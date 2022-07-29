@@ -7,6 +7,9 @@ namespace DKCommunicationNET;
 
 public class DandickSource:DKSerialBase ,ISource
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public IACSource ACSource { get ; set ; }
     public IDCSource DCSource { get; set; }
 
