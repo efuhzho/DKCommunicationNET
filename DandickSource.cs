@@ -1,0 +1,16 @@
+﻿using DKCommunicationNET.Interface;
+using DKCommunicationNET.Module;
+using DKCommunicationNET.Protocol;
+using DKCommunicationNET.BaseClass;
+
+namespace DKCommunicationNET;
+
+public class DandickSource:DKSerialBase ,ISource
+{
+    public IACSource ACSource { get ; set ; }
+    public IDCSource DCSource { get; set; }
+
+  
+
+    
+}    
