@@ -31,7 +31,7 @@ public class DKSerialBase //: SerialBase
         }
     }
 
-    public void HandShake()
+    public virtual void HandShake()
     {
 
     }
