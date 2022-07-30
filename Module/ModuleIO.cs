@@ -2,7 +2,8 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleIO:IModuleIO
+    internal class ModuleIO : IModuleIO
     {
+        public bool IsIOModuleConnected { get; set ; }
     }
 }

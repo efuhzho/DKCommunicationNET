@@ -2,4 +2,5 @@
 
 public interface IModuleIO
 {
+    public bool IsIOModuleConnected { get; set; }
 }

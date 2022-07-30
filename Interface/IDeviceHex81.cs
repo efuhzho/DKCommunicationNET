@@ -2,13 +2,12 @@
 
 public interface IDeviceHex81
 {
+    public ProtocolTypes ProtocolType { get; }
     public IModuleACS ModuleACS { get; set; }
-  
     public IModuleDCS ModuleDCS { get; set; }
-    
     public IModuleDCM ModuleDCM { get; set; }
-
     public IModulePQ ModulePQ { get; set; }
+    public IModuleIO ModuleIO { get; set; }
     public float Ua { get; set; }
     public float Ub { get; set; }
     public float Uc { get; set; }
@@ -19,5 +18,11 @@ public interface IDeviceHex81
     public float IPb { get; set; }
     public float IPc { get; set; }
     public float DCU { get; set; }
-    public float DCI { get; set; } 
+    public float DCI { get; set; }
+
+    public float Ux { get; set; }
+
+
+    public float Ix { get; set; }
+
 }

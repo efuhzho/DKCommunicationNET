@@ -4,7 +4,11 @@ namespace DKCommunicationNET. Module
 {
     internal class ModuleDCS : IModuleDCS
     {
-        public bool IsDCSModuleConnected => throw new NotImplementedException ( );
+        public ModuleDCS ( ProtocolTypes protocolType )
+        {
+
+        }
+        public bool IsDCSModuleConnected { get; set; }
 
         public void SetDCSAmplitude ( )
         {
@@ -13,7 +17,7 @@ namespace DKCommunicationNET. Module
 
         public void StartDCS ( )
         {
-            throw new NotImplementedException ( );
+           
         }
 
         public void StopDCS ( )

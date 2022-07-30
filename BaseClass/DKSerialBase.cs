@@ -1,37 +1,28 @@
-﻿namespace DKCommunicationNET.BaseClass;
+﻿namespace DKCommunicationNET. BaseClass;
 
 public class DKSerialBase //: SerialBase
 {
-    protected ProtocolTypes _protocolType ;
-    public ProtocolTypes ProtocolType
-    {
-        get { return _protocolType; }
-    }
+    /// <summary>
+    /// 设备型号
+    /// </summary>
+    public string Model { get; set; } = string. Empty;
 
-    private int id;
+    /// <summary>
+    /// 设备协议类型
+    /// </summary>
+    public ProtocolTypes ProtocolType { get; set; }
 
-    public int ID
-    {
-        get { return id; }
-        set { id = value; }
-    }
+    /// <summary>
+    /// 设备ID
+    /// </summary>
+    public int ID { get; set; }
 
-    private string sn = string.Empty;
+    /// <summary>
+    /// 设备出厂编号
+    /// </summary>
+    public string SN { get; set; } = string. Empty;
 
-    public string SN
-    {
-        get
-        {
-            return sn;
-        }
-
-        set
-        {
-            sn = value;
-        }
-    }
-
-    public virtual void HandShake()
+    public virtual void HandShake ( )
     {
 
     }
