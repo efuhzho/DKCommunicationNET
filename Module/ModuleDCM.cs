@@ -4,9 +4,9 @@ namespace DKCommunicationNET. Module
 {
     internal class ModuleDCM : ModuleBase, IModuleDCM
     {
-        public ModuleDCM ( Models protocolType )
+        public ModuleDCM ( Models model )
         {
-            _protocolType = protocolType;
+            _protocolType = model;
         }
     }
 }

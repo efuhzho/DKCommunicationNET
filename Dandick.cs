@@ -1,13 +1,7 @@
-﻿using DKCommunicationNET. Device;
+﻿using DKCommunicationNET. BaseClass;
+using DKCommunicationNET. Device;
 using DKCommunicationNET. Interface;
-using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. BaseClass;
 using DKCommunicationNET. Module;
-using System. Windows;
 namespace DKCommunicationNET;
 
 public class Dandick : DandickSerialBase
