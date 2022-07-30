@@ -2,7 +2,7 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleDCMI:IModuleDCMI
+    internal class ModuleDCM:IModuleDCM
     {
     }
 }

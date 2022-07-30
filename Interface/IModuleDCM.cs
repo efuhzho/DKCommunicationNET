@@ -1,5 +1,5 @@
 ﻿namespace DKCommunicationNET. Interface;
 
-public interface IModuleIO
+public interface IModuleDCM
 {
 }

@@ -1,6 +1,5 @@
-﻿namespace DKCommunicationNET. Interface
+﻿namespace DKCommunicationNET. Interface;
+
+public interface IModulePQ
 {
-    internal interface IModulePQ
-    {
-    }
 }

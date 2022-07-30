@@ -15,10 +15,10 @@ public enum ProtocolTypes
 
 public enum Models
 {
-    DK34B1=0,
-    DK34B2=0,
-    DK34F1=0,
-    DK34B3=1,
-    DKPTS1=1,
-    DKPTS=1
+    DK34B1=81,
+    DK34B2=81,
+    DK34F1=81,
+    DK34B3=510,
+    DKPTS1=510,
+    DKPTS=510
 }

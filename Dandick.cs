@@ -6,10 +6,9 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET
+namespace DKCommunicationNET;
+
+public class Dandick 
 {
-    public class Dandick
-    {     
-        
-    }
+
 }

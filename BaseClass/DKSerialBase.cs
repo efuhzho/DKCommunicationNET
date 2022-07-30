@@ -2,7 +2,7 @@
 
 public class DKSerialBase //: SerialBase
 {
-    protected ProtocolTypes _protocolType = ProtocolTypes.Hex81;
+    protected ProtocolTypes _protocolType ;
     public ProtocolTypes ProtocolType
     {
         get { return _protocolType; }
