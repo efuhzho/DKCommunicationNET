@@ -10,7 +10,7 @@ internal class ModuleACS : IModuleACS
     {
         _protocolType = protocolType;
     }
-    public bool IsACSModuleConnected { get; set; }
+   
 
     public void SetACSAmplitude ( float amplitude )
     {

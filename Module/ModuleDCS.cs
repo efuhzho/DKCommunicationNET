@@ -8,7 +8,7 @@ namespace DKCommunicationNET. Module
         {
 
         }
-        public bool IsDCSModuleConnected { get; set; }
+       
 
         public void SetDCSAmplitude ( )
         {

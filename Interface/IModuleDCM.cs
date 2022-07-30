@@ -2,5 +2,5 @@
 
 public interface IModuleDCM
 {
-    public bool IsDCMModuleConnected { get; set; }
+   
 }

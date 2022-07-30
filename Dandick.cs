@@ -85,34 +85,10 @@ public class Dandick : DKSerialBase
 
     public bool IsACSModuleConnected { get; set; }
     public bool IsDCSModuleConnected { get; set; }
-
-    //public void SetACSAmplitude ( float amplitude )
-    //{
-
-    //}
-
-    //public void SetDCSAmplitude ( )
-    //{
-    //    throw new NotImplementedException ( );
-    //}
-
-    //public void StartACS ( )
-    //{
-    //    throw new NotImplementedException ( );
-    //}
-
-    //public void StartDCS ( )
-    //{
-    //    throw new NotImplementedException ( );
-    //}
-
-    //public void StopACS ( )
-    //{
-    //    throw new NotImplementedException ( );
-    //}
-
-    //public void StopDCS ( )
-    //{
-    //    throw new NotImplementedException ( );
-    //}
+    public bool IsIOModuleConnected { get; set; }
+    public bool IsPQModuleConnected { get; set; }
+    public bool IsDCMModuleConnected { get; set; }
 }
+
+    
+
