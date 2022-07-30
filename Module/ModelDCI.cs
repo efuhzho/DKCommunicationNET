@@ -7,7 +7,13 @@ using DKCommunicationNET.Interface;
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModelDCI:IModuleDCI
+    internal class ModelDCI : IModuleDCI
     {
+        public bool IsModuleDCIConnected { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public void SetDCI ( )
+        {
+            throw new NotImplementedException ( );
+        }
     }
 }

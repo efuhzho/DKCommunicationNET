@@ -5,23 +5,22 @@ using System. Text;
 using System. Threading. Tasks;
 using DKCommunicationNET. Interface;
 
-namespace DKCommunicationNET. Module
+namespace DKCommunicationNET. Module;
+
+internal class ModuleACI : IModuleACI
 {
-    internal class ModuleACI : IModuleACI
+  
+    public bool IsModuleACIConnected => throw new NotImplementedException ( );
+
+ 
+
+    public void SetACI ( float amplitude )
     {
-      
-        public bool IsModuleACIConnected => throw new NotImplementedException ( );
+        throw new NotImplementedException ( );
+    }      
 
-     
-
-        public void SetACI ( float amplitude )
-        {
-            throw new NotImplementedException ( );
-        }      
-
-        public void STOP ( )
-        {
-            throw new NotImplementedException ( );
-        }
+    public void STOP ( )
+    {
+        throw new NotImplementedException ( );
     }
 }

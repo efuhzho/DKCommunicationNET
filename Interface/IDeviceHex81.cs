@@ -1,6 +1,6 @@
 ﻿namespace DKCommunicationNET. Interface;
 
-public interface IHex81/*:IACSCurrent,IDCSource*/
+public interface IDeviceHex81
 {
     public IModuleACU ModuleACU { get; set; }
     public IModuleACI ModuleACI { get; set; }

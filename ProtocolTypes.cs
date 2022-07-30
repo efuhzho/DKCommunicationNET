@@ -8,8 +8,8 @@ namespace DKCommunicationNET;
 
 public enum ProtocolTypes
 {
-    Hex81=0,
-    Hex5AA5=1,
+    Hex81=81,
+    Hex5AA5=510,
 }
 
 public enum Models

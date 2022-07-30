@@ -9,11 +9,8 @@ namespace DKCommunicationNET. Module;
 
 internal class ModuleACU: IModuleACU
 {
-    private bool isACSConneted = true;
-    public bool IsModuleACUConnected => isACSConneted;
-
-   
-
+    private bool isModuleACUConnected = true;
+    public bool IsModuleACUConnected => isModuleACUConnected;
     public void SetACU ( float amplitude )
     {
         Console. WriteLine ( $"ModuleACU={amplitude}" );

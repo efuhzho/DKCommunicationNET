@@ -8,7 +8,7 @@ namespace DKCommunicationNET.Interface
 {
     public interface IModuleDCU
     {
-        public bool IsDCSConnected { get;  }
+        public bool IsModuleDCUConnected { get;  }
         void SetDCU();
     }
 }

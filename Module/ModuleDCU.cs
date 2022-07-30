@@ -9,9 +9,9 @@ namespace DKCommunicationNET.Module
 {
     internal class ModuleDCU:IModuleDCU
     {
-        private bool isDCSConneted = true;       
+        private bool isModuleDCUConneted = true;       
 
-        public bool IsDCSConnected => isDCSConneted;
+        public bool IsModuleDCUConnected => isModuleDCUConneted;
         public void SetDCU()
         {
             Console.WriteLine("ModuleDCU=600V");
