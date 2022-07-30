@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DKCommunicationNET.Interface
 {
-    public interface IDCSource
+    public interface IModuleDCI
     {
-        public bool IsDCSConnected { get;  }
-        void StarDCVoltage();
-        void StopDCVoltage();
+        public bool IsModuleDCIConnected { get; set; }
+        public void SetDCI ( );
     }
 }

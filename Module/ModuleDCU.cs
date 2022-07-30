@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace DKCommunicationNET.Module
 {
-    internal class ModuleDCSource:IDCSource
+    internal class ModuleDCU:IModuleDCU
     {
         private bool isDCSConneted = true;       
 
         public bool IsDCSConnected => isDCSConneted;
-        public void StarDCVoltage()
+        public void SetDCU()
         {
-            Console.WriteLine("DCU=600V");
+            Console.WriteLine("ModuleDCU=600V");
 
         }
 
         public void StopDCVoltage()
         {
-            Console.WriteLine("DCU=zero");
+            Console.WriteLine("ModuleDCU=zero");
 
         }
     }

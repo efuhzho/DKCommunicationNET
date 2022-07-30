@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DKCommunicationNET.Interface
 {
-    public interface IACSource
+    public interface IModuleACU
     {
-        public bool IsACSConnected { get; }
-        void StarACVoltage(float amplitude);
-        void StopACVoltage();
+        public bool IsModuleACUConnected { get; }
+        void SetACU(float amplitude);      
     }
 }

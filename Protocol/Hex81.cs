@@ -1,16 +1,16 @@
-﻿using DKCommunicationNET.BaseClass;
-using DKCommunicationNET.Interface;
+﻿using DKCommunicationNET. BaseClass;
+using DKCommunicationNET. Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System. Collections. Generic;
+using System. Linq;
+using System. Text;
+using System. Threading. Tasks;
 
-namespace DKCommunicationNET.Protocol;
+namespace DKCommunicationNET. Protocol;
 
 internal class Hex81
 {
-    public const ProtocolTypes Type = ProtocolTypes.Hex81;
+    public const ProtocolTypes Type = ProtocolTypes. Hex81;
 
     public const byte FramID = 0x81;
 
