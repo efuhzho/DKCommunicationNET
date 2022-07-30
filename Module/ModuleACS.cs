@@ -23,6 +23,6 @@ internal class ModuleACS :ModuleBase ,IModuleACS
 
     public void StopACS ( )
     {
-        throw new NotImplementedException ( );
+       
     }
 }

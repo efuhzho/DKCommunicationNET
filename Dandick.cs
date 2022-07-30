@@ -181,6 +181,8 @@ public class Dandick : DKSerialBase
     }
     #endregion 构造函数
 
+    #region 初始化
+
     /// <summary>
     /// 功能状态初始化器
     /// </summary>
@@ -193,7 +195,7 @@ public class Dandick : DKSerialBase
         IsPQModuleConnected = _Device. IsPQModuleSupported;
     }
 
-
+    #endregion 初始化
 }
 
 
