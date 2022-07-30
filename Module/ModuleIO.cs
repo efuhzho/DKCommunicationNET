@@ -2,8 +2,11 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleIO : IModuleIO
+    internal class ModuleIO : ModuleBase, IModuleIO
     {
-       
+        public ModuleIO ( ProtocolTypes protocolType )
+        {
+            _protocolType = protocolType;
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace DKCommunicationNET. Device;
 
 public class DeviceHex81 :IDevice
 {
-    public bool IsACSModuleSupported => false;
+    public bool IsACSModuleSupported => true;
     public bool IsDCSModuleSupported=>true;
     public bool IsDCMModuleSupported =>true;
     public bool IsIOModuleSupported => false;

@@ -2,13 +2,13 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleDCS : IModuleDCS
+    internal class ModuleDCS : ModuleBase, IModuleDCS
     {
         public ModuleDCS ( ProtocolTypes protocolType )
         {
-
+            _protocolType = protocolType;
         }
-       
+
 
         public void SetDCSAmplitude ( )
         {
@@ -17,7 +17,7 @@ namespace DKCommunicationNET. Module
 
         public void StartDCS ( )
         {
-           
+
         }
 
         public void StopDCS ( )

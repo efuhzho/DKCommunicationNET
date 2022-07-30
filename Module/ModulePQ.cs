@@ -3,8 +3,11 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModulePQ : IModulePQ
+    internal class ModulePQ :ModuleBase, IModulePQ
     {
-       
+        public ModulePQ ( ProtocolTypes protocolType )
+        {
+            _protocolType=protocolType;
+        }
     }
 }

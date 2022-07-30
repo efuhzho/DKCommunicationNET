@@ -69,9 +69,9 @@ public class Dandick : DKSerialBase
 
         _ModuleACS = new ModuleACS ( ProtocolType );
         _ModuleDCS = new ModuleDCS ( ProtocolType );
-        _ModuleDCM = new ModuleDCM ( );
-        _ModuleIO = new ModuleIO ( );
-        _ModulePQ = new ModulePQ ( );
+        _ModuleDCM = new ModuleDCM ( ProtocolType );
+        _ModuleIO = new ModuleIO ( ProtocolType );
+        _ModulePQ = new ModulePQ ( ProtocolType );
 
         _Device = ProtocolType switch //TODO 看视频如何解决这个问题
         {
@@ -79,6 +79,15 @@ public class Dandick : DKSerialBase
             ProtocolTypes. Hex5AA5 => new DeviceHex5AA5 ( ),
             _ => new DeviceHex81 ( ),
         };
+
+        FunctionsInitializer ( );
+    }
+
+    /// <summary>
+    /// 功能状态初始化器
+    /// </summary>
+   void FunctionsInitializer ( )
+    {
         IsACSModuleConnected = _Device. IsACSModuleSupported;
         IsDCSModuleConnected = _Device. IsDCSModuleSupported;
     }

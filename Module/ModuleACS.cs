@@ -3,9 +3,8 @@
 
 namespace DKCommunicationNET. Module;
 
-internal class ModuleACS : IModuleACS
-{
-    private readonly ProtocolTypes _protocolType;
+internal class ModuleACS :ModuleBase ,IModuleACS
+{    
     public ModuleACS ( ProtocolTypes protocolType )
     {
         _protocolType = protocolType;

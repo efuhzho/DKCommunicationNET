@@ -2,8 +2,11 @@
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleDCM : IModuleDCM
+    internal class ModuleDCM : ModuleBase, IModuleDCM
     {
-       
+        public ModuleDCM ( ProtocolTypes protocolType )
+        {
+            _protocolType = protocolType;
+        }
     }
 }
