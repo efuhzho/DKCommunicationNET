@@ -26,7 +26,7 @@ public class DeviceHex81 : DKSerialBase, IDeviceHex81
         ModuleACU = new ModuleACU ( );
         ModuleACI = new ModuleACI ( );
         ModuleDCU = new ModuleDCU ( );
-        ModuleDCI = new ModelDCI ( );
+        ModuleDCI = new ModuleDCI ( );
     }
 
     public void StopAC ( )

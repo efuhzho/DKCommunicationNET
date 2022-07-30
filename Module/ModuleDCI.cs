@@ -1,13 +1,8 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET.Interface;
+﻿using DKCommunicationNET. Interface;
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModelDCI : IModuleDCI
+    internal class ModuleDCI : IModuleDCI
     {
         public bool IsModuleDCIConnected { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
