@@ -7,6 +7,7 @@ namespace DKCommunicationNET. Device;
 
 public class DeviceHex81 : DKSerialBase, IDeviceHex81
 {
+    
     public IModuleACI ModuleACI { get; set; }
     public IModuleACU ModuleACU { get; set; }
     public IModuleDCU ModuleDCU { get; set; }
@@ -20,10 +21,19 @@ public class DeviceHex81 : DKSerialBase, IDeviceHex81
     public float DCU { get ; set; }
     public float DCI { get ; set; }
 
+
     public DeviceHex81 ( Models model )
     {
-        protocolype = ( ProtocolTypes ) model;
-        ModuleACU = new ModuleACU ( );
+        _protocolType = ( ProtocolTypes ) model;
+        ModuleACU = new ModuleACU (_protocolType );
+        ModuleACI = new ModuleACI ( );
+        ModuleDCU = new ModuleDCU ( );
+        ModuleDCI = new ModuleDCI ( );
+    }
+    public DeviceHex81 ( ProtocolTypes protocolType )
+    {
+        _protocolType = protocolType;
+        ModuleACU = new ModuleACU ( _protocolType );
         ModuleACI = new ModuleACI ( );
         ModuleDCU = new ModuleDCU ( );
         ModuleDCI = new ModuleDCI ( );
@@ -32,6 +42,7 @@ public class DeviceHex81 : DKSerialBase, IDeviceHex81
     public void StopAC ( )
     {
         throw new NotImplementedException ( );
+        
     }
 
     public void StopDC ( )

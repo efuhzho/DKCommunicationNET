@@ -1,6 +1,6 @@
 ﻿namespace DKCommunicationNET. Interface;
 
-public class IDeviceHex5AA5
+public interface IDeviceHex5AA5
 {
 
 }

@@ -7,16 +7,23 @@ namespace DKCommunicationNET. Module
         private bool isModuleDCUConneted = true;       
 
         public bool IsModuleDCUConnected => isModuleDCUConneted;
+
+        public ProtocolTypes ProtocolType { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
         public void SetDCU()
         {
             Console.WriteLine("ModuleDCU=600V");
 
         }
 
-        public void StopDCVoltage()
+        public void START ( )
         {
-            Console.WriteLine("ModuleDCU=zero");
+            throw new NotImplementedException ( );
+        }
 
+        public void STOP ( )
+        {
+            throw new NotImplementedException ( );
         }
     }
 }
