@@ -8,7 +8,7 @@ namespace DKCommunicationNET. Interface
 {
     internal interface IDevice
     {
-        public  ProtocolTypes ProtocolType { get; }
+        public  Models ProtocolType { get; }
         public bool IsACSModuleSupported { get; }
         public bool IsDCSModuleSupported { get;  }
         public bool IsDCMModuleSupported { get;  }

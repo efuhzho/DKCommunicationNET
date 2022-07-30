@@ -4,7 +4,7 @@ namespace DKCommunicationNET. Module
 {
     internal class ModuleDCS : ModuleBase, IModuleDCS
     {
-        public ModuleDCS ( ProtocolTypes protocolType )
+        public ModuleDCS ( Models protocolType )
         {
             _protocolType = protocolType;
         }

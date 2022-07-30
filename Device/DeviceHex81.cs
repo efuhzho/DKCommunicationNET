@@ -12,7 +12,7 @@ public class DeviceHex81 :IDevice
     public bool IsIOModuleSupported => false;
     public bool IsPQModuleSupported =>true;
 
-    public ProtocolTypes ProtocolType => ProtocolTypes.Hex81;
+    public Models ProtocolType => Models.Hex81;
 
 
 
@@ -21,7 +21,7 @@ public class DeviceHex81 :IDevice
 
     //public DeviceHex81 ( )
     //{
-    //    ModuleACS = new ModuleACS ( ProtocolType );
+    //    ModuleACS = new ModuleACS ( Model );
     //}
     //public IModuleACS ModuleACS { get; set; }
     //public IModuleDCS ModuleDCS { get; set; }
@@ -52,7 +52,7 @@ public class DeviceHex81 :IDevice
 
     //public void Hex81dosomething ( )
     //{
-    //    _ModuleACS  = new ModuleACS ( ProtocolType );
+    //    _ModuleACS  = new ModuleACS ( Model );
     //    _ModuleACS. SetACSAmplitude ( 100.005f );
     //}
 

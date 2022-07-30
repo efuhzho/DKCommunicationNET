@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Module;
 
 internal class ModuleACS :ModuleBase ,IModuleACS
 {    
-    public ModuleACS ( ProtocolTypes protocolType )
+    public ModuleACS ( Models protocolType )
     {
         _protocolType = protocolType;
     }
@@ -18,7 +18,7 @@ internal class ModuleACS :ModuleBase ,IModuleACS
 
     public void StartACS ( )
     {
-        throw new NotImplementedException ( );
+        
     }
 
     public void StopACS ( )

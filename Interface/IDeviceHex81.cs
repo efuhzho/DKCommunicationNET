@@ -2,7 +2,7 @@
 
 public interface IDeviceHex81
 {
-    public ProtocolTypes ProtocolType { get; }
+    public Models ProtocolType { get; }
     public IModuleACS ModuleACS { get; set; }
     public IModuleDCS ModuleDCS { get; set; }
     public IModuleDCM ModuleDCM { get; set; }

@@ -12,5 +12,5 @@ public class DeviceHex5AA5 : IDevice
     public bool IsIOModuleSupported => true;
     public bool IsPQModuleSupported => true;
 
-    public ProtocolTypes ProtocolType => ProtocolTypes.Hex5AA5;
+    public Models ProtocolType => Models.Hex5AA5;
 }

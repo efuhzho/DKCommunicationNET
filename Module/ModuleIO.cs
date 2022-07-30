@@ -4,7 +4,7 @@ namespace DKCommunicationNET. Module
 {
     internal class ModuleIO : ModuleBase, IModuleIO
     {
-        public ModuleIO ( ProtocolTypes protocolType )
+        public ModuleIO ( Models protocolType )
         {
             _protocolType = protocolType;
         }

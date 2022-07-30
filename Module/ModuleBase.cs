@@ -8,6 +8,6 @@ namespace DKCommunicationNET. Module
 {
     internal class ModuleBase
     {
-        protected ProtocolTypes _protocolType;
+        protected Models _protocolType;
     }
 }

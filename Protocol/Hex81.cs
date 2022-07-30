@@ -10,7 +10,7 @@ namespace DKCommunicationNET. Protocol;
 
 internal class Hex81
 {
-    public const ProtocolTypes Type = ProtocolTypes. Hex81;
+    public const Models Type = Models. Hex81;
 
     public const byte FramID = 0x81;
 
