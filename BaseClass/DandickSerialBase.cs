@@ -1,6 +1,6 @@
 ﻿namespace DKCommunicationNET. BaseClass;
 
-public class DKSerialBase //: SerialBase
+public class DandickSerialBase //: SerialBase
 {
     /// <summary>
     /// 设备协议类型
@@ -17,7 +17,7 @@ public class DKSerialBase //: SerialBase
     /// </summary>
     public string SN { get; set; } = string. Empty;
 
-    public virtual void HandShake ( )
+    public  void HandShake ( )
     {
 
     }

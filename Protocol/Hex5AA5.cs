@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DKCommunicationNET.Protocol;
 
-public class Hex5AA5 
+internal class Hex5AA5 
 {
 
 }

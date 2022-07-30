@@ -4,7 +4,7 @@ using DKCommunicationNET. Module;
 
 namespace DKCommunicationNET. Device;
 
-public class DeviceHex81 :IDevice
+internal class DeviceHex81 :IDevice
 {
     public bool IsACSModuleSupported => true;
     public bool IsDCSModuleSupported=>true;

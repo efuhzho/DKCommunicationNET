@@ -10,7 +10,7 @@ using DKCommunicationNET. Module;
 using System. Windows;
 namespace DKCommunicationNET;
 
-public class Dandick : DKSerialBase
+public class Dandick : DandickSerialBase
 {
     #region 私有字段
 
@@ -193,6 +193,7 @@ public class Dandick : DKSerialBase
         IsDCMModuleConnected = _Device. IsDCMModuleSupported;
         IsIOModuleConnected = _Device. IsIOModuleSupported;
         IsPQModuleConnected = _Device. IsPQModuleSupported;
+        HandShake ( );
     }
 
     #endregion 初始化
