@@ -21,19 +21,22 @@ internal class ModuleACS :ModuleBase ,IModuleACS
         throw new NotImplementedException ( );
     }
 
-    public void SetACSAmplitude ( float amplitude )
+    public void SetAmplitudeOfACS ( float amplitude )
     {
 
     }
 
+    public void SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI  , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 )
+    {
+        throw new NotImplementedException ( );
+    }
 
-
-    public void StartACS ( )
+    public void StartOutputOfACS ( )
     {
         
     }
 
-    public void StopACS ( )
+    public void StopOutputOfACS ( )
     {
        
     }

@@ -3,8 +3,9 @@
 public interface IModuleACS
 {
     public void GetRangesOfACS ( );
-    public void SetACSAmplitude ( float amplitude );
-    public void StartACS ( );
-    public void StopACS ( );
+    public void SetAmplitudeOfACS ( float amplitude );
+    public void StartOutputOfACS ( );
+    public void StopOutputOfACS ( );
+    public void SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 );
 }
 
