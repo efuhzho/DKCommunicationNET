@@ -1,4 +1,18 @@
-﻿namespace DKCommunicationNET. Interface;
+﻿using DKCommunicationNET. Interface. IModule;
+
+namespace DKCommunicationNET. Interface;
+
+
+
+
+
+
+
+
+//TODO 废弃的接口，删除
+
+
+
 
 public interface IDeviceHex81
 {

@@ -1,4 +1,5 @@
 ﻿using DKCommunicationNET. Interface;
+using DKCommunicationNET. Interface. IModule;
 
 namespace DKCommunicationNET. Module
 {
@@ -7,6 +8,11 @@ namespace DKCommunicationNET. Module
         public ModuleDCM ( Models model )
         {
             _protocolType = model;
+        }
+
+        public void GetRangesOfDCM ( )
+        {
+            throw new NotImplementedException ( );
         }
     }
 }

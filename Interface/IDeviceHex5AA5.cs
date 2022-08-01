@@ -1,5 +1,9 @@
 ﻿namespace DKCommunicationNET. Interface;
 
+
+
+
+//TODO 废弃的
 public interface IDeviceHex5AA5
 {
     //public IModuleACS ModuleACS { get; set; }

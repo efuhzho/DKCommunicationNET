@@ -1,4 +1,5 @@
 ﻿using DKCommunicationNET. Interface;
+using DKCommunicationNET. Interface. IModule;
 
 namespace DKCommunicationNET. Module
 {
@@ -9,6 +10,10 @@ namespace DKCommunicationNET. Module
             _protocolType = protocolType;
         }
 
+        public void GetRangesOfDCS ( )
+        {
+            throw new NotImplementedException ( );
+        }
 
         public void SetDCSAmplitude ( )
         {

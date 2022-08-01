@@ -4,10 +4,9 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Interface
+namespace DKCommunicationNET. Language
 {
-    internal interface IModuleBase
+    internal class English:DefaultLanguage
     {
-
     }
 }

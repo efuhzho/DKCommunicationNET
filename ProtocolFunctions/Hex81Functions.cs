@@ -2,24 +2,50 @@
 using DKCommunicationNET. Interface;
 using DKCommunicationNET. Module;
 
-namespace DKCommunicationNET. Device;
+namespace DKCommunicationNET. ProtocolFunctions;
 
-internal class DeviceHex81 :IDevice
+/// <summary>
+/// 基于Hex81协议的设备所支持的功能状态
+/// </summary>
+internal class Hex81Functions : IProtocolFunctions
 {
-    public bool IsACSModuleSupported => true;
-    public bool IsDCSModuleSupported=>true;
-    public bool IsDCMModuleSupported =>true;
-    public bool IsIOModuleSupported => false;
-    public bool IsPQModuleSupported =>true;
+    /// <summary>
+    /// 本类设备的协议类型：Hex81
+    /// </summary>
+    public Models Model => Models. Hex81;
 
-    public Models ProtocolType => Models.Hex81;
+    /// <summary>
+    /// 基于本协议的设备：是否支持【交流源模块】：是
+    /// </summary>
+    public bool IsACSModuleSupported => true;
+
+    /// <summary>
+    /// 基于本协议的设备：是否支持【直流源模块】：是
+    /// </summary>
+    public bool IsDCSModuleSupported => true;
+
+    /// <summary>
+    /// 基于本协议的设备：是否支持【直流表模块】：是
+    /// </summary>
+    public bool IsDCMModuleSupported => true;
+
+    /// <summary>
+    /// 基于本协议的设备：是否支持【开关量模块】：否
+    /// </summary>
+    public bool IsIOModuleSupported { get; }
+
+    /// <summary>
+    /// 基于本协议的设备：是否支持【电能模块】：是
+    /// </summary>
+    public bool IsPQModuleSupported => true;
+
 
 
 
     #region MyRegion
 
 
-    //public DeviceHex81 ( )
+    //public FunctionsHex81 ( )
     //{
     //    ModuleACS = new ModuleACS ( Model );
     //}

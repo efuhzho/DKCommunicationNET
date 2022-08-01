@@ -6,11 +6,11 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Protocol;
+namespace DKCommunicationNET. ProtocolInformation;
 
-internal class Hex81
+internal class Hex81Information 
 {
-    public const Models Type = Models. Hex81;
+    public const Models Model = Models. Hex81;
 
     public const byte FramID = 0x81;
 
@@ -44,4 +44,30 @@ internal class Hex81
     public const byte SetDisplayPage = 0x4A;
     public const ushort SetDisplayPageCommandLength = 8;
     #endregion
+
+    public Enum ModeTTTTTEST
+    {
+        get;
+        set;
+    } = Models. Hex81;
+
+
+
+    public enum SystemMode
+    {
+
+        a,
+        b,
+        c
+    }
+
+    public static string [ ] GetSystemMode ( )
+    {
+        string [ ] result = new string [ 3 ];
+        result [ 0 ] = SystemMode. a. ToString ( );
+        result [ 1 ] = SystemMode. b. ToString ( );
+        result [ 2 ] = SystemMode. c. ToString ( );
+
+        return result;
+    }
 }

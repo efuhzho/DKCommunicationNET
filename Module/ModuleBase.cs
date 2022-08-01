@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Module
 {
-    internal class ModuleBase
+    public class ModuleBase
     {
         protected Models _protocolType;
     }
