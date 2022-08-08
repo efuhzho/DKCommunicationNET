@@ -18,15 +18,14 @@ public interface ISystemSettings
 
 public interface ISystemMode
 {
-    internal void SetSystemMode ( Enum Mode );    
+    public void SetSystemMode ( Enum Mode );    
     public void SetSystemMode ( string Mode );
     public List<string> GetSystemModes ( );
-
 }
 
 public interface IDisplayPage
 {
-    internal void SetDisplayPage ( Enum Page );
+    public void SetDisplayPage ( Enum Page );
 
     public void SetDisplayPage (string Page );
     public List<string> GetDisplayPages ( );
@@ -34,24 +33,22 @@ public interface IDisplayPage
 }
 
 
-public class SystemMode : ModuleBase, ISystemMode
+public class SystemMode : ISystemMode
 {
-    public SystemMode ( Models model )
-    {
-        _protocolType = model;
-    }
-    public string [ ] GetSystemModes ( )
-    {
-        switch ( _protocolType )
-        {
-            case Models. Hex81:
-                return Hex81Information. GetSystemMode ( );
-            case Models. Hex5AA5:
-                return Hex5AA5Information. GetSystemMode ( );
-            default:
-                return Hex81Information. GetSystemMode ( );
-        }
-    }
+    
+    //public string[ ] GetSystemModes ( )
+    //{
+    //    //switch ( _protocolType )
+    //    //{
+    //    //    case Models. Hex81:
+    //    //        return Hex81Information. GetSystemMode ( );
+    //    //    case Models. Hex5AA5:
+    //    //        return Hex5AA5Information. GetSystemMode ( );
+    //    //    default:
+    //    //        return Hex81Information. GetSystemMode ( );
+    //    //}
+    //    return Hex81Information. GetSystemMode ( );
+    //}
 
     public void SetSystemMode ( Enum SystemMode )
     {

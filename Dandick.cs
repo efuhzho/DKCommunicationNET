@@ -1,13 +1,9 @@
 ﻿using DKCommunicationNET. BaseClass;
-using DKCommunicationNET. ProtocolFunctions;
 using DKCommunicationNET. Interface;
-using DKCommunicationNET. Module;
-using DKCommunicationNET. Language;
-using System. Collections. Generic;
-using System. Collections;
-using DKCommunicationNET. ProtocolInformation;
 using DKCommunicationNET. Interface. IModule;
-using System. Windows;
+using DKCommunicationNET. Module;
+using DKCommunicationNET. ProtocolFunctions;
+
 
 
 namespace DKCommunicationNET;
@@ -19,36 +15,36 @@ public class Dandick : DandickSerialBase
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-    private  IProtocolFunctions? _Functions;
+    private IProtocolFunctions? _Functions;
 
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private  IModuleACS? _ModuleACS;
+    private IModuleACS? _ModuleACS;
 
     /// <summary>
     /// 定义直流源模块对象
     /// </summary>
-    private  IModuleDCS? _ModuleDCS;
+    private IModuleDCS? _ModuleDCS;
 
     /// <summary>
     /// 定义直流表模块对象
     /// </summary>
-    private  IModuleDCM? _ModuleDCM;
+    private IModuleDCM? _ModuleDCM;
 
     /// <summary>
     /// 定义电能模块模块对象
     /// </summary>
-    private  IModulePQ? _ModulePQ;
+    private IModulePQ? _ModulePQ;
 
     /// <summary>
     /// 定义开关量模块对象
     /// </summary>
-    private  IModuleIO? _ModuleIO;
+    private IModuleIO? _ModuleIO;
 
     #endregion 私有字段
 
-    #region 【公共属性】
+    #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
 
     #region 公共属性==>[功能状态指示标志]
     /// <summary>
@@ -163,7 +159,7 @@ public class Dandick : DandickSerialBase
     #endregion 公共属性==>功能模块
 
     #region 公共属性==>[系统设置]
-    public ISystemSettings? SystemSettings { get;private set; }
+    public ISystemSettings? SystemSettings { get; private set; }
     #endregion 公共属性==>[系统设置]
 
     #endregion 【公共属性】
@@ -172,8 +168,7 @@ public class Dandick : DandickSerialBase
 
     public Dandick ( Models model )
     {
-         Model = model;
-        Messagebox messagebox = new Messagebox ( );
+        Model = model;
         FunctionsInitializer ( );
     }
     #endregion 构造函数
@@ -200,7 +195,7 @@ public class Dandick : DandickSerialBase
         };
 
         //SystemSettings = new SystemSettings ( model );
-        SystemSettings. SystemMode = new SystemMode ( Model );
+        SystemSettings. SystemMode = new SystemMode ( );
 
         IsACSModuleEnabled = _Functions. IsACSModuleSupported;
         IsDCSModuleEnabled = _Functions. IsDCSModuleSupported;
@@ -223,12 +218,6 @@ public class Dandick : DandickSerialBase
     //   _SystemSettings.SystemMode.SetSystemMode ( SystemMode );
     //}
 
-
-
-
-
-
-
     #region 模块功能状态检查
 
     #endregion 模块功能状态检查
@@ -237,7 +226,27 @@ public class Dandick : DandickSerialBase
 internal class CheckModuleState
 {
     // throw new Exception ( StringResources. Language. NotEnabledModule + $"型号【{Model}】，编号【{SN}】" );
+    public static Dictionary<int , string> EnumNamedValues<T> ( ) where T : System. Enum
+    {
+        var result = new Dictionary<int , string> ( );
+        var values = Enum. GetValues ( typeof ( T ) );
 
+        foreach ( int item in values )
+            result. Add ( item , Enum. GetName ( typeof ( T ) , item )! );
+        return result;
+    }
+    public void Do ( )
+    {
+
+        var map = EnumNamedValues<Models> ( );
+
+        foreach ( var pair in map )
+        {
+
+        }
+
+
+    }
 
 }
 

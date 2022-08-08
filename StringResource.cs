@@ -5,7 +5,7 @@ namespace DKCommunicationNET;
 /// <summary>
 /// DKCommunication的字符串资源及多语言管理中心
 /// </summary>
-internal  class StringResources //TODO 是否需要定义成静态类
+internal class StringResources
 {
     #region Constractor
 
@@ -46,6 +46,26 @@ internal  class StringResources //TODO 是否需要定义成静态类
     public static void SeteLanguageEnglish ( )
     {
         Language = new English ( );
+    }
+
+    /// <summary>
+    /// 获取当前源码行数
+    /// </summary>
+    /// <returns></returns>
+    public static int GetLineNum ( )
+    {
+        System. Diagnostics. StackTrace st = new System. Diagnostics. StackTrace ( 1 , true );
+        return st. GetFrame ( 0 ). GetFileLineNumber ( );
+    }
+
+    /// <summary>
+    /// 获取当前源码的源文件名
+    /// </summary>
+    /// <returns></returns>
+    public static string GetCurSourceFileName ( )
+    {
+        System. Diagnostics. StackTrace st = new System. Diagnostics. StackTrace ( 1 , true );
+        return st. GetFrame ( 0 ). GetFileName ( );
     }
 }
 

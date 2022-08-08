@@ -14,12 +14,7 @@ internal class ModuleACS :ModuleBase ,IModuleACS
     public void GetRangesOfACS ( )
     {
         throw new NotImplementedException ( );
-    }
-
-    public List<Enum> GetSystemMode ( )
-    {
-        throw new NotImplementedException ( );
-    }
+    }     
 
     public void SetAmplitudeOfACS ( float amplitude )
     {
