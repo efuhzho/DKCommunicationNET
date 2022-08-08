@@ -3,7 +3,7 @@ using System. Collections. Generic;
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
-using DKCommunicationNET. ProtocolInformation;
+using DKCommunicationNET. Protocols;
 using DKCommunicationNET. Module;
 
 namespace DKCommunicationNET. Interface;

@@ -181,7 +181,7 @@ public class Dandick : DandickSerialBase
     void FunctionsInitializer ( )
     {
 
-        _ModuleACS = new ModuleACS ( Model );
+        _ModuleACS = new ModuleACS (  );
         _ModuleDCS = new ModuleDCS ( Model );
         _ModuleDCM = new ModuleDCM ( Model );
         _ModuleIO = new ModuleIO ( Model );

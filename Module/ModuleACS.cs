@@ -1,16 +1,12 @@
 ﻿using DKCommunicationNET. Interface;
 using DKCommunicationNET. Interface. IModule;
-using DKCommunicationNET. ProtocolInformation;
+using DKCommunicationNET. Protocols;
 
 namespace DKCommunicationNET. Module;
 
-internal class ModuleACS :ModuleBase ,IModuleACS
+internal class ModuleACS :IModuleACS
 {    
-    public ModuleACS ( Models protocolType )
-    {
-        _protocolType = protocolType;
-    }
-
+   
     public void GetRangesOfACS ( )
     {
         throw new NotImplementedException ( );

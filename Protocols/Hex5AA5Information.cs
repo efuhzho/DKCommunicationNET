@@ -2,21 +2,27 @@
 using DKCommunicationNET. Interface;
 using System;
 using System. Collections. Generic;
+
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
+namespace DKCommunicationNET. Protocols;
 
-namespace DKCommunicationNET. ProtocolInformation;
-
-internal class Hex81Information
+internal class Hex5AA5Information
 {
-    #region 【CommandCodes】[系统设置]
+    #region 【CommandCodes】[系统]
 
     /// <summary>
     /// 报文头
     /// </summary>
-    internal const byte FrameID = 0x81;
+    internal const byte Sync0 = 0xA5;
+    internal const byte Sync1 = 0x5A;
+
+    /// <summary>
+    /// 报文尾
+    /// </summary>
+    internal const byte End = 0x96;
 
     /// <summary>
     /// 系统应答命令
@@ -35,8 +41,8 @@ internal class Hex81Information
     /// <summary>
     /// 联机命令，读取终端型号和版本号
     /// </summary>
-    internal const byte HandShake = 0x4C;
-    internal const ushort HandShakeCommandLength = 7;
+    internal const byte HandShake = 0x11;
+    internal const ushort HandShakeCommandLength = 11;
 
     /// <summary>
     /// 设置系统模式
@@ -67,32 +73,34 @@ internal class Hex81Information
     /// <returns>带指令信息的结果：完整指令长度</returns>
     internal static OperateResult<byte [ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
-        byte _RxID;
-        byte _TxID;
-
+        InitDic ( );
+        byte ID;
         if ( AnalysisID ( id ). IsSuccess )
         {
-            _RxID = AnalysisID ( id ). Content [ 0 ];
-            _TxID = AnalysisID ( id ). Content [ 1 ];
+            ID = AnalysisID ( id ). Content [ 0 ];
         }
         else
         {
             return AnalysisID ( id );
         }
-
         //尝试预创建报文
         try
         {
             byte [ ] buffer = new byte [ commandLength ];
-            buffer [ 0 ] = FrameID;
-            buffer [ 1 ] = _RxID;
-            buffer [ 2 ] = _TxID;
-            buffer [ 3 ] = BitConverter. GetBytes ( commandLength ) [ 0 ];
-            buffer [ 4 ] = BitConverter. GetBytes ( commandLength ) [ 1 ];
-            buffer [ 5 ] = commandCode;
-            if ( commandLength == 7 )
+            buffer [ 0 ] = Sync0;
+            buffer [ 1 ] = Sync1;
+            buffer [ 2 ] = BitConverter. GetBytes ( commandLength ) [ 0 ];
+            buffer [ 3 ] = BitConverter. GetBytes ( commandLength ) [ 1 ];
+            buffer [ 4 ] = ID;
+            buffer [ 5 ] = 0x00;
+            buffer [ 6 ] = DicFrameType [ commandCode ];
+            buffer [ 7 ] = commandCode;
+            buffer [ commandLength - 1 ] = End;
+
+            if ( commandLength == 11 )
             {
-                buffer [ 6 ] = CRCcalculator ( buffer );    //如果是不带数据的命令则加上校验码
+                buffer [ 8 ] = CRCcalculator ( buffer ) [ 0 ];    //如果是不带数据的命令则加上校验码
+                buffer [ 9 ] = CRCcalculator ( buffer ) [ 1 ];    //如果是不带数据的命令则加上校验码
             }
             return OperateResult. CreateSuccessResult ( buffer );
         }
@@ -119,8 +127,9 @@ internal class Hex81Information
             OperateResult<byte [ ]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
             if ( dataBytesWithoutData. IsSuccess )
             {
-                Array. Copy ( data , 0 , dataBytesWithoutData. Content , 6 , data. Length );
-                dataBytesWithoutData. Content [ commandLength - 1 ] = CRCcalculator ( dataBytesWithoutData. Content );
+                Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
+                dataBytesWithoutData. Content [ commandLength - 3 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 0 ];
+                dataBytesWithoutData. Content [ commandLength - 2 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 1 ];
                 return dataBytesWithoutData;
             }
             else
@@ -137,25 +146,31 @@ internal class Hex81Information
 
     #endregion 【Internal Methods】
 
-    #region 【Private Methods】
+    #region 【Private Methods】 [校验码计算器][解析ID][帧类型和报文类型的字典]
+
+    #region Private Methods ==> [校验码计算器]
+
     /// <summary>
     /// 获取对应的数据的CRC校验码（异或和）
     /// </summary>
     /// <param name="sendBytes">需要校验的数据，不包含CRC字节，包含报文头0x81</param>
     /// <returns>返回CRC校验码</returns>
-    private static byte CRCcalculator ( byte [ ] sendBytes )
+    internal static byte [ ] CRCcalculator ( byte [ ] sendBytes )
     {
-        byte crc = 0;
+        ushort crc = 0;
 
-        //从第二个字节开始执行异或:忽略报文头
-        for ( int i = 1 ; i < sendBytes. Length ; i++ )
+        //从第三个字节开始执行代数和:忽略报文头
+        for ( int i = 2 ; i < sendBytes. Length - 2 ; i++ )
         {
-            crc ^= sendBytes [ i ];
+            crc += sendBytes [ i ];
         }
-        return crc;
+        return BitConverter. GetBytes ( crc );
     }
+    #endregion Private Methods ==> [校验码计算器]
+
+    #region Private Methods ==> [解析ID]
     /// <summary>
-    /// 解析ID,转换为两个字节
+    /// 解析ID，转换为1个字节
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
@@ -163,14 +178,55 @@ internal class Hex81Information
     {
         try
         {
-            byte [ ] twoBytesID = BitConverter. GetBytes ( id );  //低位在前            
-            return OperateResult. CreateSuccessResult ( twoBytesID );
+            byte [ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
+            return OperateResult. CreateSuccessResult ( oneByteID );
         }
         catch ( Exception )
         {
             return new OperateResult<byte [ ]> ( 1001 , "请输入正确的ID!" );
         }
     }
+    #endregion Private Methods ==> [解析ID]
+
+    #region Private Methods ==> [帧类型和报文类型的字典]
+
+    private static Dictionary<byte , byte> DicFrameType = new Dictionary<byte , byte> ( );
+
+    /// <summary>
+    /// 字典初始化
+    /// </summary>
+    private static void InitDic ( )
+    {
+        for ( byte i = 0x11 ; i < 0x19 ; i++ )
+        {
+            DicFrameType [ i ] = 0x01;
+        }
+
+        for ( byte i = 0x31 ; i < 0x39 ; i++ )
+        {
+            DicFrameType [ i ] = 0x02;
+        }
+        for ( byte i = 0x40 ; i < 0x44 ; i++ )
+        {
+            DicFrameType [ i ] = 0x02;
+        }
+
+        for ( byte i = 0x51 ; i < 0x54 ; i++ )
+        {
+            DicFrameType [ i ] = 0x03;
+        }
+        for ( byte i = 0x61 ; i < 0x65 ; i++ )
+        {
+            DicFrameType [ i ] = 0x04;
+        }
+        for ( byte i = 0xB1 ; i < 0xBA ; i++ )
+        {
+            DicFrameType [ i ] = 0x09;
+        }
+    }
+
+    #endregion Private Methods ==> [帧类型和报文类型的字典]
+
     #endregion Private Methods
 
     #region 【枚举类型】
@@ -231,5 +287,7 @@ internal class Hex81Information
         ErrorIc = 0b_0010_0000,    // 0x20 // 32
         ErrorDC = 0b_0100_0000     // 0x40 // 64
     }
+
+
     #endregion 枚举类型
 }

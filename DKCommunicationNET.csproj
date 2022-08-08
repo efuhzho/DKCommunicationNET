@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Function\" />
+    <Folder Include="新文件夹\" />
   </ItemGroup>
 
   <ItemGroup>
