@@ -11,7 +11,7 @@ namespace DKCommunicationNET. ProtocolInformation;
 
 internal class Hex81Information
 {
-    #region 【CommandCodes】[系统]
+    #region 【CommandCodes】[系统设置]
 
     /// <summary>
     /// 报文头

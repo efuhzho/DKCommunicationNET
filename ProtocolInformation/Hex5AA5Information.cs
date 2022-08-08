@@ -19,6 +19,9 @@ internal class Hex5AA5Information
     private const byte Sync0 = 0xA5;
     private const byte Sync1 = 0x5A;
 
+    /// <summary>
+    /// 报文尾
+    /// </summary>
     private const byte End = 0x96;
 
     /// <summary>
@@ -39,7 +42,7 @@ internal class Hex5AA5Information
     /// 联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x11;
-    internal const ushort HandShakeCommandLength = 7;
+    internal const ushort HandShakeCommandLength = 11;
 
     /// <summary>
     /// 设置系统模式
@@ -125,8 +128,8 @@ internal class Hex5AA5Information
             if ( dataBytesWithoutData. IsSuccess )
             {
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
-                dataBytesWithoutData. Content [ commandLength - 3] = CRCcalculator ( dataBytesWithoutData. Content ) [0];
-                dataBytesWithoutData. Content [ commandLength - 2] = CRCcalculator ( dataBytesWithoutData. Content ) [1];
+                dataBytesWithoutData. Content [ commandLength - 3 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 0 ];
+                dataBytesWithoutData. Content [ commandLength - 2 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 1 ];
                 return dataBytesWithoutData;
             }
             else
