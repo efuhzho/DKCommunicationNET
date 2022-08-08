@@ -7,6 +7,10 @@ using DKCommunicationNET. Interface. IPacketBuilder;
 
 namespace DKCommunicationNET. Protocols;
 
+/// <summary>
+/// Hex81协议报文创建类
+/// </summary>
+[Model(Models.Hex81)]
 internal class Hex81PacketBuilder : IPacketBuilder
 {
     /// <summary>
@@ -62,7 +66,7 @@ internal class Hex81PacketBuilder : IPacketBuilder
     /// <param name="commandLength">指令长度</param>
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
-    /// <returns></returns>
+    /// <returns>带指令信息的结果：完整指令长度</returns>
     public OperateResult<byte[]> PacketBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 )
     {
         try

@@ -6,6 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols;
 
+[Model(Models.Hex5AA5)]
 internal class Hex5AA5PacketBuilder
 {
     public Hex5AA5PacketBuilder ( )

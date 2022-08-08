@@ -9,6 +9,9 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols;
 
+/// <summary>
+/// Hex81协议信息类
+/// </summary>
 internal class Hex81Information
 {
     #region 【CommandCodes】[系统设置]
