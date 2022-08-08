@@ -63,5 +63,17 @@ internal class DefaultLanguage
     public virtual string Receive => "接收";
     #endregion 一般错误信息
 
+    #region CRC校验信息
     public virtual string CRCCheckFailed => "CRC校验检查失败：";
+    #endregion CRC校验信息
+
+    #region 日志相关信息
+    public virtual string LogNetDebug => "调试";
+    public virtual string LogNetInfo => "信息";
+    public virtual string LogNetWarn => "警告";
+    public virtual string LogNetError => "错误";
+    public virtual string LogNetFatal => "致命";
+    public virtual string LogNetAbandon => "放弃";
+    public virtual string LogNetAll => "全部";
+    #endregion 日志相关信息
 }

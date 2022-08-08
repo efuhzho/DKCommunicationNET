@@ -1,11 +1,11 @@
 ﻿namespace DKCommunicationNET. BaseClass;
 
-public class DandickSerialBase //: SerialBase
+public class DandickSerialBase : SerialBase
 {
     /// <summary>
     /// 设备协议类型
     /// </summary>
-    public string Model { get; set; } = string. Empty;
+    public Models Model { get; set; } 
 
     /// <summary>
     /// 设备ID
