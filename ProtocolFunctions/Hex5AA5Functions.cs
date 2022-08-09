@@ -10,14 +10,14 @@ namespace DKCommunicationNET. ProtocolFunctions;
 internal class Hex5AA5Functions : IProtocolFunctions
 {
     /// <summary>
-    /// 本类设备的协议类型：Hex5AA5
+    /// 本类设备的协议类型：Hex5A
     /// </summary>
-    public Models Model => Models. Hex5AA5;
+    public Models Model => Models. Hex5A;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【交流源模块】：是
     /// </summary>
-    public bool IsACSModuleSupported => true;
+    public bool IsACSModuleSupported => false;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【直流源模块】：是

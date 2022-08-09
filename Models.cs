@@ -14,7 +14,7 @@ namespace DKCommunicationNET;
 public enum Models
 {
     Hex81 = 81,
-    Hex5AA5 = 510,
+    Hex5A = 510,
     DK34B1 = 81,
     DK34B2 = 81,
     DK34F1 = 81,

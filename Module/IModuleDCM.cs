@@ -1,4 +1,4 @@
-﻿namespace DKCommunicationNET. Module. IModule;
+﻿namespace DKCommunicationNET. Module;
 
 public interface IModuleDCM
 {

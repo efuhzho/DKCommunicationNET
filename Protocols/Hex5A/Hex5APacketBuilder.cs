@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex5A;
 
-[Model ( Models. Hex5AA5 )]
+[Model ( Models. Hex5A )]
 internal class Hex5APacketBuilder
 {
     public Hex5APacketBuilder ( )
@@ -21,21 +21,20 @@ internal class Hex5APacketBuilder
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    internal OperateResult<byte[]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
+    internal OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
         byte ID;
-        if ( AnalysisID ( id ). IsSuccess )
-        {
-            ID = AnalysisID ( id ). Content[0];
-        }
-        else
+        if ( !AnalysisID ( id ). IsSuccess )
         {
             return AnalysisID ( id );
+
         }
+        ID = AnalysisID ( id ). Content[0];
+
         //尝试预创建报文
         try
         {
-            byte[] buffer = new byte[commandLength];
+            byte[ ] buffer = new byte[commandLength];
             buffer[0] = Hex5AInformation. Sync0;
             buffer[1] = Hex5AInformation. Sync1;
             buffer[2] = BitConverter. GetBytes ( commandLength )[0];
@@ -57,7 +56,7 @@ internal class Hex5APacketBuilder
         //发生异常回报当前代码位置和异常信息
         catch ( Exception ex )
         {
-            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
         }
     }
 
@@ -69,11 +68,11 @@ internal class Hex5APacketBuilder
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
     /// <returns></returns>
-    internal OperateResult<byte[]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 )
+    internal OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte[ ] data , ushort id = 0 )
     {
         try
         {
-            OperateResult<byte[]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
+            OperateResult<byte[ ]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
             if ( dataBytesWithoutData. IsSuccess )
             {
 #pragma warning disable CS8604 // 引用类型参数可能为 null。
@@ -92,7 +91,7 @@ internal class Hex5APacketBuilder
         }
         catch ( Exception ex )
         {
-            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
         }
     }
 
@@ -102,16 +101,16 @@ internal class Hex5APacketBuilder
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
-    private OperateResult<byte[]> AnalysisID ( ushort id )
+    private OperateResult<byte[ ]> AnalysisID ( ushort id )
     {
         try
         {
-            byte[] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
+            byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
             return OperateResult. CreateSuccessResult ( oneByteID );
         }
         catch ( Exception )
         {
-            return new OperateResult<byte[]> ( 1001 , "请输入正确的ID!" );
+            return new OperateResult<byte[ ]> ( 1001 , "请输入正确的ID!" );
         }
     }
     #endregion Private Methods ==> [解析ID]

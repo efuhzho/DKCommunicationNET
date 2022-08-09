@@ -1,9 +1,9 @@
 ﻿using DKCommunicationNET. BaseClass;
 using DKCommunicationNET. Interface;
-using DKCommunicationNET. Module. IModule;
 using DKCommunicationNET. Module;
 using DKCommunicationNET. ProtocolFunctions;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols;
 
 
 
@@ -12,6 +12,8 @@ namespace DKCommunicationNET;
 public class Dandick : DandickSerialBase<RegularByteTransform>
 {
     #region 【私有字段】
+
+    IDandickFactory _factory;
 
     /// <summary>
     /// 定义协议所支持的功能对象
@@ -82,14 +84,14 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     {
         get
         {
-            if ( !IsACSModuleEnabled )
-            {
-                throw new Exception ( StringResources. Language. NotSupportedModule + Model );
-            }
+            //if ( !IsACSModuleEnabled )
+            //{
+            //    throw new Exception ( StringResources. Language. NotSupportedModule + Model );
+            //}
             return _ModuleACS;
         }
         //set { _ModuleACS = value; }
-       
+
     }
 
     /// <summary>
@@ -170,6 +172,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
 
     public Dandick ( Models model )
     {
+        _factory = new DictionaryOfFactorys ( ). GetFactory ( model );
         Model = model;
         FunctionsInitializer ( );
     }
@@ -183,21 +186,21 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     void FunctionsInitializer ( )
     {
 
-        _ModuleACS = new ModuleACS (  );
-        _ModuleDCS = new ModuleDCS ( Model );
-        _ModuleDCM = new ModuleDCM ( Model );
-        _ModuleIO = new ModuleIO ( Model );
-        _ModulePQ = new ModulePQ ( Model );
+        _ModuleACS = _factory. GetModuleACS ( ). Content;
+        _ModuleDCS = _factory. GetModuleDCS ( ). Content;
+        _ModuleDCM = _factory. GetModuleDCM ( ). Content;
+        _ModuleIO = _factory. GetModuleIO ( ). Content;
+        _ModulePQ = _factory. GetModulePQ ( ). Content;
 
         _Functions = Model switch //TODO 看视频如何解决这个问题
         {
             Models. Hex81 => new Hex81Functions ( ),
-            Models. Hex5AA5 => new Hex5AA5Functions ( ),
+            Models. Hex5A => new Hex5AA5Functions ( ),
             _ => new Hex81Functions ( ),
         };
 
         //SystemSettings = new SystemSettings ( model );
-        SystemSettings. SystemMode = new SystemMode ( );
+        //SystemSettings. SystemMode = new SystemMode ( );
 
         IsACSModuleEnabled = _Functions. IsACSModuleSupported;
         IsDCSModuleEnabled = _Functions. IsDCSModuleSupported;

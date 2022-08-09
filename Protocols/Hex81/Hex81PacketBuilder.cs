@@ -25,15 +25,13 @@ internal class Hex81PacketBuilder : IPacketBuilder
         byte _RxID;
         byte _TxID;
 
-        if ( AnalysisID ( id ). IsSuccess )
-        {
-            _RxID = AnalysisID ( id ). Content[0];
-            _TxID = AnalysisID ( id ). Content[1];
-        }
-        else
+        if (! AnalysisID ( id ). IsSuccess )
         {
             return AnalysisID ( id );
         }
+      
+        _RxID = AnalysisID ( id ). Content[0];
+        _TxID = AnalysisID ( id ). Content[1];
 
         //尝试预创建报文
         try

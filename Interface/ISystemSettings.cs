@@ -42,7 +42,7 @@ public class SystemMode : ISystemMode
     //    //{
     //    //    case Models. Hex81:
     //    //        return Hex81Information. GetSystemMode ( );
-    //    //    case Models. Hex5AA5:
+    //    //    case Models. Hex5A:
     //    //        return Hex5AA5Information. GetSystemMode ( );
     //    //    default:
     //    //        return Hex81Information. GetSystemMode ( );
