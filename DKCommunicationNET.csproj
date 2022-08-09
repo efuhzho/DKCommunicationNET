@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Function\" />
-    <Folder Include="ProtocolFunctions\" />
     <Folder Include="Protocols\HexA5\" />
   </ItemGroup>
 
