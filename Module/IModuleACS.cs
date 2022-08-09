@@ -2,6 +2,7 @@
 
 public interface IModuleACS
 {
+    public bool IsEnabled { get; set; }
     public OperateResult<byte[ ]> GetRanges ( );
     public OperateResult<byte[ ]> SetAmplitude ( float amplitude );
     public OperateResult<byte[ ]> Open ( );

@@ -4,7 +4,7 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Interface;
+namespace DKCommunicationNET. Protocols;
 
 /// <summary>
 /// 【设备功能状态接口】所有基于不同协议类型的设备的功能状态：只读
@@ -14,7 +14,7 @@ internal interface IProtocolFunctions
     /// <summary>
     /// 设备型号：已关联协议类型
     /// </summary>
-    public  Models Model { get; }
+    public Models Model { get; }
 
     /// <summary>
     /// 是否支持交流源模块
@@ -24,12 +24,12 @@ internal interface IProtocolFunctions
     /// <summary>
     /// 是否支持直流源模块
     /// </summary>
-    public bool IsDCSModuleSupported { get;  }
+    public bool IsDCSModuleSupported { get; }
 
     /// <summary>
     /// 是否支持直流表模块
     /// </summary>
-    public bool IsDCMModuleSupported { get;  }
+    public bool IsDCMModuleSupported { get; }
 
     /// <summary>
     /// 是否支持开关量模块

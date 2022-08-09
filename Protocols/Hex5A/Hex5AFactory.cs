@@ -7,6 +7,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex5A;
 
+[Model(Models.Hex5A)]
 internal class Hex5AFactory : IDandickFactory
 {
     public OperateResult<IModuleACS> GetModuleACS ( )

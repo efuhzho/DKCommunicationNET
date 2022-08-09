@@ -40,6 +40,7 @@ internal class Hex81Information
     /// </summary>
     internal const byte HandShake = 0x4C;
     internal const ushort HandShakeCommandLength = 7;
+    internal static readonly byte[ ] HandShakeCommand = new byte[7] { 0x81 , 00 , 00 , 00 , 00 , 00 , 00 };
 
     /// <summary>
     /// 设置系统模式
@@ -55,9 +56,94 @@ internal class Hex81Information
 
     #endregion CommandCodes ==> [系统设置]
 
+    #region CommandCodes ==> [交流源/表]
+    /// <summary>
+    /// 交流源关闭命令
+    /// </summary>
+    public const byte CloseACS = 0x4F;  //2022年7月7日
+    public const ushort CloseACSLength = 7;
+
+    /// <summary>
+    /// 交流源打开命令
+    /// </summary>
+    public const byte OpenACS = 0x54; //2022年7月7日
+    public const ushort OpenACSLength = 7;
+
+    /// <summary>
+    /// 读取交流标准源档位信息
+    /// </summary>
+    public const byte GetRangesOfACS = 0x11;
+    public const byte GetRangesOfACSLength = 7;
+
+    /// <summary>
+    /// 设置交流源档位参数 
+    /// </summary>
+    public const byte SetACSourceRanges = 0x31; //2022年7月7日
+    public const ushort SetRangesLength = 16;  //!51F具备IPa,IPb,IPc
+
+    /// <summary>
+    /// 设置源幅度参数
+    /// </summary>
+    public const byte SetACSAmplitude = 0x32;    //2022年7月7日
+    public const ushort SetACSAmplitudeLength = 43; //!51F具备IPa,IPb,IPc
+
+    /// <summary>
+    /// 设置源相位参数
+    /// </summary>
+    public const byte WritePhase = 0x33;    //2022年7月8日 10点22分
+    public const ushort WritePhaseLength = 31;
+
+    /// <summary>
+    /// 设置源频率参数:当 Fa=Fb!=Fc 时，Flag=2；Fa=Fb=Fc 时，Flag=3,只设置Fa则三相同频
+    /// </summary>
+    public const byte WriteFrequency = 0x34;    //2022年7月8日 12点34分
+    public const ushort WriteFrequencyLength = 20;//注意：设置时 Fa=Fb，Fc 可以设置为与 AB 相不同的频率
+                                                  //也可以只设置 Fa，则默认为三相同频，用于兼容以前的设备通讯程序
+
+    /// <summary>
+    /// 设置源接线模式:
+    /// </summary>
+    public const byte SetWireMode = 0x35;   //2022年7月8日 19点31分
+    public const ushort SetWireModeLength = 8;
+
+    /// <summary>
+    /// 闭环控制使能命令：HarmonicMode ：谐波模式，0-以真有效值的百分比输入谐波（有效值恒定）；1-以基波值的百分比输入谐波（基波恒定）
+    /// </summary>
+    public const byte SetClosedLoop = 0x36;     //2022年7月9日
+    public const ushort SetClosedLoopLength = 9;
+
+    /// <summary>
+    /// 设置谐波参数：注意：建议协议长度不超过 256，超过 256 个字节建议分批发送。
+    /// </summary>
+    public const byte WriteHarmonics = 0x58; //2022年7月10日
+    public const ushort WriteHarmonicsClearLength = 9;
+
+    /// <summary>
+    /// 设置有功功率
+    /// </summary>
+    public const byte WriteWattPower = 0x50;
+    public const ushort WriteWattPowerLength = 12;
+
+    /// <summary>
+    /// 设置无功功率
+    /// </summary>
+    public const byte WriteWattlessPower = 0x51; //TODO 确认协议描述是否有误
+    public const byte WriteWattlessPowerLength = 12;
+
+    /// <summary>
+    /// 读交流标准表参数/数据：读标准源输出值
+    /// </summary>
+    public const byte ReadACSourceData = 0x4D;
+    public const byte ReadACSourceDataLength = 7;
+
+    /// <summary>
+    /// 读系统状态位：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// </summary>
+    public const byte ReadACStatus = 0x4E;
+    public const byte ReadACStatusLength = 7;
+    #endregion CommandCodes ==> [交流源/表]
+
     #endregion 【CommandCodes】[系统]
-
-
 
     #region 【Internal Methods】
     /// <summary>
@@ -65,7 +151,7 @@ internal class Hex81Information
     /// </summary>
     /// <param name="sendBytes">需要校验的数据，不包含CRC字节，包含报文头0x81</param>
     /// <returns>返回CRC校验码</returns>
-    internal static byte CRCcalculator ( byte[] sendBytes )
+    internal static byte CRCcalculator ( byte[ ] sendBytes )
     {
         byte crc = 0;
 

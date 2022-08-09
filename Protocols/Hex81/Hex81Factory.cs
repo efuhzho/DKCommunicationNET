@@ -3,6 +3,7 @@
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
+[Model(Models.Hex81)]
 internal class Hex81Factory : IDandickFactory
 {
     public OperateResult<IModuleACS> GetModuleACS ( )

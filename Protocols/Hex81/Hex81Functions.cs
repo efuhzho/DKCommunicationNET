@@ -2,7 +2,7 @@
 using DKCommunicationNET. Interface;
 using DKCommunicationNET. Module;
 
-namespace DKCommunicationNET. ProtocolFunctions;
+namespace DKCommunicationNET. Protocols. Hex81;
 
 /// <summary>
 /// 基于Hex81协议的设备所支持的功能状态
@@ -17,7 +17,7 @@ internal class Hex81Functions : IProtocolFunctions
     /// <summary>
     /// 基于本协议的设备：是否支持【交流源模块】：是
     /// </summary>
-    public bool IsACSModuleSupported => true;
+    public bool IsACSModuleSupported => false;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【直流源模块】：是

@@ -2,12 +2,12 @@
 using DKCommunicationNET. Interface;
 using DKCommunicationNET. Module;
 
-namespace DKCommunicationNET. ProtocolFunctions;
+namespace DKCommunicationNET. Protocols. Hex5A;
 
 /// <summary>
 /// 基于Hex5AA5协议的设备所支持的功能状态
 /// </summary>
-internal class Hex5AA5Functions : IProtocolFunctions
+internal class Hex5AFunctions : IProtocolFunctions
 {
     /// <summary>
     /// 本类设备的协议类型：Hex5A
@@ -37,7 +37,7 @@ internal class Hex5AA5Functions : IProtocolFunctions
     /// <summary>
     /// 基于本协议的设备：是否支持【电能模块】：是
     /// </summary>
-    public bool IsPQModuleSupported => true;  
+    public bool IsPQModuleSupported => true;
 }
 
 

@@ -1,11 +1,10 @@
 ﻿using DKCommunicationNET. BaseClass;
+using DKCommunicationNET. Core;
 using DKCommunicationNET. Interface;
 using DKCommunicationNET. Module;
-using DKCommunicationNET. ProtocolFunctions;
-using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols;
-
-
+using DKCommunicationNET. Protocols. Hex5A;
+using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET;
 
@@ -18,12 +17,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-    private IProtocolFunctions? _Functions;
+    private IProtocolFunctions? _Functions = null;
 
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private IModuleACS? _ModuleACS;
+    private IModuleACS? _ModuleACS = null;
 
     /// <summary>
     /// 定义直流源模块对象
@@ -58,7 +57,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 是否装配直流源模块
     /// </summary>
-    public bool IsDCSModuleEnabled { get; set; }
+    public bool IsDCSModuleEnabled { get; set; } = true;
 
     /// <summary>
     /// 是否装配开关量模块
@@ -84,14 +83,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     {
         get
         {
-            //if ( !IsACSModuleEnabled )
-            //{
-            //    throw new Exception ( StringResources. Language. NotSupportedModule + Model );
-            //}
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions.IsACSModuleSupported , IsACSModuleEnabled );
             return _ModuleACS;
         }
-        //set { _ModuleACS = value; }
-
     }
 
     /// <summary>
@@ -101,13 +95,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     {
         get
         {
-            if ( !IsDCSModuleEnabled )
-            {
-                throw new Exception ( StringResources. Language. NotSupportedModule + Model );
-            }
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions.IsDCSModuleSupported , IsDCSModuleEnabled );
+
             return _ModuleDCS;
+          
         }
-        //set { _ModuleDCS = value; }
     }
 
     /// <summary>
@@ -117,12 +109,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     {
         get
         {
-            if ( !IsDCMModuleEnabled )
+            if ( IsDCMModuleEnabled )
             {
-                throw new Exception ( StringResources. Language. NotSupportedModule + Model );
-
+                return _ModuleDCM;
             }
-            return _ModuleDCM;
+            throw new Exception ( StringResources. Language. NotSupportedModule + Model );
         }
         //set { _ModuleDCM = value; }
     }
@@ -135,12 +126,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     {
         get
         {
-            if ( !IsPQModuleEnabled )
+            if ( IsPQModuleEnabled )
             {
-                throw new Exception ( StringResources. Language. NotSupportedModule + Model );
-
+                return _ModulePQ;
             }
-            return _ModulePQ;
+            throw new Exception ( StringResources. Language. NotSupportedModule + Model );
         }
         //set { _ModulePQ = value; }
     }
@@ -178,7 +168,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     }
     #endregion 构造函数
 
-    #region 设备【功能状态使能】初始化
+    #region 【功能状态使能】初始化
 
     /// <summary>
     /// 功能状态初始化器
@@ -195,37 +185,22 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
         _Functions = Model switch //TODO 看视频如何解决这个问题
         {
             Models. Hex81 => new Hex81Functions ( ),
-            Models. Hex5A => new Hex5AA5Functions ( ),
+            Models. Hex5A => new Hex5AFunctions ( ),
             _ => new Hex81Functions ( ),
         };
 
         //SystemSettings = new SystemSettings ( model );
         //SystemSettings. SystemMode = new SystemMode ( );
 
-        IsACSModuleEnabled = _Functions. IsACSModuleSupported;
-        IsDCSModuleEnabled = _Functions. IsDCSModuleSupported;
-        IsDCMModuleEnabled = _Functions. IsDCMModuleSupported;
-        IsIOModuleEnabled = _Functions. IsIOModuleSupported;
-        IsPQModuleEnabled = _Functions. IsPQModuleSupported;
+        //IsACSModuleEnabled = _Functions. IsACSModuleSupported;
+        //IsDCSModuleEnabled = _Functions. IsDCSModuleSupported;
+        //IsDCMModuleEnabled = _Functions. IsDCMModuleSupported;
+        //IsIOModuleEnabled = _Functions. IsIOModuleSupported;
+        //IsPQModuleEnabled = _Functions. IsPQModuleSupported;
     }
 
     #endregion 设备【功能状态使能】初始化
 
-
-    //private ISystemSettings _SystemSettings;
-
-    ///// <summary>
-    ///// 设置系统模式
-    ///// </summary>
-    ///// <param name="SystemMode">枚举系统模式</param>
-    //public void SetSystemMode ( Enum SystemMode )
-    //{
-    //   _SystemSettings.SystemMode.SetSystemMode ( SystemMode );
-    //}
-
-    #region 模块功能状态检查
-
-    #endregion 模块功能状态检查
 }
 
 internal class CheckModuleState

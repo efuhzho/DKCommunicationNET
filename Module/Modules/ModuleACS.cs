@@ -6,6 +6,8 @@ namespace DKCommunicationNET. Module;
 
 internal class ModuleACS : IModuleACS
 {
+    public bool IsEnabled { get; set; }=true;
+
     public OperateResult<byte[ ]> Close ( )
     {
         return new OperateResult<byte[ ]> ( StringResources.GetLineNum(),StringResources. Language. NotSupportedModule +StringResources.GetCurSourceFileName() );
