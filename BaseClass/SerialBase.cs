@@ -21,8 +21,10 @@ namespace DKCommunicationNET.BaseClass
         /// </summary>
         public SerialBase ( )
         {
-            SP_ReadData = new SerialPort( );
+            _SerialPort = new SerialPort ( );
             hybirdLock = new SimpleHybirdLock( );
+            _SerialPort. ReadTimeout = 2000;
+            _SerialPort. WriteTimeout = 1000;
         }
 
         #endregion
@@ -30,12 +32,12 @@ namespace DKCommunicationNET.BaseClass
         #region Public Method
 
         /// <summary>
-        /// 初始化串口信息，9600波特率，8位数据位，1位停止位，无奇偶校验
+        /// 初始化串口信息，115200波特率，8位数据位，1位停止位，无奇偶校验
         /// </summary>
         /// <param name="portName">端口号信息，例如"COM3"</param>
         public void SerialPortInni( string portName )
         {
-            SerialPortInni( portName, 9600 );
+            SerialPortInni( portName, 115200 );
         }
 
         /// <summary>
@@ -58,15 +60,15 @@ namespace DKCommunicationNET.BaseClass
         /// <param name="parity">奇偶校验</param>
         public void SerialPortInni( string portName, int baudRate, int dataBits, StopBits stopBits, Parity parity )
         {
-            if (SP_ReadData.IsOpen)
+            if (_SerialPort.IsOpen)
             {
                 return;
             }
-            SP_ReadData.PortName     = portName;    // 串口
-            SP_ReadData.BaudRate     = baudRate;    // 波特率
-            SP_ReadData.DataBits     = dataBits;    // 数据位
-            SP_ReadData.StopBits     = stopBits;    // 停止位
-            SP_ReadData.Parity       = parity;      // 奇偶校验
+            _SerialPort.PortName     = portName;    // 串口
+            _SerialPort.BaudRate     = baudRate;    // 波特率
+            _SerialPort.DataBits     = dataBits;    // 数据位
+            _SerialPort.StopBits     = stopBits;    // 停止位
+            _SerialPort.Parity       = parity;      // 奇偶校验
         }
 
         /// <summary>
@@ -75,17 +77,17 @@ namespace DKCommunicationNET.BaseClass
         /// <param name="initi">初始化的委托方法</param>
         public void SerialPortInni( Action<SerialPort> initi )
         {
-            if (SP_ReadData.IsOpen)
+            if (_SerialPort.IsOpen)
             {
                 return;
             }
-            SP_ReadData.PortName = "COM5";
-            SP_ReadData.BaudRate = 9600;
-            SP_ReadData.DataBits = 8;
-            SP_ReadData.StopBits = StopBits.One;
-            SP_ReadData.Parity = Parity.None;
+            _SerialPort.PortName = "COM5";
+            _SerialPort.BaudRate = 115200;
+            _SerialPort.DataBits = 8;
+            _SerialPort.StopBits = StopBits.One;
+            _SerialPort.Parity = Parity.None;
 
-            initi.Invoke( SP_ReadData );
+            initi.Invoke( _SerialPort );
         }
 
         /// <summary>
@@ -93,9 +95,9 @@ namespace DKCommunicationNET.BaseClass
         /// </summary>
         public void Open( )
         {
-            if (!SP_ReadData.IsOpen)
+            if (!_SerialPort.IsOpen)
             {
-                SP_ReadData.Open( );
+                _SerialPort.Open( );
                 InitializationOnOpen( );
             }
         }
@@ -106,7 +108,7 @@ namespace DKCommunicationNET.BaseClass
         /// <returns>是或否</returns>
         public bool IsOpen( )
         {
-            return SP_ReadData.IsOpen;
+            return _SerialPort.IsOpen;
         }
 
         /// <summary>
@@ -114,10 +116,10 @@ namespace DKCommunicationNET.BaseClass
         /// </summary>
         public void Close( )
         {
-            if(SP_ReadData.IsOpen)
+            if(_SerialPort.IsOpen)
             {
                 ExtraOnClose( );
-                SP_ReadData.Close( );
+                _SerialPort.Close( );
             }
         }
 
@@ -132,14 +134,14 @@ namespace DKCommunicationNET.BaseClass
 
             if (IsClearCacheBeforeRead) ClearSerialCache( );
 
-            OperateResult sendResult = SPSend( SP_ReadData, send );
+            OperateResult sendResult = SPSend( _SerialPort, send );
             if (!sendResult.IsSuccess)
             {
                 hybirdLock.Leave( );
                 return OperateResult.CreateFailedResult<byte[]>( sendResult );
             }
 
-            OperateResult<byte[]> receiveResult = SPReceived( SP_ReadData, true );
+            OperateResult<byte[]> receiveResult = SPReceived( _SerialPort, true );
             hybirdLock.Leave( );
 
             return receiveResult;
@@ -151,7 +153,7 @@ namespace DKCommunicationNET.BaseClass
         /// <returns>是否操作成功的方法</returns>
         public OperateResult<byte[]> ClearSerialCache( )
         {
-            return SPReceived( SP_ReadData, false );
+            return SPReceived( _SerialPort, false );
         }
 
         #endregion
@@ -326,17 +328,37 @@ namespace DKCommunicationNET.BaseClass
             get { return isClearCacheBeforeRead; }
             set { isClearCacheBeforeRead = value; }
         }
+               
+        /// <summary>
+        /// 写入串口数据超时时间
+        /// </summary>
+        public int WriteTimeOut
+        {
+            get { return _SerialPort. WriteTimeout; }
+            set { if ( value > 0 ) _SerialPort. WriteTimeout = value; }
+        } 
+      
+        /// <summary>
+        /// 写入串口数据超时时间
+        /// </summary>
+        public int ReadTimeOut
+        {
+            get { return _SerialPort.ReadTimeout; }
+            set { if ( value > 0 ) _SerialPort.ReadTimeout = value; }
+        }
 
         #endregion
 
         #region Private Member
-        
-        private SerialPort SP_ReadData = null;                    // 串口交互的核心
+
+        internal readonly SerialPort _SerialPort ;                    // 串口交互的核心
         private SimpleHybirdLock hybirdLock;                      // 数据交互的锁
         private ILogNet? logNet;                                   // 日志存储
         private int receiveTimeout = 5000;                        // 接收数据的超时时间
         private int sleepTime = 20;                               // 睡眠的时间
         private bool isClearCacheBeforeRead = false;              // 是否在发送前清除缓冲
+
+
 
         #endregion
     }

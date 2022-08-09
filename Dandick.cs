@@ -163,6 +163,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         _factory = new DictionaryOfFactorys ( ). GetFactory ( model );
         Model = model;
         FunctionsInitializer ( );
+        
     }
     #endregion 构造函数
 

@@ -68,7 +68,7 @@ namespace DKCommunicationNET. Core
         ////    }
 
         ////    //发送报文
-        ////    OperateResult sendResult = SPSend ( SP_ReadData , send );
+        ////    OperateResult sendResult = SPSend ( _SerialPort , send );
 
         ////    //发送报文失败
         ////    if ( !sendResult. IsSuccess )
@@ -78,7 +78,7 @@ namespace DKCommunicationNET. Core
         ////    }
 
         ////    //发送报文成功则接收数据
-        ////    OperateResult<byte[ ]> receivedResult = SPReceived ( SP_ReadData , true );
+        ////    OperateResult<byte[ ]> receivedResult = SPReceived ( _SerialPort , true );
         ////    hybirdLock. Leave ( );
 
         ////    return receivedResult;
