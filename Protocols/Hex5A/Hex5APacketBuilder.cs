@@ -4,12 +4,12 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Protocols;
+namespace DKCommunicationNET. Protocols. Hex5A;
 
-[Model(Models.Hex5AA5)]
-internal class Hex5AA5PacketBuilder
+[Model ( Models. Hex5AA5 )]
+internal class Hex5APacketBuilder
 {
-    public Hex5AA5PacketBuilder ( )
+    public Hex5APacketBuilder ( )
     {
         InitDic ( );
     }
@@ -36,20 +36,20 @@ internal class Hex5AA5PacketBuilder
         try
         {
             byte[] buffer = new byte[commandLength];
-            buffer[0] = Hex5AA5Information. Sync0;
-            buffer[1] = Hex5AA5Information. Sync1;
+            buffer[0] = Hex5AInformation. Sync0;
+            buffer[1] = Hex5AInformation. Sync1;
             buffer[2] = BitConverter. GetBytes ( commandLength )[0];
             buffer[3] = BitConverter. GetBytes ( commandLength )[1];
             buffer[4] = ID;
             buffer[5] = 0x00;
             buffer[6] = DicFrameType[commandCode];
             buffer[7] = commandCode;
-            buffer[commandLength - 1] = Hex5AA5Information. End;
+            buffer[commandLength - 1] = Hex5AInformation. End;
 
             if ( commandLength == 11 )
             {
-                buffer[8] = Hex5AA5Information. CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
-                buffer[9] = Hex5AA5Information. CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
+                buffer[8] = Hex5AInformation. CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
+                buffer[9] = Hex5AInformation. CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
             }
             return OperateResult. CreateSuccessResult ( buffer );
         }
@@ -81,8 +81,8 @@ internal class Hex5AA5PacketBuilder
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
 
 #pragma warning restore CS8604 // 引用类型参数可能为 null。
-                dataBytesWithoutData. Content[commandLength - 3] = Hex5AA5Information. CRCcalculator ( dataBytesWithoutData. Content )[0];
-                dataBytesWithoutData. Content[commandLength - 2] = Hex5AA5Information. CRCcalculator ( dataBytesWithoutData. Content )[1];
+                dataBytesWithoutData. Content[commandLength - 3] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[0];
+                dataBytesWithoutData. Content[commandLength - 2] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[1];
                 return dataBytesWithoutData;
             }
             else
@@ -122,7 +122,7 @@ internal class Hex5AA5PacketBuilder
     /// <summary>
     /// 字典用于自动判定帧类型
     /// </summary>
-    private readonly Dictionary<byte , byte> DicFrameType = new( );
+    private readonly Dictionary<byte , byte> DicFrameType = new ( );
 
     /// <summary>
     /// 字典初始化

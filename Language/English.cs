@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Language
 {
-    internal class English:DefaultLanguage
+    internal class English:Chinese
     {
     }
 }

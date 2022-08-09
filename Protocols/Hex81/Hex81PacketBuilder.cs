@@ -3,14 +3,14 @@ using System. Collections. Generic;
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
-using DKCommunicationNET. Interface. IPacketBuilder;
+using DKCommunicationNET.Protocols;
 
-namespace DKCommunicationNET. Protocols;
+namespace DKCommunicationNET. Protocols. Hex81;
 
 /// <summary>
 /// Hex81协议报文创建类
 /// </summary>
-[Model(Models.Hex81)]
+[Model ( Models. Hex81 )]
 internal class Hex81PacketBuilder : IPacketBuilder
 {
     /// <summary>

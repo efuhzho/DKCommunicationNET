@@ -7,9 +7,9 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Protocols;
+namespace DKCommunicationNET. Protocols. Hex5A;
 
-internal class Hex5AA5Information
+internal class Hex5AInformation
 {
     #region 【CommandCodes】[系统]
 
@@ -71,13 +71,13 @@ internal class Hex5AA5Information
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    internal static OperateResult<byte [ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
+    internal static OperateResult<byte[]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
         InitDic ( );
         byte ID;
         if ( AnalysisID ( id ). IsSuccess )
         {
-            ID = AnalysisID ( id ). Content [ 0 ];
+            ID = AnalysisID ( id ). Content[0];
         }
         else
         {
@@ -86,21 +86,21 @@ internal class Hex5AA5Information
         //尝试预创建报文
         try
         {
-            byte [ ] buffer = new byte [ commandLength ];
-            buffer [ 0 ] = Sync0;
-            buffer [ 1 ] = Sync1;
-            buffer [ 2 ] = BitConverter. GetBytes ( commandLength ) [ 0 ];
-            buffer [ 3 ] = BitConverter. GetBytes ( commandLength ) [ 1 ];
-            buffer [ 4 ] = ID;
-            buffer [ 5 ] = 0x00;
-            buffer [ 6 ] = DicFrameType [ commandCode ];
-            buffer [ 7 ] = commandCode;
-            buffer [ commandLength - 1 ] = End;
+            byte[] buffer = new byte[commandLength];
+            buffer[0] = Sync0;
+            buffer[1] = Sync1;
+            buffer[2] = BitConverter. GetBytes ( commandLength )[0];
+            buffer[3] = BitConverter. GetBytes ( commandLength )[1];
+            buffer[4] = ID;
+            buffer[5] = 0x00;
+            buffer[6] = DicFrameType[commandCode];
+            buffer[7] = commandCode;
+            buffer[commandLength - 1] = End;
 
             if ( commandLength == 11 )
             {
-                buffer [ 8 ] = CRCcalculator ( buffer ) [ 0 ];    //如果是不带数据的命令则加上校验码
-                buffer [ 9 ] = CRCcalculator ( buffer ) [ 1 ];    //如果是不带数据的命令则加上校验码
+                buffer[8] = CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
+                buffer[9] = CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
             }
             return OperateResult. CreateSuccessResult ( buffer );
         }
@@ -108,7 +108,7 @@ internal class Hex5AA5Information
         //发生异常回报当前代码位置和异常信息
         catch ( Exception ex )
         {
-            return new OperateResult<byte [ ]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
+            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
         }
     }
 
@@ -120,16 +120,16 @@ internal class Hex5AA5Information
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
     /// <returns></returns>
-    internal static OperateResult<byte [ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte [ ] data , ushort id = 0 )
+    internal static OperateResult<byte[]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 )
     {
         try
         {
-            OperateResult<byte [ ]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
+            OperateResult<byte[]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
             if ( dataBytesWithoutData. IsSuccess )
             {
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
-                dataBytesWithoutData. Content [ commandLength - 3 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 0 ];
-                dataBytesWithoutData. Content [ commandLength - 2 ] = CRCcalculator ( dataBytesWithoutData. Content ) [ 1 ];
+                dataBytesWithoutData. Content[commandLength - 3] = CRCcalculator ( dataBytesWithoutData. Content )[0];
+                dataBytesWithoutData. Content[commandLength - 2] = CRCcalculator ( dataBytesWithoutData. Content )[1];
                 return dataBytesWithoutData;
             }
             else
@@ -139,7 +139,7 @@ internal class Hex5AA5Information
         }
         catch ( Exception ex )
         {
-            return new OperateResult<byte [ ]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
+            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
         }
     }
     #endregion Internal Methods ==> [创建报文格式]
@@ -155,14 +155,14 @@ internal class Hex5AA5Information
     /// </summary>
     /// <param name="sendBytes">需要校验的数据，不包含CRC字节，包含报文头0x81</param>
     /// <returns>返回CRC校验码</returns>
-    internal static byte [ ] CRCcalculator ( byte [ ] sendBytes )
+    internal static byte[] CRCcalculator ( byte[] sendBytes )
     {
         ushort crc = 0;
 
         //从第三个字节开始执行代数和:忽略报文头
         for ( int i = 2 ; i < sendBytes. Length - 2 ; i++ )
         {
-            crc += sendBytes [ i ];
+            crc += sendBytes[i];
         }
         return BitConverter. GetBytes ( crc );
     }
@@ -174,16 +174,16 @@ internal class Hex5AA5Information
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
-    private static OperateResult<byte [ ]> AnalysisID ( ushort id )
+    private static OperateResult<byte[]> AnalysisID ( ushort id )
     {
         try
         {
-            byte [ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
+            byte[] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
             return OperateResult. CreateSuccessResult ( oneByteID );
         }
         catch ( Exception )
         {
-            return new OperateResult<byte [ ]> ( 1001 , "请输入正确的ID!" );
+            return new OperateResult<byte[]> ( 1001 , "请输入正确的ID!" );
         }
     }
     #endregion Private Methods ==> [解析ID]
@@ -199,29 +199,29 @@ internal class Hex5AA5Information
     {
         for ( byte i = 0x11 ; i < 0x19 ; i++ )
         {
-            DicFrameType [ i ] = 0x01;
+            DicFrameType[i] = 0x01;
         }
 
         for ( byte i = 0x31 ; i < 0x39 ; i++ )
         {
-            DicFrameType [ i ] = 0x02;
+            DicFrameType[i] = 0x02;
         }
         for ( byte i = 0x40 ; i < 0x44 ; i++ )
         {
-            DicFrameType [ i ] = 0x02;
+            DicFrameType[i] = 0x02;
         }
 
         for ( byte i = 0x51 ; i < 0x54 ; i++ )
         {
-            DicFrameType [ i ] = 0x03;
+            DicFrameType[i] = 0x03;
         }
         for ( byte i = 0x61 ; i < 0x65 ; i++ )
         {
-            DicFrameType [ i ] = 0x04;
+            DicFrameType[i] = 0x04;
         }
         for ( byte i = 0xB1 ; i < 0xBA ; i++ )
         {
-            DicFrameType [ i ] = 0x09;
+            DicFrameType[i] = 0x09;
         }
     }
 

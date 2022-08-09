@@ -1,14 +1,15 @@
 ﻿using DKCommunicationNET. BaseClass;
 using DKCommunicationNET. Interface;
-using DKCommunicationNET. Interface. IModule;
+using DKCommunicationNET. Module. IModule;
 using DKCommunicationNET. Module;
 using DKCommunicationNET. ProtocolFunctions;
+using DKCommunicationNET. Core;
 
 
 
 namespace DKCommunicationNET;
 
-public class Dandick : DandickSerialBase
+public class Dandick : DandickSerialBase<RegularByteTransform>
 {
     #region 【私有字段】
 
@@ -88,6 +89,7 @@ public class Dandick : DandickSerialBase
             return _ModuleACS;
         }
         //set { _ModuleACS = value; }
+       
     }
 
     /// <summary>

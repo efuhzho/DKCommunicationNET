@@ -7,7 +7,7 @@ using System. Text;
 using System. Threading. Tasks;
 
 
-namespace DKCommunicationNET. Protocols;
+namespace DKCommunicationNET. Protocols. Hex81;
 
 /// <summary>
 /// Hex81协议信息类
@@ -65,14 +65,14 @@ internal class Hex81Information
     /// </summary>
     /// <param name="sendBytes">需要校验的数据，不包含CRC字节，包含报文头0x81</param>
     /// <returns>返回CRC校验码</returns>
-    internal static byte CRCcalculator ( byte [ ] sendBytes )
+    internal static byte CRCcalculator ( byte[] sendBytes )
     {
         byte crc = 0;
 
         //从第二个字节开始执行异或:忽略报文头
         for ( int i = 1 ; i < sendBytes. Length ; i++ )
         {
-            crc ^= sendBytes [ i ];
+            crc ^= sendBytes[i];
         }
         return crc;
     }

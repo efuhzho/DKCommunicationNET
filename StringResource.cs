@@ -28,7 +28,7 @@ internal class StringResources
     /// 获取或设置系统的语言选项 ->
     /// Gets or sets the language options for the system
     /// </summary>
-    public static DefaultLanguage Language = new ( );
+    public static Chinese Language = new ( );
 
     /// <summary>
     /// 将语言设置为中文 ->
@@ -36,7 +36,7 @@ internal class StringResources
     /// </summary>
     public static void SetLanguageChinese ( )
     {
-        Language = new DefaultLanguage ( );
+        Language = new Chinese ( );
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ namespace DKCommunicationNET. Language;
 /// <summary>
 /// 类库的语言基类，默认中文
 /// </summary>
-internal class DefaultLanguage
+internal class Chinese
 {
     #region 设备错误码信息
     public virtual string ErrorUa => "故障：Ua；";
@@ -76,4 +76,23 @@ internal class DefaultLanguage
     public virtual string LogNetAbandon => "放弃";
     public virtual string LogNetAll => "全部";
     #endregion 日志相关信息
+
+    #region Client相关
+    public virtual string ReConnectServerSuccess => "重连服务器成功";
+    public virtual string ReConnectServerAfterTenSeconds => "在10秒后重新连接服务器";
+    public virtual string KeyIsNotAllowedNull => "关键字不允许为空";
+    public virtual string KeyIsExistAlready => "当前的关键字已经存在";
+    public virtual string KeyIsNotExist => "当前订阅的关键字不存在";
+    public virtual string ConnectingServer => "正在连接服务器...";
+    public virtual string ConnectFailedAndWait => "连接断开，等待{0}秒后重新连接";
+    public virtual string AttemptConnectServer => "正在尝试第{0}次连接服务器";
+    public virtual string ConnectServerSuccess => "连接服务器成功";
+    public virtual string GetClientIpaddressFailed => "客户端IP地址获取失败";
+    public virtual string ConnectionIsNotAvailable => "当前的连接不可用";
+    public virtual string DeviceCurrentIsLoginRepeat => "当前设备的id重复登录";
+    public virtual string DeviceCurrentIsLoginForbidden => "当前设备的id禁止登录";
+    public virtual string PasswordCheckFailed => "密码验证失败";
+    public virtual string DataTransformError => "数据转换失败，源数据：";
+    public virtual string RemoteClosedConnection => "远程关闭了连接";
+    #endregion Client相关
 }
