@@ -9,6 +9,8 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 [Model ( Models. Hex5A )]
 internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
 {
+    public static readonly Hex5APacketBuilderHelper Instance = new  ( );
+
     public Hex5APacketBuilderHelper ( )
     {
         InitDic ( );

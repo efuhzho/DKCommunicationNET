@@ -8,7 +8,12 @@ namespace DKCommunicationNET. Protocols. Hex5A
 {
     internal class Hex5APacketBuilderOfACS : IPacketsBuilderOfACS
     {
-        public ushort ID { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public ushort ID { get; set ; }
+
+        public Hex5APacketBuilderOfACS (ushort id =0)
+        {
+            ID = id;
+        }
 
         public OperateResult<byte[ ]> PacketOfClose ( )
         {
@@ -17,7 +22,8 @@ namespace DKCommunicationNET. Protocols. Hex5A
 
         public OperateResult<byte[ ]> PacketOfGetRanges ( )
         {
-            throw new NotImplementedException ( );
+            byte[ ] data = new byte[ 1] { (byte)Hex5AInformation. GetRangeType. ACS };
+            return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. OK , Hex5AInformation. OKLength ,data);
         }
 
         public OperateResult<byte[ ]> PacketOfOpen ( )

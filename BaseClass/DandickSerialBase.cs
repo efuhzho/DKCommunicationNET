@@ -12,7 +12,7 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     /// <summary>
     /// 设备协议类型
     /// </summary>
-    public Models Model { get; set; } 
+    public Models Model { get; set; }
 
     /// <summary>
     /// 设备ID
@@ -22,7 +22,7 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     /// <summary>
     /// 设备出厂编号
     /// </summary>
-    public string SN { get; set; } = string. Empty; 
+    public string SN { get; set; } = string. Empty;
 
     /// <summary>
     /// 当前客户端的数据变换机制，当需要从字节数据转换类型数据的时候需要。
@@ -34,8 +34,12 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     }
     private TTransform byteTransform;                // 数据变换的接口
 
-    public  void HandShake ( )
+    public virtual OperateResult<byte[ ]> HandShake ( )
     {
-
+        return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
+    }
+    protected override OperateResult InitializationOnOpen ( )
+    {
+        return HandShake ( );
     }
 }

@@ -6,34 +6,35 @@ namespace DKCommunicationNET. Protocols. Hex81;
 [Model ( Models. Hex81 )]
 internal class Hex81Factory : IProtocolFactory
 {
-    public IPacketBuilderOfACM GetPacketsOfACM ( )
+    public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IPacketsBuilderOfACS GetPacketsOfACS ( )
+    public OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( )
     {
-        return new Hex81PacketBuilderOfACS ( );        
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilderOfACS ( ) as IPacketsBuilderOfACS );
+
     }
 
-    public IPacketBuilderOfDCM GetPacketsOfDCM ( )
+    public OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfDCM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IPacketBuilderOfDCS GetPacketsOfDCS ( )
+    public OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfDCS> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IPacketBuilderOfIO GetPacketsOfIO ( )
+    public OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfIO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IPacketBuilderOfPQ GetPacketsOfPQ ( )
+    public OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfPQ> ( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )

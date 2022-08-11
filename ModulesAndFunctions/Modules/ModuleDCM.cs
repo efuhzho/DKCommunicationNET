@@ -1,5 +1,5 @@
 ﻿using DKCommunicationNET. Interface;
-using DKCommunicationNET. Module;
+using DKCommunicationNET. ModulesAndFunctions;
 
 namespace DKCommunicationNET. Module
 {

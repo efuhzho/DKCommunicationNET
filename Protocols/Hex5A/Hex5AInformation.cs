@@ -16,8 +16,8 @@ internal class Hex5AInformation
     /// <summary>
     /// 报文头
     /// </summary>
-    internal const byte Sync0 = 0xA5;
-    internal const byte Sync1 = 0x5A;
+    internal const byte Sync0 = 0x5A;
+    internal const byte Sync1 = 0xA5;
 
     /// <summary>
     /// 报文尾
@@ -27,8 +27,8 @@ internal class Hex5AInformation
     /// <summary>
     /// 系统应答命令
     /// </summary>
-    internal const byte OK = 0x4B;
-    internal const ushort OKLength = 8;
+    internal const byte OK = 0x12;
+    internal const ushort OKLength = 12;
 
     /// <summary>
     /// 发送故障代码，带枚举数据
@@ -43,6 +43,7 @@ internal class Hex5AInformation
     /// </summary>
     internal const byte HandShake = 0x11;
     internal const ushort HandShakeCommandLength = 11;
+    public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x01 , 0x43 , 0x96 };
 
     /// <summary>
     /// 设置系统模式
@@ -271,6 +272,15 @@ internal class Hex5AInformation
         /// 直流表校准模式
         /// </summary>
         ModeDCMeterCalibrate = 14
+    }
+
+    public enum GetRangeType : byte
+    {
+        ACS = 1,
+        ACM_Cap = 2,
+        DCS = 3,
+        DCM = 4,
+        ACM = 7
     }
 
     /// <summary>

@@ -60,12 +60,14 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// <summary>
     /// 是否装配交流源模块
     /// </summary>
-    public bool IsACSModuleEnabled { get; set; }
+    public bool IsACSModuleEnabled { get; set; } = true;
+
+    public bool IsACMModuleEnabled { get; set; } 
 
     /// <summary>
     /// 是否装配直流源模块
     /// </summary>
-    public bool IsDCSModuleEnabled { get; set; } 
+    public bool IsDCSModuleEnabled { get; set; }
 
     /// <summary>
     /// 是否装配开关量模块
@@ -91,7 +93,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsACSModuleSupported , IsACSModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsACSModuleEnabled );
             return _PacketsOfACS;
         }
     }
@@ -103,7 +105,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsDCSModuleSupported , IsDCSModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsACMModuleEnabled );
             return _PacketOfACM;
         }
     }
@@ -115,7 +117,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsDCSModuleSupported , IsDCSModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCS , IsDCSModuleEnabled );
             return _PacketOfDCS;
         }
     }
@@ -127,11 +129,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            if ( IsDCMModuleEnabled )
-            {
-                return _PacketOfDCM;
-            }
-            throw new Exception ( StringResources. Language. NotSupportedModule + Model );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCM , IsDCMModuleEnabled );
+            return _PacketOfDCM;
         }
     }
 
@@ -143,11 +142,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            if ( IsPQModuleEnabled )
-            {
-                return _PacketOfPQ;
-            }
-            throw new Exception ( StringResources. Language. NotSupportedModule + Model );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForPQ , IsPQModuleEnabled );
+            return _PacketOfPQ;
         }
     }
 
@@ -158,11 +154,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            if ( IsIOModuleEnabled )
-            {
-                return _PacketOfIO;
-            }
-            throw new Exception ( StringResources. Language. NotEnabledModule + $"型号【{Model}】，编号【{SN}】" );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForIO , IsIOModuleEnabled );
+            return _PacketOfIO;
         }
     }
     #endregion 公共属性==>功能模块
@@ -178,11 +171,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     #region 【构造函数】
 
-    public Dandick ( Models model )
+    public Dandick ( Models model , ushort id = 0 )
     {
         _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
-        Model = model;
         FunctionsInitializer ( );
+        Model = model;
+        ID = id;
     }
     #endregion 构造函数
 
@@ -194,20 +188,27 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     void FunctionsInitializer ( )
     {
         //
-        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( );
-        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( );
-        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( );
-        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( );
-        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( );
-        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( );
+        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ).Content;
+        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ).Content;
+        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ).Content;
+        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ).Content;
+        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ).Content;
+        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ).Content;
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
-        _Functions = _ProtocolFactory.GetProtocolFunctionsState ( );
+        _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
 
 
         //SystemSettings = new SystemSettings ( model );
         //SystemSettings. SystemMode = new SystemMode ( );
 
     }
+
+    public override OperateResult<byte[ ]> HandShake ( )
+    {
+        return CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
+    }
+
+
     #endregion 设备【功能状态使能】初始化
 
     #region 【Public Methods】
@@ -247,7 +248,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        return CommandAction. Action ( _PacketsOfACS. PacketOfGetRanges , CheckResponse );
+        return CommandAction. Action ( PacketsOfACS. PacketOfGetRanges , CheckResponse );
     }
 
     public OperateResult<byte[ ]> SetAmplitude ( float amplitude )

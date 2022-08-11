@@ -40,7 +40,7 @@ internal class Hex81Information
     /// </summary>
     internal const byte HandShake = 0x4C;
     internal const ushort HandShakeCommandLength = 7;
-    internal static readonly byte[ ] HandShakeCommand = new byte[7] { 0x81 , 00 , 00 , 00 , 00 , 00 , 00 };
+    internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
 
     /// <summary>
     /// 设置系统模式

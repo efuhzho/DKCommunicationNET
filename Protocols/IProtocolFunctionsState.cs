@@ -19,27 +19,31 @@ internal interface IProtocolFunctionsState
     /// <summary>
     /// 是否支持交流源模块
     /// </summary>
-    public bool IsACSModuleSupported { get; }
+    public bool IsSupportedForACS { get; }
+
+    public bool IsSupportedForACM { get; }
 
     /// <summary>
     /// 是否支持直流源模块
     /// </summary>
-    public bool IsDCSModuleSupported { get; }
+    public bool IsSupportedForDCS { get; }
 
     /// <summary>
     /// 是否支持直流表模块
     /// </summary>
-    public bool IsDCMModuleSupported { get; }
+    public bool IsSupportedForDCM { get; }
 
     /// <summary>
     /// 是否支持开关量模块
     /// </summary>
-    public bool IsIOModuleSupported { get; }
+    public bool IsSupportedForIO { get; }
 
     /// <summary>
     /// 是否支持电能模块
     /// </summary>
-    public bool IsPQModuleSupported { get; }
+    public bool IsSupportedForPQ { get; }
+
+    OperateResult<byte[ ]> GetPacketOfHandShake ( );
 
     //TODO 协议增加
 }

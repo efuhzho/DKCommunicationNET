@@ -43,3 +43,7 @@ internal interface IPacketBuilderOfIO
 internal interface IPacketBuilderOfPQ
 {
 }
+internal interface IHandShake
+{
+
+}

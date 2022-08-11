@@ -10,34 +10,36 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 [Model ( Models. Hex5A )]
 internal class Hex5AFactory : IProtocolFactory
 {
-    public IPacketBuilderOfACM GetPacketsOfACM ( )
+    public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
     {
-        throw new NotImplementedException ( );
+        return OperateResult.CreateSuccessResult( new Hex5APacketBuilderOfACM ( ) as IPacketBuilderOfACM);
     }
 
-    public IPacketsBuilderOfACS GetPacketsOfACS ( )
+    public OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( )
     {
-        return new Hex5APacketBuilderOfACS ( );
+        return OperateResult.CreateSuccessResult(new Hex5APacketBuilderOfACS ( ) as IPacketsBuilderOfACS);
     }
 
-    public IPacketBuilderOfDCM GetPacketsOfDCM ( )
+    public OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfDCM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IPacketBuilderOfDCS GetPacketsOfDCS ( )
+    public OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfDCS> ( StringResources. Language. NotSupportedModule );
+
     }
 
-    public IPacketBuilderOfIO GetPacketsOfIO ( )
+    public OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfIO> ( StringResources. Language. NotSupportedModule );
+
     }
 
-    public IPacketBuilderOfPQ GetPacketsOfPQ ( )
+    public OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilderOfPQ>( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )
@@ -45,7 +47,7 @@ internal class Hex5AFactory : IProtocolFactory
         return new Hex5ACRCChecker ( );
     }
 
-    public IProtocolFunctionsState GetProtocolFunctionsState ( )
+public IProtocolFunctionsState GetProtocolFunctionsState ( )
     {
         return new Hex5AFunctionsState ( );
     }
