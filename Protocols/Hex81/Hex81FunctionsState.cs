@@ -17,7 +17,7 @@ internal class Hex81FunctionsState : IProtocolFunctionsState
     /// <summary>
     /// 基于本协议的设备：是否支持【交流源模块】：是
     /// </summary>
-    public bool IsSupportedForACS => false;
+    public bool IsSupportedForACS => true;
     public bool IsSupportedForACM => true;
 
     /// <summary>

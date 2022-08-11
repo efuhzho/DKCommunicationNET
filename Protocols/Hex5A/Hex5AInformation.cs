@@ -27,8 +27,8 @@ internal class Hex5AInformation
     /// <summary>
     /// 系统应答命令
     /// </summary>
-    internal const byte OK = 0x12;
-    internal const ushort OKLength = 12;
+    internal const byte OK = 0x11;
+    internal const ushort OKLength = 11;
 
     /// <summary>
     /// 发送故障代码，带枚举数据
@@ -43,7 +43,7 @@ internal class Hex5AInformation
     /// </summary>
     internal const byte HandShake = 0x11;
     internal const ushort HandShakeCommandLength = 11;
-    public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x01 , 0x43 , 0x96 };
+    public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x1D , 0x00 , 0x96 };
 
     /// <summary>
     /// 设置系统模式

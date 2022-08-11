@@ -23,7 +23,7 @@ namespace DKCommunicationNET. Protocols. Hex5A
         public OperateResult<byte[ ]> PacketOfGetRanges ( )
         {
             byte[ ] data = new byte[ 1] { (byte)Hex5AInformation. GetRangeType. ACS };
-            return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. OK , Hex5AInformation. OKLength ,data);
+            return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. OK , Hex5AInformation. OKLength ,ID);
         }
 
         public OperateResult<byte[ ]> PacketOfOpen ( )
