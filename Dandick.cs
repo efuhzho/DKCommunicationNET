@@ -1,7 +1,7 @@
 ﻿using DKCommunicationNET. BaseClass;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. Interface;
-using DKCommunicationNET. Module;
+using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
 using DKCommunicationNET. Protocols. Hex5A;
 using DKCommunicationNET. Protocols. Hex81;
@@ -13,12 +13,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 {
     #region 【私有字段】
 
-    IPacketFactory _factory;
+    IProtocolFactory _PacketFactory;
 
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-    private IProtocolFunctions? _Functions;
+    private IProtocolFunctionsState? _Functions;
 
     /// <summary>
     /// 定义交流源模块对象
@@ -26,24 +26,31 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     private IPacketsOfACS? _PacketsOfACS;
 
     /// <summary>
+    /// 定义交流表模块对象
+    /// </summary>
+    private IPacketOfACM? _PacketOfACM;
+
+    /// <summary>
     /// 定义直流源模块对象
     /// </summary>
-    private IModuleDCS? _ModuleDCS;
+    private IPacketOfDCS? _PacketOfDCS;
 
     /// <summary>
     /// 定义直流表模块对象
     /// </summary>
-    private IModuleDCM? _ModuleDCM;
+    private IPacketOfDCM? _PacketOfDCM;
 
     /// <summary>
     /// 定义电能模块模块对象
     /// </summary>
-    private IModulePQ? _ModulePQ;
+    private IPacketOfPQ? _PacketOfPQ;
 
     /// <summary>
     /// 定义开关量模块对象
     /// </summary>
-    private IModuleIO? _ModuleIO;
+    private IPacketOfIO? _PacketOfIO;
+
+    private ICRCChecker? _CRCChecker;
 
     #endregion 私有字段
 
@@ -90,27 +97,39 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     }
 
     /// <summary>
-    /// 直流源模块
+    /// 交流表模块
     /// </summary>
-    private IModuleDCS ModuleDCS
+    private IPacketOfACM PacketOfACM
     {
         get
         {
             CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsDCSModuleSupported , IsDCSModuleEnabled );
-            return _ModuleDCS;
+            return _PacketOfACM;
+        }
+    }
+
+    /// <summary>
+    /// 直流源模块
+    /// </summary>
+    private IPacketOfDCS PacketOfDCS
+    {
+        get
+        {
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsDCSModuleSupported , IsDCSModuleEnabled );
+            return _PacketOfDCS;
         }
     }
 
     /// <summary>
     /// 直流表模块
     /// </summary>
-    private IModuleDCM ModuleDCM
+    private IPacketOfDCM PacketOfDCM
     {
         get
         {
             if ( IsDCMModuleEnabled )
             {
-                return _ModuleDCM;
+                return _PacketOfDCM;
             }
             throw new Exception ( StringResources. Language. NotSupportedModule + Model );
         }
@@ -120,13 +139,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// <summary>
     /// 电能模块
     /// </summary>
-    private IModulePQ ModulePQ
+    private IPacketOfPQ PacketOfPQ
     {
         get
         {
             if ( IsPQModuleEnabled )
             {
-                return _ModulePQ;
+                return _PacketOfPQ;
             }
             throw new Exception ( StringResources. Language. NotSupportedModule + Model );
         }
@@ -135,13 +154,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// <summary>
     /// 开关量模块
     /// </summary>
-    private IModuleIO ModuleIO
+    private IPacketOfIO PacketOfIO
     {
         get
         {
             if ( IsIOModuleEnabled )
             {
-                return _ModuleIO;
+                return _PacketOfIO;
             }
             throw new Exception ( StringResources. Language. NotEnabledModule + $"型号【{Model}】，编号【{SN}】" );
         }
@@ -160,10 +179,10 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     public Dandick ( Models model )
     {
-        _factory = new DictionaryOfFactorys ( ). GetFactory ( model );
+        _PacketFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
         Model = model;
         FunctionsInitializer ( );
-        
+
     }
     #endregion 构造函数
 
@@ -175,17 +194,19 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     void FunctionsInitializer ( )
     {
 
-        _PacketsOfACS = _factory. GetPacketsOfACS ( );
-        //_ModuleDCS = _factory. GetModuleDCS ( ). Content;
-        //_ModuleDCM = _factory. GetModuleDCM ( ). Content;
-        //_ModuleIO = _factory. GetModuleIO ( ). Content;
-        //_ModulePQ = _factory. GetModulePQ ( ). Content;
+        _PacketsOfACS = _PacketFactory. GetPacketsOfACS ( );
+        _PacketOfACM = _PacketFactory. GetPacketsOfACM ( );
+        _PacketOfDCS = _PacketFactory. GetPacketsOfDCS ( );
+        _PacketOfDCM = _PacketFactory. GetPacketsOfDCM ( );
+        _PacketOfIO = _PacketFactory. GetPacketsOfIO ( );
+        _PacketOfPQ = _PacketFactory. GetPacketsOfPQ ( );
+        _CRCChecker = _PacketFactory. GetCRCChecker ( );
 
         _Functions = Model switch //TODO 看视频如何解决这个问题
         {
-            Models. Hex81 => new Hex81Functions ( ),
-            Models. Hex5A => new Hex5AFunctions ( ),
-            _ => new Hex81Functions ( ),
+            Models. Hex81 => new Hex81FunctionsState ( ),
+            Models. Hex5A => new Hex5AFunctionsState ( ),
+            _ => new Hex81FunctionsState ( ),
         };
 
         //SystemSettings = new SystemSettings ( model );
@@ -199,7 +220,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        return _PacketsOfACS. PacketOfGetRanges ( );
+        return CommandAction. Action ( _PacketsOfACS. PacketOfGetRanges , CheckResponse );
     }
 
     public OperateResult<byte[ ]> SetAmplitude ( float amplitude )
@@ -244,7 +265,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #endregion 【Public Methods】
 
     #region --------------------------------- Core Interative 核心交互-------------------------
-    private  OperateResult<byte[ ]> CheckResponse ( byte[ ] send )
+    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send )
     {
         // 发送报文并获取回复报文
         OperateResult<byte[ ]> response = ReadBase ( send );
@@ -258,31 +279,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         // 长度校验
         if ( response. Content. Length < 7 )
         {
-            return new OperateResult<byte[ ]> ( 811300 , StringResources. Language. ReceiveDataLengthTooShort + "811300" );
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , StringResources. Language. ReceiveDataLengthTooShort );
         }
 
-        // 检查crc
-        if ( !DK81CommunicationInfo. CheckCRC ( response. Content ) )
+        // 检查CRC:CheckCRC包含报文头验证
+        if ( !_CRCChecker. CheckCRC ( response. Content ) )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. CRCCheckFailed + SoftBasic. ByteToHexString ( response. Content , ' ' ) );
-        }
-
-        //回复OK
-        if ( response. Content[5] == DK81CommunicationInfo. OK && response. Content[6] == send[5] )
-        {
-            return response;
-        }
-
-        // 检查是否报故障：是     //TODO 随时主动报故障的问题
-        if ( response. Content[5] == DK81CommunicationInfo. ErrorCode )
-        {
-            return new OperateResult<byte[ ]> ( response. Content[6] , ( ( ErrorCode ) response. Content[6] ). ToString ( ) ); //TODO 测试第二种故障码解析:/*DK81CommunicationInfo.GetErrorMessageByErrorCode(response.Content[6])*/
-        }
-
-        //检查命令码：命令码不一致且不是OK命令
-        if ( send[5] != response. Content[5] )
-        {
-            return new OperateResult<byte[ ]> ( response. Content[5] , $"Receive CommandCode Check Failed:SendCode is {send[5]},ReceivedCode is {response. Content[5]}" );
         }
 
         return response;

@@ -23,7 +23,7 @@ namespace DKCommunicationNET.BaseClass
         {
             _SerialPort = new SerialPort ( );
             hybirdLock = new SimpleHybirdLock( );
-            _SerialPort. ReadTimeout = 2000;
+            _SerialPort. ReadTimeout = 1000;
             _SerialPort. WriteTimeout = 1000;
         }
 

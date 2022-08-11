@@ -11,7 +11,7 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// Hex81协议报文创建类
 /// </summary>
 [Model ( Models. Hex81 )]
-internal class Hex81PacketBuilder : IPacketBuilder
+internal class Hex81PacketBuilder : IPacketBuilderHelper
 {
     public static readonly Hex81PacketBuilder Instance = new Hex81PacketBuilder ();
     /// <summary>

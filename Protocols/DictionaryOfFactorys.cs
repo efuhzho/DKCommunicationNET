@@ -12,7 +12,7 @@ namespace DKCommunicationNET. Protocols;
 
 internal class DictionaryOfFactorys
 {
-    readonly Dictionary<Models , IPacketFactory> keyValuePairs = new ( );
+    readonly Dictionary<Models , IProtocolFactory> keyValuePairs = new ( );
     public DictionaryOfFactorys ( )
     {
         //keyValuePairs[Models. Hex81] = new Hex81Factory ( );
@@ -22,18 +22,18 @@ internal class DictionaryOfFactorys
         Assembly assembly = Assembly. GetExecutingAssembly ( );
         foreach ( var item in assembly. GetTypes ( ) )
         {
-            if ( typeof ( IPacketFactory ). IsAssignableFrom ( item ) && !item. IsInterface )
+            if ( typeof ( IProtocolFactory ). IsAssignableFrom ( item ) && !item. IsInterface )
             {
                 ModelAttribute? ModelsAttribute = item. GetCustomAttribute<ModelAttribute> ( );
                 if ( ModelsAttribute != null )
                 {
-                    keyValuePairs[ModelsAttribute. Model] = Activator. CreateInstance ( item ) as IPacketFactory;
+                    keyValuePairs[ModelsAttribute. Model] = Activator. CreateInstance ( item ) as IProtocolFactory;
                 }
             }
         }
     }
 
-    internal IPacketFactory GetFactory ( Models model )
+    internal IProtocolFactory GetFactory ( Models model )
     {
         return keyValuePairs[model];
     }

@@ -9,7 +9,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 【设备功能状态接口】所有基于不同协议类型的设备的功能状态：只读
 /// </summary>
-internal interface IProtocolFunctions
+internal interface IProtocolFunctionsState
 {
     /// <summary>
     /// 设备型号：已关联协议类型
@@ -41,4 +41,5 @@ internal interface IProtocolFunctions
     /// </summary>
     public bool IsPQModuleSupported { get; }
 
+    //TODO 协议增加
 }

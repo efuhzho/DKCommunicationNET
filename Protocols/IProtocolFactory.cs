@@ -8,12 +8,14 @@ using DKCommunicationNET. Protocols;
 
 namespace DKCommunicationNET
 {
-    internal interface IPacketFactory
+    internal interface IProtocolFactory
     {
         IPacketsOfACS GetPacketsOfACS ( );
-        IModuleDCM GetPacketsOfDCM ( );
-        IModuleDCS GetPacketsOfDCS ( );
-        IModuleIO GetPacketsOfIO ( );
-        IModulePQ GetPacketsOfPQ ( );
+        IPacketOfACM GetPacketsOfACM ( );
+        IPacketOfDCS GetPacketsOfDCS ( );
+        IPacketOfDCM GetPacketsOfDCM ( );
+        IPacketOfIO GetPacketsOfIO ( );
+        IPacketOfPQ GetPacketsOfPQ ( );
+        ICRCChecker GetCRCChecker ( );
     }
 }

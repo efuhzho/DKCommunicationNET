@@ -7,7 +7,7 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 /// <summary>
 /// 基于Hex5AA5协议的设备所支持的功能状态
 /// </summary>
-internal class Hex5AFunctions : IProtocolFunctions
+internal class Hex5AFunctionsState : IProtocolFunctionsState
 {
     /// <summary>
     /// 本类设备的协议类型：Hex5A

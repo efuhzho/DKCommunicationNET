@@ -8,14 +8,11 @@ namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketOfACS : IPacketsOfACS
     {
-        public Hex81PacketOfACS ( ushort id )
+        public Hex81PacketOfACS ( ushort id = 0 )
         {
             ID = id;
         }
-        public Hex81PacketOfACS ( )
-        {
-
-        }
+       
         public ushort ID { get; set; }
 
         public OperateResult<byte[ ]> PacketOfClose ( )

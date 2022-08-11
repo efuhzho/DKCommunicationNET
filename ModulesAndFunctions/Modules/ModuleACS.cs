@@ -1,5 +1,5 @@
 ﻿using DKCommunicationNET. Interface;
-using DKCommunicationNET. Module;
+using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
 
 namespace DKCommunicationNET. Module;
@@ -10,7 +10,8 @@ internal class ModuleACS : IModuleACS
 
     public OperateResult<byte[ ]> Close ( )
     {
-        return new OperateResult<byte[ ]> ( StringResources.GetLineNum(),StringResources. Language. NotSupportedModule +StringResources.GetCurSourceFileName() );
+        throw new NotImplementedException ( );
+
     }
 
     public OperateResult<byte[ ]> GetRanges ( )

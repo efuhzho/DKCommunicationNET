@@ -8,30 +8,40 @@ using System. Threading. Tasks;
 namespace DKCommunicationNET. Protocols. Hex5A;
 
 [Model ( Models. Hex5A )]
-internal class Hex5APacketFactory : IPacketFactory
+internal class Hex5AFactory : IProtocolFactory
 {
+    public IPacketOfACM GetPacketsOfACM ( )
+    {
+        throw new NotImplementedException ( );
+    }
+
     public IPacketsOfACS GetPacketsOfACS ( )
     {
         return new Hex5APacketOfACS ( );
     }
 
-    public IModuleDCM GetPacketsOfDCM ( )
+    public IPacketOfDCM GetPacketsOfDCM ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IModuleDCS GetPacketsOfDCS ( )
+    public IPacketOfDCS GetPacketsOfDCS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IModuleIO GetPacketsOfIO ( )
+    public IPacketOfIO GetPacketsOfIO ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IModulePQ GetPacketsOfPQ ( )
+    public IPacketOfPQ GetPacketsOfPQ ( )
     {
         throw new NotImplementedException ( );
+    }
+
+    public ICRCChecker GetCRCChecker ( )
+    {
+        return new Hex5ACRCChecker ( );
     }
 }

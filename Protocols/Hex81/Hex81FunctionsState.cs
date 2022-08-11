@@ -7,7 +7,7 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// 基于Hex81协议的设备所支持的功能状态
 /// </summary>
-internal class Hex81Functions : IProtocolFunctions
+internal class Hex81FunctionsState : IProtocolFunctionsState
 {
     /// <summary>
     /// 本类设备的协议类型：Hex81
