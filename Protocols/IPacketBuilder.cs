@@ -8,11 +8,11 @@ namespace DKCommunicationNET. Protocols;
 
 internal interface IPacketBuilderHelper
 {
-    OperateResult<byte[]> PacketBuilder ( byte commandCode , ushort commandLength , ushort id = 0 );
-    OperateResult<byte[]> PacketBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 );
+    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id = 0 );
+    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 );
 }
 
-internal interface IPacketsOfACS
+internal interface IPacketsBuilderOfACS
 {
     public ushort ID { get; set; }
     public OperateResult<byte[ ]> PacketOfGetRanges ( );
@@ -24,22 +24,22 @@ internal interface IPacketsOfACS
     public OperateResult<byte[ ]> PacketOfSetFrequency ( float FreqOfAll , float FreqOfC = 0 );
     public OperateResult<byte[ ]> PacketOfSetWireMode ( string wireMode );
 }
-internal interface IPacketOfACM
+internal interface IPacketBuilderOfACM
 {
 }
 
-internal interface IPacketOfDCS
+internal interface IPacketBuilderOfDCS
 {
 }
 
-internal interface IPacketOfDCM
+internal interface IPacketBuilderOfDCM
 {
 }
 
-internal interface IPacketOfIO
+internal interface IPacketBuilderOfIO
 {
 }
 
-internal interface IPacketOfPQ
+internal interface IPacketBuilderOfPQ
 {
 }

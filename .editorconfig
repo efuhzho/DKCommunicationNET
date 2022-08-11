@@ -129,6 +129,9 @@ csharp_style_unused_value_assignment_preference = discard_variable:suggestion
 csharp_style_unused_value_expression_statement_preference = discard_variable:silent
 csharp_space_between_empty_square_brackets = true
 
+# CS8601: 引用类型赋值可能为 null。
+dotnet_diagnostic.CS8601.severity = suggestion
+
 [*.vb]
 #### 命名样式 ####
 

@@ -4,7 +4,7 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 
-namespace DKCommunicationNET. Protocols;
+namespace DKCommunicationNET. Core;
 
 /// <summary>
 /// 检查所选型号的功能状态类

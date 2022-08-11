@@ -7,9 +7,9 @@ using System. Threading. Tasks;
 namespace DKCommunicationNET. Protocols. Hex5A;
 
 [Model ( Models. Hex5A )]
-internal class Hex5APacketBuilder
+internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
 {
-    public Hex5APacketBuilder ( )
+    public Hex5APacketBuilderHelper ( )
     {
         InitDic ( );
     }
@@ -21,7 +21,7 @@ internal class Hex5APacketBuilder
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    internal OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
         byte ID;
         if ( !AnalysisID ( id ). IsSuccess )
@@ -68,11 +68,11 @@ internal class Hex5APacketBuilder
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
     /// <returns></returns>
-    internal OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte[ ] data , ushort id = 0 )
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data , ushort id = 0 )
     {
         try
         {
-            OperateResult<byte[ ]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
+            OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilder ( commandCode , commandLength , id );
             if ( dataBytesWithoutData. IsSuccess )
             {
 #pragma warning disable CS8604 // 引用类型参数可能为 null。

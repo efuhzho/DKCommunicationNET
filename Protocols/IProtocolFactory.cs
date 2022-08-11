@@ -10,12 +10,13 @@ namespace DKCommunicationNET
 {
     internal interface IProtocolFactory
     {
-        IPacketsOfACS GetPacketsOfACS ( );
-        IPacketOfACM GetPacketsOfACM ( );
-        IPacketOfDCS GetPacketsOfDCS ( );
-        IPacketOfDCM GetPacketsOfDCM ( );
-        IPacketOfIO GetPacketsOfIO ( );
-        IPacketOfPQ GetPacketsOfPQ ( );
+        IPacketsBuilderOfACS GetPacketsOfACS ( );
+        IPacketBuilderOfACM GetPacketsOfACM ( );
+        IPacketBuilderOfDCS GetPacketsOfDCS ( );
+        IPacketBuilderOfDCM GetPacketsOfDCM ( );
+        IPacketBuilderOfIO GetPacketsOfIO ( );
+        IPacketBuilderOfPQ GetPacketsOfPQ ( );
         ICRCChecker GetCRCChecker ( );
+        IProtocolFunctionsState GetProtocolFunctionsState ( );
     }
 }

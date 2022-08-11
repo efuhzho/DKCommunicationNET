@@ -6,9 +6,9 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex81
 {
-    internal class Hex81PacketOfACS : IPacketsOfACS
+    internal class Hex81PacketBuilderOfACS : IPacketsBuilderOfACS
     {
-        public Hex81PacketOfACS ( ushort id = 0 )
+        public Hex81PacketBuilderOfACS ( ushort id = 0 )
         {
             ID = id;
         }
@@ -17,22 +17,22 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> PacketOfClose ( )
         {
-            return Hex81PacketBuilder. Instance. PacketBuilder ( Hex81Information. CloseACS , Hex81Information. CloseACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. CloseACS , Hex81Information. CloseACSLength , ID );
         }
 
         public OperateResult<byte[ ]> PacketOfGetRanges ( )
         {
-            return Hex81PacketBuilder. Instance. PacketBuilder ( Hex81Information. GetRangesOfACS , Hex81Information. GetRangesOfACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRangesOfACS , Hex81Information. GetRangesOfACSLength , ID );
         }
 
         public OperateResult<byte[ ]> PacketOfOpen ( )
         {
-            return Hex81PacketBuilder. Instance. PacketBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , ID );
         }
 
         public OperateResult<byte[ ]> PacketOfSetAmplitude ( float amplitude )
         {
-            return Hex81PacketBuilder. Instance. PacketBuilder ( Hex81Information. SetACSAmplitude , Hex81Information. SetACSAmplitudeLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetACSAmplitude , Hex81Information. SetACSAmplitudeLength , ID );
         }
 
         public OperateResult<byte[ ]> PacketOfSetFrequency ( float FreqOfAll , float FreqOfC = 0 )

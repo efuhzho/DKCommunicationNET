@@ -11,9 +11,9 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// Hex81协议报文创建类
 /// </summary>
 [Model ( Models. Hex81 )]
-internal class Hex81PacketBuilder : IPacketBuilderHelper
+internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
 {
-    public static readonly Hex81PacketBuilder Instance = new Hex81PacketBuilder ();
+    public static readonly Hex81PacketBuilderHelper Instance = new Hex81PacketBuilderHelper ();
     /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
@@ -21,7 +21,7 @@ internal class Hex81PacketBuilder : IPacketBuilderHelper
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public  OperateResult<byte[]> PacketBuilder ( byte commandCode , ushort commandLength , ushort id = 0 )
+    public  OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
         byte _RxID;
         byte _TxID;
@@ -66,11 +66,11 @@ internal class Hex81PacketBuilder : IPacketBuilderHelper
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public  OperateResult<byte[]> PacketBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 )
+    public  OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 )
     {
         try
         {
-            OperateResult<byte[]> shell = PacketBuilder ( commandCode , commandLength , id );
+            OperateResult<byte[]> shell = PacketShellBuilder ( commandCode , commandLength , id );
             if ( !shell. IsSuccess )
             {
                 return shell;

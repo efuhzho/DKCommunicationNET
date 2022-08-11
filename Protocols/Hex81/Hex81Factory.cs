@@ -6,32 +6,32 @@ namespace DKCommunicationNET. Protocols. Hex81;
 [Model ( Models. Hex81 )]
 internal class Hex81Factory : IProtocolFactory
 {
-    public IPacketOfACM GetPacketsOfACM ( )
+    public IPacketBuilderOfACM GetPacketsOfACM ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketsOfACS GetPacketsOfACS ( )
+    public IPacketsBuilderOfACS GetPacketsOfACS ( )
     {
-        return new Hex81PacketOfACS ( );        
+        return new Hex81PacketBuilderOfACS ( );        
     }
 
-    public IPacketOfDCM GetPacketsOfDCM ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public IPacketOfDCS GetPacketsOfDCS ( )
+    public IPacketBuilderOfDCM GetPacketsOfDCM ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketOfIO GetPacketsOfIO ( )
+    public IPacketBuilderOfDCS GetPacketsOfDCS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketOfPQ GetPacketsOfPQ ( )
+    public IPacketBuilderOfIO GetPacketsOfIO ( )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public IPacketBuilderOfPQ GetPacketsOfPQ ( )
     {
         throw new NotImplementedException ( );
     }
@@ -39,5 +39,10 @@ internal class Hex81Factory : IProtocolFactory
     public ICRCChecker GetCRCChecker ( )
     {
         return new Hex81CRCChecker ( ) ;
+    }
+
+    public IProtocolFunctionsState GetProtocolFunctionsState ( )
+    {
+        return new Hex81FunctionsState ( );
     }
 }

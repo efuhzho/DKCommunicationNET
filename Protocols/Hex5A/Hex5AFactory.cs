@@ -10,32 +10,32 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 [Model ( Models. Hex5A )]
 internal class Hex5AFactory : IProtocolFactory
 {
-    public IPacketOfACM GetPacketsOfACM ( )
+    public IPacketBuilderOfACM GetPacketsOfACM ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketsOfACS GetPacketsOfACS ( )
+    public IPacketsBuilderOfACS GetPacketsOfACS ( )
     {
-        return new Hex5APacketOfACS ( );
+        return new Hex5APacketBuilderOfACS ( );
     }
 
-    public IPacketOfDCM GetPacketsOfDCM ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public IPacketOfDCS GetPacketsOfDCS ( )
+    public IPacketBuilderOfDCM GetPacketsOfDCM ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketOfIO GetPacketsOfIO ( )
+    public IPacketBuilderOfDCS GetPacketsOfDCS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public IPacketOfPQ GetPacketsOfPQ ( )
+    public IPacketBuilderOfIO GetPacketsOfIO ( )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public IPacketBuilderOfPQ GetPacketsOfPQ ( )
     {
         throw new NotImplementedException ( );
     }
@@ -43,5 +43,10 @@ internal class Hex5AFactory : IProtocolFactory
     public ICRCChecker GetCRCChecker ( )
     {
         return new Hex5ACRCChecker ( );
+    }
+
+    public IProtocolFunctionsState GetProtocolFunctionsState ( )
+    {
+        return new Hex5AFunctionsState ( );
     }
 }

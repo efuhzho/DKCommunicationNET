@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex5A
 {
-    internal class Hex5APacketOfACS : IPacketsOfACS
+    internal class Hex5APacketBuilderOfACS : IPacketsBuilderOfACS
     {
         public ushort ID { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
