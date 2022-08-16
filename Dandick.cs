@@ -246,7 +246,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #region Public Methods ==> [ACS]
 
 
-    public OperateResult<byte[ ]> GetRanges ( )
+    public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
         return CommandAction. Action ( PacketsOfACS. PacketOfGetRanges , CheckResponse );
     }

@@ -14,7 +14,7 @@ internal class ModuleACS : IModuleACS
 
     }
 
-    public OperateResult<byte[ ]> GetRanges ( )
+    public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
         throw new NotImplementedException ( );
     }

@@ -231,7 +231,7 @@ namespace DKCommunicationNET. BaseClass
         protected virtual OperateResult<byte[ ]> SPReceived ( SerialPort serialPort , bool awaitData )
         {
             byte[ ] buffer = new byte[1024];
-            System. IO. MemoryStream ms = new System. IO. MemoryStream ( );
+            MemoryStream ms = new MemoryStream ( );
             DateTime start = DateTime. Now;                                  // 开始时间，用于确认是否超时的信息
             while ( true )
             {
