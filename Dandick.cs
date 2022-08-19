@@ -63,35 +63,72 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
 
     #region 公共属性==>[功能状态指示标志]
+    #region FuncB
+
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsACSModuleEnabled { get; set; } 
+    public bool IsEnabled_ACS { get; private set; } 
 
     /// <summary>
     /// 指示是否激活交流表功能
     /// </summary>
-    public bool IsACMModuleEnabled { get; set; }
+    public bool IsEnabled_ACM { get; private set; }
 
     /// <summary>
     /// 指示是否激活直流源功能
     /// </summary>
-    public bool IsDCSModuleEnabled { get; set; }
+    public bool IsEnabled_DCS { get; private set; }
 
     /// <summary>
     /// 指示是否激活开关量功能
     /// </summary>
-    public bool IsIOModuleEnabled { get; set; }
+    public bool IsEnabled_IO { get; private set; }
 
     /// <summary>
     /// 指示是否激活电能功能
     /// </summary>
-    public bool IsPQModuleEnabled { get; set; }
+    public bool IsEnabled_EPQ { get; private set; }
 
     /// <summary>
     /// 指示是否激活直流表功能
     /// </summary>
-    public bool IsDCMModuleEnabled { get; set; }
+    public bool IsEnabled_DCM { get; private set; }
+    #endregion
+
+    #region FuncS
+
+    /// <summary>
+    /// 指示是否激活双频输出功能
+    /// </summary>
+    public bool IsEnabled_DualFreqs { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活保护电流功能
+    /// </summary>
+    public bool IsEnabled_IProtect { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活闪变输出功能
+    /// </summary>
+    public bool IsEnabled_PST { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活遥信功能
+    /// </summary>
+    public bool IsEnabled_YX { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活高频输出功能
+    /// </summary>
+    public bool IsEnabled_HF { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活电机控制功能
+    /// </summary>
+    public bool IsEnabled_PWM { get; private set; }
+    #endregion
+
     #endregion 公共属性==>功能状态指示标志
 
     #region 公共属性==>[功能模块]
@@ -102,7 +139,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsACSModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACS );
             return _PacketsOfACS;
         }
     }
@@ -114,7 +151,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsACMModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACM );
             return _PacketOfACM;
         }
     }
@@ -126,7 +163,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCS , IsDCSModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCS , IsEnabled_DCS );
             return _PacketOfDCS;
         }
     }
@@ -138,7 +175,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCM , IsDCMModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCM , IsEnabled_DCM );
             return _PacketOfDCM;
         }
     }
@@ -151,7 +188,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForPQ , IsPQModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForPQ , IsEnabled_EPQ );
             return _PacketOfPQ;
         }
     }
@@ -163,7 +200,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     {
         get
         {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForIO , IsIOModuleEnabled );
+            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForIO , IsEnabled_IO );
             return _PacketOfIO;
         }
     }
@@ -172,7 +209,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #region 公共属性==>[系统设置]
 
     public ISystemSettings? SystemSettings { get; private set; }
-    public bool IsEnabled { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+   
 
     #endregion 公共属性==>[系统设置]
 
@@ -220,7 +257,18 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         Model = _Decoder. Model;
         Fireware = _Decoder. Firmware;
         SN = _Decoder. SN;
-
+        IsEnabled_ACS=_Decoder. IsEnabled_ACS;
+        IsEnabled_ACM=_Decoder. IsEnabled_ACM;
+        IsEnabled_DCS= _Decoder. IsEnabled_DCS;
+        IsEnabled_DCM= _Decoder. IsEnabled_DCM;
+        IsEnabled_EPQ= _Decoder. IsEnabled_EPQ;
+        IsEnabled_IO= _Decoder. IsEnabled_IO;
+        IsEnabled_DualFreqs= _Decoder. IsEnabled_DualFreqs;
+        IsEnabled_IProtect= _Decoder. IsEnabled_IProtect;
+        IsEnabled_PST= _Decoder. IsEnabled_PST;
+        IsEnabled_YX= _Decoder. IsEnabled_YX;
+        IsEnabled_HF= _Decoder. IsEnabled_HF;
+        IsEnabled_PWM= _Decoder. IsEnabled_PWM;
         return res;
     }
 

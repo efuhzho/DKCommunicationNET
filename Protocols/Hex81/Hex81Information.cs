@@ -226,11 +226,11 @@ public enum ErrorCodes : byte
 [Flags]
 internal enum FuncB
 {
-    ACS = 0B_0000_0001,
-    ACM = 0B_0000_0010,
-    DCS = 0B_0000_0100,
-    DCM = 0B_0000_1000,
-    EPQ = 0B_0001_0000,
+    Enabled_ACS = 0B_0000_0001,
+    Enabled_ACM = 0B_0000_0010,
+    Enabled_DCS = 0B_0000_0100,
+    Enabled_DCM = 0B_0000_1000,
+    Enabled_EPQ = 0B_0001_0000,
 }
 
 /// <summary>
@@ -239,12 +239,12 @@ internal enum FuncB
 [Flags]
 internal enum FuncS
 {
-    双频输出 = 0B_0000_0001,
-    保护电流 = 0B_0000_0010,
-    闪变输出 = 0B_0000_0100,
-    遥信功能 = 0B_0000_1000,
-    高频输出 = 0B_0001_0000,
-    电机控制 = 0B_0010_0000,
+    Enabled_DualFreqs = 0B_0000_0001,
+    Enabled_IProtect = 0B_0000_0010,
+    Enabled_PST = 0B_0000_0100,
+    Enabled_YX = 0B_0000_1000,
+    Enabled_HF = 0B_0001_0000,
+    Enabled_PWM = 0B_0010_0000,
 }
 #endregion 枚举类型
 

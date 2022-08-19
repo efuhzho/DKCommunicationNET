@@ -1,4 +1,5 @@
-﻿using DKCommunicationNET. Core;
+﻿using DKCommunicationNET. BasicFramework;
+using DKCommunicationNET. Core;
 using System. Text;
 
 namespace DKCommunicationNET. Protocols. Hex81;
@@ -13,6 +14,9 @@ internal class Hex81Decoder : IDecoder
     {
         _byteTransform = byteTransform;
     }
+
+    #region 【属性】
+
     public int Offset => 6;
     public string? Model { get; private set; }
     public string? Firmware { get; private set; }
@@ -24,6 +28,20 @@ internal class Hex81Decoder : IDecoder
     public bool IsEnabled_EPQ { get; private set; }
     public bool IsEnabled_DCM { get; private set; }
 
+    public bool IsEnabled_DualFreqs { get; private set; }
+
+    public bool IsEnabled_IProtect { get; private set; }
+
+    public bool IsEnabled_PST { get; private set; }
+
+    public bool IsEnabled_YX { get; private set; }
+
+    public bool IsEnabled_HF { get; private set; }
+
+    public bool IsEnabled_PWM { get; private set; }
+    #endregion 属性
+
+    #region 【Decoders】
 
     /// <summary>
     /// 联机协议解析器
@@ -64,10 +82,24 @@ internal class Hex81Decoder : IDecoder
 
         //基本功能激活状态
         byte FuncB = buffer[^3];
-
-
+        bool[ ] funcB = SoftBasic. ByteToBoolArray ( FuncB );
+        IsEnabled_ACS = funcB[0];
+        IsEnabled_ACM = funcB[1];
+        IsEnabled_DCS = funcB[2];
+        IsEnabled_DCM = funcB[3];
+        IsEnabled_EPQ = funcB[4];
 
         //特殊功能激活状态
         byte FuncS = buffer[^2];
+        bool[ ] funcS = SoftBasic. ByteToBoolArray ( FuncS );
+        IsEnabled_DualFreqs = funcS[0];
+        IsEnabled_IProtect = funcS[1];
+        IsEnabled_PST = funcS[2];
+        IsEnabled_YX = funcS[3];
+        IsEnabled_HF = funcS[4];
+        IsEnabled_PWM = funcS[5];
     }
+
+    #endregion Decoders
+
 }
