@@ -9,12 +9,12 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 【设备功能状态接口】所有基于不同协议类型的设备的功能状态：只读
 /// </summary>
-internal interface IProtocolFunctionsState
+internal interface IProtocolFunctions
 {
-    /// <summary>
-    /// 设备型号：已关联协议类型
-    /// </summary>
-    public Models Model { get; }
+    ///// <summary>
+    ///// 设备型号：已关联协议类型
+    ///// </summary>
+    //public Models Model { get; }
 
     /// <summary>
     /// 是否支持交流源模块

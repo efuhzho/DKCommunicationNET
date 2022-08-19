@@ -15,32 +15,47 @@ internal interface IDecoder
     /// <summary>
     /// 设备型号
     /// </summary>
-    public string? Model { get; set; }
+    public string? Model { get; }
 
     /// <summary>
-    /// 设备版本号
+    /// 固件版本号
     /// </summary>
-    public string? Version { get; }
+    public string? Firmware { get; }
 
     /// <summary>
     /// 设备出厂编号
     /// </summary>
-    public string? SN { get; set; }
+    public string? SN { get;  }
 
     /// <summary>
-    /// 基本功能
+    /// 指示是否激活交流源功能
     /// </summary>
-    public byte FuncB { get; }
+    public bool IsEnabled_ACS { get;  } 
 
     /// <summary>
-    /// 特殊功能
+    /// 指示是否激活交流表功能
     /// </summary>
-    public byte FuncS { get; }
+    public bool IsEnabled_ACM { get;  }
 
     /// <summary>
-    /// 【只适用于Hex5A】直流源功能
+    /// 指示是否激活直流源功能
     /// </summary>
-    public byte FuncD { get; }
+    public bool IsEnabled_DCS { get;  }
+
+    /// <summary>
+    /// 指示是否激活开关量功能
+    /// </summary>
+    public bool IsEnabled_IO { get;  }
+
+    /// <summary>
+    /// 指示是否激活电能功能
+    /// </summary>
+    public bool IsEnabled_EPQ { get;  }
+
+    /// <summary>
+    /// 指示是否激活直流表功能
+    /// </summary>
+    public bool IsEnabled_DCM { get;  }
 
     /// <summary>
     /// 解析联机指令的回复报文

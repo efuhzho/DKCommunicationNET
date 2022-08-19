@@ -17,12 +17,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 {
     #region 【私有字段】
 
-    IProtocolFactory _ProtocolFactory;
+    readonly IProtocolFactory _ProtocolFactory;
 
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-    private IProtocolFunctionsState? _Functions;
+    private IProtocolFunctions _Functions;
 
     /// <summary>
     /// 定义交流源模块对象
@@ -54,7 +54,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// </summary>
     private IPacketBuilderOfIO? _PacketOfIO;
 
-    private ICRCChecker? _CRCChecker;
+    private ICRCChecker _CRCChecker;
+
+    private IDecoder _Decoder;
 
     #endregion 私有字段
 
@@ -62,29 +64,32 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     #region 公共属性==>[功能状态指示标志]
     /// <summary>
-    /// 是否装配交流源模块
+    /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsACSModuleEnabled { get; set; } = true;
+    public bool IsACSModuleEnabled { get; set; } 
 
+    /// <summary>
+    /// 指示是否激活交流表功能
+    /// </summary>
     public bool IsACMModuleEnabled { get; set; }
 
     /// <summary>
-    /// 是否装配直流源模块
+    /// 指示是否激活直流源功能
     /// </summary>
     public bool IsDCSModuleEnabled { get; set; }
 
     /// <summary>
-    /// 是否装配开关量模块
+    /// 指示是否激活开关量功能
     /// </summary>
     public bool IsIOModuleEnabled { get; set; }
 
     /// <summary>
-    /// 是否装配电能模块
+    /// 指示是否激活电能功能
     /// </summary>
     public bool IsPQModuleEnabled { get; set; }
 
     /// <summary>
-    /// 是否装配直流表模块
+    /// 指示是否激活直流表功能
     /// </summary>
     public bool IsDCMModuleEnabled { get; set; }
     #endregion 公共属性==>功能状态指示标志
@@ -175,11 +180,15 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     #region 【构造函数】
 
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="model">枚举的设备型号（或协议类型），[找不到对应的设备型号？]：可按枚举中的协议类型实例化对象</param>
+    /// <param name="id">设备ID,默认值为0，[可选参数]</param>
     public Dandick ( Models model , ushort id = 0 )
     {
         _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
         FunctionsInitializer ( );
-        Model = model;
         ID = id;
     }
     #endregion 构造函数
@@ -200,11 +209,19 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
         _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
+        _Decoder = _ProtocolFactory. GetDecoder ( ByteTransform );
     }
+
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
     {
-        return CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
+        OperateResult<byte[ ]> res = CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
+        _Decoder. DecodeHandShake ( res );
+        Model = _Decoder. Model;
+        Fireware = _Decoder. Firmware;
+        SN = _Decoder. SN;
+
+        return res;
     }
 
 

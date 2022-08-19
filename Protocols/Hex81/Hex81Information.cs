@@ -1,13 +1,4 @@
-﻿using DKCommunicationNET. BaseClass;
-using DKCommunicationNET. Interface;
-using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-
-
-namespace DKCommunicationNET. Protocols. Hex81;
+﻿namespace DKCommunicationNET. Protocols. Hex81;
 
 /// <summary>
 /// Hex81协议信息类
@@ -155,7 +146,7 @@ internal class Hex81Information
     internal static byte CRCcalculator ( byte[ ] sendBytes )
     {
         byte crc = 0;
-        
+
         //从第二个字节开始执行异或:忽略报文头
         for ( int i = 1 ; i < sendBytes. Length ; i++ )
         {
@@ -233,7 +224,7 @@ public enum ErrorCodes : byte
 /// //0x01=ACS；0x02=ACM；0x04=DCS；0x08=DCM；0x10=PQ 
 /// </summary>
 [Flags]
-public enum FuncB
+internal enum FuncB
 {
     ACS = 0B_0000_0001,
     ACM = 0B_0000_0010,
@@ -246,7 +237,7 @@ public enum FuncB
 /// D0=双频输出，D1=保护电流，D2=闪变输出，D3=遥信功能，D4=400Hz 高频输出，D5=电机控制
 /// </summary>
 [Flags]
-public enum FuncS
+internal enum FuncS
 {
     双频输出 = 0B_0000_0001,
     保护电流 = 0B_0000_0010,

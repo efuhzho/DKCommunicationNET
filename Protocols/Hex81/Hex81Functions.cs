@@ -7,12 +7,12 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// 基于Hex81协议的设备所支持的功能状态
 /// </summary>
-internal class Hex81FunctionsState : IProtocolFunctionsState
+internal class Hex81Functions : IProtocolFunctions
 {
-    /// <summary>
-    /// 本类设备的协议类型：Hex81
-    /// </summary>
-    public Models Model => Models. Hex81;
+    ///// <summary>
+    ///// 本类设备的协议类型：Hex81
+    ///// </summary>
+    //public Models Model => Models. Hex81;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【交流源模块】：是

@@ -17,15 +17,16 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
         // 实例化数据转换规则
         byteTransform = new TTransform ( );    
     }
+
     /// <summary>
     /// 设备型号
     /// </summary>
     public string? Model { get; set; }
 
     /// <summary>
-    /// 设备版本号
+    /// 固件版本号
     /// </summary>
-    public string? Version { get; set; }
+    public string? Fireware { get; set; }
 
     /// <summary>
     /// 设备ID

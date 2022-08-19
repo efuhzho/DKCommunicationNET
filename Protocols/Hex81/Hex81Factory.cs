@@ -8,14 +8,8 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// Hex81协议工厂类
 /// </summary>
 [Model ( Models. Hex81 )]
-internal class Hex81Factory: IProtocolFactory 
+internal class Hex81Factory : IProtocolFactory
 {
-    private readonly IByteTransform _byteTransform;
-
-    public Hex81Factory ( IByteTransform byteTransform )
-    {
-        _byteTransform = byteTransform;
-    }
     public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
     {
         return new OperateResult<IPacketBuilderOfACM> ( StringResources. Language. NotSupportedModule );
@@ -49,16 +43,16 @@ internal class Hex81Factory: IProtocolFactory
 
     public ICRCChecker GetCRCChecker ( )
     {
-        return new Hex81CRCChecker ( ) ;
+        return new Hex81CRCChecker ( );
     }
 
-    public IProtocolFunctionsState GetProtocolFunctionsState ( )
+    public IProtocolFunctions GetProtocolFunctionsState ( )
     {
-        return new Hex81FunctionsState ( );
+        return new Hex81Functions ( );
     }
 
-    public IDecoder GetDecoder ( )
+    public IDecoder GetDecoder (IByteTransform byteTransform )
     {
-        return new Hex81Decoder ( _byteTransform );
+        return new Hex81Decoder ( byteTransform );
     }
 }
