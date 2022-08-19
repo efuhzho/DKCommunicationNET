@@ -1,4 +1,5 @@
-﻿using DKCommunicationNET. Module;
+﻿using DKCommunicationNET. Core;
+using DKCommunicationNET. Module;
 
 
 namespace DKCommunicationNET. Protocols. Hex81;
@@ -7,8 +8,14 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// Hex81协议工厂类
 /// </summary>
 [Model ( Models. Hex81 )]
-internal class Hex81Factory : IProtocolFactory
-{ 
+internal class Hex81Factory<TByteTransform> : IProtocolFactory  where TByteTransform : IByteTransform
+{
+    private readonly TByteTransform _byteTransform;
+
+    public Hex81Factory ( TByteTransform byteTransform )
+    {
+        _byteTransform = byteTransform;
+    }
     public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
     {
         return new OperateResult<IPacketBuilderOfACM> ( StringResources. Language. NotSupportedModule );
@@ -48,5 +55,10 @@ internal class Hex81Factory : IProtocolFactory
     public IProtocolFunctionsState GetProtocolFunctionsState ( )
     {
         return new Hex81FunctionsState ( );
+    }
+
+    public IDecoder GetDecoder ( )
+    {
+        return new Hex81Decoder<TByteTransform> ( _byteTransform );
     }
 }

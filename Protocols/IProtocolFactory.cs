@@ -60,4 +60,10 @@ internal interface IProtocolFactory
     /// </summary>
     /// <returns></returns>
     IProtocolFunctionsState GetProtocolFunctionsState ( );
+
+    /// <summary>
+    /// 获取解码器
+    /// </summary>
+    /// <returns></returns>
+    IDecoder GetDecoder ( );
 }
