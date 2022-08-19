@@ -351,7 +351,7 @@ namespace DKCommunicationNET. BaseClass
 
         #region Private Member
         // 串口交互的核心
-        internal readonly SerialPort _SerialPort;
+        protected readonly SerialPort _SerialPort;
 
         // 数据交互的锁
         private SimpleHybirdLock hybirdLock;

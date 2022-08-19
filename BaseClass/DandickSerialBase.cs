@@ -3,8 +3,15 @@ using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. BaseClass;
 
+/// <summary>
+/// 所有丹迪克串口设备的基类
+/// </summary>
+/// <typeparam name="TTransform">数据转换器</typeparam>
 public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByteTransform, new()
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public DandickSerialBase ( )
     {
         byteTransform = new TTransform ( );    // 实例化数据转换规则
@@ -34,10 +41,19 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     }
     private TTransform byteTransform;                // 数据变换的接口
 
+    /// <summary>
+    /// 联机方法
+    /// </summary>
+    /// <returns>带成功标志的操作结果对象</returns>
     public virtual OperateResult<byte[ ]> HandShake ( )
     {
         return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
     }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns><inheritdoc/></returns>
     protected override OperateResult InitializationOnOpen ( )
     {
         return HandShake ( );

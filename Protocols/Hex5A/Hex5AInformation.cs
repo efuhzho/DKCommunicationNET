@@ -35,7 +35,7 @@ internal class Hex5AInformation
     /// </summary>
     internal const byte ErrorCode = 0x52;
     internal const byte ErrorCodeLength = 8;
-
+    
     #region CommandCodes ==> [系统设置]
 
     /// <summary>
@@ -280,7 +280,8 @@ internal class Hex5AInformation
         ACM_Cap = 2,
         DCS = 3,
         DCM = 4,
-        ACM = 7
+        ACM = 7,
+           
     }
 
     /// <summary>

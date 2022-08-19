@@ -47,8 +47,8 @@ namespace DKCommunicationNET. BasicFramework
         /// </example>
         public static string CalculateStreamMD5 ( Stream stream )
         {
-            byte[] bytes_md5 = null;
-            using ( MD5 md5 = new MD5CryptoServiceProvider ( ) )
+            byte[]? bytes_md5 = null;
+            using ( MD5 md5 = MD5. Create ( ) )
             {
                 bytes_md5 = md5. ComputeHash ( stream );
             }
@@ -74,34 +74,13 @@ namespace DKCommunicationNET. BasicFramework
         public static string CalculateStreamMD5 ( string data , Encoding encode )
         {
             string str_md5 = string. Empty;
-            using ( MD5 md5 = new MD5CryptoServiceProvider ( ) )
+            using ( MD5 md5 = MD5.Create ( ) )
             {
                 byte[] bytes_md5 = md5. ComputeHash ( encode. GetBytes ( data ) );
                 str_md5 = BitConverter. ToString ( bytes_md5 ). Replace ( "-" , "" );
             }
             return str_md5;
         }
-
-#if !NETSTANDARD2_0
-        /// <summary>
-        /// 获取内存图片的md5码 -> Get the MD5 code of the memory picture
-        /// </summary>
-        /// <param name="bitmap">内存图片</param>
-        /// <returns>Md5字符串</returns>
-        /// <example>
-        /// 下面举例实现获取一个图像的md5码
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="CalculateStreamMD5Example2" title="CalculateStreamMD5示例" />
-        /// </example>
-        public static string CalculateStreamMD5 ( Bitmap bitmap )
-        {
-            MemoryStream ms = new MemoryStream ( );
-            bitmap. Save ( ms , bitmap. RawFormat );
-            MD5 md5 = new MD5CryptoServiceProvider ( );
-            byte[] bytes_md5 = md5. ComputeHash ( ms );
-            ms. Dispose ( );
-            return BitConverter. ToString ( bytes_md5 ). Replace ( "-" , "" );
-        }
-#endif
 
         #endregion
 
@@ -113,8 +92,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="size">实际的大小值</param>
         /// <returns>最终的字符串值</returns>
         /// <example>
-        /// 比如说我们获取了文件的长度，这个长度可以来自于本地，也可以来自于数据库查询
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetSizeDescriptionExample" title="GetSizeDescription示例" />
+        /// 比如说我们获取了文件的长度，这个长度可以来自于本地，也可以来自于数据库查询       
         /// </example>
         public static string GetSizeDescription ( long size )
         {
@@ -147,11 +125,7 @@ namespace DKCommunicationNET. BasicFramework
         /// 从一个时间差返回带单位的描述
         /// </summary>
         /// <param name="ts">实际的时间差</param>
-        /// <returns>最终的字符串值</returns>
-        /// <example>
-        /// 比如说我们获取了一个时间差信息
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetTimeSpanDescriptionExample" title="GetTimeSpanDescription示例" />
-        /// </example>
+        /// <returns>最终的字符串值</returns>       
         public static string GetTimeSpanDescription ( TimeSpan ts )
         {
             if ( ts. TotalSeconds <= 60 )
@@ -183,10 +157,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <typeparam name="T">数据类型</typeparam>
         /// <param name="array">原数据</param>
         /// <param name="data">等待新增的数据</param>
-        /// <param name="max">原数据的最大值</param>
-        /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="AddArrayDataExample" title="AddArrayData示例" />
-        /// </example>
+        /// <param name="max">原数据的最大值</param>       
         public static void AddArrayData<T> ( ref T[] array , T[] data , int max )
         {
             if ( data == null ) return;           // 数据为空
@@ -267,7 +238,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example>
         public static T[] ArrayExpandToLengthEven<T> ( T[] data )
         {
-            if ( data == null ) return new T[0];
+            if ( data == null ) return Array. Empty<T> ( );
 
             if ( data. Length % 2 == 1 )
             {
@@ -876,7 +847,7 @@ namespace DKCommunicationNET. BasicFramework
         public static byte[] BytesArrayRemoveDouble ( byte[] value , int leftLength , int rightLength )
         {
             if ( value == null ) return null;
-            if ( value. Length <= ( leftLength + rightLength ) ) return new byte[0];
+            if ( value. Length <= ( leftLength + rightLength ) ) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[value. Length - leftLength - rightLength];
             Array. Copy ( value , leftLength , buffer , 0 , buffer. Length );

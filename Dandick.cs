@@ -6,9 +6,13 @@ using DKCommunicationNET. Protocols;
 using DKCommunicationNET. Protocols. Hex5A;
 using DKCommunicationNET. Protocols. Hex81;
 using DKCommunicationNET. BasicFramework;
+using System. ComponentModel. DataAnnotations;
 
 namespace DKCommunicationNET;
 
+/// <summary>
+/// 丹迪克设备类
+/// </summary>
 public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 {
     #region 【私有字段】
@@ -62,7 +66,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// </summary>
     public bool IsACSModuleEnabled { get; set; } = true;
 
-    public bool IsACMModuleEnabled { get; set; } 
+    public bool IsACMModuleEnabled { get; set; }
 
     /// <summary>
     /// 是否装配直流源模块
@@ -188,12 +192,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     void FunctionsInitializer ( )
     {
         //
-        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ).Content;
-        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ).Content;
-        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ).Content;
-        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ).Content;
-        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ).Content;
-        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ).Content;
+        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ). Content;
+        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ). Content;
+        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ). Content;
+        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ). Content;
+        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ). Content;
+        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
         _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
 
@@ -203,6 +207,10 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns><inheritdoc/></returns>
     public override OperateResult<byte[ ]> HandShake ( )
     {
         return CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
@@ -246,27 +254,39 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #region Public Methods ==> [ACS]
 
 
-    public OperateResult<byte[ ]> GetRanges ( )
+    public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
         return CommandAction. Action ( PacketsOfACS. PacketOfGetRanges , CheckResponse );
     }
 
-    public OperateResult<byte[ ]> SetAmplitude ( float amplitude )
+    public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude )
+    {
+        throw new NotImplementedException ( );
+
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns><inheritdoc cref="IModuleACS.OpenACS"/></returns>
+    /// <exception cref="NotImplementedException" >description</exception>
+    public OperateResult<byte[ ]> OpenACS ( )
+    {
+        throw new NotImplementedException ( "meiyou此功能" );
+
+    }
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <returns><inheritdoc/></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public OperateResult<byte[ ]> CloseACS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    OperateResult<byte[ ]> IModuleACS.Open ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    OperateResult<byte[ ]> IModuleACS.Close ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 )
+    public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
         throw new NotImplementedException ( );
     }
@@ -281,7 +301,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> SetWireMode ( string wireMode )
+    public OperateResult<byte[ ]> SetWireMode ( Enum wireMode )
     {
         throw new NotImplementedException ( );
     }

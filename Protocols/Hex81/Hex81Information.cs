@@ -154,7 +154,7 @@ internal class Hex81Information
     internal static byte CRCcalculator ( byte[ ] sendBytes )
     {
         byte crc = 0;
-
+        
         //从第二个字节开始执行异或:忽略报文头
         for ( int i = 1 ; i < sendBytes. Length ; i++ )
         {
@@ -255,3 +255,5 @@ public enum FuncS
     电机控制 = 0B_0010_0000,
 }
 #endregion 枚举类型
+
+

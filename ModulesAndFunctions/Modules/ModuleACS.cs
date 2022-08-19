@@ -8,23 +8,23 @@ internal class ModuleACS : IModuleACS
 {
     public bool IsEnabled { get; set; }=true;
 
-    public OperateResult<byte[ ]> Close ( )
+    public OperateResult<byte[ ]> CloseACS ( )
     {
         throw new NotImplementedException ( );
 
     }
 
-    public OperateResult<byte[ ]> GetRanges ( )
+    public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> Open ( )
+    public OperateResult<byte[ ]> OpenACS ( )
     {
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> SetAmplitude ( float amplitude )
+    public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude )
     {
         throw new NotImplementedException ( );
     }
@@ -39,12 +39,12 @@ internal class ModuleACS : IModuleACS
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 )
+    public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 )
     {
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> SetWireMode ( string wireMode )
+    public OperateResult<byte[ ]> SetWireMode ( Enum wireMode )
     {
         throw new NotImplementedException ( );
     }
