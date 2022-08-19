@@ -10,16 +10,22 @@ namespace DKCommunicationNET. BaseClass;
 public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByteTransform, new()
 {
     /// <summary>
-    /// 
+    /// 构造函数
     /// </summary>
     public DandickSerialBase ( )
     {
-        byteTransform = new TTransform ( );    // 实例化数据转换规则
+        // 实例化数据转换规则
+        byteTransform = new TTransform ( );    
     }
     /// <summary>
-    /// 设备协议类型
+    /// 设备型号
     /// </summary>
-    public Models Model { get; set; }
+    public string? Model { get; set; }
+
+    /// <summary>
+    /// 设备版本号
+    /// </summary>
+    public string? Version { get; set; }
 
     /// <summary>
     /// 设备ID
@@ -39,10 +45,12 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
         get { return byteTransform; }
         set { byteTransform = value; }
     }
-    private TTransform byteTransform;                // 数据变换的接口
+
+    // 数据变换的接口
+    private TTransform byteTransform;               
 
     /// <summary>
-    /// 联机方法
+    /// 联机命令：执行该命令则自动获取设备信息并初始化实例对象
     /// </summary>
     /// <returns>带成功标志的操作结果对象</returns>
     public virtual OperateResult<byte[ ]> HandShake ( )

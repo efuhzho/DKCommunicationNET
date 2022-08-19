@@ -31,6 +31,7 @@ internal class Hex81Information
     /// 发送故障代码，带枚举数据
     /// </summary>
     internal const byte ErrorCode = 0x52;
+
     internal const byte ErrorCodeLength = 8;
 
     #region CommandCodes ==> [系统设置]

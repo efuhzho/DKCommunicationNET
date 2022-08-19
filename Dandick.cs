@@ -201,11 +201,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
         _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
     }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <returns><inheritdoc/></returns>
+    /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
     {
         return CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
@@ -244,6 +240,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
         return response;
     }
+    /// <inheritdoc/>
     #endregion Core Interative 核心交互
 
     #region Public Methods ==> [ACS]
@@ -254,6 +251,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         return CommandAction. Action ( PacketsOfACS. PacketOfGetRanges , CheckResponse );
     }
 
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude )
     {
         throw new NotImplementedException ( );
