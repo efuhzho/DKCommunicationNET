@@ -8,6 +8,295 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// </summary>
 public interface IModuleACS
 {
+    #region 【属性】
+
+    /// <summary>
+    /// 电压档位个数
+    /// </summary>
+    internal byte RangesCount_ACU { get; }
+
+    /// <summary>
+    /// 电流档位个数
+    /// </summary>
+    internal byte RangesCount_ACI { get; }
+
+    /// <summary>
+    /// 当前电压档位的索引值，0为最大档位
+    /// </summary>
+    internal int RangeIndex_ACU { get; set; }
+
+    /// <summary>
+    /// 当前交流电压档位值，单位V
+    /// </summary>
+    float Range_ACU { get; }
+
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    internal int RangeIndex_ACI { get; set; }
+
+    /// <summary>
+    /// 当前交流电流档位值，单位A
+    /// </summary>
+    float Range_ACI { get; }
+
+    /// <summary>
+    /// 保护电流档位的索引值，0为最大档位
+    /// </summary>
+    internal int RangeIndex_IProtect { get; set; }
+
+    /// <summary>
+    /// 当前保护电流档位值，单位A
+    /// </summary>
+    float Range_IProtect { get; }
+
+    /// <summary>
+    /// 保护电流档位个数
+    /// </summary>
+    internal byte RangesCount_IProtect { get; }
+
+    /// <summary>
+    /// 只支持A相电压输出的起始档位号
+    /// </summary>
+    internal byte URanges_Asingle { get; }
+
+    /// <summary>
+    /// 只支持A相电流输出的起始档位号
+    /// </summary>
+    internal byte IRanges_Asingle { get; }
+
+    /// <summary>
+    /// 只支持A相保护电流输出的起始档位号
+    /// </summary>
+    internal byte IProtectRanges_Asingle { get; }
+
+    /// <summary>
+    /// 电压档位集合
+    /// </summary>
+    float[ ] ACU_RangesList { get; set; }
+
+    /// <summary>
+    /// 电流档位集合
+    /// </summary>
+    float[ ] ACI_RangesList { get; set; }
+
+    /// <summary>
+    /// 保护电流档位集合
+    /// </summary>
+    float[ ] IProtect_RangesList { get; set; }
+
+    /// <summary>
+    /// 当前接线模式枚举
+    /// </summary>
+    Enum WireMode { get; set; }
+
+    /// <summary>
+    /// 当前闭环模式枚举
+    /// </summary>
+    Enum CloseLoopMode { get; set; }
+
+    /// <summary>
+    /// 当前谐波模式枚举
+    /// </summary>
+    Enum HarmonicMode { get; set; }
+
+    /// <summary>
+    /// 频率(支持双频输出时为AB相频率)
+    /// </summary>
+    float Freq { get; set; }
+
+    /// <summary>
+    /// C相频率(支持双频输出时有效)
+    /// </summary>
+    float Freq_C { get; set; }
+
+    /// <summary>
+    /// 当前输出的谐波个数
+    /// </summary>
+    byte HarmonicCount { get; set; }
+
+    /// <summary>
+    /// 当前所有谐波输出通道
+    /// </summary>
+    Enum HarmonicChannels { get; set; }
+
+    /// <summary>
+    /// 当前所有谐波输出数据
+    /// </summary>
+    HarmonicArgs[ ] Harmonics { get; set; }
+
+    /// <summary>
+    /// A相电压数据
+    /// </summary>
+    float UA { get; set; }
+
+    /// <summary>
+    /// B相电压数据
+    /// </summary>
+    float UB { get; set; }
+
+    /// <summary>
+    /// C相电压数据
+    /// </summary>
+    float UC { get; set; }
+
+    /// <summary>
+    /// A相电流数据
+    /// </summary>
+    float IA { get; set; }
+
+    /// <summary>
+    /// B相电流数据
+    /// </summary>
+    float IB { get; set; }
+
+    /// <summary>
+    /// C相电流数据
+    /// </summary>
+    float IC { get; set; }
+
+    /// <summary>
+    /// A相保护电流数据
+    /// </summary>
+    float IPA { get; set; }
+
+    /// <summary>
+    /// B相保护电流数据
+    /// </summary>
+    float IPB { get; set; }
+
+    /// <summary>
+    /// C相保护电流数据
+    /// </summary>
+    float IPC { get; set; }
+
+    /// <summary>
+    /// A相电压相位数据
+    /// </summary>
+    float FAI_UA { get; set; }
+
+    /// <summary>
+    /// B相电压相位数据
+    /// </summary>
+    float FAI_UB { get; set; }
+
+    /// <summary>
+    /// C相电压相位数据
+    /// </summary>
+    float FAI_UC { get; set; }
+
+    /// <summary>
+    /// A相电流相位数据
+    /// </summary>
+    float FAI_IA { get; set; }
+
+    /// <summary>
+    /// B相电流相位数据
+    /// </summary>
+    float FAI_IB { get; set; }
+
+    /// <summary>
+    /// C相电流相位数据
+    /// </summary>
+    float FAI_IC { get; set; }
+
+    /// <summary>
+    /// A相有功功率数据
+    /// </summary>
+    float PA { get; set; }
+
+    /// <summary>
+    /// B相有功功率数据
+    /// </summary>
+    float PB { get; set; }
+
+    /// <summary>
+    /// C相有功功率数据
+    /// </summary>
+    float PC { get; set; }
+
+    /// <summary>
+    /// 总有功功率数据
+    /// </summary>
+    float P { get; set; }
+
+    /// <summary>
+    /// A相无功功率数据
+    /// </summary>
+    float QA { get; set; }
+
+    /// <summary>
+    /// B相无功功率数据
+    /// </summary>
+    float QB { get; set; }
+
+    /// <summary>
+    /// C相无功功率数据
+    /// </summary>
+    float QC { get; set; }
+
+    /// <summary>
+    /// 总无功功率数据
+    /// </summary>    
+    float Q { get; set; }
+
+    /// <summary>
+    /// A相视在功率，单位：VA
+    /// </summary>
+    float SA { get; }
+
+    /// <summary>
+    /// B相视在功率，单位：VA
+    /// </summary>
+    float SB { get; }
+
+    /// <summary>
+    /// C相视在功率，单位：VA
+    /// </summary>
+    float SC { get; }
+
+    /// <summary>
+    /// 总实在功率
+    /// </summary>
+    float S { get; }
+
+    /// <summary>
+    /// A相功率因数
+    /// </summary>
+    float PFA { get; }
+
+    /// <summary>
+    /// B相功率因数
+    /// </summary>
+    float PFB { get; }
+
+    /// <summary>
+    /// C相功率因数
+    /// </summary>
+    float PFC { get; }
+
+    /// <summary>
+    /// 总功率因数
+    /// </summary>
+    float PF { get; }
+
+    /// <summary>
+    /// A相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    byte Flag_A { get; }
+
+    /// <summary>
+    /// B相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    byte Flag_B { get; }
+
+    /// <summary>
+    /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    byte Flag_C { get; }
+
+    #endregion 属性
+
     /// <summary>
     /// 交流源打开命令
     /// </summary>    
@@ -93,6 +382,11 @@ public interface IModuleACS
     /// <returns><inheritdoc cref="OpenACS"/></returns>
     public OperateResult<byte[ ]> SetWireMode ( Enum WireMode );
 
+    /// <summary>
+    /// 设置闭环模式
+    /// </summary>
+    /// <param name="ClosedLoopMode">枚举类型参数</param>
+    /// <returns></returns>
     public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode );
 
     /// <summary>
@@ -100,7 +394,7 @@ public interface IModuleACS
     /// </summary>
     /// <param name="HarmonicMode">枚举类型参数</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonicMode(Enum HarmonicMode );
+    OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode );
 
     /// <summary>
     /// 设置谐波参数
@@ -108,6 +402,6 @@ public interface IModuleACS
     /// <param name="harmonicChannels"></param>
     /// <param name="harmonicArgs"></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels ,HarmonicArgs[] harmonicArgs );
+    OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs );
 }
 

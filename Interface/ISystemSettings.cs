@@ -8,6 +8,9 @@ using DKCommunicationNET. Module;
 
 namespace DKCommunicationNET. Interface;
 
+/// <summary>
+/// 
+/// </summary>
 public interface ISystemSettings
 {
     ISystemMode SystemMode { get; set; }

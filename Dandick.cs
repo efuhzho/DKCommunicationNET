@@ -200,11 +200,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
         _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
-
-
-        //SystemSettings = new SystemSettings ( model );
-        //SystemSettings. SystemMode = new SystemMode ( );
-
     }
 
     /// <summary>

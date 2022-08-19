@@ -21,6 +21,9 @@ internal interface IProtocolFunctionsState
     /// </summary>
     public bool IsSupportedForACS { get; }
 
+    /// <summary>
+    /// 是否支持交流表模块
+    /// </summary>
     public bool IsSupportedForACM { get; }
 
     /// <summary>
@@ -43,7 +46,11 @@ internal interface IProtocolFunctionsState
     /// </summary>
     public bool IsSupportedForPQ { get; }
 
+    /// <summary>
+    /// 获取联机协议报文
+    /// </summary>
+    /// <returns>含协议报文的操作结果对象</returns>
     OperateResult<byte[ ]> GetPacketOfHandShake ( );
 
-    //TODO 协议增加
+    //TODO 协议功能增加
 }

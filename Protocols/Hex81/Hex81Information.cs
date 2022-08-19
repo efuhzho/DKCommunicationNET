@@ -229,7 +229,7 @@ public enum ErrorCodes : byte
 }
 
 /// <summary>
-/// //0x01:ACS;0x02:ACM;0x04:DCS;0x08:DCM;0x10:PQ 
+/// //0x01=ACS；0x02=ACM；0x04=DCS；0x08=DCM；0x10=PQ 
 /// </summary>
 [Flags]
 public enum FuncB
@@ -242,7 +242,7 @@ public enum FuncB
 }
 
 /// <summary>
-/// D0：双频输出，D1：保护电流，D2：闪变输出，D3：遥信功能，D4：400Hz 高频输出，D5：电机控制
+/// D0=双频输出，D1=保护电流，D2=闪变输出，D3=遥信功能，D4=400Hz 高频输出，D5=电机控制
 /// </summary>
 [Flags]
 public enum FuncS

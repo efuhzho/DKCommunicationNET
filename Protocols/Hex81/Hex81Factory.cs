@@ -3,9 +3,12 @@
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
+/// <summary>
+/// Hex81协议工厂类
+/// </summary>
 [Model ( Models. Hex81 )]
 internal class Hex81Factory : IProtocolFactory
-{
+{ 
     public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
     {
         return new OperateResult<IPacketBuilderOfACM> ( StringResources. Language. NotSupportedModule );
