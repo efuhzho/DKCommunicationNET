@@ -163,65 +163,95 @@ internal class Hex81Information
         return crc;
     }
 
-    #endregion Internal Methods
+    #endregion Internal Methods 
+}
 
-    #region 【枚举类型】
-    public enum SystemModes : byte
-    {
-        /// <summary>
-        /// 标准源模式
-        /// </summary>
-        ModeDefault = 0,
-
-        /// <summary>
-        /// 标准表模式
-        /// </summary>
-        ModeStandardMeter = 1,
-
-        /// <summary>
-        /// 标准表（钳表）模式
-        /// </summary>
-        ModeStandardMeterClamp = 2,
-
-        /// <summary>
-        /// 标准源校准模式
-        /// </summary>
-        ModeStandardSourceCalibrate = 10,
-
-        /// <summary>
-        /// 标准表校准模式
-        /// </summary>
-        ModeStandardMeterCalibrate = 11,
-
-        /// <summary>
-        /// 钳表校准模式
-        /// </summary>
-        ModeStandardClampCalibrate = 12,
-
-        /// <summary>
-        /// 直流源校准模式
-        /// </summary>
-        ModeDCSourceCalibrate = 13,
-
-        /// <summary>
-        /// 直流表校准模式
-        /// </summary>
-        ModeDCMeterCalibrate = 14
-    }
+#region 【枚举类型】
+/// <summary>
+/// 系统模式
+/// </summary>
+public enum SystemModes : byte
+{
+    /// <summary>
+    /// 标准源模式
+    /// </summary>
+    ModeDefault = 0,
 
     /// <summary>
-    /// 故障码定义：枚举。此为获取故障信息的第二种方式
+    /// 标准表模式
     /// </summary>
-    [Flags]
-    public enum ErrorCodes : byte
-    {
-        ErrorUa = 0b_0000_0001,    // 0x01 // 1
-        ErrorUb = 0b_0000_0010,    // 0x02 // 2
-        ErrorUc = 0b_0000_0100,    // 0x04 // 4
-        ErrorIa = 0b_0000_1000,    // 0x08 // 8
-        ErrorIb = 0b_0001_0000,    // 0x10 // 16
-        ErrorIc = 0b_0010_0000,    // 0x20 // 32
-        ErrorDC = 0b_0100_0000     // 0x40 // 64
-    }
-    #endregion 枚举类型
+    ModeStandardMeter = 1,
+
+    /// <summary>
+    /// 标准表（钳表）模式
+    /// </summary>
+    ModeStandardMeterClamp = 2,
+
+    /// <summary>
+    /// 标准源校准模式
+    /// </summary>
+    ModeStandardSourceCalibrate = 10,
+
+    /// <summary>
+    /// 标准表校准模式
+    /// </summary>
+    ModeStandardMeterCalibrate = 11,
+
+    /// <summary>
+    /// 钳表校准模式
+    /// </summary>
+    ModeStandardClampCalibrate = 12,
+
+    /// <summary>
+    /// 直流源校准模式
+    /// </summary>
+    ModeDCSourceCalibrate = 13,
+
+    /// <summary>
+    /// 直流表校准模式
+    /// </summary>
+    ModeDCMeterCalibrate = 14
 }
+
+/// <summary>
+/// 故障码定义：枚举。此为获取故障信息的第二种方式
+/// </summary>
+[Flags]
+public enum ErrorCodes : byte
+{
+    ErrorUa = 0b_0000_0001,    // 0x01 // 1
+    ErrorUb = 0b_0000_0010,    // 0x02 // 2
+    ErrorUc = 0b_0000_0100,    // 0x04 // 4
+    ErrorIa = 0b_0000_1000,    // 0x08 // 8
+    ErrorIb = 0b_0001_0000,    // 0x10 // 16
+    ErrorIc = 0b_0010_0000,    // 0x20 // 32
+    ErrorDC = 0b_0100_0000     // 0x40 // 64
+}
+
+/// <summary>
+/// //0x01:ACS;0x02:ACM;0x04:DCS;0x08:DCM;0x10:PQ 
+/// </summary>
+[Flags]
+public enum FuncB
+{
+    ACS = 0B_0000_0001,
+    ACM = 0B_0000_0010,
+    DCS = 0B_0000_0100,
+    DCM = 0B_0000_1000,
+    EPQ = 0B_0001_0000,
+}
+
+/// <summary>
+/// D0：双频输出，D1：保护电流，D2：闪变输出，D3：遥信功能，D4：400Hz 高频输出，D5：电机控制
+/// </summary>
+[Flags]
+public enum FuncS
+{
+    双频输出 = 0B_0000_0001,
+    保护电流 = 0B_0000_0010,
+    闪变输出 = 0B_0000_0100,
+    遥信功能 = 0B_0000_1000,
+    高频输出 = 0B_0001_0000,
+    电机控制 = 0B_0010_0000,
+}
+#endregion 枚举类型
