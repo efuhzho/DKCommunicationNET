@@ -8,11 +8,11 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// Hex81协议工厂类
 /// </summary>
 [Model ( Models. Hex81 )]
-internal class Hex81Factory<TByteTransform> : IProtocolFactory  where TByteTransform : IByteTransform
+internal class Hex81Factory: IProtocolFactory 
 {
-    private readonly TByteTransform _byteTransform;
+    private readonly IByteTransform _byteTransform;
 
-    public Hex81Factory ( TByteTransform byteTransform )
+    public Hex81Factory ( IByteTransform byteTransform )
     {
         _byteTransform = byteTransform;
     }
@@ -59,6 +59,6 @@ internal class Hex81Factory<TByteTransform> : IProtocolFactory  where TByteTrans
 
     public IDecoder GetDecoder ( )
     {
-        return new Hex81Decoder<TByteTransform> ( _byteTransform );
+        return new Hex81Decoder ( _byteTransform );
     }
 }

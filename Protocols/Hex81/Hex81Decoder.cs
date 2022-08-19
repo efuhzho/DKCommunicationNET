@@ -6,10 +6,10 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// Hex81协议解码器
 /// </summary>
-internal class Hex81Decoder<TByteTransform> : IDecoder where TByteTransform : IByteTransform
+internal class Hex81Decoder : IDecoder 
 {
-    private readonly TByteTransform _byteTransform;
-    public Hex81Decoder ( TByteTransform byteTransform )
+    private readonly IByteTransform _byteTransform;
+    public Hex81Decoder ( IByteTransform byteTransform )
     {
         _byteTransform = byteTransform;
     }
