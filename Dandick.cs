@@ -209,7 +209,86 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     #region 公共属性==>[系统设置]
 
     public ISystemSettings? SystemSettings { get; private set; }
-   
+
+    public float Range_ACU => throw new NotImplementedException ( );
+
+    public float Range_ACI => throw new NotImplementedException ( );
+
+    public float Range_IProtect => throw new NotImplementedException ( );
+
+    public float[ ] ACU_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float[ ] ACI_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float[ ] IProtect_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Freq { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Freq_C { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public byte HarmonicCount { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public HarmonicArgs[ ] Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float P { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+    public float SA => throw new NotImplementedException ( );
+
+    public float SB => throw new NotImplementedException ( );
+
+    public float SC => throw new NotImplementedException ( );
+
+    public float S => throw new NotImplementedException ( );
+
+    public float PFA => throw new NotImplementedException ( );
+
+    public float PFB => throw new NotImplementedException ( );
+
+    public float PFC => throw new NotImplementedException ( );
+
+    public float PF => throw new NotImplementedException ( );
+
+    public byte Flag_A => throw new NotImplementedException ( );
+
+    public byte Flag_B => throw new NotImplementedException ( );
+
+    public byte Flag_C => throw new NotImplementedException ( );
+
+    byte IModuleACS.RangesCount_ACU => throw new NotImplementedException ( );
+
+    byte IModuleACS.RangesCount_ACI => throw new NotImplementedException ( );
+
+    int IModuleACS.RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    int IModuleACS.RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    int IModuleACS.RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+    byte IModuleACS.RangesCount_IProtect => throw new NotImplementedException ( );
+
+    byte IModuleACS.URanges_Asingle => throw new NotImplementedException ( );
+
+    byte IModuleACS.IRanges_Asingle => throw new NotImplementedException ( );
+
+    byte IModuleACS.IProtectRanges_Asingle => throw new NotImplementedException ( );
+
 
     #endregion 公共属性==>[系统设置]
 
@@ -360,6 +439,21 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     }
 
     public OperateResult<byte[ ]> SetWireMode ( Enum wireMode )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
     {
         throw new NotImplementedException ( );
     }
