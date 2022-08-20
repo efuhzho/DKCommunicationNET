@@ -122,5 +122,6 @@ namespace DKCommunicationNET. Protocols. Hex5A
             //协议版本号B
             byte PT_VerB= buffer[^4];
         }
+    
     }
 }

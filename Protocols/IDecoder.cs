@@ -16,8 +16,5 @@ internal interface IDecoder:IDeviceFunctions
     /// 解析联机指令的回复报文
     /// </summary>
     /// <param name="result">联机指令操作结果</param>
-    void DecodeHandShake ( OperateResult<byte[ ]> result );
-
-
-    void DecodeHandShake ( OperateResult<byte> result );
+    void DecodeHandShake ( OperateResult<byte[ ]> result );   
 }
