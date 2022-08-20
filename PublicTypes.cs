@@ -1,11 +1,4 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Interface;
-
-namespace DKCommunicationNET;
+﻿namespace DKCommunicationNET;
 
 /// <summary>
 /// 设备型号列表，关联协议类型
@@ -51,6 +44,8 @@ public enum Models
     /// 【设备型号】<inheritdoc cref = "Hex5A" />
     /// </summary>
     DKPTS = Hex5A,
+
+    //TODO 完善设备型号
 }
 
 #region Structs

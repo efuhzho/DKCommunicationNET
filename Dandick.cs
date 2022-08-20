@@ -153,13 +153,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
         //由抽象协议工厂根据客户选择的设备型号返回对应的实例。
         _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
 
-
-        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ). Content;
-        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ). Content;
-        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ). Content;
-        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ). Content;
-        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ). Content;
-        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
+        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS (id ). Content;
+        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( id ). Content;
+        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( id ). Content;
+        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( id ). Content;
+        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO (id ). Content;
+        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ (id ). Content;
         _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
         _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
         _Decoder = _ProtocolFactory. GetDecoder ( ByteTransform );
@@ -292,30 +291,52 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     public Enum HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
     /// <inheritdoc/>
     public HarmonicArgs[ ] Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IPA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IPB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float IPC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float FAI_IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float PA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float PB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float PC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float P { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float QA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float QB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-
     /// <inheritdoc/>
     public float SA { get; private set; }
     /// <inheritdoc/>
@@ -359,11 +380,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     #endregion 公共属性>>>【交流源】
 
-
-
-
-
-
     #endregion 【公共属性】
 
 
@@ -376,11 +392,15 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
         _Decoder. DecodeHandShake ( res );
         Model = _Decoder. Model;
         Firmware = _Decoder. Firmware;
+        ProtocolVer = _Decoder. ProtocolVer;
         SN = _Decoder. SN;
         IsEnabled_ACS = _Decoder. IsEnabled_ACS;
         IsEnabled_ACM = _Decoder. IsEnabled_ACM;
+        IsEnabled_ACM_Cap= _Decoder. IsEnabled_ACM_Cap;
         IsEnabled_DCS = _Decoder. IsEnabled_DCS;
+        IsEnabled_DCS_AUX = _Decoder. IsEnabled_DCS_AUX;
         IsEnabled_DCM = _Decoder. IsEnabled_DCM;
+        IsEnabled_DCM_RIP = _Decoder. IsEnabled_DCM_RIP;
         IsEnabled_EPQ = _Decoder. IsEnabled_EPQ;
         IsEnabled_IO = _Decoder. IsEnabled_IO;
         IsEnabled_DualFreqs = _Decoder. IsEnabled_DualFreqs;
@@ -389,6 +409,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
         IsEnabled_YX = _Decoder. IsEnabled_YX;
         IsEnabled_HF = _Decoder. IsEnabled_HF;
         IsEnabled_PWM = _Decoder. IsEnabled_PWM;
+        IsEnabled_PPS = _Decoder. IsEnabled_PPS;
         return res;
     }
 
@@ -397,6 +418,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
 
     #region --------------------------------- Core Interative 核心交互-------------------------
+    /// <summary>
+    /// 发送报文，获取并校验下位机的回复报文。
+    /// </summary>
+    /// <param name="send">发送的报文</param>
+    /// <returns></returns>
     private OperateResult<byte[ ]> CheckResponse ( byte[ ] send )
     {
         // 发送报文并获取回复报文
@@ -502,32 +528,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
 }
 
-internal class CheckModuleState
-{
-    // throw new Exception ( StringResources. Language. NotEnabledModule + $"型号【{Model}】，编号【{SN}】" );
-    public static Dictionary<int , string> EnumNamedValues<T> ( ) where T : System. Enum
-    {
-        var result = new Dictionary<int , string> ( );
-        var values = Enum. GetValues ( typeof ( T ) );
 
-        foreach ( int item in values )
-            result. Add ( item , Enum. GetName ( typeof ( T ) , item )! );
-        return result;
-    }
-    public void Do ( )
-    {
-
-        var map = EnumNamedValues<Models> ( );
-
-        foreach ( var pair in map )
-        {
-
-        }
-
-
-    }
-
-}
 
 
 

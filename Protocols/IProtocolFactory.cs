@@ -10,7 +10,7 @@ using DKCommunicationNET. Protocols;
 namespace DKCommunicationNET;
 
 /// <summary>
-/// 协议工厂接口
+/// 协议抽象工厂接口
 /// </summary>
 internal interface IProtocolFactory
 {    
@@ -18,37 +18,37 @@ internal interface IProtocolFactory
     /// 获取交流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( );
+    OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS (ushort id );
 
     /// <summary>
     /// 获取交流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( );
+    OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( ushort id );
 
     /// <summary>
     /// 获取直流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( );
+    OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( ushort id );
 
     /// <summary>
     /// 获取直流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( );
+    OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM (ushort id );
 
     /// <summary>
     /// 获取开关量报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( );
+    OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( ushort id );
 
     /// <summary>
     /// 获取电能报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( );
+    OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( ushort id );
 
     /// <summary>
     /// 获取CRC校验器对象

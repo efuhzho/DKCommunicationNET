@@ -10,33 +10,33 @@ namespace DKCommunicationNET. Protocols. Hex81;
 [Model ( Models. Hex81 )]
 internal class Hex81Factory : IProtocolFactory
 {
-    public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( )
+    public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( ushort id )
     {
         return new OperateResult<IPacketBuilderOfACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( )
+    public OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilderOfACS ( ) as IPacketsBuilderOfACS );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilderOfACS (  id ) as IPacketsBuilderOfACS );
 
     }
 
-    public OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( )
+    public OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( ushort id )
     {
         return new OperateResult<IPacketBuilderOfDCM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( )
+    public OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( ushort id )
     {
         return new OperateResult<IPacketBuilderOfDCS> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( )
+    public OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( ushort id )
     {
         return new OperateResult<IPacketBuilderOfIO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( )
+    public OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( ushort id )
     {
         return new OperateResult<IPacketBuilderOfPQ> ( StringResources. Language. NotSupportedModule );
     }

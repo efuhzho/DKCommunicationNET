@@ -8,7 +8,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilderOfACS : IPacketsBuilderOfACS
     {
-        public Hex81PacketBuilderOfACS ( ushort id = 0 )
+        public Hex81PacketBuilderOfACS ( ushort id )
         {
             ID = id;
         }

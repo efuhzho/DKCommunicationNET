@@ -8,8 +8,8 @@ namespace DKCommunicationNET. Protocols;
 
 internal interface IPacketBuilderHelper
 {
-    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id = 0 );
-    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id = 0 );
+    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id  );
+    OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id  );
 }
 
 internal interface IPacketsBuilderOfACS

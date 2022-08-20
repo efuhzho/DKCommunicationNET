@@ -1,5 +1,6 @@
 ﻿using DKCommunicationNET. Protocols. Hex81;
 using System. Collections. Generic;
+using System. IO. Ports;
 
 namespace DKCommunicationNET. ModulesAndFunctions;
 
@@ -8,6 +9,8 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// </summary>
 public interface IModuleACS
 {
+
+    //TODO 添加输出精度信息
     #region 【属性】
 
     /// <summary>

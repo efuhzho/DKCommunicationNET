@@ -10,7 +10,7 @@ namespace DKCommunicationNET. Protocols. Hex5A
     {
         public ushort ID { get; set ; }
 
-        public Hex5APacketBuilderOfACS (ushort id =0)
+        public Hex5APacketBuilderOfACS (ushort id )
         {
             ID = id;
         }
