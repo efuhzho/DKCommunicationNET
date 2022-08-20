@@ -139,10 +139,53 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     #endregion 私有字段
 
-    #region 【公共属性】[功能状态指示标志]
-    #region 公共属性==>[功能状态指示标志]
-    #region FuncB
+    #region 【构造函数】
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="model">枚举的设备型号（或协议类型），[找不到对应的设备型号？]：可按枚举中的协议类型实例化对象</param>
+    /// <param name="id">设备ID,默认值为0，[可选参数]</param>
+    public Dandick ( Models model , ushort id = 0 )
+    {
+        //设备ID初始化
+        ID = id;
 
+        //由抽象协议工厂根据客户选择的设备型号返回对应的实例。
+        _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
+
+
+        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ). Content;
+        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ). Content;
+        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ). Content;
+        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ). Content;
+        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ). Content;
+        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
+        _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
+        _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
+        _Decoder = _ProtocolFactory. GetDecoder ( ByteTransform );
+    }
+    #endregion 构造函数
+
+
+    #region 【公共属性】
+
+    #region 公共属性>>>【设备信息】
+
+    /// <inheritdoc/>
+    public string? Model { get; set; }
+
+    /// <inheritdoc/>
+    public string? SN { get; set; }
+
+    /// <inheritdoc/>
+    public string? Firmware { get; private set; }
+
+    /// <inheritdoc/>
+    public string? ProtocolVer { get; private set; }
+    #endregion 公共属性>>>【设备信息】
+
+    #region 公共属性>>>【功能状态指示标志】
+    #region FuncB
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
@@ -153,10 +196,16 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     /// </summary>
     public bool IsEnabled_ACM { get; private set; }
 
+    /// <inheritdoc/>
+    public bool IsEnabled_ACM_Cap { get; private set; }
+
     /// <summary>
     /// 指示是否激活直流源功能
     /// </summary>
     public bool IsEnabled_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsEnabled_DCS_AUX { get; private set; }
 
     /// <summary>
     /// 指示是否激活开关量功能
@@ -172,7 +221,10 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     /// 指示是否激活直流表功能
     /// </summary>
     public bool IsEnabled_DCM { get; private set; }
-    #endregion
+
+    /// <inheritdoc/>
+    public bool IsEnabled_DCM_RIP { get; private set; }
+    #endregion FuncB
 
     #region FuncS
 
@@ -205,24 +257,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     /// 指示是否激活电机控制功能
     /// </summary>
     public bool IsEnabled_PWM { get; private set; }
-    #endregion
-
-    /// <inheritdoc/>
-    public bool IsEnabled_ACM_Cap { get; private set; }
-
-    /// <inheritdoc/>
-    public bool IsEnabled_DCS_AUX { get; private set; }
-
-    /// <inheritdoc/>
-    public bool IsEnabled_DCM_RIP { get; private set; }
 
     /// <inheritdoc/>
     public bool IsEnabled_PPS { get; private set; }
-    #endregion 公共属性==>功能状态指示标志
+    #endregion FuncS
+    #endregion 公共属性>>>【功能状态指示标志】
 
-    #region 公共属性==>[系统设置]
-
-    public ISystemSettings? SystemSettings { get; private set; }
+    #region 公共属性>>>【交流源】
     /// <inheritdoc/>
     public float Range_ACU => throw new NotImplementedException ( );
     /// <inheritdoc/>
@@ -314,58 +355,19 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     byte IModuleACS.IProtectRanges_Asingle => throw new NotImplementedException ( );
 
-    /// <inheritdoc/>
-    public string? Model { get; set; }
 
-    /// <inheritdoc/>
-    public string? SN { get; set; }
 
-    /// <inheritdoc/>
-    public string? Firmware { get; private set; }
-
-    /// <inheritdoc/>
-    public string? ProtocolVer { get; private set; }
+    #endregion 公共属性>>>【交流源】
 
 
 
 
-    #endregion 公共属性==>[系统设置]
+
 
     #endregion 【公共属性】
 
-    #region 【构造函数】
-
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="model">枚举的设备型号（或协议类型），[找不到对应的设备型号？]：可按枚举中的协议类型实例化对象</param>
-    /// <param name="id">设备ID,默认值为0，[可选参数]</param>
-    public Dandick ( Models model , ushort id = 0 )
-    {
-        _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
-        FunctionsInitializer ( );
-        ID = id;
-    }
-    #endregion 构造函数
 
     #region 【功能状态使能】初始化
-
-    /// <summary>
-    /// 功能状态初始化器
-    /// </summary>
-    void FunctionsInitializer ( )
-    {
-        //
-        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS ( ). Content;
-        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( ). Content;
-        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( ). Content;
-        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( ). Content;
-        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO ( ). Content;
-        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ ( ). Content;
-        _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
-        _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
-        _Decoder = _ProtocolFactory. GetDecoder ( ByteTransform );
-    }
 
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
@@ -393,9 +395,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     #endregion 设备【功能状态使能】初始化
 
-    #region 【Public Methods】
-
-    #endregion 【Public Methods】
 
     #region --------------------------------- Core Interative 核心交互-------------------------
     private OperateResult<byte[ ]> CheckResponse ( byte[ ] send )
