@@ -18,37 +18,37 @@ internal interface IProtocolFactory
     /// 获取交流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS (ushort id );
+    OperateResult<IPacketsBuilder_ACS> GetPacketsOfACS (ushort id );
 
     /// <summary>
     /// 获取交流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( ushort id );
+    OperateResult<IPacketBuilder_ACM> GetPacketsOfACM ( ushort id );
 
     /// <summary>
     /// 获取直流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( ushort id );
+    OperateResult<IPacketBuilder_DCS> GetPacketsOfDCS ( ushort id );
 
     /// <summary>
     /// 获取直流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM (ushort id );
+    OperateResult<IPacketBuilder_DCM> GetPacketsOfDCM (ushort id );
 
     /// <summary>
     /// 获取开关量报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( ushort id );
+    OperateResult<IPacketBuilder_IO> GetPacketsOfIO ( ushort id );
 
     /// <summary>
     /// 获取电能报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( ushort id );
+    OperateResult<IPacketBuilder_PQ> GetPacketsOfPQ ( ushort id );
 
     /// <summary>
     /// 获取CRC校验器对象

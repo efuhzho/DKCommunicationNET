@@ -11,36 +11,36 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 [Model ( Models. Hex5A )]
 internal class Hex5AFactory : IProtocolFactory
 {
-    public OperateResult<IPacketBuilderOfACM> GetPacketsOfACM ( ushort id )
+    public OperateResult<IPacketBuilder_ACM> GetPacketsOfACM ( ushort id )
     {
-        return OperateResult.CreateSuccessResult( new Hex5APacketBuilderOfACM ( ) as IPacketBuilderOfACM);
+        return OperateResult.CreateSuccessResult( new Hex5APacketBuilderOfACM ( ) as IPacketBuilder_ACM);
     }
 
-    public OperateResult<IPacketsBuilderOfACS> GetPacketsOfACS ( ushort id )
+    public OperateResult<IPacketsBuilder_ACS> GetPacketsOfACS ( ushort id )
     {
-        return OperateResult.CreateSuccessResult(new Hex5APacketBuilderOfACS ( id ) as IPacketsBuilderOfACS);
+        return OperateResult.CreateSuccessResult(new Hex5APacketBuilderOfACS ( id ) as IPacketsBuilder_ACS);
     }
 
-    public OperateResult<IPacketBuilderOfDCM> GetPacketsOfDCM ( ushort id )
+    public OperateResult<IPacketBuilder_DCM> GetPacketsOfDCM ( ushort id )
     {
-        return new OperateResult<IPacketBuilderOfDCM> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IPacketBuilder_DCM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilderOfDCS> GetPacketsOfDCS ( ushort id )
+    public OperateResult<IPacketBuilder_DCS> GetPacketsOfDCS ( ushort id )
     {
-        return new OperateResult<IPacketBuilderOfDCS> ( StringResources. Language. NotSupportedModule );
-
-    }
-
-    public OperateResult<IPacketBuilderOfIO> GetPacketsOfIO ( ushort id )
-    {
-        return new OperateResult<IPacketBuilderOfIO> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IPacketBuilder_DCS> ( StringResources. Language. NotSupportedModule );
 
     }
 
-    public OperateResult<IPacketBuilderOfPQ> GetPacketsOfPQ ( ushort id )
+    public OperateResult<IPacketBuilder_IO> GetPacketsOfIO ( ushort id )
     {
-        return new OperateResult<IPacketBuilderOfPQ>( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
+
+    }
+
+    public OperateResult<IPacketBuilder_PQ> GetPacketsOfPQ ( ushort id )
+    {
+        return new OperateResult<IPacketBuilder_PQ>( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )

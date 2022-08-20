@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex81
 {
-    internal class Hex81PacketBuilderOfACS : IPacketsBuilderOfACS
+    internal class Hex81PacketBuilderOfACS : IPacketsBuilder_ACS
     {
         public Hex81PacketBuilderOfACS ( ushort id )
         {

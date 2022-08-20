@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex5A
 {
-    internal class Hex5APacketBuilderOfACM:IPacketBuilderOfACM
+    internal class Hex5APacketBuilderOfACM:IPacketBuilder_ACM
     {
     }
 }

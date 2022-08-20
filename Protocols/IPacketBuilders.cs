@@ -6,13 +6,16 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols;
 
+/// <summary>
+/// 报文创建助手
+/// </summary>
 internal interface IPacketBuilderHelper
 {
     OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id  );
     OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id  );
 }
 
-internal interface IPacketsBuilderOfACS
+internal interface IPacketsBuilder_ACS
 {
     public ushort ID { get; set; }
     public OperateResult<byte[ ]> PacketOfGetRanges ( );
@@ -24,23 +27,23 @@ internal interface IPacketsBuilderOfACS
     public OperateResult<byte[ ]> PacketOfSetFrequency ( float FreqOfAll , float FreqOfC = 0 );
     public OperateResult<byte[ ]> PacketOfSetWireMode ( string wireMode );
 }
-internal interface IPacketBuilderOfACM
+internal interface IPacketBuilder_ACM
 {
 }
 
-internal interface IPacketBuilderOfDCS
+internal interface IPacketBuilder_DCS
 {
 }
 
-internal interface IPacketBuilderOfDCM
+internal interface IPacketBuilder_DCM
 {
 }
 
-internal interface IPacketBuilderOfIO
+internal interface IPacketBuilder_IO
 {
 }
 
-internal interface IPacketBuilderOfPQ
+internal interface IPacketBuilder_PQ
 {
 }
 internal interface IHandShake
