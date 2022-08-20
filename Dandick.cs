@@ -16,9 +16,6 @@ namespace DKCommunicationNET;
 /// </summary>
 public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 {
-
-
-
     #region 【私有字段】
     readonly IProtocolFactory _protocolFactory;
 
@@ -83,7 +80,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsEnabled_ACS { get; private set; }
+    public bool IsEnabled_ACS { get ; private set; }
 
     /// <summary>
     /// 指示是否激活交流表功能
@@ -165,9 +162,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// </summary>
     public ACS ACS
     {
-        get { return _ACS; }
+        get { CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACS); return _ACS; }
         set { _ACS = value; }
     }
+
+
     #endregion 公共属性>>>功能
 
     #endregion 【公共属性】
