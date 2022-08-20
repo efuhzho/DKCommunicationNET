@@ -7,17 +7,27 @@ using DKCommunicationNET. Protocols. Hex5A;
 using DKCommunicationNET. Protocols. Hex81;
 using DKCommunicationNET. BasicFramework;
 using System. ComponentModel. DataAnnotations;
+using DKCommunicationNET. Module;
 
 namespace DKCommunicationNET;
 
 /// <summary>
 /// 丹迪克设备类
 /// </summary>
-public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDeviceFunctions
+public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions/*,IModuleACS*/
 {
+    private ACS _ACS;
+
+    public ACS ACS
+    {
+        get { return _ACS; }
+        set { _ACS = value; }
+    }
+
+
     #region 【私有字段】
 
-    readonly IProtocolFactory _ProtocolFactory;
+    readonly IProtocolFactory _protocolFactory;
 
     /// <summary>
     /// 定义协议所支持的功能对象
@@ -151,17 +161,19 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
         ID = id;
 
         //由抽象协议工厂根据客户选择的设备型号返回对应的实例。
-        _ProtocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
+        _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
 
-        _PacketsOfACS = _ProtocolFactory. GetPacketsOfACS (id ). Content;
-        _PacketOfACM = _ProtocolFactory. GetPacketsOfACM ( id ). Content;
-        _PacketOfDCS = _ProtocolFactory. GetPacketsOfDCS ( id ). Content;
-        _PacketOfDCM = _ProtocolFactory. GetPacketsOfDCM ( id ). Content;
-        _PacketOfIO = _ProtocolFactory. GetPacketsOfIO (id ). Content;
-        _PacketOfPQ = _ProtocolFactory. GetPacketsOfPQ (id ). Content;
-        _CRCChecker = _ProtocolFactory. GetCRCChecker ( );
-        _Functions = _ProtocolFactory. GetProtocolFunctionsState ( );
-        _Decoder = _ProtocolFactory. GetDecoder ( ByteTransform );
+        _ACS = new ACS ( _protocolFactory , _SerialPort , CheckResponse );
+
+        _PacketsOfACS = _protocolFactory. GetPacketsOfACS (id ). Content;
+        _PacketOfACM = _protocolFactory. GetPacketsOfACM ( id ). Content;
+        _PacketOfDCS = _protocolFactory. GetPacketsOfDCS ( id ). Content;
+        _PacketOfDCM = _protocolFactory. GetPacketsOfDCM ( id ). Content;
+        _PacketOfIO = _protocolFactory. GetPacketsOfIO (id ). Content;
+        _PacketOfPQ = _protocolFactory. GetPacketsOfPQ (id ). Content;
+        _CRCChecker = _protocolFactory. GetCRCChecker ( );
+        _Functions = _protocolFactory. GetProtocolFunctionsState ( );
+        _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
     }
     #endregion 构造函数
 

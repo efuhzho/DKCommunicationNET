@@ -56,22 +56,22 @@ public interface IModuleACS
     /// <summary>
     /// 保护电流档位个数
     /// </summary>
-    internal byte RangesCount_IProtect { get; }
+     byte RangesCount_IProtect { get; }
 
     /// <summary>
     /// 只支持A相电压输出的起始档位号
     /// </summary>
-    internal byte URanges_Asingle { get; }
+     byte URanges_Asingle { get; }
 
     /// <summary>
     /// 只支持A相电流输出的起始档位号
     /// </summary>
-    internal byte IRanges_Asingle { get; }
+     byte IRanges_Asingle { get; }
 
     /// <summary>
     /// 只支持A相保护电流输出的起始档位号
     /// </summary>
-    internal byte IProtectRanges_Asingle { get; }
+     byte IProtectRanges_Asingle { get; }
 
     /// <summary>
     /// 电压档位集合

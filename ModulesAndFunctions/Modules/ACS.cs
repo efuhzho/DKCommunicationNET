@@ -8,7 +8,7 @@ namespace DKCommunicationNET. Module;
 /// </summary>
 public class ACS : IModuleACS
 {
-    
+
     #region 私有字段
     /// <summary>
     /// 定义协议工厂变量
@@ -24,6 +24,21 @@ public class ACS : IModuleACS
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
     private Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    #endregion
+
+    #region 构造函数
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="protocolFactory">协议工厂对象</param>
+    /// <param name="serialPort">串口对象</param>
+    /// <param name="methodOfCheckResponse"></param>
+    internal ACS ( IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    {
+        _protocolFactory = protocolFactory;
+        _serialPort = serialPort;
+        _methodOfCheckResponse = methodOfCheckResponse;
+    }
     #endregion
 
     #region 属性
@@ -138,39 +153,31 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte Flag_C => throw new NotImplementedException ( );
 
-   
+    /// <inheritdoc/>
+    public byte RangesCount_ACU => throw new NotImplementedException ( );
 
-    byte IModuleACS.RangesCount_ACU => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public byte RangesCount_ACI => throw new NotImplementedException ( );
 
-    byte IModuleACS.RangesCount_ACI => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public int RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
+    public int RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
+    public int RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
-    int IModuleACS.RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    int IModuleACS.RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    int IModuleACS.RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
+    public byte RangesCount_IProtect => throw new NotImplementedException ( );
 
-    byte IModuleACS.RangesCount_IProtect => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public byte URanges_Asingle => throw new NotImplementedException ( );
 
-    byte IModuleACS.URanges_Asingle => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public byte IRanges_Asingle => throw new NotImplementedException ( );
 
-    byte IModuleACS.IRanges_Asingle => throw new NotImplementedException ( );
-
-    byte IModuleACS.IProtectRanges_Asingle => throw new NotImplementedException ( );
-    #endregion
-
-    #region 构造函数
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="protocolFactory">协议工厂对象</param>
-    /// <param name="serialPort">串口对象</param>
-    /// <param name="methodOfCheckResponse"></param>
-    internal ACS ( IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
-    {
-        _protocolFactory= protocolFactory;
-        _serialPort = serialPort;
-        _methodOfCheckResponse = methodOfCheckResponse;
-    }
-    #endregion
+    /// <inheritdoc/>
+    public byte IProtectRanges_Asingle => throw new NotImplementedException ( );
+    #endregion       
 
     #region 方法
     public OperateResult<byte[ ]> OpenACS ( )
