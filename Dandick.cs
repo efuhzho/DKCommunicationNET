@@ -223,23 +223,33 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     #region 公共属性==>[系统设置]
 
     public ISystemSettings? SystemSettings { get; private set; }
-
+    /// <inheritdoc/>
     public float Range_ACU => throw new NotImplementedException ( );
-
+    /// <inheritdoc/>
     public float Range_ACI => throw new NotImplementedException ( );
-
+    /// <inheritdoc/>
     public float Range_IProtect => throw new NotImplementedException ( );
-
+    /// <inheritdoc/>
     public float[ ] ACU_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float[ ] ACI_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float[ ] IProtect_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public Enum WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public Enum CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public Enum HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float Freq { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public float Freq_C { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public byte HarmonicCount { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public Enum HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    /// <inheritdoc/>
     public HarmonicArgs[ ] Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
     public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
     public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
@@ -265,27 +275,28 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
     public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
-    public float SA => throw new NotImplementedException ( );
-
-    public float SB => throw new NotImplementedException ( );
-
-    public float SC => throw new NotImplementedException ( );
-
-    public float S => throw new NotImplementedException ( );
-
-    public float PFA => throw new NotImplementedException ( );
-
-    public float PFB => throw new NotImplementedException ( );
-
-    public float PFC => throw new NotImplementedException ( );
-
-    public float PF => throw new NotImplementedException ( );
-
-    public byte Flag_A => throw new NotImplementedException ( );
-
-    public byte Flag_B => throw new NotImplementedException ( );
-
-    public byte Flag_C => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public float SA { get; private set; }
+    /// <inheritdoc/>
+    public float SB { get; private set; }
+    /// <inheritdoc/>
+    public float SC { get; private set; }
+    /// <inheritdoc/>
+    public float S { get; private set; }
+    /// <inheritdoc/>
+    public float PFA { get; private set; }
+    /// <inheritdoc/>
+    public float PFB { get; private set; }
+    /// <inheritdoc/>
+    public float PFC { get; private set; }
+    /// <inheritdoc/>
+    public float PF { get; private set; }
+    /// <inheritdoc/>
+    public byte Flag_A { get; private set; }
+    /// <inheritdoc/>
+    public byte Flag_B { get; private set; }
+    /// <inheritdoc/>
+    public byte Flag_C { get; private set; }
 
     byte IModuleACS.RangesCount_ACU => throw new NotImplementedException ( );
 
@@ -315,7 +326,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     /// <inheritdoc/>
     public string? ProtocolVer { get; private set; }
 
-  
+
 
 
     #endregion 公共属性==>[系统设置]

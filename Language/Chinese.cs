@@ -24,11 +24,15 @@ internal class Chinese
     #endregion 设备错误码信息
 
     #region 设备功能状态
-    //TODO 删除名字
-    public virtual string NotEnabledModule => "设备未安装此功能模块请联系周付宏，当前设备：";
+    /// <summary>
+    /// 设备未激活功能
+    /// </summary>
+    public virtual string NotEnabledModule => "您的设备未激活此功能，如有疑问请联系设备供应商。";
 
-    //TODO 删除名字
-    public virtual string NotSupportedModule => "该型号不支持此功能请联系周付宏，当前型号：";
+    /// <summary>
+    /// 设备不支持功能
+    /// </summary>
+    public virtual string NotSupportedModule => "您的设备不支持此功能，如有疑问请联系设备供应商。";
 
     #endregion 设备功能状态
 
