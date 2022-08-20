@@ -13,7 +13,7 @@ namespace DKCommunicationNET;
 /// <summary>
 /// 丹迪克设备类
 /// </summary>
-public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
+public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDeviceFunctions
 {
     #region 【私有字段】
 
@@ -63,7 +63,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// 解码器
     /// </summary>
     private IDecoder _Decoder;
-    
+
     /// <summary>
     /// 交流源模块
     /// </summary>
@@ -136,7 +136,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
             return _PacketOfIO;
         }
     }
-   
+
     #endregion 私有字段
 
     #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
@@ -146,7 +146,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsEnabled_ACS { get; private set; } 
+    public bool IsEnabled_ACS { get; private set; }
 
     /// <summary>
     /// 指示是否激活交流表功能
@@ -209,7 +209,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     #endregion 公共属性==>功能状态指示标志
 
-    
+
 
     #region 公共属性==>[系统设置]
 
@@ -294,6 +294,18 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
 
     byte IModuleACS.IProtectRanges_Asingle => throw new NotImplementedException ( );
 
+    /// <inheritdoc/>
+    public string? Model { get; set; }
+
+    /// <inheritdoc/>
+    public string? SN { get; set; }
+
+    /// <inheritdoc/>
+    public string? Firmware { get; private set; }
+
+    /// <inheritdoc/>
+    public string? ProtocolVer { get; private set; }
+
 
     #endregion 公共属性==>[系统设置]
 
@@ -339,20 +351,20 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
         OperateResult<byte[ ]> res = CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
         _Decoder. DecodeHandShake ( res );
         Model = _Decoder. Model;
-        Fireware = _Decoder. Firmware;
+        Firmware = _Decoder. Firmware;
         SN = _Decoder. SN;
-        IsEnabled_ACS=_Decoder. IsEnabled_ACS;
-        IsEnabled_ACM=_Decoder. IsEnabled_ACM;
-        IsEnabled_DCS= _Decoder. IsEnabled_DCS;
-        IsEnabled_DCM= _Decoder. IsEnabled_DCM;
-        IsEnabled_EPQ= _Decoder. IsEnabled_EPQ;
-        IsEnabled_IO= _Decoder. IsEnabled_IO;
-        IsEnabled_DualFreqs= _Decoder. IsEnabled_DualFreqs;
-        IsEnabled_IProtect= _Decoder. IsEnabled_IProtect;
-        IsEnabled_PST= _Decoder. IsEnabled_PST;
-        IsEnabled_YX= _Decoder. IsEnabled_YX;
-        IsEnabled_HF= _Decoder. IsEnabled_HF;
-        IsEnabled_PWM= _Decoder. IsEnabled_PWM;
+        IsEnabled_ACS = _Decoder. IsEnabled_ACS;
+        IsEnabled_ACM = _Decoder. IsEnabled_ACM;
+        IsEnabled_DCS = _Decoder. IsEnabled_DCS;
+        IsEnabled_DCM = _Decoder. IsEnabled_DCM;
+        IsEnabled_EPQ = _Decoder. IsEnabled_EPQ;
+        IsEnabled_IO = _Decoder. IsEnabled_IO;
+        IsEnabled_DualFreqs = _Decoder. IsEnabled_DualFreqs;
+        IsEnabled_IProtect = _Decoder. IsEnabled_IProtect;
+        IsEnabled_PST = _Decoder. IsEnabled_PST;
+        IsEnabled_YX = _Decoder. IsEnabled_YX;
+        IsEnabled_HF = _Decoder. IsEnabled_HF;
+        IsEnabled_PWM = _Decoder. IsEnabled_PWM;
         return res;
     }
 

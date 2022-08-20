@@ -11,6 +11,7 @@ internal class Hex81Information
     /// 报文头
     /// </summary>
     internal const byte FrameID = 0x81;
+    internal const int DataStartIndex = 6;
 
     /// <summary>
     /// 系统应答命令

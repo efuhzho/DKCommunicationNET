@@ -17,15 +17,26 @@ internal class Hex81Decoder : IDecoder
 
     #region 【属性】
 
-    public int Offset => 6;
-    public string? Model { get; private set; }
+    public int Offset => Hex81Information.DataStartIndex;
+
+    public string? Model { get;  set; }
+
+    public string? SN { get; set; }
+
     public string? Firmware { get; private set; }
-    public string? SN { get; private set; }
+
+    public string? ProtocolVer => string. Empty;
+
     public bool IsEnabled_ACS { get; private set; }
+
     public bool IsEnabled_ACM { get; private set; }
+
     public bool IsEnabled_DCS { get; private set; }
+
     public bool IsEnabled_IO { get; private set; }
+
     public bool IsEnabled_EPQ { get; private set; }
+
     public bool IsEnabled_DCM { get; private set; }
 
     public bool IsEnabled_DualFreqs { get; private set; }
@@ -39,14 +50,18 @@ internal class Hex81Decoder : IDecoder
     public bool IsEnabled_HF { get; private set; }
 
     public bool IsEnabled_PWM { get; private set; }
+
+    public bool IsEnabled_ACM_Cap { get; private set; }
+
+    public bool IsEnabled_DCS_AUX { get; private set; }
+
+    public bool IsEnabled_DCM_RIP { get; private set; }
+
+    public bool IsEnabled_PPS { get; private set; }
     #endregion 属性
 
     #region 【Decoders】
 
-    /// <summary>
-    /// 联机协议解析器
-    /// </summary>
-    /// <param name="result">下位机回复结果</param>
     public void DecodeHandShake ( OperateResult<byte[ ]> result )
     {
         if ( !result. IsSuccess || result. Content == null )
@@ -63,22 +78,22 @@ internal class Hex81Decoder : IDecoder
         //获取设备型号结束符的索引值
         int endIndex = bufferList. IndexOf ( 0x00 , Offset );
 
-        //计算model字节长度，包含0x00结束符
-        int modelLength = endIndex - 5;
+        //计算model字节长度，包含0x00结束符，5=报文头的字节数6再减去1
+        int modelLength = endIndex - Offset+1;
         //解析的设备型号
-        Model = _byteTransform. TransString ( buffer , 6 , modelLength , Encoding. ASCII );
+        Model = _byteTransform. TransString ( buffer , Offset , modelLength , Encoding. ASCII );
 
         //解析下位机版本号
-        byte verA = buffer[modelLength + 6];
-        byte verB = buffer[modelLength + 7];
+        byte verA = buffer[modelLength + Offset];
+        byte verB = buffer[modelLength + Offset+1];
         //下位机版本号
         Firmware = $"V{verA}.{verB}";
 
         //解析设备编号
-        int serialEndIndex = bufferList. IndexOf ( 0x00 , 8 + modelLength );
+        int serialEndIndex = bufferList. IndexOf ( 0x00 , Offset+ modelLength + 2 );
         int serialLength = serialEndIndex - 7 - modelLength;
         //设备编号字节长度，包含0x00结束符            
-        SN = _byteTransform. TransString ( buffer , 8 + modelLength , serialLength , Encoding. ASCII );
+        SN = _byteTransform. TransString ( buffer , Offset + modelLength + 2 , serialLength , Encoding. ASCII );
 
         //基本功能激活状态
         byte FuncB = buffer[^3];

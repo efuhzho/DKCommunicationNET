@@ -9,6 +9,7 @@ internal class Hex5AInformation
     /// </summary>
     internal const byte Sync0 = 0x5A;
     internal const byte Sync1 = 0xA5;
+    internal const int DataStartIndex = 8;
 
     /// <summary>
     /// 报文尾

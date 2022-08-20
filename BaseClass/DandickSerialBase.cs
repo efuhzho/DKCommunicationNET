@@ -19,24 +19,9 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     }
 
     /// <summary>
-    /// 设备型号
-    /// </summary>
-    public string? Model { get; set; }
-
-    /// <summary>
-    /// 固件版本号
-    /// </summary>
-    public string? Fireware { get; set; }
-
-    /// <summary>
     /// 设备ID
     /// </summary>
     public int ID { get; set; }
-
-    /// <summary>
-    /// 设备出厂编号
-    /// </summary>
-    public string SN { get; set; } = string. Empty;
 
     /// <summary>
     /// 当前客户端的数据变换机制，当需要从字节数据转换类型数据的时候需要。
