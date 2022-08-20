@@ -29,66 +29,64 @@ internal interface IDecoder
 
     #region FuncB
     /// <summary>
-    /// 指示是否激活交流源功能
+    /// 指示交流源功能是否激活
     /// </summary>
-    public bool IsEnabled_ACS { get;  } 
+    public bool IsEnabled_ACS { get;  }
 
     /// <summary>
-    /// 指示是否激活交流表功能
+    /// 指示交流表功能是否激活
     /// </summary>
     public bool IsEnabled_ACM { get;  }
 
     /// <summary>
-    /// 指示是否激活直流源功能
+    /// 指示直流源功能是否激活
     /// </summary>
     public bool IsEnabled_DCS { get;  }
 
     /// <summary>
-    /// 指示是否激活直流表功能
+    /// 指示直流表功能是否激活
     /// </summary>
     public bool IsEnabled_DCM { get; }
 
     /// <summary>
-    /// 指示是否激活开关量功能
+    /// 指示开关量功能是否激活
     /// </summary>
     public bool IsEnabled_IO { get;  }
 
     /// <summary>
-    /// 指示是否激活电能功能
+    /// 指示电能校验功能是否激活
     /// </summary>
     public bool IsEnabled_EPQ { get;  }
     #endregion FuncB
 
-    #region FuncS
-  
-
+    #region FuncS 
     /// <summary>
-    /// 指示是否激活双频输出功能
+    /// 指示双频输出功能是否激活
     /// </summary>
     public bool IsEnabled_DualFreqs { get; }
 
     /// <summary>
-    /// 指示是否激活保护电流功能
+    /// 指示保护电流功能是否激活
     /// </summary>
     public bool IsEnabled_IProtect { get;  }
 
     /// <summary>
-    /// 指示是否激活闪变输出功能
+    /// 指示闪变输出功能是否激活
     /// </summary>
     public bool IsEnabled_PST { get; }
 
     /// <summary>
-    /// 指示是否激活遥信功能
+    /// 指示遥信功能是否激活
     /// </summary>
     public bool IsEnabled_YX { get; }
 
     /// <summary>
-    /// 指示是否激活高频输出功能
+    /// 指示高频输出功能是否激活
     /// </summary>
     public bool IsEnabled_HF { get; }
 
     /// <summary>
-    /// 指示是否激活电机控制功能
+    /// 指示电机控制功能是否激活
     /// </summary>
     public bool IsEnabled_PWM { get; }
     #endregion FuncS

@@ -15,41 +15,41 @@ namespace DKCommunicationNET. Protocols. Hex5A
             _byteTransform = byteTransform;
         }
 
-        public int Offset => throw new NotImplementedException ( );
+        public int Offset => 6;
 
-        public string? Model => throw new NotImplementedException ( );
+        public string? Model { get; private set; }
 
-        public string? Firmware => throw new NotImplementedException ( );
+        public string? Firmware { get; private set; }
 
-        public string? SN => throw new NotImplementedException ( );
+        public string? SN { get; private set; }
 
-        public bool IsEnabled_ACS => throw new NotImplementedException ( );
+        public bool IsEnabled_ACS { get; private set; }
 
-        public bool IsEnabled_ACM => throw new NotImplementedException ( );
+        public bool IsEnabled_ACM { get; private set; }
 
-        public bool IsEnabled_DCS => throw new NotImplementedException ( );
+        public bool IsEnabled_DCS { get; private set; }
 
-        public bool IsEnabled_DCM => throw new NotImplementedException ( );
+        public bool IsEnabled_DCM { get; private set; }
 
-        public bool IsEnabled_IO => throw new NotImplementedException ( );
+        public bool IsEnabled_IO { get; private set; }
 
-        public bool IsEnabled_EPQ => throw new NotImplementedException ( );
+        public bool IsEnabled_EPQ { get; private set; }
 
-        public bool IsEnabled_DualFreqs => throw new NotImplementedException ( );
+        public bool IsEnabled_DualFreqs { get; private set; }
 
-        public bool IsEnabled_IProtect => throw new NotImplementedException ( );
+        public bool IsEnabled_IProtect { get; private set; }
 
-        public bool IsEnabled_PST => throw new NotImplementedException ( );
+        public bool IsEnabled_PST { get; private set; }
 
-        public bool IsEnabled_YX => throw new NotImplementedException ( );
+        public bool IsEnabled_YX { get; private set; }
 
-        public bool IsEnabled_HF => throw new NotImplementedException ( );
+        public bool IsEnabled_HF { get; private set; }
 
-        public bool IsEnabled_PWM => throw new NotImplementedException ( );
+        public bool IsEnabled_PWM { get; private set; }
 
         public void DecodeHandShake ( OperateResult<byte[ ]> result )
         {
-            throw new NotImplementedException ( );
+            return;
         }
     }
 }
