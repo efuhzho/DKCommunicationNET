@@ -17,7 +17,7 @@ internal class CommandAction
     public static OperateResult<byte[ ]> Action ( Func< OperateResult<byte[ ]>> methodOfGetPacket, Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse)
     {
         //获取命令报文
-        var packetRes = methodOfGetPacket. Invoke ( );
+        OperateResult<byte[ ]> packetRes = methodOfGetPacket. Invoke ( );
 
         //报文获取失败则直接上抛失败的结果
         if (!packetRes.IsSuccess )
@@ -26,7 +26,7 @@ internal class CommandAction
         }
 
         //报文获取成功则：调用串口核心交互流程的方法：发送、接收、校验
-        var CheckRes = methodOfCheckResponse. Invoke ( packetRes. Content );
+        OperateResult<byte[ ]> CheckRes = methodOfCheckResponse. Invoke ( packetRes. Content );
 
         //无论结果成功与否均上抛结果，调用者需要判断结果是否成功。
         return CheckRes;

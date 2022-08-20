@@ -1,12 +1,8 @@
 ﻿using DKCommunicationNET. BaseClass;
+using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
-using DKCommunicationNET. Interface;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
-using DKCommunicationNET. Protocols. Hex5A;
-using DKCommunicationNET. Protocols. Hex81;
-using DKCommunicationNET. BasicFramework;
-using System. ComponentModel. DataAnnotations;
 
 namespace DKCommunicationNET;
 
