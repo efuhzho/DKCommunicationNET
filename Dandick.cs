@@ -139,7 +139,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     #endregion 私有字段
 
-    #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
+    #region 【公共属性】[功能状态指示标志]
     #region 公共属性==>[功能状态指示标志]
     #region FuncB
 
@@ -207,9 +207,18 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
     public bool IsEnabled_PWM { get; private set; }
     #endregion
 
+    /// <inheritdoc/>
+    public bool IsEnabled_ACM_Cap { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsEnabled_DCS_AUX { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsEnabled_DCM_RIP { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsEnabled_PPS { get; private set; }
     #endregion 公共属性==>功能状态指示标志
-
-
 
     #region 公共属性==>[系统设置]
 
@@ -305,6 +314,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS, IDev
 
     /// <inheritdoc/>
     public string? ProtocolVer { get; private set; }
+
+  
 
 
     #endregion 公共属性==>[系统设置]

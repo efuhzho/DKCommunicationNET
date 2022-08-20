@@ -50,7 +50,7 @@ namespace DKCommunicationNET. ModulesAndFunctions
         public bool IsEnabled_DCS { get; }
 
         /// <summary>
-        /// 辅助直流源
+        /// 辅助直流源是否激活
         /// </summary>
         public bool IsEnabled_DCS_AUX { get; }
 
@@ -60,7 +60,7 @@ namespace DKCommunicationNET. ModulesAndFunctions
         public bool IsEnabled_DCM { get; }
 
         /// <summary>
-        /// 直流纹波表
+        /// 指示直流纹波表是否激活
         /// </summary>
         public bool IsEnabled_DCM_RIP { get; }
    
