@@ -48,7 +48,7 @@ internal class Hex5AFactory : IProtocolFactory
         return new Hex5ACRCChecker ( );
     }
 
-public IProtocolFunctions GetProtocolFunctionsState ( )
+public IProtocolFunctions GetProtocolFunctions ( )
     {
         return new Hex5AFunctions ( );
     }

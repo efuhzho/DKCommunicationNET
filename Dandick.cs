@@ -14,55 +14,18 @@ namespace DKCommunicationNET;
 /// <summary>
 /// 丹迪克设备类
 /// </summary>
-public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions/*,IModuleACS*/
+public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 {
-    private ACS _ACS;
 
-    public ACS ACS
-    {
-        get { return _ACS; }
-        set { _ACS = value; }
-    }
 
 
     #region 【私有字段】
-
     readonly IProtocolFactory _protocolFactory;
 
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
     private IProtocolFunctions _Functions;
-
-    /// <summary>
-    /// 定义交流源模块对象
-    /// </summary>
-    private IPacketsBuilderOfACS? _PacketsOfACS;
-
-    /// <summary>
-    /// 定义交流表模块对象
-    /// </summary>
-    private IPacketBuilderOfACM? _PacketOfACM;
-
-    /// <summary>
-    /// 定义直流源模块对象
-    /// </summary>
-    private IPacketBuilderOfDCS? _PacketOfDCS;
-
-    /// <summary>
-    /// 定义直流表模块对象
-    /// </summary>
-    private IPacketBuilderOfDCM? _PacketOfDCM;
-
-    /// <summary>
-    /// 定义电能模块模块对象
-    /// </summary>
-    private IPacketBuilderOfPQ? _PacketOfPQ;
-
-    /// <summary>
-    /// 定义开关量模块对象
-    /// </summary>
-    private IPacketBuilderOfIO? _PacketOfIO;
 
     /// <summary>
     /// CRC校验器
@@ -72,82 +35,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 解码器
     /// </summary>
-    private IDecoder _Decoder;
-
-    /// <summary>
-    /// 交流源模块
-    /// </summary>
-    private IPacketsBuilderOfACS PacketsOfACS
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACS );
-            return _PacketsOfACS;
-        }
-    }
-
-    /// <summary>
-    /// 交流表模块
-    /// </summary>
-    private IPacketBuilderOfACM PacketOfACM
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACM );
-            return _PacketOfACM;
-        }
-    }
-
-    /// <summary>
-    /// 直流源模块
-    /// </summary>
-    private IPacketBuilderOfDCS PacketOfDCS
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCS , IsEnabled_DCS );
-            return _PacketOfDCS;
-        }
-    }
-
-    /// <summary>
-    /// 直流表模块
-    /// </summary>
-    private IPacketBuilderOfDCM PacketOfDCM
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForDCM , IsEnabled_DCM );
-            return _PacketOfDCM;
-        }
-    }
-
-
-    /// <summary>
-    /// 电能模块
-    /// </summary>
-    private IPacketBuilderOfPQ PacketOfPQ
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForPQ , IsEnabled_EPQ );
-            return _PacketOfPQ;
-        }
-    }
-
-    /// <summary>
-    /// 开关量模块
-    /// </summary>
-    private IPacketBuilderOfIO PacketOfIO
-    {
-        get
-        {
-            CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForIO , IsEnabled_IO );
-            return _PacketOfIO;
-        }
-    }
-
-    #endregion 私有字段
+    private IDecoder _Decoder;  
+    #endregion 【私有字段】
 
     #region 【构造函数】
     /// <summary>
@@ -165,22 +54,15 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
         _ACS = new ACS ( _protocolFactory , _SerialPort , CheckResponse );
 
-        _PacketsOfACS = _protocolFactory. GetPacketsOfACS (id ). Content;
-        _PacketOfACM = _protocolFactory. GetPacketsOfACM ( id ). Content;
-        _PacketOfDCS = _protocolFactory. GetPacketsOfDCS ( id ). Content;
-        _PacketOfDCM = _protocolFactory. GetPacketsOfDCM ( id ). Content;
-        _PacketOfIO = _protocolFactory. GetPacketsOfIO (id ). Content;
-        _PacketOfPQ = _protocolFactory. GetPacketsOfPQ (id ). Content;
         _CRCChecker = _protocolFactory. GetCRCChecker ( );
-        _Functions = _protocolFactory. GetProtocolFunctionsState ( );
+        _Functions = _protocolFactory. GetProtocolFunctions ( );
         _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
     }
     #endregion 构造函数
 
-
     #region 【公共属性】
 
-    #region 公共属性>>>【设备信息】
+    #region 公共属性>>>设备信息
 
     /// <inheritdoc/>
     public string? Model { get; set; }
@@ -193,10 +75,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public string? ProtocolVer { get; private set; }
-    #endregion 公共属性>>>【设备信息】
+    #endregion 公共属性>>>设备信息
 
-    #region 公共属性>>>【功能状态指示标志】
-    #region FuncB
+    #region 公共属性>>>功能状态指示标志
+
+    #region 公共属性>>>功能状态指示>>>FuncB
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
@@ -235,9 +118,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public bool IsEnabled_DCM_RIP { get; private set; }
-    #endregion FuncB
+    #endregion 公共属性>>>功能状态指示>>>FuncB
 
-    #region FuncS
+    #region 公共属性>>>功能状态指示>>>FuncS
 
     /// <summary>
     /// 指示是否激活双频输出功能
@@ -271,131 +154,25 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public bool IsEnabled_PPS { get; private set; }
-    #endregion FuncS
-    #endregion 公共属性>>>【功能状态指示标志】
+    #endregion 公共属性>>>功能状态指示>>>FuncS
 
-    #region 公共属性>>>【交流源】
-    /// <inheritdoc/>
-    public float Range_ACU => throw new NotImplementedException ( );
-    /// <inheritdoc/>
-    public float Range_ACI => throw new NotImplementedException ( );
-    /// <inheritdoc/>
-    public float Range_IProtect => throw new NotImplementedException ( );
-    /// <inheritdoc/>
-    public float[ ] ACU_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float[ ] ACI_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float[ ] IProtect_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public Enum WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public Enum CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public Enum HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float Freq { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float Freq_C { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public byte HarmonicCount { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public Enum HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public HarmonicArgs[ ] Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IPA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IPB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float IPC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float FAI_IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float PA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float PB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float PC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float P { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float QA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float QB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    /// <inheritdoc/>
-    public float SA { get; private set; }
-    /// <inheritdoc/>
-    public float SB { get; private set; }
-    /// <inheritdoc/>
-    public float SC { get; private set; }
-    /// <inheritdoc/>
-    public float S { get; private set; }
-    /// <inheritdoc/>
-    public float PFA { get; private set; }
-    /// <inheritdoc/>
-    public float PFB { get; private set; }
-    /// <inheritdoc/>
-    public float PFC { get; private set; }
-    /// <inheritdoc/>
-    public float PF { get; private set; }
-    /// <inheritdoc/>
-    public byte Flag_A { get; private set; }
-    /// <inheritdoc/>
-    public byte Flag_B { get; private set; }
-    /// <inheritdoc/>
-    public byte Flag_C { get; private set; }
+    #endregion 公共属性>>>功能状态指示
 
-    byte IModuleACS.RangesCount_ACU => throw new NotImplementedException ( );
-
-    byte IModuleACS.RangesCount_ACI => throw new NotImplementedException ( );
-
-    int IModuleACS.RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    int IModuleACS.RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    int IModuleACS.RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-
-    byte IModuleACS.RangesCount_IProtect => throw new NotImplementedException ( );
-
-    byte IModuleACS.URanges_Asingle => throw new NotImplementedException ( );
-
-    byte IModuleACS.IRanges_Asingle => throw new NotImplementedException ( );
-
-    byte IModuleACS.IProtectRanges_Asingle => throw new NotImplementedException ( );
-
-
-
-    #endregion 公共属性>>>【交流源】
+    #region 公共属性>>>功能
+    private ACS _ACS;
+    /// <summary>
+    /// <inheritdoc cref="Module.ACS"/>
+    /// </summary>
+    public ACS ACS
+    {
+        get { return _ACS; }
+        set { _ACS = value; }
+    }
+    #endregion 公共属性>>>功能
 
     #endregion 【公共属性】
 
-
-    #region 【功能状态使能】初始化
+    #region 【功能状态初始化】
 
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
@@ -408,7 +185,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         SN = _Decoder. SN;
         IsEnabled_ACS = _Decoder. IsEnabled_ACS;
         IsEnabled_ACM = _Decoder. IsEnabled_ACM;
-        IsEnabled_ACM_Cap= _Decoder. IsEnabled_ACM_Cap;
+        IsEnabled_ACM_Cap = _Decoder. IsEnabled_ACM_Cap;
         IsEnabled_DCS = _Decoder. IsEnabled_DCS;
         IsEnabled_DCS_AUX = _Decoder. IsEnabled_DCS_AUX;
         IsEnabled_DCM = _Decoder. IsEnabled_DCM;
@@ -424,12 +201,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         IsEnabled_PPS = _Decoder. IsEnabled_PPS;
         return res;
     }
+    #endregion 【功能状态初始化】
 
-
-    #endregion 设备【功能状态使能】初始化
-
-
-    #region --------------------------------- Core Interative 核心交互-------------------------
+    #region 【Core Interative 核心交互】
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文。
     /// </summary>
@@ -461,83 +235,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         return response;
     }
     /// <inheritdoc/>
-    #endregion Core Interative 核心交互
-
-    #region Public Methods ==> [ACS]
-
-
-    public OperateResult<byte[ ]> GetRangesOfACS ( )
-    {
-        return CommandAction. Action ( PacketsOfACS. PacketOfGetRanges , CheckResponse );
-    }
-
-    /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude )
-    {
-        throw new NotImplementedException ( );
-
-    }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <returns><inheritdoc cref="IModuleACS.OpenACS"/></returns>
-    /// <exception cref="NotImplementedException" >description</exception>
-    public OperateResult<byte[ ]> OpenACS ( )
-    {
-        throw new NotImplementedException ( "meiyou此功能" );
-
-    }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <returns><inheritdoc/></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public OperateResult<byte[ ]> CloseACS ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetWireMode ( Enum wireMode )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode )
-    {
-        throw new NotImplementedException ( );
-    }
-
-    public OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
-    {
-        throw new NotImplementedException ( );
-    }
-
-
-
-    #endregion Public Methods ==> [ACS]
-
+    #endregion 【Core Interative 核心交互】
 }
 
 

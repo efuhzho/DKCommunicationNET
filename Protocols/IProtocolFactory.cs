@@ -60,7 +60,7 @@ internal interface IProtocolFactory
     /// 获取协议功能状态对象
     /// </summary>
     /// <returns></returns>
-    IProtocolFunctions GetProtocolFunctionsState ( );
+    IProtocolFunctions GetProtocolFunctions ( );
 
     /// <summary>
     /// 获取解码器

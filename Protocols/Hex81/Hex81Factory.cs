@@ -46,7 +46,7 @@ internal class Hex81Factory : IProtocolFactory
         return new Hex81CRCChecker ( );
     }
 
-    public IProtocolFunctions GetProtocolFunctionsState ( )
+    public IProtocolFunctions GetProtocolFunctions ( )
     {
         return new Hex81Functions ( );
     }
