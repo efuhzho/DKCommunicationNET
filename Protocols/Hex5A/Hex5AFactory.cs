@@ -1,4 +1,5 @@
-﻿using DKCommunicationNET. Module;
+﻿using DKCommunicationNET. Core;
+using DKCommunicationNET. Module;
 using System;
 using System. Collections. Generic;
 using System. Linq;
@@ -50,5 +51,10 @@ internal class Hex5AFactory : IProtocolFactory
 public IProtocolFunctions GetProtocolFunctionsState ( )
     {
         return new Hex5AFunctions ( );
+    }
+
+    public IDecoder GetDecoder ( IByteTransform byteTransform )
+    {
+        return new Hex5ADecoder( byteTransform );
     }
 }
