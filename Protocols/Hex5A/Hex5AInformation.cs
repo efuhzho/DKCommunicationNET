@@ -1,13 +1,4 @@
-﻿using DKCommunicationNET. BaseClass;
-using DKCommunicationNET. Interface;
-using System;
-using System. Collections. Generic;
-
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-
-namespace DKCommunicationNET. Protocols. Hex5A;
+﻿namespace DKCommunicationNET. Protocols. Hex5A;
 
 internal class Hex5AInformation
 {

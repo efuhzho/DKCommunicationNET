@@ -54,84 +54,16 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
     /// </summary>
     private IPacketBuilderOfIO? _PacketOfIO;
 
+    /// <summary>
+    /// CRC校验器
+    /// </summary>
     private ICRCChecker _CRCChecker;
 
+    /// <summary>
+    /// 解码器
+    /// </summary>
     private IDecoder _Decoder;
-
-    #endregion 私有字段
-
-    #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
-
-    #region 公共属性==>[功能状态指示标志]
-    #region FuncB
-
-    /// <summary>
-    /// 指示是否激活交流源功能
-    /// </summary>
-    public bool IsEnabled_ACS { get; private set; } 
-
-    /// <summary>
-    /// 指示是否激活交流表功能
-    /// </summary>
-    public bool IsEnabled_ACM { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活直流源功能
-    /// </summary>
-    public bool IsEnabled_DCS { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活开关量功能
-    /// </summary>
-    public bool IsEnabled_IO { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活电能功能
-    /// </summary>
-    public bool IsEnabled_EPQ { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活直流表功能
-    /// </summary>
-    public bool IsEnabled_DCM { get; private set; }
-    #endregion
-
-    #region FuncS
-
-    /// <summary>
-    /// 指示是否激活双频输出功能
-    /// </summary>
-    public bool IsEnabled_DualFreqs { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活保护电流功能
-    /// </summary>
-    public bool IsEnabled_IProtect { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活闪变输出功能
-    /// </summary>
-    public bool IsEnabled_PST { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活遥信功能
-    /// </summary>
-    public bool IsEnabled_YX { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活高频输出功能
-    /// </summary>
-    public bool IsEnabled_HF { get; private set; }
-
-    /// <summary>
-    /// 指示是否激活电机控制功能
-    /// </summary>
-    public bool IsEnabled_PWM { get; private set; }
-    #endregion
-
-    #endregion 公共属性==>功能状态指示标志
-
-    #region 公共属性==>[功能模块]
+    
     /// <summary>
     /// 交流源模块
     /// </summary>
@@ -204,7 +136,80 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IModuleACS
             return _PacketOfIO;
         }
     }
-    #endregion 公共属性==>功能模块
+   
+    #endregion 私有字段
+
+    #region 【公共属性】[功能状态指示标志][功能模块][系统设置]
+    #region 公共属性==>[功能状态指示标志]
+    #region FuncB
+
+    /// <summary>
+    /// 指示是否激活交流源功能
+    /// </summary>
+    public bool IsEnabled_ACS { get; private set; } 
+
+    /// <summary>
+    /// 指示是否激活交流表功能
+    /// </summary>
+    public bool IsEnabled_ACM { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活直流源功能
+    /// </summary>
+    public bool IsEnabled_DCS { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活开关量功能
+    /// </summary>
+    public bool IsEnabled_IO { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活电能功能
+    /// </summary>
+    public bool IsEnabled_EPQ { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活直流表功能
+    /// </summary>
+    public bool IsEnabled_DCM { get; private set; }
+    #endregion
+
+    #region FuncS
+
+    /// <summary>
+    /// 指示是否激活双频输出功能
+    /// </summary>
+    public bool IsEnabled_DualFreqs { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活保护电流功能
+    /// </summary>
+    public bool IsEnabled_IProtect { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活闪变输出功能
+    /// </summary>
+    public bool IsEnabled_PST { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活遥信功能
+    /// </summary>
+    public bool IsEnabled_YX { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活高频输出功能
+    /// </summary>
+    public bool IsEnabled_HF { get; private set; }
+
+    /// <summary>
+    /// 指示是否激活电机控制功能
+    /// </summary>
+    public bool IsEnabled_PWM { get; private set; }
+    #endregion
+
+    #endregion 公共属性==>功能状态指示标志
+
+    
 
     #region 公共属性==>[系统设置]
 
