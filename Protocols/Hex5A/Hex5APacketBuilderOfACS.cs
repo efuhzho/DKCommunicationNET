@@ -8,28 +8,18 @@ namespace DKCommunicationNET. Protocols. Hex5A
 {
     internal class Hex5APacketBuilderOfACS : IPacketsBuilder_ACS
     {
-        public ushort ID { get; set ; }
+        private readonly ushort _id;
 
         public Hex5APacketBuilderOfACS (ushort id )
         {
-            ID = id;
-        }
-
-        public OperateResult<byte[ ]> PacketOfClose ( )
-        {
-            throw new NotImplementedException ( );
-        }
+            _id = id;
+        }        
 
         public OperateResult<byte[ ]> PacketOfGetRanges ( )
         {
             byte[ ] data = new byte[ 1] { (byte)Hex5AInformation. GetRangeType. ACS };
-            return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. OK , Hex5AInformation. OKLength ,ID);
-        }
-
-        public OperateResult<byte[ ]> PacketOfOpen ( )
-        {
-            throw new NotImplementedException ( );
-        }
+            return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. OK , Hex5AInformation. OKLength ,_id);
+        }     
 
         public OperateResult<byte[ ]> PacketOfSetAmplitude ( float amplitude )
         {
@@ -52,6 +42,16 @@ namespace DKCommunicationNET. Protocols. Hex5A
         }
 
         public OperateResult<byte[ ]> PacketOfSetWireMode ( string wireMode )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.PacketOfOpen ( )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.PacketOfClose ( )
         {
             throw new NotImplementedException ( );
         }

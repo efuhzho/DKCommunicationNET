@@ -37,9 +37,9 @@ public class ACS : IModuleACS
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketsBuilder_ACS? _PacketsBuilder; 
+    private readonly IPacketsBuilder_ACS? _PacketsBuilder;
 
-   
+
     #endregion
 
     #region 构造函数
@@ -200,15 +200,18 @@ public class ACS : IModuleACS
 
     /// <inheritdoc/>
     public byte IProtectRanges_Asingle { get; }
+
     #endregion       
 
     #region 方法
-    public OperateResult<byte[ ]> OpenACS ( )
+
+    /// <inheritdoc/>
+     OperateResult<byte[ ]> IModuleACS.OpenACS ( )
     {
-        CommandAction. Action ( _PacketsBuilder. PacketOfOpen  , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. PacketOfOpen , _methodOfCheckResponse );
     }
 
-    public OperateResult<byte[ ]> CloseACS ( )
+     OperateResult<byte[ ]> IModuleACS.CloseACS ( )
     {
         throw new NotImplementedException ( );
     }
@@ -257,6 +260,7 @@ public class ACS : IModuleACS
     {
         throw new NotImplementedException ( );
     }
+
     #endregion
 
 }

@@ -328,13 +328,13 @@ public interface IModuleACS
     ///      </list>    
     /// </returns>
     /// <exception cref="NotImplementedException" ></exception>
-    public OperateResult<byte[ ]> OpenACS ( );
+    internal OperateResult<byte[ ]> OpenACS ( );
 
     /// <summary>
     /// 交流源关闭命令
     /// </summary>
     /// <returns><inheritdoc cref="OpenACS"/></returns>
-    public OperateResult<byte[ ]> CloseACS ( );
+    internal OperateResult<byte[ ]> CloseACS ( );
 
     /// <summary>
     /// 读取交流源档位

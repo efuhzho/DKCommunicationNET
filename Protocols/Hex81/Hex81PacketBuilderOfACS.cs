@@ -8,31 +8,31 @@ namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilderOfACS : IPacketsBuilder_ACS
     {
+        private ushort _id;
+
         public Hex81PacketBuilderOfACS ( ushort id )
         {
-            ID = id;
+            _id = id;
         }
-       
-        public ushort ID { get;  }
 
         public OperateResult<byte[ ]> PacketOfClose ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. CloseACS , Hex81Information. CloseACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. CloseACS , Hex81Information. CloseACSLength , _id );
         }
 
         public OperateResult<byte[ ]> PacketOfGetRanges ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRangesOfACS , Hex81Information. GetRangesOfACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRangesOfACS , Hex81Information. GetRangesOfACSLength , _id );
         }
 
         public OperateResult<byte[ ]> PacketOfOpen ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , _id );
         }
 
         public OperateResult<byte[ ]> PacketOfSetAmplitude ( float amplitude )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetACSAmplitude , Hex81Information. SetACSAmplitudeLength , ID );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetACSAmplitude , Hex81Information. SetACSAmplitudeLength , _id );
         }
 
         public OperateResult<byte[ ]> PacketOfSetFrequency ( float FreqOfAll , float FreqOfC = 0 )
