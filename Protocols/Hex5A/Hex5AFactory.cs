@@ -18,7 +18,7 @@ internal class Hex5AFactory : IProtocolFactory
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )
     {
-        return OperateResult.CreateSuccessResult(new Hex5APacketBuilderOfACS ( id ) as IPacketsBuilder_ACS);
+        return OperateResult.CreateSuccessResult(new Hex5APacketBuilder_ACS ( id ) as IPacketsBuilder_ACS);
     }
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )

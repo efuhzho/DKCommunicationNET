@@ -2,8 +2,9 @@
 
 internal class Hex5AInformation
 {
-    #region 【CommandCodes】[系统]
+    #region 【CommandCodes】
 
+    #region CommandCodes>>> 系统
     /// <summary>
     /// 报文头
     /// </summary>
@@ -12,48 +13,42 @@ internal class Hex5AInformation
     internal const int DataStartIndex = 8;
 
     /// <summary>
-    /// 报文尾
+    /// 【命令码】报文尾
     /// </summary>
     internal const byte End = 0x96;
 
     /// <summary>
-    /// 系统应答命令
-    /// </summary>
-    internal const byte OK = 0x11;
-    internal const ushort OKLength = 11;
-
-    /// <summary>
-    /// 发送故障代码，带枚举数据
-    /// </summary>
-    internal const byte ErrorCode = 0x52;
-    internal const byte ErrorCodeLength = 8;
-    
-    #region CommandCodes ==> [系统设置]
-
-    /// <summary>
-    /// 联机命令，读取终端型号和版本号
+    /// 【命令码】联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x11;
     internal const ushort HandShakeCommandLength = 11;
     public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x1D , 0x00 , 0x96 };
 
     /// <summary>
-    /// 设置系统模式
+    /// 【命令码】设置系统模式
     /// </summary>
     internal const byte SetSystemMode = 0x44;
     internal const ushort SetSystemModeCommandLength = 8;
 
     /// <summary>
-    /// 设置当前终端显示界面
+    /// 【命令码】设置当前终端显示界面
     /// </summary>
     internal const byte SetDisplayPage = 0x4A;
     internal const ushort SetDisplayPageCommandLength = 8;
+    #endregion CommandCodes>>>系统
 
-    #endregion CommandCodes ==> [系统设置]
+    #region CommandCodes>>>ACS
+    /// <summary>
+    /// 【命令码】获取交流源档位
+    /// </summary>
+   internal const byte GetRanges_ACS = 0x12;
+   internal const byte GetRanges_ACS_Len = 12;
 
-    #endregion 【CommandCodes】[系统]
+    #endregion CommandCodes>>>ACS
 
-    #region 【Internal Methods】[创建报文格式]
+    #endregion 【CommandCodes】
+
+    #region 【Internal Methods】
 
     #region Internal Methods ==> [创建报文格式]
 
@@ -139,7 +134,7 @@ internal class Hex5AInformation
 
     #endregion 【Internal Methods】
 
-    #region 【Private Methods】 [校验码计算器][解析ID][帧类型和报文类型的字典]
+    #region 【Private Methods】 
 
     #region Private Methods ==> [校验码计算器]
 
@@ -220,7 +215,7 @@ internal class Hex5AInformation
 
     #endregion Private Methods ==> [帧类型和报文类型的字典]
 
-    #endregion Private Methods
+    #endregion 【Private Methods】
 
     #region 【枚举类型】
     public enum SystemModes : byte
@@ -266,14 +261,35 @@ internal class Hex5AInformation
         ModeDCMeterCalibrate = 14
     }
 
+    /// <summary>
+    /// 获取档位类型
+    /// </summary>
     public enum GetRangeType : byte
     {
+        /// <summary>
+        /// 交流源
+        /// </summary>
         ACS = 1,
+
+        /// <summary>
+        /// 钳表
+        /// </summary>
         ACM_Cap = 2,
+
+        /// <summary>
+        /// 直流源
+        /// </summary>
         DCS = 3,
+
+        /// <summary>
+        /// 直流表
+        /// </summary>
         DCM = 4,
-        ACM = 7,
-           
+
+        /// <summary>
+        /// 交流表
+        /// </summary>
+        ACM = 7           
     }
 
     /// <summary>

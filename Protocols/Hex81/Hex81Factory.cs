@@ -17,7 +17,7 @@ internal class Hex81Factory : IProtocolFactory
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilderOfACS (  id ) as IPacketsBuilder_ACS );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS (  id ) as IPacketsBuilder_ACS );
 
     }
 

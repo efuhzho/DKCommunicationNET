@@ -53,13 +53,13 @@ internal class Hex81Information
     /// <summary>
     /// 交流源关闭命令
     /// </summary>
-    public const byte CloseACS = 0x4F;  //2022年7月7日
+    public const byte CloseACS = 0x4F;  
     public const ushort CloseACSLength = 7;
 
     /// <summary>
     /// 交流源打开命令
     /// </summary>
-    public const byte OpenACS = 0x54; //2022年7月7日
+    public const byte OpenACS = 0x54; 
     public const ushort OpenACSLength = 7;
 
     /// <summary>
@@ -71,19 +71,19 @@ internal class Hex81Information
     /// <summary>
     /// 设置交流源档位参数 
     /// </summary>
-    public const byte SetACSourceRanges = 0x31; //2022年7月7日
+    public const byte SetACSourceRanges = 0x31; 
     public const ushort SetRangesLength = 16;  //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源幅度参数
     /// </summary>
-    public const byte SetACSAmplitude = 0x32;    //2022年7月7日
+    public const byte SetACSAmplitude = 0x32;    
     public const ushort SetACSAmplitudeLength = 43; //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源相位参数
     /// </summary>
-    public const byte WritePhase = 0x33;    //2022年7月8日 10点22分
+    public const byte WritePhase = 0x33;    
     public const ushort WritePhaseLength = 31;
 
     /// <summary>
@@ -96,19 +96,19 @@ internal class Hex81Information
     /// <summary>
     /// 设置源接线模式:
     /// </summary>
-    public const byte SetWireMode = 0x35;   //2022年7月8日 19点31分
+    public const byte SetWireMode = 0x35;   
     public const ushort SetWireModeLength = 8;
 
     /// <summary>
     /// 闭环控制使能命令：HarmonicMode ：谐波模式，0-以真有效值的百分比输入谐波（有效值恒定）；1-以基波值的百分比输入谐波（基波恒定）
     /// </summary>
-    public const byte SetClosedLoop = 0x36;     //2022年7月9日
+    public const byte SetClosedLoop = 0x36;     
     public const ushort SetClosedLoopLength = 9;
 
     /// <summary>
     /// 设置谐波参数：注意：建议协议长度不超过 256，超过 256 个字节建议分批发送。
     /// </summary>
-    public const byte WriteHarmonics = 0x58; //2022年7月10日
+    public const byte WriteHarmonics = 0x58; 
     public const ushort WriteHarmonicsClearLength = 9;
 
     /// <summary>

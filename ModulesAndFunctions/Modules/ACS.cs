@@ -207,7 +207,7 @@ public class ACS : IModuleACS
         
      OperateResult<byte[ ]> IModuleACS.OpenACS ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. PacketOfOpen , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open , _methodOfCheckResponse );
     }
 
      OperateResult<byte[ ]> IModuleACS.CloseACS ( )
@@ -218,7 +218,7 @@ public class ACS : IModuleACS
 /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. PacketOfGetRanges , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_GetRanges , _methodOfCheckResponse );
     }
 
     public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
