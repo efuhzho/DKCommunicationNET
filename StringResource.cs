@@ -62,10 +62,11 @@ internal class StringResources
     /// 获取当前源码的源文件名
     /// </summary>
     /// <returns></returns>
-    public static string GetCurSourceFileName ( )
+    public static string? GetCurSourceFileName ( )
     {
-        System. Diagnostics. StackTrace st = new System. Diagnostics. StackTrace ( 1 , true );
-        return st. GetFrame ( 0 ). GetFileName ( );
+        System. Diagnostics. StackTrace st = new ( 1 , true );
+
+        return st. GetFrame ( 0 ). GetFileName ( )+":";
     }
 }
 

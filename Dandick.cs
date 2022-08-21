@@ -62,7 +62,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         //初始化标准表钳表功能模块
 
         //初始化直流源功能模块
-
+        _DCS = new DCS ( ID , _protocolFactory , _SerialPort , CheckResponse );
         //初始化辅助直流源功能模块
 
         //初始化直流表功能模块
@@ -230,7 +230,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         Firmware = _Decoder. Firmware;
         ProtocolVer = _Decoder. ProtocolVer;
         SN = _Decoder. SN;
-        IsEnabled_ACS = _Decoder. IsEnabled_ACS;
+        IsEnabled_ACS = true; // TODO 释放注释_Decoder. IsEnabled_ACS;
         IsEnabled_ACM = _Decoder. IsEnabled_ACM;
         IsEnabled_ACM_Cap = _Decoder. IsEnabled_ACM_Cap;
         IsEnabled_DCS = _Decoder. IsEnabled_DCS;

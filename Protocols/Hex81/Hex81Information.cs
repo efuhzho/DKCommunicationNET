@@ -5,13 +5,13 @@
 /// </summary>
 internal class Hex81Information
 {
-    #region 【CommandCodes】[系统设置]
-
     /// <summary>
     /// 报文头
     /// </summary>
     internal const byte FrameID = 0x81;
     internal const int DataStartIndex = 6;
+
+    #region 【CommandCodes】[系统设置]
 
     /// <summary>
     /// 系统应答命令
@@ -24,9 +24,7 @@ internal class Hex81Information
     /// </summary>
     internal const byte ErrorCode = 0x52;
 
-    internal const byte ErrorCodeLength = 8;
-
-    #region CommandCodes ==> [系统设置]
+    internal const byte ErrorCodeLength = 8;    
 
     /// <summary>
     /// 联机命令，读取终端型号和版本号
@@ -65,14 +63,14 @@ internal class Hex81Information
     /// <summary>
     /// 读取交流标准源档位信息
     /// </summary>
-    public const byte GetRangesOfACS = 0x11;
-    public const byte GetRangesOfACSLength = 7;
+    public const byte GetRanges_ACS = 0x11;
+    public const byte GetRangesOfACSLength = 7;    
 
     /// <summary>
     /// 设置交流源档位参数 
     /// </summary>
-    public const byte SetACSourceRanges = 0x31; 
-    public const ushort SetRangesLength = 16;  //!51F具备IPa,IPb,IPc
+    public const byte SetRanges_ACS = 0x31; 
+    public const ushort SetRanges_ACS_Length = 16;  //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源幅度参数
@@ -83,14 +81,14 @@ internal class Hex81Information
     /// <summary>
     /// 设置源相位参数
     /// </summary>
-    public const byte WritePhase = 0x33;    
-    public const ushort WritePhaseLength = 31;
+    public const byte SetPhase = 0x33;    
+    public const ushort SetPhaseLength = 31;
 
     /// <summary>
     /// 设置源频率参数:当 Fa=Fb!=Fc 时，Flag=2；Fa=Fb=Fc 时，Flag=3,只设置Fa则三相同频
     /// </summary>
-    public const byte WriteFrequency = 0x34;    //2022年7月8日 12点34分
-    public const ushort WriteFrequencyLength = 20;//注意：设置时 Fa=Fb，Fc 可以设置为与 AB 相不同的频率
+    public const byte SetFrequency = 0x34;    //2022年7月8日 12点34分
+    public const ushort SetFrequencyLength = 20;//注意：设置时 Fa=Fb，Fc 可以设置为与 AB 相不同的频率
                                                   //也可以只设置 Fa，则默认为三相同频，用于兼容以前的设备通讯程序
 
     /// <summary>
@@ -135,8 +133,6 @@ internal class Hex81Information
     public const byte ReadACStatus = 0x4E;
     public const byte ReadACStatusLength = 7;
     #endregion CommandCodes ==> [交流源/表]
-
-    #endregion 【CommandCodes】[系统]
 
     #region 【Internal Methods】
     /// <summary>

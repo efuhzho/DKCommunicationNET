@@ -36,7 +36,7 @@ namespace DKCommunicationNET. Protocols. Hex5A
             throw new NotImplementedException ( );
         }
 
-        public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIPa = 0 , byte rangeIndexOfIPb = 0 , byte rangeIndexOfIPc = 0 )
+        public OperateResult<byte[ ]> Packet_SetRanges ( int rangeIndexOfACU , int rangeIndexOfACI , int rangeIndexOfIP = 0 )
         {
             throw new NotImplementedException ( );
         }

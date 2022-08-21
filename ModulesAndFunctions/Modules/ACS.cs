@@ -49,8 +49,9 @@ public class ACS : IModuleACS
     /// <param name="id">设备ID</param>
     /// <param name="protocolFactory">协议工厂对象</param>
     /// <param name="serialPort">串口对象</param>
+    /// <param name="byteTransform">数据转换规则</param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal ACS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort,Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
         _id = id;
         _protocolFactory = protocolFactory;

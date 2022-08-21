@@ -71,15 +71,12 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
         try
         {
             OperateResult<byte[]> shell = PacketShellBuilder ( commandCode , commandLength , id );
-            if ( !shell. IsSuccess )
+            if ( !shell. IsSuccess ||shell.Content==null)
             {
                 return shell;
             }
-#pragma warning disable CS8604 // 引用类型参数可能为 null。
 
             Array. Copy ( data , 0 , shell. Content , 6 , data. Length );
-
-#pragma warning restore CS8604 // 引用类型参数可能为 null。
 
             shell. Content[commandLength - 1] = Hex81Information. CRCcalculator ( shell. Content );
             return shell;

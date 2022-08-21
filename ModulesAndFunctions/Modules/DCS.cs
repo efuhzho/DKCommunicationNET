@@ -1,4 +1,5 @@
-﻿using DKCommunicationNET. Interface;
+﻿using System. IO. Ports;
+using DKCommunicationNET. Interface;
 using DKCommunicationNET. ModulesAndFunctions;
 
 namespace DKCommunicationNET. Module;
@@ -7,7 +8,12 @@ namespace DKCommunicationNET. Module;
 /// 直流源功能模块
 /// </summary>
 public class DCS :  IModuleDCS
-{ 
+{
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    {
+
+    }
+
     /// <summary>
     /// 
     /// </summary>
