@@ -17,7 +17,7 @@ internal interface IPacketBuilderHelper
 
 internal interface IPacketsBuilder_ACS
 {
-    public ushort ID { get; set; }
+    public ushort ID { get; }
     public OperateResult<byte[ ]> PacketOfGetRanges ( );
     public OperateResult<byte[ ]> PacketOfSetAmplitude ( float amplitude );
     public OperateResult<byte[ ]> PacketOfOpen ( );

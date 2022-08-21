@@ -13,7 +13,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             ID = id;
         }
        
-        public ushort ID { get; set; }
+        public ushort ID { get;  }
 
         public OperateResult<byte[ ]> PacketOfClose ( )
         {

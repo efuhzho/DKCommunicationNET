@@ -1,4 +1,5 @@
 ﻿using System. IO. Ports;
+using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
 
@@ -16,52 +17,29 @@ public class ACS : IModuleACS
     /// <summary>
     /// 设备ID
     /// </summary>
-    private ushort _id;
+    private readonly ushort _id;
 
     /// <summary>
     /// 定义协议工厂变量
     /// </summary>
-    private IProtocolFactory _protocolFactory;
+    private readonly IProtocolFactory _protocolFactory;
 
     /// <summary>
     /// 定义串口类变量
     /// </summary>
-    private SerialPort _serialPort;
+    private readonly SerialPort _serialPort;
 
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
-    private Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
 
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private IPacketsBuilder_ACS? _PacketsBuilder;
+    private readonly IPacketsBuilder_ACS? _PacketsBuilder; 
 
-    ///// <summary>
-    ///// 定义交流表模块对象
-    ///// </summary>
-    //private IPacketBuilder_ACM? _PacketOfACM;
-
-    ///// <summary>
-    ///// 定义直流源模块对象
-    ///// </summary>
-    //private IPacketBuilder_DCS? _PacketOfDCS;
-
-    ///// <summary>
-    ///// 定义直流表模块对象
-    ///// </summary>
-    //private IPacketBuilder_DCM? _PacketOfDCM;
-
-    ///// <summary>
-    ///// 定义电能模块模块对象
-    ///// </summary>
-    //private IPacketBuilder_PQ? _PacketOfPQ;
-
-    ///// <summary>
-    ///// 定义开关量模块对象
-    ///// </summary>
-    //private IPacketBuilder_IO? _PacketOfIO;
+   
     #endregion
 
     #region 构造函数
@@ -78,9 +56,12 @@ public class ACS : IModuleACS
         _protocolFactory = protocolFactory;
         _serialPort = serialPort;
         _methodOfCheckResponse = methodOfCheckResponse;
-        _PacketsBuilder = ( IPacketsBuilder_ACS? ) _protocolFactory. GetPacketsOfACS ( _id );
+
+        //初始化报文创建器
+        _PacketsBuilder = _protocolFactory. GetPacketBuilderOfACS ( _id ). Content; //忽略空值，调用时会捕获解引用为null的异常
+
     }
-   
+
     #endregion
 
     #region 属性
@@ -224,7 +205,7 @@ public class ACS : IModuleACS
     #region 方法
     public OperateResult<byte[ ]> OpenACS ( )
     {
-        throw new NotImplementedException ( );
+        CommandAction. Action ( _PacketsBuilder. PacketOfOpen  , _methodOfCheckResponse );
     }
 
     public OperateResult<byte[ ]> CloseACS ( )
