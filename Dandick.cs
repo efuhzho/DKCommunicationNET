@@ -115,7 +115,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsEnabled_ACS { get ; private set; }
+    public bool IsEnabled_ACS { get; private set; } 
 
     /// <summary>
     /// 指示是否激活交流表功能
