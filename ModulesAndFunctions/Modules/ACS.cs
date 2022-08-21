@@ -1,5 +1,7 @@
 ﻿using System. IO. Ports;
 using DKCommunicationNET. ModulesAndFunctions;
+using DKCommunicationNET. Protocols;
+
 
 namespace DKCommunicationNET. Module;
 
@@ -30,6 +32,36 @@ public class ACS : IModuleACS
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
     private Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+
+    /// <summary>
+    /// 定义交流源模块对象
+    /// </summary>
+    private IPacketsBuilder_ACS? _PacketsOfACS;
+
+    /// <summary>
+    /// 定义交流表模块对象
+    /// </summary>
+    private IPacketBuilder_ACM? _PacketOfACM;
+
+    /// <summary>
+    /// 定义直流源模块对象
+    /// </summary>
+    private IPacketBuilder_DCS? _PacketOfDCS;
+
+    /// <summary>
+    /// 定义直流表模块对象
+    /// </summary>
+    private IPacketBuilder_DCM? _PacketOfDCM;
+
+    /// <summary>
+    /// 定义电能模块模块对象
+    /// </summary>
+    private IPacketBuilder_PQ? _PacketOfPQ;
+
+    /// <summary>
+    /// 定义开关量模块对象
+    /// </summary>
+    private IPacketBuilder_IO? _PacketOfIO;
     #endregion
 
     #region 构造函数
@@ -51,121 +83,121 @@ public class ACS : IModuleACS
 
     #region 属性
     /// <inheritdoc/>
-    public float Range_ACU => throw new NotImplementedException ( );
+    public float Range_ACU { get; }
 
     /// <inheritdoc/>
-    public float Range_ACI => throw new NotImplementedException ( );
+    public float Range_ACI { get; }
 
     /// <inheritdoc/>
-    public float Range_IProtect => throw new NotImplementedException ( );
+    public float Range_IProtect { get; }
 
     /// <inheritdoc/>
-    public float[ ] ACU_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float[ ] ACU_RangesList { get ; set ; }
     /// <inheritdoc/>
-    public float[ ] ACI_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float[ ] ACI_RangesList { get; set; }
     /// <inheritdoc/>
-    public float[ ] IProtect_RangesList { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float[ ] IProtect_RangesList { get; set; }
     /// <inheritdoc/>
-    public Enum WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum WireMode { get; set; }
     /// <inheritdoc/>
-    public Enum CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum CloseLoopMode { get; set; }
     /// <inheritdoc/>
-    public Enum HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum HarmonicMode { get; set; }
     /// <inheritdoc/>
-    public float Freq { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Freq { get; set; }
     /// <inheritdoc/>
-    public float Freq_C { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Freq_C { get; set; }
     /// <inheritdoc/>
-    public byte HarmonicCount { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public byte HarmonicCount { get; set; }
     /// <inheritdoc/>
-    public Enum HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public Enum HarmonicChannels { get; set; }
     /// <inheritdoc/>
-    public HarmonicArgs[ ] Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public HarmonicArgs[ ] Harmonics { get; set; }
     /// <inheritdoc/>
-    public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UA { get; set; }
     /// <inheritdoc/>
-    public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UB { get; set; }
     /// <inheritdoc/>
-    public float UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float UC { get; set; }
     /// <inheritdoc/>
-    public float IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IA { get; set; }
     /// <inheritdoc/>
-    public float IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IB { get; set; }
     /// <inheritdoc/>
-    public float IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IC { get; set; }
     /// <inheritdoc/>
-    public float IPA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPA { get; set; }
     /// <inheritdoc/>
-    public float IPB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPB { get; set; }
     /// <inheritdoc/>
-    public float IPC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float IPC { get; set; }
     /// <inheritdoc/>
-    public float FAI_UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UA { get; set; }
     /// <inheritdoc/>
-    public float FAI_UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UB { get; set; }
     /// <inheritdoc/>
-    public float FAI_UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_UC { get; set; }
     /// <inheritdoc/>
-    public float FAI_IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IA { get; set; }
     /// <inheritdoc/>
-    public float FAI_IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IB { get; set; }
     /// <inheritdoc/>
-    public float FAI_IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float FAI_IC { get; set; }
     /// <inheritdoc/>
-    public float PA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PA { get; set; }
     /// <inheritdoc/>
-    public float PB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PB { get; set; }
     /// <inheritdoc/>
-    public float PC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float PC { get; set; }
     /// <inheritdoc/>
-    public float P { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float P { get; set; }
     /// <inheritdoc/>
-    public float QA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QA { get; set; }
     /// <inheritdoc/>
-    public float QB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QB { get; set; }
     /// <inheritdoc/>
-    public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float QC { get; set; }
     /// <inheritdoc/>
-    public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public float Q { get; set; }
 
     /// <inheritdoc/>
-    public float SA => throw new NotImplementedException ( );
+    public float SA { get; }
 
     /// <inheritdoc/>
-    public float SB => throw new NotImplementedException ( );
+    public float SB { get; }
 
     /// <inheritdoc/>
-    public float SC => throw new NotImplementedException ( );
+    public float SC { get; }
 
     /// <inheritdoc/>
-    public float S => throw new NotImplementedException ( );
+    public float S { get; }
 
     /// <inheritdoc/>
-    public float PFA => throw new NotImplementedException ( );
+    public float PFA { get; }
 
     /// <inheritdoc/>
-    public float PFB => throw new NotImplementedException ( );
+    public float PFB { get; }
 
     /// <inheritdoc/>
-    public float PFC => throw new NotImplementedException ( );
+    public float PFC { get; }
 
     /// <inheritdoc/>
-    public float PF => throw new NotImplementedException ( );
+    public float PF { get; }
 
     /// <inheritdoc/>
-    public byte Flag_A => throw new NotImplementedException ( );
+    public byte Flag_A { get; }
 
     /// <inheritdoc/>
-    public byte Flag_B => throw new NotImplementedException ( );
+    public byte Flag_B { get; }
 
     /// <inheritdoc/>
-    public byte Flag_C => throw new NotImplementedException ( );
+    public byte Flag_C { get; }
 
     /// <inheritdoc/>
-    public byte RangesCount_ACU => throw new NotImplementedException ( );
+    public byte RangesCount_ACU { get; }
 
     /// <inheritdoc/>
-    public byte RangesCount_ACI => throw new NotImplementedException ( );
+    public byte RangesCount_ACI { get; }
 
     /// <inheritdoc/>
     public int RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
@@ -175,16 +207,16 @@ public class ACS : IModuleACS
     public int RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
     /// <inheritdoc/>
-    public byte RangesCount_IProtect => throw new NotImplementedException ( );
+    public byte RangesCount_IProtect { get; }
 
     /// <inheritdoc/>
-    public byte URanges_Asingle => throw new NotImplementedException ( );
+    public byte URanges_Asingle { get; }
 
     /// <inheritdoc/>
-    public byte IRanges_Asingle => throw new NotImplementedException ( );
+    public byte IRanges_Asingle { get; }
 
     /// <inheritdoc/>
-    public byte IProtectRanges_Asingle => throw new NotImplementedException ( );
+    public byte IProtectRanges_Asingle { get; }
     #endregion       
 
     #region 方法
