@@ -36,32 +36,32 @@ public class ACS : IModuleACS
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private IPacketsBuilder_ACS? _PacketsOfACS;
+    private IPacketsBuilder_ACS? _PacketsBuilder;
 
-    /// <summary>
-    /// 定义交流表模块对象
-    /// </summary>
-    private IPacketBuilder_ACM? _PacketOfACM;
+    ///// <summary>
+    ///// 定义交流表模块对象
+    ///// </summary>
+    //private IPacketBuilder_ACM? _PacketOfACM;
 
-    /// <summary>
-    /// 定义直流源模块对象
-    /// </summary>
-    private IPacketBuilder_DCS? _PacketOfDCS;
+    ///// <summary>
+    ///// 定义直流源模块对象
+    ///// </summary>
+    //private IPacketBuilder_DCS? _PacketOfDCS;
 
-    /// <summary>
-    /// 定义直流表模块对象
-    /// </summary>
-    private IPacketBuilder_DCM? _PacketOfDCM;
+    ///// <summary>
+    ///// 定义直流表模块对象
+    ///// </summary>
+    //private IPacketBuilder_DCM? _PacketOfDCM;
 
-    /// <summary>
-    /// 定义电能模块模块对象
-    /// </summary>
-    private IPacketBuilder_PQ? _PacketOfPQ;
+    ///// <summary>
+    ///// 定义电能模块模块对象
+    ///// </summary>
+    //private IPacketBuilder_PQ? _PacketOfPQ;
 
-    /// <summary>
-    /// 定义开关量模块对象
-    /// </summary>
-    private IPacketBuilder_IO? _PacketOfIO;
+    ///// <summary>
+    ///// 定义开关量模块对象
+    ///// </summary>
+    //private IPacketBuilder_IO? _PacketOfIO;
     #endregion
 
     #region 构造函数
@@ -72,13 +72,15 @@ public class ACS : IModuleACS
     /// <param name="protocolFactory">协议工厂对象</param>
     /// <param name="serialPort">串口对象</param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS (ushort id, IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal ACS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
         _id = id;
         _protocolFactory = protocolFactory;
         _serialPort = serialPort;
         _methodOfCheckResponse = methodOfCheckResponse;
+        _PacketsBuilder = ( IPacketsBuilder_ACS? ) _protocolFactory. GetPacketsOfACS ( _id );
     }
+   
     #endregion
 
     #region 属性
@@ -92,7 +94,7 @@ public class ACS : IModuleACS
     public float Range_IProtect { get; }
 
     /// <inheritdoc/>
-    public float[ ] ACU_RangesList { get ; set ; }
+    public float[ ] ACU_RangesList { get; set; }
     /// <inheritdoc/>
     public float[ ] ACI_RangesList { get; set; }
     /// <inheritdoc/>
