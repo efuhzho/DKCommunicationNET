@@ -10,6 +10,12 @@ public class ACS : IModuleACS
 {
 
     #region 私有字段
+
+    /// <summary>
+    /// 设备ID
+    /// </summary>
+    private ushort _id;
+
     /// <summary>
     /// 定义协议工厂变量
     /// </summary>
@@ -30,11 +36,13 @@ public class ACS : IModuleACS
     /// <summary>
     /// 构造函数
     /// </summary>
+    /// <param name="id">设备ID</param>
     /// <param name="protocolFactory">协议工厂对象</param>
     /// <param name="serialPort">串口对象</param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS ( IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal ACS (ushort id, IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
+        _id = id;
         _protocolFactory = protocolFactory;
         _serialPort = serialPort;
         _methodOfCheckResponse = methodOfCheckResponse;

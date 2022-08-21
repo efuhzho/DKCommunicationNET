@@ -21,7 +21,7 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     /// <summary>
     /// 设备ID
     /// </summary>
-    public int ID { get; set; }
+    public ushort ID { get; set; }
 
     /// <summary>
     /// 当前客户端的数据变换机制，当需要从字节数据转换类型数据的时候需要。

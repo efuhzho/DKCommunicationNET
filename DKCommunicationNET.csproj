@@ -20,5 +20,8 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ModulesAndFunctions\Functions\" />
+  </ItemGroup>
 
 </Project>

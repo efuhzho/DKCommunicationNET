@@ -16,17 +16,17 @@ public interface IModuleACS
     /// <summary>
     /// 电压档位个数
     /// </summary>
-    internal byte RangesCount_ACU { get; }
+     byte RangesCount_ACU { get; }
 
     /// <summary>
     /// 电流档位个数
     /// </summary>
-    internal byte RangesCount_ACI { get; }
+     byte RangesCount_ACI { get; }
 
     /// <summary>
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
-    internal int RangeIndex_ACU { get; set; }
+     int RangeIndex_ACU { get; set; }
 
     /// <summary>
     /// 当前交流电压档位值，单位V

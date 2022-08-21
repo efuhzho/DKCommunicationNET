@@ -1,13 +1,9 @@
 ﻿using DKCommunicationNET. BaseClass;
+using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
-using DKCommunicationNET. Interface;
+using DKCommunicationNET. Module;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
-using DKCommunicationNET. Protocols. Hex5A;
-using DKCommunicationNET. Protocols. Hex81;
-using DKCommunicationNET. BasicFramework;
-using System. ComponentModel. DataAnnotations;
-using DKCommunicationNET. Module;
 
 namespace DKCommunicationNET;
 
@@ -22,17 +18,17 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-    private IProtocolFunctions _Functions;
+     readonly IProtocolFunctions _prodocolFunctions;
 
     /// <summary>
     /// CRC校验器
     /// </summary>
-    private ICRCChecker _CRCChecker;
+     readonly ICRCChecker _CRCChecker;
 
     /// <summary>
     /// 解码器
     /// </summary>
-    private IDecoder _Decoder;  
+     readonly IDecoder _Decoder;  
     #endregion 【私有字段】
 
     #region 【构造函数】
@@ -46,14 +42,51 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         //设备ID初始化
         ID = id;
 
-        //由抽象协议工厂根据客户选择的设备型号返回对应的实例。
-        _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
+        //由抽象协议工厂根据客户选择的设备型号返回对应的协议工厂实例。
+        _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );       
 
-        _ACS = new ACS ( _protocolFactory , _SerialPort , CheckResponse );
-
+        //初始化CRC校验器
         _CRCChecker = _protocolFactory. GetCRCChecker ( );
-        _Functions = _protocolFactory. GetProtocolFunctions ( );
+
+        //初始化当前协议（设备型号）所支持的功能标志
+        _prodocolFunctions = _protocolFactory. GetProtocolFunctions ( );
+
+        //初始化解码器
         _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
+
+        //初始化交流源模块
+        _ACS = new ACS ( ID , _protocolFactory , _SerialPort , CheckResponse );
+
+        //初始化交流表功能模块
+
+        //初始化标准表钳表功能模块
+
+        //初始化直流源功能模块
+
+        //初始化辅助直流源功能模块
+
+        //初始化直流表功能模块
+
+        //初始化直流纹波表功能模块
+
+        //初始化电能校验功能模块
+
+        //初始化开关量功能模块
+
+        //初始化双频输出功能模块
+
+        //初始化保护电流功能模块
+
+        //初始化闪变输出功能模块
+
+        //初始化遥信功能功能模块
+
+        //初始化高频输出功能模块
+
+        //初始化电机控制功能模块
+
+        //初始化对时功能功能模块
+
     }
     #endregion 构造函数
 
@@ -72,11 +105,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public string? ProtocolVer { get; private set; }
+
     #endregion 公共属性>>>设备信息
 
     #region 公共属性>>>功能状态指示标志
 
     #region 公共属性>>>功能状态指示>>>FuncB
+
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
@@ -115,7 +150,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public bool IsEnabled_DCM_RIP { get; private set; }
+
     #endregion 公共属性>>>功能状态指示>>>FuncB
+
 
     #region 公共属性>>>功能状态指示>>>FuncS
 
@@ -151,23 +188,34 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     /// <inheritdoc/>
     public bool IsEnabled_PPS { get; private set; }
+
     #endregion 公共属性>>>功能状态指示>>>FuncS
 
     #endregion 公共属性>>>功能状态指示
 
-    #region 公共属性>>>功能
+    #region 公共属性>>>功能模块
+
     private ACS _ACS;
     /// <summary>
     /// <inheritdoc cref="Module.ACS"/>
     /// </summary>
     public ACS ACS
     {
-        get { CheckFunctionsStatus. CheckFunctionsState ( _Functions. IsSupportedForACS , IsEnabled_ACS); return _ACS; }
+        get { CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupportedForACS , IsEnabled_ACS); return _ACS; }
         set { _ACS = value; }
     }
 
+    private DCS _DCS;
+    /// <summary>
+    /// <inheritdoc cref="Module.DCS"/>
+    /// </summary>
+    public DCS DCS
+    {
+        get { return _DCS; }
+        set { _DCS = value; }
+    }
 
-    #endregion 公共属性>>>功能
+    #endregion 公共属性>>>功能模块
 
     #endregion 【公共属性】
 
@@ -176,7 +224,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
     {
-        OperateResult<byte[ ]> res = CommandAction. Action ( _Functions. GetPacketOfHandShake , CheckResponse );
+        OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake , CheckResponse );
         _Decoder. DecodeHandShake ( res );
         Model = _Decoder. Model;
         Firmware = _Decoder. Firmware;
@@ -214,7 +262,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         OperateResult<byte[ ]> response = ReadBase ( send );
 
         //获取回复不成功
-        if ( !response. IsSuccess )
+        if ( !response. IsSuccess ||response.Content==null)
         {
             return response;
         }
@@ -233,7 +281,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
         return response;
     }
-    /// <inheritdoc/>
+    
     #endregion 【Core Interative 核心交互】
 }
 
