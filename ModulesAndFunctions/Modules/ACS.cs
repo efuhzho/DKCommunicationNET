@@ -204,8 +204,7 @@ public class ACS : IModuleACS
     #endregion       
 
     #region 方法
-
-    /// <inheritdoc/>
+        
      OperateResult<byte[ ]> IModuleACS.OpenACS ( )
     {
         return CommandAction. Action ( _PacketsBuilder. PacketOfOpen , _methodOfCheckResponse );
@@ -216,9 +215,10 @@ public class ACS : IModuleACS
         throw new NotImplementedException ( );
     }
 
+/// <inheritdoc/>
     public OperateResult<byte[ ]> GetRangesOfACS ( )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. PacketOfGetRanges , _methodOfCheckResponse );
     }
 
     public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
