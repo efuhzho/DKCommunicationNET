@@ -50,7 +50,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             throw new NotImplementedException ( );
         }
 
-        public OperateResult<byte[ ]> PacketOfSetWireMode ( string wireMode )
+        public OperateResult<byte[ ]> PacketOfSetWireMode ( Enum wireMode )
         {
             throw new NotImplementedException ( );
         }
