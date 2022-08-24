@@ -8,7 +8,7 @@ using DKCommunicationNET. Protocols;
 namespace DKCommunicationNET;
 
 /// <summary>
-/// 丹迪克设备类
+/// 丹迪克设备类:版本Ver2分组架构 2022年8月25日01点56分
 /// </summary>
 public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 {
