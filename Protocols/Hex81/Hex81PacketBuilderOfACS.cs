@@ -58,7 +58,6 @@ namespace DKCommunicationNET. Protocols. Hex81
             float[ ] data = new float[2];
             data[0] = FreqOfAll;
             data[1] = FreqOfC;
-
             byte[ ] buffer = _byteTransform. TransByte ( data );
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetFrequency , Hex81Information. SetFrequencyLength , buffer , _id );
         }
@@ -73,7 +72,6 @@ namespace DKCommunicationNET. Protocols. Hex81
             data[4] = PhaseIb;
             data[5] = PhaseIc;
             byte[ ] buffer = _byteTransform. TransByte ( data );
-
             return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.SetPhase, Hex81Information.SetPhaseLength , buffer , _id );
         }
 
@@ -90,7 +88,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Open ( )
         {
-            throw new NotImplementedException ( );
+            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder (Hex81Information. OpenACS , Hex81Information. OpenACSLength , _id );
         }
     }
 }
