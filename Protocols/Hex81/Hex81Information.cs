@@ -161,6 +161,38 @@ internal class Hex81Information
     //TODO NotImplemented.【适用于双通道】读直流表测量参数/数据。
     #endregion 【CommandCodes】>>>直流表
 
+    #region 【CommandCodes】>>>直流源
+    /// <summary>
+    /// 设置直流源档位参数
+    /// </summary>
+    public const byte SetRange_DCS = 0x66;
+    public const byte SetRange_DCS_Length = 9;
+
+    /// <summary>
+    /// 打开直流源
+    /// </summary>
+    public const byte Open_DCS = 0x67;
+    public const byte Open_DCS_Length = 8;
+
+    /// <summary>
+    /// 关闭直流源
+    /// </summary>
+    public const byte Stop_DCS = 0x68;
+    public const byte Stop_DCS_Length = 8;
+
+    /// <summary>
+    /// 设置直流源幅值
+    /// </summary>
+    public const byte SetAmplitude_DCS = 0x69;
+    public const byte SetAmplitude_DCS_Length = 13;
+
+    /// <summary>
+    /// 读直流源参数/数据
+    /// </summary>
+    public const byte ReadData_DCS = 0x79;
+    public const byte ReadData_DCS_Length = 8;
+    #endregion 【CommandCodes】>>>直流源
+
     #region 【Internal Methods】
     /// <summary>
     /// 获取对应的数据的CRC校验码（异或和）

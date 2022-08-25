@@ -151,12 +151,46 @@ internal interface IPacketsBuilder_ACS
 }
 internal interface IPacketBuilder_ACM
 {
-  
-
 }
 
 internal interface IPacketBuilder_DCS
 {
+    /// <summary>
+    /// 关闭直流源
+    /// </summary>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <returns></returns>
+    OperateResult<byte> Packet_Stop_DCS (byte? type=null );
+
+    /// <summary>
+    /// 打开直流源
+    /// </summary>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <returns></returns>
+    OperateResult<byte> Packet_Open_DCS (byte? type=null );
+    /// <summary>
+    /// 创建报文：设置直流源档位：【indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效】
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值：indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效</param>
+    /// <param name="type">输出类型：‘U'=直流电压；’I‘=直流电流；’R‘=直流电阻</param>
+    /// <returns></returns>
+    OperateResult<byte> Packet_SetRange_DCS (byte indexOfRange,byte type );
+
+    /// <summary>
+    /// 创建报文：设置直流源幅度
+    /// </summary>
+    /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="data">要设定的输出值</param>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <returns></returns>
+    OperateResult<byte> Packet_SetAmplitude_DCS ( byte indexOfRange,float data,byte type );
+
+    /// <summary>
+    /// 创建报文：读取直流源当前输出值
+    /// </summary>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <returns></returns>
+    OperateResult<byte> Packet_ReadData_DCS ( byte? type =null);
 }
 
 /// <summary>
@@ -170,13 +204,13 @@ internal interface IPacketBuilder_DCM
     /// <param name="rangeIndex">量程索引值</param>
     /// <param name="type">测量类型：0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetRange_DCM ( byte rangeIndex , byte type );
+    OperateResult<byte[ ]> Packet_SetRange_DCM ( byte rangeIndex , byte type );
 
     /// <summary>
     /// 读取直流表数据
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> ReadData_DCM ( );
+    OperateResult<byte[ ]> Packet_ReadData_DCM ( );
 }
 
 internal interface IPacketBuilder_IO
