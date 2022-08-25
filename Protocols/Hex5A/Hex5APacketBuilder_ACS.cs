@@ -51,7 +51,7 @@ namespace DKCommunicationNET. Protocols. Hex5A
             throw new NotImplementedException ( );
         }
 
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Close ( )
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Stop ( )
         {
             throw new NotImplementedException ( );
         }

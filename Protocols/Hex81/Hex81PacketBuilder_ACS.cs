@@ -138,25 +138,22 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> Packet_ReadData_ACS ( )
         {
-            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.ReadData_ACS,_id );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_ACS , _id );
         }
 
         public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( )
         {
-            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.GetStatus_ACS,_id );
-        }
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetStatus_ACS , _id );
+        }      
 
-        #region 不公开的方法
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Close ( )
+        public OperateResult<byte[ ]> Packet_Stop ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. CloseACS , Hex81Information. CloseACSLength , _id );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. CloseACS , _id );
         }
 
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Open ( )
+        public OperateResult<byte[ ]> Packet_Open ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , _id );
-        }
-        #endregion 不公开的方法
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , _id );
+        }      
     }
 }

@@ -199,7 +199,16 @@ internal class Hex81Information
     #endregion 【CommandCodes】>>>直流源
 
     #region 【CommandCodes】>>>电能
+    /// <summary>
+    /// 读电能误差
+    /// </summary>
+    public const byte ReadData_EPQ = 0x45;
 
+    /// <summary>
+    /// 设置电能校验参数并启动电能校验
+    /// </summary>
+    public const byte SetElectricity = 0x37;
+    public const byte SetElectricity_Length = 32;
 
     #endregion 【CommandCodes】>>>电能
 

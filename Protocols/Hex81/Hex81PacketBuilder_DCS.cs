@@ -14,7 +14,7 @@ namespace DKCommunicationNET. Protocols. Hex81
         {
             _id = id;
         }
-        public OperateResult<byte[ ]> Packet_Stop_DCS ( byte? type = null )
+        public OperateResult<byte[ ]> Packet_Stop ( byte? type = null )
         {
             if ( type == null )
             {
@@ -25,7 +25,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             byte[ ] data = new byte[1] { ( byte ) type };
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Stop_DCS , Hex81Information. Stop_DCS_Length , data , _id );
         }
-        public OperateResult<byte[ ]> Packet_Open_DCS ( byte? type = null )
+        public OperateResult<byte[ ]> Packet_Open ( byte? type = null )
         {
             if ( type == null )
             {
@@ -37,7 +37,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Open_DCS , Hex81Information. Open_DCS_Length , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_ReadData_DCS ( byte? type = null )
+        public OperateResult<byte[ ]> Packet_ReadData ( byte? type = null )
         {
             if ( type == null )
             {
@@ -49,7 +49,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , Hex81Information. ReadData_DCS_Length , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetAmplitude_DCS ( byte indexOfRange , float amplitude , byte type , IByteTransform byteTransform )
+        public OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type , IByteTransform byteTransform )
         {
             byte[ ] data = new byte[6];
             data[0] = indexOfRange;
@@ -58,13 +58,13 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetAmplitude_DCS , Hex81Information. SetAmplitude_DCS_Length , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetRange_DCS ( byte indexOfRange , byte type )
+        public OperateResult<byte[ ]> Packet_SetRange ( byte indexOfRange , byte type )
         {
             byte[ ] data = new byte[2] { indexOfRange , type };
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetRange_DCS , Hex81Information. SetRange_DCS_Length , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_GetRanges_DCS ( )
+        public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
         }

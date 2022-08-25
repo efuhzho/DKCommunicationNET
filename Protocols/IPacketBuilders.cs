@@ -77,13 +77,13 @@ internal interface IPacketsBuilder_ACS
     /// 创建【打开交流源】的报文
     /// </summary>
     /// <returns></returns>
-    internal OperateResult<byte[ ]> Packet_Open ( );
+    public OperateResult<byte[ ]> Packet_Open ( );
 
     /// <summary>
     /// 创建【关闭交流源】的报文
     /// </summary>
     /// <returns></returns>
-    internal OperateResult<byte[ ]> Packet_Close ( );
+    public OperateResult<byte[ ]> Packet_Stop ( );
 
     /// <summary>
     /// 创建报文：设置相位
@@ -172,46 +172,46 @@ internal interface IPacketBuilder_DCS
     /// <summary>
     /// 关闭直流源
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Stop_DCS (byte? type=null );
+    OperateResult<byte[ ]> Packet_Stop (byte? type=null );
 
     /// <summary>
     /// 打开直流源
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Open_DCS (byte? type=null );
+    OperateResult<byte[ ]> Packet_Open (byte? type=null );
     /// <summary>
     /// 创建报文：设置直流源档位：【indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效】
     /// </summary>
     /// <param name="indexOfRange">档位索引值：indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效</param>
     /// <param name="type">输出类型：‘U'=直流电压；’I‘=直流电流；’R‘=直流电阻</param>
     /// <returns></returns>
-    OperateResult<byte[]> Packet_SetRange_DCS (byte indexOfRange,byte type );
+    OperateResult<byte[]> Packet_SetRange (byte indexOfRange,byte type );
 
     /// <summary>
     /// 创建报文：设置直流源幅度
     /// </summary>
-    /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <param name="amplitude">要设定的幅值</param>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
-    OperateResult<byte[]> Packet_SetAmplitude_DCS ( byte indexOfRange,float amplitude , byte type , IByteTransform byteTransform );
+    OperateResult<byte[]> Packet_SetAmplitude ( byte indexOfRange,float amplitude , byte type , IByteTransform byteTransform );
 
     /// <summary>
     /// 创建报文：读取直流源当前输出值
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte[]> Packet_ReadData_DCS ( byte? type =null);
+    OperateResult<byte[]> Packet_ReadData ( byte? type =null);
 
     /// <summary>
     /// 创建报文：获取直流源档位信息
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_GetRanges_DCS (  );
+    OperateResult<byte[ ]> Packet_GetRanges (  );
 
 }
 
@@ -226,19 +226,19 @@ internal interface IPacketBuilder_DCM
     /// <param name="rangeIndex">量程索引值</param>
     /// <param name="type">测量类型：0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange_DCM ( byte rangeIndex , byte type );
+    OperateResult<byte[ ]> Packet_SetRange ( byte rangeIndex , byte type );
 
     /// <summary>
     /// 读取直流表数据
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ReadData_DCM ( );
+    OperateResult<byte[ ]> Packet_ReadData ( );
 
     /// <summary>
     /// 获取直流表档位信息
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_GetRanges_DCM ( );
+    OperateResult<byte[ ]> Packet_GetRanges ( );
 }
 
 /// <summary>
@@ -253,6 +253,24 @@ internal interface IPacketBuilder_IO
 /// </summary>
 internal interface IPacketBuilder_PQ
 {
+    /// <summary>
+    /// 创建报文：读取电能校验误差
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_ReadData ( );
 
+    /// <summary>
+    /// 创建报文：设置电能校验参数并启动电能校验
+    /// </summary>
+    /// <param name="electricityType">电能类型：’‘=有功；’‘=无功</param>
+    /// <param name="meterPConst">【表】有功脉冲常数</param>
+    /// <param name="meterQConst">【表】无功脉冲常数</param>
+    /// <param name="sourcePConst">有功脉冲常数</param>
+    /// <param name="sourceQConst">无功脉冲常数</param>
+    /// <param name="meterDIV">【表】分频系数</param>
+    /// <param name="meterRounds">【表】校验圈数</param>
+    /// <param name="byteTransform">数据转换规则</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetElectricity( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds , IByteTransform byteTransform );
 }
 
