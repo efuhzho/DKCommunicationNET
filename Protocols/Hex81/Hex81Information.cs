@@ -29,7 +29,7 @@ internal class Hex81Information
     /// 发送故障代码，带枚举数据
     /// </summary>
     internal const byte ErrorCode = 0x52;
-    internal const byte ErrorCodeLength = 8;      
+    internal const byte ErrorCodeLength = 8;
 
     /// <summary>
     /// 设置系统模式
@@ -48,37 +48,37 @@ internal class Hex81Information
     /// <summary>
     /// 交流源关闭命令
     /// </summary>
-    public const byte CloseACS = 0x4F;  
+    public const byte CloseACS = 0x4F;
     public const ushort CloseACSLength = 7;
 
     /// <summary>
     /// 交流源打开命令
     /// </summary>
-    public const byte OpenACS = 0x54; 
+    public const byte OpenACS = 0x54;
     public const ushort OpenACSLength = 7;
 
     /// <summary>
     /// 读取交流标准源档位信息
     /// </summary>
     public const byte GetRanges_ACS = 0x11;
-    public const byte GetRanges_ACS_Length = 7;    
+    public const byte GetRanges_ACS_Length = 7;
 
     /// <summary>
     /// 设置交流源档位参数 
     /// </summary>
-    public const byte SetRanges_ACS = 0x31; 
+    public const byte SetRanges_ACS = 0x31;
     public const ushort SetRanges_ACS_Length = 16;  //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源幅度参数
     /// </summary>
-    public const byte SetAmplitude_ACS = 0x32;    
+    public const byte SetAmplitude_ACS = 0x32;
     public const ushort SetAmplitude_ACS_Length = 43; //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源相位参数
     /// </summary>
-    public const byte SetPhase = 0x33;    
+    public const byte SetPhase = 0x33;
     public const ushort SetPhaseLength = 31;
 
     /// <summary>
@@ -86,24 +86,24 @@ internal class Hex81Information
     /// </summary>
     public const byte SetFrequency = 0x34;    //2022年7月8日 12点34分
     public const ushort SetFrequencyLength = 20;//注意：设置时 Fa=Fb，Fc 可以设置为与 AB 相不同的频率
-                                                  //也可以只设置 Fa，则默认为三相同频，用于兼容以前的设备通讯程序
+                                                //也可以只设置 Fa，则默认为三相同频，用于兼容以前的设备通讯程序
 
     /// <summary>
     /// 设置源接线模式:
     /// </summary>
-    public const byte SetWireMode = 0x35;   
+    public const byte SetWireMode = 0x35;
     public const ushort SetWireModeLength = 8;
 
     /// <summary>
     /// 闭环控制使能命令：HarmonicMode ：谐波模式，0-以真有效值的百分比输入谐波（有效值恒定）；1-以基波值的百分比输入谐波（基波恒定）
     /// </summary>
-    public const byte SetClosedLoop = 0x36;     
+    public const byte SetClosedLoop = 0x36;
     public const ushort SetClosedLoopLength = 9;
 
     /// <summary>
     /// 设置谐波参数：注意：建议协议长度不超过 256，超过 256 个字节建议分批发送。
     /// </summary>
-    public const byte SetHarmonics = 0x58; 
+    public const byte SetHarmonics = 0x58;
 
     /// <summary>
     /// 设置有功功率
@@ -280,6 +280,69 @@ public enum DisplayPage : byte
 }
 
 /// <summary>
+/// 接线方式枚举
+/// </summary>
+public enum WireMode : byte
+{
+    /// <summary>
+    /// 三相四线制
+    /// </summary>
+    WireMode_3P4L = 00,
+
+    /// <summary>
+    /// 三相三线制
+    /// </summary>
+    WireMode_3P3L = 01,
+
+    /// <summary>
+    /// 单相
+    /// </summary>
+    WireMode_1P1L = 02,
+
+    /// <summary>
+    /// 二线两元件（两个互感器）
+    /// </summary>
+    WireMode_2Component = 03,
+
+    /// <summary>
+    /// 二线三元件（三个互感器）
+    /// </summary>
+    WireMode_3Component = 04,
+}
+
+/// <summary>
+/// 闭环控制定义
+/// </summary>
+public enum CloseLoopMode : byte
+{
+    /// <summary>
+    /// 闭环
+    /// </summary>
+    CloseLoop = 0,
+
+    /// <summary>
+    /// 开环
+    /// </summary>
+    OpenLoop = 1
+}
+
+/// <summary>
+/// 谐波模式
+/// </summary>
+public enum HarmonicMode : byte
+{
+    /// <summary>
+    /// 以真有效值的百分比输入谐波
+    /// </summary>
+    ValidValuesConstant = 0,
+
+    /// <summary>
+    /// 以基波值的百分比输入谐波
+    /// </summary>
+    FundamentalConstant = 1
+}
+
+/// <summary>
 /// 故障码定义：枚举。此为获取故障信息的第二种方式
 /// </summary>
 [Flags]
@@ -322,36 +385,267 @@ internal enum FuncS
 }
 
 /// <summary>
-/// 接线方式枚举
+/// 谐波设置通道选择
 /// </summary>
-public enum WireMode : byte
+[Flags]
+public enum ChannelsHarmonic : byte
 {
     /// <summary>
-    /// 三相四线制
+    /// A相电压
     /// </summary>
-    WireMode_3P4L = 00,
+    Channel_Ua = 0b_0000_0001,  // 0x01 // 1
 
     /// <summary>
-    /// 三相三线制
+    /// B相电压
     /// </summary>
-    WireMode_3P3L = 01,
+    Channel_Ub = 0b_0000_0010,  // 0x02 // 2
 
     /// <summary>
-    /// 单相
+    /// C相电压
     /// </summary>
-    WireMode_1P1L = 02,
+    Channel_Uc = 0b_0000_0100,  // 0x04 // 4
 
     /// <summary>
-    /// 二线两元件（两个互感器）
+    /// A相电流
     /// </summary>
-    WireMode_2Component = 03,
+    Channel_Ia = 0b_0000_1000,  // 0x08 // 8
 
     /// <summary>
-    /// 二线三元件（三个互感器）
+    /// B相电流
     /// </summary>
-    WireMode_3Component = 04,
+    Channel_Ib = 0b_0001_0000,  // 0x10 // 16
+
+    /// <summary>
+    /// C相电流
+    /// </summary>
+    Channel_Ic = 0b_0010_0000,  // 0x20 // 32
+
+    /// <summary>
+    /// 所有相电压
+    /// </summary>
+    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,    // 0x07 // 7
+
+    /// <summary>
+    /// 所有相电流
+    /// </summary>
+    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   // 0x38 // 56
+
+    /// <summary>
+    /// 电压所有相和电流所有相
+    /// </summary>
+    Channel_All = Channel_U | Channel_I   // 0x3F // 63
 }
 
+/// <summary>
+/// 设置有功功率通道枚举
+/// </summary>
+public enum Channel_WattPower : byte
+{
+    /// <summary>
+    /// A相有功功率
+    /// </summary>
+    Channel_Pa = 0,
+    /// <summary>
+    /// B相有功功率
+    /// </summary>
+    Channel_Pb = 1,
+    /// <summary>
+    /// C相有功功率
+    /// </summary>
+    Channel_Pc = 2,
+    /// <summary>
+    /// 总有功功率
+    /// </summary>
+    Channel_Psum = 3
+}
+
+/// <summary>
+/// 设置有功功率通道枚举
+/// </summary>
+public enum Channel_WattLessPower : byte
+{
+    /// <summary>
+    /// A相无功功功率
+    /// </summary>
+    Channel_Qa = 0,
+
+    /// <summary>
+    /// B相无功功率
+    /// </summary>
+    Channel_Qb = 1,
+
+    /// <summary>
+    /// C相无功功率
+    /// </summary>
+    Channel_Qc = 2,
+
+    /// <summary>
+    /// 总无功功率
+    /// </summary>
+    Channel_Qsum = 3
+}
+
+/// <summary>
+/// 电能校验类型（ 电能测量）
+/// </summary>
+public enum ElectricityType : byte
+{
+    /// <summary>
+    /// 有功功率
+    /// </summary>
+    P = ( byte ) 'P', //0x50,
+
+    /// <summary>
+    /// 无功功率
+    /// </summary>
+    Q = ( byte ) 'Q' //0x51
+}
+
+/// <summary>
+/// 直流表测量类型
+/// </summary>
+public enum DCMerterMeasureType : byte
+{
+    /// <summary>
+    /// 直流电压
+    /// </summary>
+    DCM_Voltage = 0,
+
+    /// <summary>
+    /// 直流电流
+    /// </summary>
+    DCM_Current = 1,
+
+    /// <summary>
+    /// 纹波电压
+    /// </summary>
+    DCM_VoltageRipple = 2,
+
+    /// <summary>
+    /// 纹波电流
+    /// </summary>
+    DCM_CurrentRipple = 3
+}
+
+/// <summary>
+/// 直流源输出类型
+/// </summary>
+public enum DCS_Type : byte
+{
+    /// <summary>
+    /// 直流源电压输出
+    /// </summary>
+    DCS_Type_U = ( byte ) 'U', //85;0x55
+
+    /// <summary>
+    /// 直流源电流输出
+    /// </summary>
+    DCS_Type_I = ( byte ) 'I', //73;0x49
+
+    /// <summary>
+    /// 直流电阻输出
+    /// </summary>
+    DCS_Type_R = ( byte ) 'R'  //82;0x52
+}
+
+/// <summary>
+/// 校准时的操作类型
+/// </summary>
+public enum CalibrateType : byte
+{
+    /// <summary>
+    /// 校准标准源
+    /// </summary>
+    标准源 = 0,
+
+    /// <summary>
+    /// 校准标准表
+    /// </summary>
+    标准表 = 1,
+
+    /// <summary>
+    /// 校准钳形表
+    /// </summary>
+    钳形表 = 2,
+
+    /// <summary>
+    /// 校准直流源
+    /// </summary>
+    直流源 = 3,
+
+    /// <summary>
+    /// 校准直流表
+    /// </summary>
+    直流表 = 4,
+}
+
+/// <summary>
+/// 当前校准点
+/// </summary>
+public enum CalibrateLevel : byte
+{
+    /// <summary>
+    /// 零点
+    /// </summary>
+    零点 = 0,
+
+    /// <summary>
+    /// 20%校准点
+    /// </summary>
+    校准点20 = 1,
+
+    /// <summary>
+    /// 100%校准点
+    /// </summary>
+    校准点100 = 2,
+
+    /// <summary>
+    /// 相位校准
+    /// </summary>
+    相位校准 = 3,
+}
+
+/// <summary>
+/// 直流源校准类型
+/// </summary>
+public enum Calibrate_DCSourceType : byte
+{
+    /// <summary>
+    /// 直流电压校准
+    /// </summary>
+    直流电压 = ( byte ) 'U',
+
+    /// <summary>
+    /// 直流电流校准
+    /// </summary>
+    直流电流 = ( byte ) 'I'
+}
+
+/// <summary>
+/// 直流表校准类型
+/// </summary>
+public enum Calibrate_DCMeterType : byte
+{
+    /// <summary>
+    /// 直流电压校准
+    /// </summary>
+    直流电压 = 0,
+
+    /// <summary>
+    /// 直流电流校准
+    /// </summary>
+    直流电流 = 1,
+
+    /// <summary>
+    /// 纹波电压校准
+    /// </summary>
+    纹波电压 = 2,
+
+    /// <summary>
+    /// 纹波电流校准
+    /// </summary>
+    纹波电流 = 3
+}
 #endregion 枚举类型
 
 
