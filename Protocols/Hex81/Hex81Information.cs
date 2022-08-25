@@ -130,6 +130,37 @@ internal class Hex81Information
     public const byte GetStatus_ACS_Length = 7;
     #endregion CommandCodes ==> [交流源/表]
 
+    #region 【CommandCodes】>>>直流表
+    /// <summary>
+    /// 设置直流表量程:0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。
+    /// </summary>
+    public const byte SetRange_DCM = 0x61;
+    public const byte SetRange_DCM_Length = 9;
+
+    /// <summary>
+    /// 【无参】读直流表测量参数/数据。
+    /// </summary>
+    public const byte ReadData_DCM = 0x62;
+
+    ///// <summary>
+    ///// 设置直流表测量类型：0-直流；1-纹波。
+    ///// </summary>
+    //public const byte SetDCMeterMesureType = 0x63;         
+    //TODO NotImplemented.设置直流表测量类型：0-直流；1-纹波。
+
+    ///// <summary>
+    ///// 【适用于双通道】设置直流表测量参数/数据。
+    ///// </summary>
+    //public const byte SetDCMeterDataWithTwoCh = 0x64;     
+    //TODO NotImplemented.【适用于双通道】设置直流表测量参数/数据。
+
+    ///// <summary>
+    ///// 【适用于双通道】读直流表测量参数/数据。
+    ///// </summary>
+    //public const byte ReadDCMeterDataWithTwoCh = 0x65;    
+    //TODO NotImplemented.【适用于双通道】读直流表测量参数/数据。
+    #endregion 【CommandCodes】>>>直流表
+
     #region 【Internal Methods】
     /// <summary>
     /// 获取对应的数据的CRC校验码（异或和）

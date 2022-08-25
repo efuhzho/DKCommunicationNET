@@ -59,7 +59,7 @@ public struct HarmonicArgs
     /// <summary>
     /// 支持的最大谐波次数
     /// </summary>
-    internal int harmonicTimesMax = 100;
+    internal byte harmonicTimesMax = 100;
     /// <summary>
     /// 支持的最大谐波幅度
     /// </summary>
@@ -69,7 +69,7 @@ public struct HarmonicArgs
     /// </summary>    
     /// <param name="harmonicTimesMax">支持的最大谐波次数</param>
     /// <param name="amplitudeMax">支持的最大谐波幅度</param>
-    public HarmonicArgs ( int harmonicTimesMax = 100 , float amplitudeMax = 1F )
+    public HarmonicArgs ( byte harmonicTimesMax = 100 , float amplitudeMax = 1F )
     {      
         this. harmonicTimesMax = harmonicTimesMax;
         this. amplitudeMax = amplitudeMax;

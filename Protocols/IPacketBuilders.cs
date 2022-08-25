@@ -4,6 +4,7 @@ using System. Linq;
 using System. Text;
 using System. Threading. Channels;
 using System. Threading. Tasks;
+using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
 
@@ -12,8 +13,10 @@ namespace DKCommunicationNET. Protocols;
 /// </summary>
 internal interface IPacketBuilderHelper
 {
+    //TODO 添加注释
     OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id );
     OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data , ushort id );
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort id );
 }
 
 internal interface IPacketBuilder_Settings
@@ -116,7 +119,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channels">要设置的谐波通道</param>
     /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonics (byte channels, HarmonicArgs[ ]? harmonics=null );
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( byte channels , HarmonicArgs[ ]? harmonics = null );
 
     /// <summary>
     /// 创建报文：设置有功功率
@@ -124,7 +127,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channel">要设置的有功功率通道</param>
     /// <param name="p">要设置的有功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattPower ( byte  channel , float p );
+    public OperateResult<byte[ ]> Packet_SetWattPower ( byte channel , float p );
 
     /// <summary>
     ///  创建报文：设置无功功率
@@ -132,30 +135,48 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channel">要设置的无功功率通道</param>
     /// <param name="q">要设置的无功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte  channel , float q );
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q );
 
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
     /// </summary>
     /// <returns></returns>
-    public OperateResult <byte[ ]> Packet_ReadData_ACS ( );
+    public OperateResult<byte[ ]> Packet_ReadData_ACS ( );
 
     /// <summary>
     /// 读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
     /// </summary>
     /// <returns></returns>
-    public OperateResult <byte[ ]> Packet_GetReadDataStatus_ACS ( );
+    public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( );
 }
 internal interface IPacketBuilder_ACM
 {
+  
+
 }
 
 internal interface IPacketBuilder_DCS
 {
 }
 
+/// <summary>
+/// 直流表模块报文创建类
+/// </summary>
 internal interface IPacketBuilder_DCM
 {
+    /// <summary>
+    /// 设置直流表量程和测量类型
+    /// </summary>
+    /// <param name="rangeIndex">量程索引值</param>
+    /// <param name="type">测量类型：0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetRange_DCM ( byte rangeIndex , byte type );
+
+    /// <summary>
+    /// 读取直流表数据
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> ReadData_DCM ( );
 }
 
 internal interface IPacketBuilder_IO

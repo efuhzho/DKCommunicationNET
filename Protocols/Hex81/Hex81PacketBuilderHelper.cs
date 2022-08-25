@@ -87,6 +87,17 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
         }
     }
 
+    /// <summary>
+    /// 无参命令报文创建
+    /// </summary>
+    /// <param name="commandCode"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> PacketShellBuilder(byte commandCode,ushort id )
+    {
+        return PacketShellBuilder(commandCode,7,id);
+    }
+
     #region 【Private Methods】
     /// <summary>
     /// 解析ID,转换为两个字节
