@@ -158,6 +158,5 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. OpenACS , Hex81Information. OpenACSLength , _id );
         }
         #endregion 不公开的方法
-
     }
 }
