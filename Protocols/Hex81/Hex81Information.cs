@@ -18,8 +18,7 @@ internal class Hex81Information
     internal const ushort HandShake_Length = 7;
     internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
 
-    #region 【CommandCodes】[系统设置]
-
+    #region 【CommandCodes】>>>[系统设置]
     /// <summary>
     /// 系统应答命令
     /// </summary>
@@ -43,10 +42,9 @@ internal class Hex81Information
     /// </summary>
     internal const byte SetDisplayPage = 0x4A;
     internal const ushort SetDisplayPage_Length = 8;
-
     #endregion CommandCodes ==> [系统设置]
 
-    #region CommandCodes ==> [交流源/表]
+    #region 【CommandCodes】>>>[交流源/表]
     /// <summary>
     /// 交流源关闭命令
     /// </summary>
@@ -149,7 +147,6 @@ internal class Hex81Information
         }
         return crc;
     }
-
     #endregion Internal Methods 
 }
 
@@ -201,6 +198,88 @@ public enum SystemModes : byte
 }
 
 /// <summary>
+/// 显示页面枚举
+/// </summary>
+public enum DisplayPage : byte
+{
+    #region 【标准源模式下有效】
+    /// <summary>
+    /// 【标准源模式下有效】Menu功能选择界面：仅彩屏有效，黑白屏无效。需先切换到Menu界面才能继续操作显示其他界面
+    /// </summary>
+    PageMenu = 0,
+
+    /// <summary>
+    /// 【标准源模式下有效】默认的开机界面：交流源输出界面
+    /// </summary>
+    PageDefault = 1,
+
+    /// <summary>
+    /// 【标准源模式下有效】波形显示界面：彩屏是波形显示；黑白屏是相位输出
+    /// </summary>
+    PageWave = 2,
+
+    /// <summary>
+    /// 【标准源模式下有效】矢量显示界面
+    /// </summary>
+    PagePhasor = 3,
+
+    /// <summary>
+    /// 【标准源模式下有效】谐波设置界面
+    /// </summary>
+    PageHarmony = 4,
+
+    /// <summary>
+    /// 【标准源模式下有效】电能校验界面
+    /// </summary>
+    PageElectricity = 8,
+
+    /// <summary>
+    /// 【标准源模式下有效】直流测量界面
+    /// </summary>
+    PageDCMeter = 5,
+
+    /// <summary>
+    /// 【标准源模式下有效】直流输出界面
+    /// </summary>
+    PageDC = 6,
+    #endregion 标准源模式下有效
+
+    #region 【标准表模式下有效】
+    /// <summary>
+    /// 【标准表模式下有效】参数测量界面
+    /// </summary>
+    PageStandardMeterData = 9,
+
+    /// <summary>
+    /// 【标准表模式下有效】相位测量界面：彩屏是波形显示,黑白屏是相位显示
+    /// </summary>
+    PageStandardMeterWave = 10,
+
+    /// <summary>
+    /// 【标准表模式下有效】矢量显示界面
+    /// </summary>
+    PageStandardMeterPhasor = 11,
+    #endregion 【标准表模式下有效】
+
+    #region 钳表模式下有效
+    /// <summary>
+    /// 【钳表模式下有效】钳表测量界面
+    /// </summary>
+    PageClampData = 12,
+
+    /// <summary>
+    /// 【钳表模式下有效】钳表相位测量界面
+    /// </summary>
+    PageClampPhase = 13, //黑白屏，彩屏为波形显示
+
+    /// <summary>
+    /// 【钳表模式下有效】钳表测试矢量显示界面
+    /// </summary>
+    PageClampPhasor = 14,
+    #endregion
+}
+
+/// <summary>
 /// 故障码定义：枚举。此为获取故障信息的第二种方式
 /// </summary>
 [Flags]
@@ -242,8 +321,6 @@ internal enum FuncS
     Enabled_PWM = 0B_0010_0000,
 }
 
-#region WireMode 接线方式
-
 /// <summary>
 /// 接线方式枚举
 /// </summary>
@@ -274,7 +351,7 @@ public enum WireMode : byte
     /// </summary>
     WireMode_3Component = 04,
 }
-#endregion WireMode
+
 #endregion 枚举类型
 
 
