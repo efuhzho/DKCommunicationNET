@@ -13,7 +13,7 @@ internal class Hex5AFactory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return OperateResult.CreateSuccessResult( new Hex5APacketBuilderOfACM ( ) as IPacketBuilder_ACM);
+        return OperateResult.CreateSuccessResult( new Hex5APacketBuilder_ACM ( ) as IPacketBuilder_ACM);
     }
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )

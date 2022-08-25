@@ -11,6 +11,13 @@ internal class Hex81Information
     internal const byte FrameID = 0x81;
     internal const int DataStartIndex = 6;
 
+    /// <summary>
+    /// 联机命令，读取终端型号和版本号
+    /// </summary>
+    internal const byte HandShake = 0x4C;
+    internal const ushort HandShake_Length = 7;
+    internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
+
     #region 【CommandCodes】[系统设置]
 
     /// <summary>
@@ -23,27 +30,19 @@ internal class Hex81Information
     /// 发送故障代码，带枚举数据
     /// </summary>
     internal const byte ErrorCode = 0x52;
-
-    internal const byte ErrorCodeLength = 8;    
-
-    /// <summary>
-    /// 联机命令，读取终端型号和版本号
-    /// </summary>
-    internal const byte HandShake = 0x4C;
-    internal const ushort HandShakeCommandLength = 7;
-    internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
+    internal const byte ErrorCodeLength = 8;      
 
     /// <summary>
     /// 设置系统模式
     /// </summary>
     internal const byte SetSystemMode = 0x44;
-    internal const ushort SetSystemModeCommandLength = 8;
+    internal const ushort SetSystemMode_Length = 8;
 
     /// <summary>
     /// 设置当前终端显示界面
     /// </summary>
     internal const byte SetDisplayPage = 0x4A;
-    internal const ushort SetDisplayPageCommandLength = 8;
+    internal const ushort SetDisplayPage_Length = 8;
 
     #endregion CommandCodes ==> [系统设置]
 
@@ -64,7 +63,7 @@ internal class Hex81Information
     /// 读取交流标准源档位信息
     /// </summary>
     public const byte GetRanges_ACS = 0x11;
-    public const byte GetRangesOfACSLength = 7;    
+    public const byte GetRanges_ACS_Length = 7;    
 
     /// <summary>
     /// 设置交流源档位参数 
@@ -75,8 +74,8 @@ internal class Hex81Information
     /// <summary>
     /// 设置源幅度参数
     /// </summary>
-    public const byte SetACSAmplitude = 0x32;    
-    public const ushort SetACSAmplitudeLength = 43; //!51F具备IPa,IPb,IPc
+    public const byte SetAmplitude_ACS = 0x32;    
+    public const ushort SetAmplitude_ACS_Length = 43; //!51F具备IPa,IPb,IPc
 
     /// <summary>
     /// 设置源相位参数
@@ -106,32 +105,31 @@ internal class Hex81Information
     /// <summary>
     /// 设置谐波参数：注意：建议协议长度不超过 256，超过 256 个字节建议分批发送。
     /// </summary>
-    public const byte WriteHarmonics = 0x58; 
-    public const ushort WriteHarmonicsClearLength = 9;
+    public const byte SetHarmonics = 0x58; 
 
     /// <summary>
     /// 设置有功功率
     /// </summary>
-    public const byte WriteWattPower = 0x50;
-    public const ushort WriteWattPowerLength = 12;
+    public const byte SetWattPower = 0x50;
+    public const ushort SetWattPowerLength = 12;
 
     /// <summary>
     /// 设置无功功率
     /// </summary>
-    public const byte WriteWattlessPower = 0x51; //TODO 确认协议描述是否有误
-    public const byte WriteWattlessPowerLength = 12;
+    public const byte SetWattlessPower = 0x51; //TODO 确认协议描述是否有误
+    public const byte SetWattlessPowerLength = 12;
 
     /// <summary>
     /// 读交流标准表参数/数据：读标准源输出值
     /// </summary>
-    public const byte ReadACSourceData = 0x4D;
-    public const byte ReadACSourceDataLength = 7;
+    public const byte ReadData_ACS = 0x4D;
+    public const byte ReadData_ACS_Length = 7;
 
     /// <summary>
     /// 读系统状态位：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
     /// </summary>
-    public const byte ReadACStatus = 0x4E;
-    public const byte ReadACStatusLength = 7;
+    public const byte GetStatus_ACS = 0x4E;
+    public const byte GetStatus_ACS_Length = 7;
     #endregion CommandCodes ==> [交流源/表]
 
     #region 【Internal Methods】
@@ -243,6 +241,40 @@ internal enum FuncS
     Enabled_HF = 0B_0001_0000,
     Enabled_PWM = 0B_0010_0000,
 }
+
+#region WireMode 接线方式
+
+/// <summary>
+/// 接线方式枚举
+/// </summary>
+public enum WireMode : byte
+{
+    /// <summary>
+    /// 三相四线制
+    /// </summary>
+    WireMode_3P4L = 00,
+
+    /// <summary>
+    /// 三相三线制
+    /// </summary>
+    WireMode_3P3L = 01,
+
+    /// <summary>
+    /// 单相
+    /// </summary>
+    WireMode_1P1L = 02,
+
+    /// <summary>
+    /// 二线两元件（两个互感器）
+    /// </summary>
+    WireMode_2Component = 03,
+
+    /// <summary>
+    /// 二线三元件（三个互感器）
+    /// </summary>
+    WireMode_3Component = 04,
+}
+#endregion WireMode
 #endregion 枚举类型
 
 

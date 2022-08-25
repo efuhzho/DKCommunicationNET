@@ -2,6 +2,7 @@
 using System. Collections. Generic;
 using System. Linq;
 using System. Text;
+using System. Threading. Channels;
 using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols;
@@ -13,6 +14,21 @@ internal interface IPacketBuilderHelper
 {
     OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id );
     OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data , ushort id );
+}
+
+internal interface IPacketBuilder_Settings
+{
+    /// <summary>
+    /// 设置系统模式
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetSystemMode ( byte systemMode );
+
+    /// <summary>
+    /// 设置显示页面
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetDisplayPage ( byte displayPage );
 }
 
 internal interface IPacketsBuilder_ACS
@@ -85,6 +101,50 @@ internal interface IPacketsBuilder_ACS
     /// <param name="wireMode">接线方式</param>
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_SetWireMode ( byte wireMode );
+
+    /// <summary>
+    /// 【Hex81】创建报文：设置闭环模式
+    /// </summary>
+    /// <param name="closeLoopMode"></param>
+    /// <param name="harmonicMode"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( byte closeLoopMode , byte harmonicMode );
+
+    /// <summary>
+    /// 【报文长度不可超过256】创建报文：设置谐波输出参数；如果谐波组为null,则指令为清空谐波
+    /// </summary>
+    /// <param name="channels">要设置的谐波通道</param>
+    /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetHarmonics (byte channels, HarmonicArgs[ ]? harmonics=null );
+
+    /// <summary>
+    /// 创建报文：设置有功功率
+    /// </summary>
+    /// <param name="channel">要设置的有功功率通道</param>
+    /// <param name="p">要设置的有功功率值</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetWattPower ( byte  channel , float p );
+
+    /// <summary>
+    ///  创建报文：设置无功功率
+    /// </summary>
+    /// <param name="channel">要设置的无功功率通道</param>
+    /// <param name="q">要设置的无功功率值</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte  channel , float q );
+
+    /// <summary>
+    /// 创建报文：读取交流标准表测量值/标准源输出值
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult <byte[ ]> Packet_ReadData_ACS ( );
+
+    /// <summary>
+    /// 读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult <byte[ ]> Packet_GetReadDataStatus_ACS ( );
 }
 internal interface IPacketBuilder_ACM
 {
