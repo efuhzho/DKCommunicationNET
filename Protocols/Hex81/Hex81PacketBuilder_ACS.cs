@@ -16,7 +16,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_ACS , Hex81Information. GetRanges_ACS_Length , _id );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_ACS , _id );
         }
 
         public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
@@ -138,12 +138,12 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> Packet_ReadData_ACS ( )
         {
-            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.ReadData_ACS,Hex81Information.ReadData_ACS_Length,_id );
+            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.ReadData_ACS,_id );
         }
 
         public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( )
         {
-            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.GetStatus_ACS,Hex81Information.GetRanges_ACS_Length,_id );
+            return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.GetStatus_ACS,_id );
         }
 
         #region 不公开的方法

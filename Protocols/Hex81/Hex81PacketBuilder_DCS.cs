@@ -3,10 +3,70 @@ using System. Collections. Generic;
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
+using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex81
 {
-    internal class Hex81PacketBuilder_DCS:IPacketBuilder_DCS
+    internal class Hex81PacketBuilder_DCS : IPacketBuilder_DCS
     {
+        ushort _id;
+        public Hex81PacketBuilder_DCS ( ushort id )
+        {
+            _id = id;
+        }
+        public OperateResult<byte[ ]> Packet_Stop_DCS ( byte? type = null )
+        {
+            if ( type == null )
+            {
+                return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Stop_DCS , _id );
+            }
+
+            //如果Type不为空，则创建兼容报文
+            byte[ ] data = new byte[1] { ( byte ) type };
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Stop_DCS , Hex81Information. Stop_DCS_Length , data , _id );
+        }
+        public OperateResult<byte[ ]> Packet_Open_DCS ( byte? type = null )
+        {
+            if ( type == null )
+            {
+                return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Open_DCS , _id );
+            }
+
+            //如果Type不为空，则创建兼容报文
+            byte[ ] data = new byte[1] { ( byte ) type };
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Open_DCS , Hex81Information. Open_DCS_Length , data , _id );
+        }
+
+        public OperateResult<byte[ ]> Packet_ReadData_DCS ( byte? type = null )
+        {
+            if ( type == null )
+            {
+                return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , _id );
+            }
+
+            //如果Type不为空，则创建兼容报文
+            byte[ ] data = new byte[1] { ( byte ) type };
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , Hex81Information. ReadData_DCS_Length , data , _id );
+        }
+
+        public OperateResult<byte[ ]> Packet_SetAmplitude_DCS ( byte indexOfRange , float amplitude , byte type , IByteTransform byteTransform )
+        {
+            byte[ ] data = new byte[6];
+            data[0] = indexOfRange;
+            data[5] = type;
+            byteTransform. TransByte ( amplitude ). CopyTo ( data , 1 );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetAmplitude_DCS , Hex81Information. SetAmplitude_DCS_Length , data , _id );
+        }
+
+        public OperateResult<byte[ ]> Packet_SetRange_DCS ( byte indexOfRange , byte type )
+        {
+            byte[ ] data = new byte[2] { indexOfRange , type };
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetRange_DCS , Hex81Information. SetRange_DCS_Length , data , _id );
+        }
+
+        public OperateResult<byte[ ]> Packet_GetRanges_DCS ( )
+        {
+           return Hex81PacketBuilderHelper.Instance.PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
+        }
     }
 }

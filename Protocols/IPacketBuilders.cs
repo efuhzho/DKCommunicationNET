@@ -4,12 +4,13 @@ using System. Linq;
 using System. Text;
 using System. Threading. Channels;
 using System. Threading. Tasks;
+using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
 
 /// <summary>
-/// 报文创建助手
+/// 报文创建助手接口
 /// </summary>
 internal interface IPacketBuilderHelper
 {
@@ -19,6 +20,9 @@ internal interface IPacketBuilderHelper
     public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort id );
 }
 
+/// <summary>
+/// 系统设置报文创建类接口
+/// </summary>
 internal interface IPacketBuilder_Settings
 {
     /// <summary>
@@ -34,6 +38,9 @@ internal interface IPacketBuilder_Settings
     OperateResult<byte[ ]> SetDisplayPage ( byte displayPage );
 }
 
+/// <summary>
+/// 交流源报文创建类接口
+/// </summary>
 internal interface IPacketsBuilder_ACS
 {
     /// <summary>
@@ -149,10 +156,17 @@ internal interface IPacketsBuilder_ACS
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( );
 }
+
+/// <summary>
+/// 交流表报文创建类接口
+/// </summary>
 internal interface IPacketBuilder_ACM
 {
 }
 
+/// <summary>
+/// 直流源报文创建类接口
+/// </summary>
 internal interface IPacketBuilder_DCS
 {
     /// <summary>
@@ -160,41 +174,49 @@ internal interface IPacketBuilder_DCS
     /// </summary>
     /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte> Packet_Stop_DCS (byte? type=null );
+    OperateResult<byte[ ]> Packet_Stop_DCS (byte? type=null );
 
     /// <summary>
     /// 打开直流源
     /// </summary>
     /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte> Packet_Open_DCS (byte? type=null );
+    OperateResult<byte[ ]> Packet_Open_DCS (byte? type=null );
     /// <summary>
     /// 创建报文：设置直流源档位：【indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效】
     /// </summary>
     /// <param name="indexOfRange">档位索引值：indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效</param>
     /// <param name="type">输出类型：‘U'=直流电压；’I‘=直流电流；’R‘=直流电阻</param>
     /// <returns></returns>
-    OperateResult<byte> Packet_SetRange_DCS (byte indexOfRange,byte type );
+    OperateResult<byte[]> Packet_SetRange_DCS (byte indexOfRange,byte type );
 
     /// <summary>
     /// 创建报文：设置直流源幅度
     /// </summary>
     /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
-    /// <param name="data">要设定的输出值</param>
+    /// <param name="amplitude">要设定的幅值</param>
     /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
+    /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
-    OperateResult<byte> Packet_SetAmplitude_DCS ( byte indexOfRange,float data,byte type );
+    OperateResult<byte[]> Packet_SetAmplitude_DCS ( byte indexOfRange,float amplitude , byte type , IByteTransform byteTransform );
 
     /// <summary>
     /// 创建报文：读取直流源当前输出值
     /// </summary>
     /// <param name="type"><inheritdoc cref="Packet_SetRange_DCS(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte> Packet_ReadData_DCS ( byte? type =null);
+    OperateResult<byte[]> Packet_ReadData_DCS ( byte? type =null);
+
+    /// <summary>
+    /// 创建报文：获取直流源档位信息
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_GetRanges_DCS (  );
+
 }
 
 /// <summary>
-/// 直流表模块报文创建类
+/// 直流表模块报文创建类接口
 /// </summary>
 internal interface IPacketBuilder_DCM
 {
@@ -211,16 +233,26 @@ internal interface IPacketBuilder_DCM
     /// </summary>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_ReadData_DCM ( );
+
+    /// <summary>
+    /// 获取直流表档位信息
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_GetRanges_DCM ( );
 }
 
+/// <summary>
+/// 开关量模块报文创建类接口
+/// </summary>
 internal interface IPacketBuilder_IO
 {
 }
 
+/// <summary>
+/// 电能模块报文创建类接口
+/// </summary>
 internal interface IPacketBuilder_PQ
-{
-}
-internal interface IHandShake
 {
 
 }
+

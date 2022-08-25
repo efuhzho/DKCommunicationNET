@@ -19,6 +19,12 @@ internal class Hex81PacketBuilder_DCM : IPacketBuilder_DCM
     {
         _id=id;
     }
+
+    public OperateResult<byte[ ]> Packet_GetRanges_DCM ( )
+    {
+        return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.GetRanges_DCS, _id);
+    }
+
     public OperateResult<byte[ ]> Packet_ReadData_DCM ( )
     {
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCM , _id );

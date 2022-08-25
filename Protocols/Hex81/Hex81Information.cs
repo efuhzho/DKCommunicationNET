@@ -49,19 +49,16 @@ internal class Hex81Information
     /// 交流源关闭命令
     /// </summary>
     public const byte CloseACS = 0x4F;
-    public const ushort CloseACSLength = 7;
 
     /// <summary>
     /// 交流源打开命令
     /// </summary>
     public const byte OpenACS = 0x54;
-    public const ushort OpenACSLength = 7;
 
     /// <summary>
     /// 读取交流标准源档位信息
     /// </summary>
     public const byte GetRanges_ACS = 0x11;
-    public const byte GetRanges_ACS_Length = 7;
 
     /// <summary>
     /// 设置交流源档位参数 
@@ -121,16 +118,19 @@ internal class Hex81Information
     /// 读交流标准表参数/数据：读标准源输出值
     /// </summary>
     public const byte ReadData_ACS = 0x4D;
-    public const byte ReadData_ACS_Length = 7;
 
     /// <summary>
     /// 读系统状态位：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
     /// </summary>
     public const byte GetStatus_ACS = 0x4E;
-    public const byte GetStatus_ACS_Length = 7;
     #endregion CommandCodes ==> [交流源/表]
 
     #region 【CommandCodes】>>>直流表
+    /// <summary>
+    /// 读取直流表档位/量程信息
+    /// </summary>
+    public const byte GetRanges_DCM = 0x13;
+
     /// <summary>
     /// 设置直流表量程:0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。
     /// </summary>
@@ -163,6 +163,11 @@ internal class Hex81Information
 
     #region 【CommandCodes】>>>直流源
     /// <summary>
+    /// 读取直流源档位信息
+    /// </summary>
+    public const byte GetRanges_DCS = 0x12;
+
+    /// <summary>
     /// 设置直流源档位参数
     /// </summary>
     public const byte SetRange_DCS = 0x66;
@@ -192,6 +197,13 @@ internal class Hex81Information
     public const byte ReadData_DCS = 0x79;
     public const byte ReadData_DCS_Length = 8;
     #endregion 【CommandCodes】>>>直流源
+
+    #region 【CommandCodes】>>>电能
+
+
+    #endregion 【CommandCodes】>>>电能
+
+
 
     #region 【Internal Methods】
     /// <summary>
