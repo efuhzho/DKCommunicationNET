@@ -275,7 +275,7 @@ internal class Hex81Information
 
     #endregion 【CommandCodes】>>>校准
 
-    #region 【Internal Methods】
+    #region 【Internal Methods】>>> CRC校验码计算器
     /// <summary>
     /// 获取对应的数据的CRC校验码（异或和）
     /// </summary>
