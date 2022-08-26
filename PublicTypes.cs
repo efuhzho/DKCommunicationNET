@@ -55,22 +55,22 @@ public enum Models
 /// 设置谐波参数:9个字节长度
 /// </summary>
 public struct HarmonicArgs
-{  
+{
     /// <summary>
     /// 支持的最大谐波次数
     /// </summary>
-    internal byte harmonicTimesMax = 100;
+    internal readonly byte harmonicTimesMax;
     /// <summary>
     /// 支持的最大谐波幅度
     /// </summary>
-    internal float amplitudeMax = 1F;
+    internal readonly float amplitudeMax;
     /// <summary>
     /// 谐波参数构造函数
     /// </summary>    
     /// <param name="harmonicTimesMax">支持的最大谐波次数</param>
     /// <param name="amplitudeMax">支持的最大谐波幅度</param>
     public HarmonicArgs ( byte harmonicTimesMax = 100 , float amplitudeMax = 1F )
-    {      
+    {
         this. harmonicTimesMax = harmonicTimesMax;
         this. amplitudeMax = amplitudeMax;
     }
@@ -141,7 +141,7 @@ public struct HarmonicArgs
     /// <param name="harmonic">谐波参数结构体</param>
     /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
-    public  byte[ ] HarmonicToBytes ( HarmonicArgs harmonic ,IByteTransform byteTransform )
+    public static byte[ ] HarmonicToBytes ( HarmonicArgs harmonic , IByteTransform byteTransform )
     {
         byte[ ] bytes = new byte[9];
         bytes[0] = harmonic. HarmonicTimes;
@@ -153,6 +153,15 @@ public struct HarmonicArgs
         byteTransform. TransByte ( harmonic. Angle ). CopyTo ( bytes , 5 );
 
         return bytes;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString ( )
+    {
+        return $"谐波次数：{HarmonicTimes}；谐波幅度：{Amplitude}；谐波相位：{Angle}。支持的最大谐波次数：{harmonicTimesMax}；支持的最大谐波幅度：{amplitudeMax}";
     }
 }
 #endregion Structs

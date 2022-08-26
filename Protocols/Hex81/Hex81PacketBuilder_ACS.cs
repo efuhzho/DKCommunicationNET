@@ -112,7 +112,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             //将谐波组分别转换成字节数组并复制到数据字节数组中
             for ( int i = 0 ; i < count ; i++ )
             {
-                harmonics[i]. HarmonicToBytes ( harmonics[i] , _byteTransform ). CopyTo ( data , i * 9 + 2 );
+              HarmonicArgs. HarmonicToBytes ( harmonics[i] , _byteTransform ). CopyTo ( data , i * 9 + 2 );
             }
 
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetHarmonics , ( ushort ) ( data. Length + 7 ) , data , _id );
