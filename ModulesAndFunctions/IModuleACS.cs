@@ -89,7 +89,7 @@ public interface IModuleACS : IProperties_ACS
     public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 );
 
     /// <summary>
-    /// 设置相位
+    /// 设置相位：【A相电压相位作为基准参考相位点，始终为0°】
     /// </summary>
     /// <param name="PhaseUb"></param>
     /// <param name="PhaseUc"></param>
