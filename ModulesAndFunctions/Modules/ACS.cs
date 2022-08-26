@@ -162,7 +162,7 @@ public class ACS : IModuleACS
     public float PFB { get; private set; }
 
     /// <inheritdoc/>
-    public float PFC { get; }
+    public float PFC { get; private set; }
 
     /// <inheritdoc/>
     public float PF { get; private set; }
@@ -234,11 +234,11 @@ public class ACS : IModuleACS
         {
             URanges_Count = _decoder. URanges_Count;
             URangeStartIndex_Asingle = _decoder. URangeStartIndex_Asingle;
-            IRanges_Count = _decoder . IRanges_Count;
-            IRangeStartIndex_Asingle = _decoder.IRangeStartIndex_Asingle ;
+            IRanges_Count = _decoder. IRanges_Count;
+            IRangeStartIndex_Asingle = _decoder. IRangeStartIndex_Asingle;
             IProtectRanges_Count = _decoder. IProtectRanges_Count;
             IProtectStartIndex_Asingle = _decoder. IProtectStartIndex_Asingle;
-            URanges = _decoder.URanges;
+            URanges = _decoder. URanges;
             IRanges = _decoder. IRanges;
             IProtectRanges = _decoder. IProtectRanges;
         }
@@ -247,12 +247,12 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );        
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );        
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
@@ -294,12 +294,44 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
     {
-        var result=CommandAction.Action(_PacketsBuilder.Packet_ReadData(), _methodOfCheckResponse );
-        var decodeResult=_decoder.DecodeReadData_ACS( result );
-        if ( decodeResult.IsSuccess )
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
+        var decodeResult = _decoder. DecodeReadData_ACS ( result );
+        if ( decodeResult. IsSuccess )
         {
             Freq = _decoder. Freq;
-            URange_CurrentIndex=_decoder. URange_CurrentIndex;
+            URange_CurrentIndex = _decoder. URange_CurrentIndex;
+            IRange_CurrentIndex = _decoder. IRange_CurrentIndex;
+            UA = _decoder. UA;
+            UB = _decoder. UB;
+            UC = _decoder. UC;
+            IA = _decoder. IA;
+            IB = _decoder. IB;
+            IC = _decoder. IC;
+            FAI_UA = _decoder. FAI_UA;
+            FAI_UB = _decoder. FAI_UB;
+            FAI_UC = _decoder. FAI_UC;
+            FAI_IA = _decoder. FAI_IA;
+            FAI_IB = _decoder. FAI_IB;
+            FAI_IC = _decoder. FAI_IC;
+            PA = _decoder. PA;
+            PB = _decoder. PB;
+            PC = _decoder. PC;
+            P = _decoder. P;
+            QA = _decoder. QA;
+            QB = _decoder. QB;
+            QC = _decoder. QC;
+            Q = _decoder. Q;
+            SA = _decoder. SA;
+            SB = _decoder. SB;
+            SC = _decoder. SC;
+            S = _decoder. S;
+            PFA = _decoder. PFA;
+            PFB = _decoder. PFB;
+            PFC = _decoder. PFC;
+            PF = _decoder. PF;
+            WireMode = _decoder. WireMode;
+            CloseLoopMode = _decoder. CloseLoopMode;
+            HarmonicMode = _decoder. HarmonicMode;
         }
         return result;
     }

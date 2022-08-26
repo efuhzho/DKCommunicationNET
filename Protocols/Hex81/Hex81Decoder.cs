@@ -214,48 +214,41 @@ internal class Hex81Decoder : IDecoder
     /// </returns>
     public OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> response )
     {
-        try
+
+        if ( response. IsSuccess && response. Content != null )
         {
-            if ( response. IsSuccess && response. Content != null )
-            {
-                //下位机回复的经验证的有效报文
-                byte[ ] responseBytes = response. Content;
+            //下位机回复的经验证的有效报文
+            byte[ ] responseBytes = response. Content;
 
-                //电压档位数量
-                URanges_Count = responseBytes[6];
+            //电压档位数量
+            URanges_Count = responseBytes[6];
 
-                //单相电压档位起始档位索引值
-                URangeStartIndex_Asingle = responseBytes[7];
+            //单相电压档位起始档位索引值
+            URangeStartIndex_Asingle = responseBytes[7];
 
-                //电流档位数量
-                IRanges_Count = responseBytes[8];
+            //电流档位数量
+            IRanges_Count = responseBytes[8];
 
-                //单相电流档位起始档位索引值
-                IRangeStartIndex_Asingle = responseBytes[9];
+            //单相电流档位起始档位索引值
+            IRangeStartIndex_Asingle = responseBytes[9];
 
-                //保护电流档位数量
-                IProtectRanges_Count = responseBytes[10];
+            //保护电流档位数量
+            IProtectRanges_Count = responseBytes[10];
 
-                //单相保护电流档位起始档位索引值
-                IProtectRange_CurrentIndex = responseBytes[11];
+            //单相保护电流档位起始档位索引值
+            IProtectRange_CurrentIndex = responseBytes[11];
 
-                //电压档位集合
-                URanges = _byteTransform. TransSingle ( responseBytes , 12 , URanges_Count );
+            //电压档位集合
+            URanges = _byteTransform. TransSingle ( responseBytes , 12 , URanges_Count );
 
-                //电流档位集合
-                IRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count , IRanges_Count );
+            //电流档位集合
+            IRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count , IRanges_Count );
 
-                //保护电流档位集合
-                IProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count + 4 * IRanges_Count , IProtectRanges_Count );
-                return OperateResult. CreateSuccessResult ( );
-            }
-            return new OperateResult ( response. Message );
+            //保护电流档位集合
+            IProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count + 4 * IRanges_Count , IProtectRanges_Count );
+            return OperateResult. CreateSuccessResult ( );
         }
-        catch ( Exception ex )
-        {
-            return new OperateResult ( ex. Message );
-        }
-
+        return new OperateResult ( response. Message );
     }
 
     public OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult )
@@ -265,10 +258,9 @@ internal class Hex81Decoder : IDecoder
             return new OperateResult ( responsResult. Message );
         }
         byte[ ] responseBytes = responsResult. Content;
-        Freq = _byteTransform. TransSingle ( responseBytes , 6 );
+        Freq = _byteTransform. TransSingle ( responseBytes , Offset );
         URange_CurrentIndex = responseBytes[7];
         IRange_CurrentIndex = responseBytes[10];
-
         UA = _byteTransform. TransSingle ( responseBytes , 16 );
         UB = _byteTransform. TransSingle ( responseBytes , 20 );
         UC = _byteTransform. TransSingle ( responseBytes , 24 );
