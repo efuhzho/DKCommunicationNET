@@ -1,7 +1,6 @@
-﻿using DKCommunicationNET. BasicFramework;
+﻿using System. Text;
+using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
-using DKCommunicationNET. ModulesAndFunctions;
-using System. Text;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -221,7 +220,7 @@ internal class Hex81Decoder : IDecoder
             byte[ ] responseBytes = response. Content;
 
             //电压档位数量
-            URanges_Count = responseBytes[6];
+            URanges_Count = responseBytes[Offset];
 
             //单相电压档位起始档位索引值
             URangeStartIndex_Asingle = responseBytes[7];
@@ -258,9 +257,10 @@ internal class Hex81Decoder : IDecoder
             return new OperateResult ( responsResult. Message );
         }
         byte[ ] responseBytes = responsResult. Content;
+
         Freq = _byteTransform. TransSingle ( responseBytes , Offset );
-        URange_CurrentIndex = responseBytes[7];
-        IRange_CurrentIndex = responseBytes[10];
+        URange_CurrentIndex = responseBytes[Offset + 4];  //取UA的档位索引
+        IRange_CurrentIndex = responseBytes[Offset + 7];  //取IA的档位索引
         UA = _byteTransform. TransSingle ( responseBytes , 16 );
         UB = _byteTransform. TransSingle ( responseBytes , 20 );
         UC = _byteTransform. TransSingle ( responseBytes , 24 );
@@ -292,6 +292,29 @@ internal class Hex81Decoder : IDecoder
         WireMode = ( WireMode ) responseBytes[128];
         CloseLoopMode = ( CloseLoopMode ) responseBytes[129];
         HarmonicMode = ( HarmonicMode ) responseBytes[130];
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    public OperateResult DecodeReadData_Status_ACS ( OperateResult<byte[ ]> responsResult )
+    {
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+        byte[ ] response = responsResult. Content;
+
+        Flag_A = response[6];
+        Flag_B = response[7];
+        Flag_C = response[8];
+        Freq = _byteTransform. TransSingle ( response , 9 );
+        Freq_C = _byteTransform. TransSingle ( response , 17 );
+        IPA = _byteTransform. TransSingle ( response , 21 );
+        IPB = _byteTransform. TransSingle ( response , 25 );
+        IPC = _byteTransform. TransSingle ( response , 29 );
+        URange_CurrentValue = _byteTransform. TransSingle ( response , 33 );
+        IRange_CurrentValue = _byteTransform. TransSingle ( response , 37 );
+        IProtectRange_CurrentValue = _byteTransform. TransSingle ( response , 41 );
+
         return OperateResult. CreateSuccessResult ( );
     }
 

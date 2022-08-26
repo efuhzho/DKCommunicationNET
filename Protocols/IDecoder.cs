@@ -19,12 +19,24 @@ internal interface IDecoder : IDeviceFunctions, IProperties_ACS
     void DecodeHandShake ( OperateResult<byte[ ]> responsResult );
 
     /// <summary>
-    /// 【解码】读取交流源档位信息
+    /// 【解码】解析读取交流源档位信息命令的回复报文
     /// </summary>
     /// <param name="responsResult">【操作结果】下位机回复的报文</param>
     /// <returns></returns>
     OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> responsResult );
 
+    /// <summary>
+    /// 【解码】解析读取交流源/表的命令的回复报文
+    /// </summary>
+    /// <param name="responsResult">指令操作结果</param>
+    /// <returns></returns>
     OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult );
+
+    /// <summary>
+    /// 【解码】解析读取交流源/表输出状态的命令的回复报文
+    /// </summary>
+    /// <param name="responsResult">指令操作结果</param>
+    /// <returns></returns>
+    OperateResult DecodeReadData_Status_ACS ( OperateResult<byte[ ]> responsResult );
 
 }

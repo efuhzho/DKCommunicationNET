@@ -51,6 +51,51 @@ namespace DKCommunicationNET. Protocols. Hex5A
             throw new NotImplementedException ( );
         }
 
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_ReadData ( )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_ReadData_Status ( )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA , float IPB , float IPC )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetClosedLoop ( byte closeLoopMode , byte harmonicMode )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetHarmonics ( byte channels , HarmonicArgs[ ]? harmonics )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWattLessPower ( byte channel , float q )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWattPower ( byte channel , float p )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWireMode ( byte wireMode )
+        {
+            throw new NotImplementedException ( );
+        }
+
         OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Stop ( )
         {
             throw new NotImplementedException ( );

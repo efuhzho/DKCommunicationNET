@@ -81,11 +81,11 @@ public class ACS : IModuleACS
     public float[ ]? IProtectRanges { get; set; }
 
     /// <inheritdoc/>
-    public Enum WireMode { get; set; }
+    public Enum? WireMode { get; set; }
     /// <inheritdoc/>
-    public Enum CloseLoopMode { get; set; }
+    public Enum? CloseLoopMode { get; set; }
     /// <inheritdoc/>
-    public Enum HarmonicMode { get; set; }
+    public Enum? HarmonicMode { get; set; }
     /// <inheritdoc/>
     public float Freq { get; set; }
     /// <inheritdoc/>
@@ -93,7 +93,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte HarmonicCount { get; set; }
     /// <inheritdoc/>
-    public Enum HarmonicChannels { get; set; }
+    public Enum? HarmonicChannels { get; set; }
     /// <inheritdoc/>
     public HarmonicArgs[ ] Harmonics { get; set; }
     /// <inheritdoc/>
@@ -183,11 +183,11 @@ public class ACS : IModuleACS
     public byte IRanges_Count { get; private set; }
 
     /// <inheritdoc/>
-    public int URange_CurrentIndex { get; set; }
+    public byte URange_CurrentIndex { get; set; }
     /// <inheritdoc/>
-    public int IRange_CurrentIndex { get; set; }
+    public byte IRange_CurrentIndex { get; set; }
     /// <inheritdoc/>
-    public int IProtectRange_CurrentIndex { get; set; }
+    public byte IProtectRange_CurrentIndex { get; set; }
 
     /// <inheritdoc/>
     public byte IProtectRanges_Count { get; private set; }
@@ -199,10 +199,7 @@ public class ACS : IModuleACS
     public byte IRangeStartIndex_Asingle { get; private set; }
 
     /// <inheritdoc/>
-    public byte IProtectStartIndex_Asingle { get; private set; }
-    byte IProperties_ACS.URange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    byte IProperties_ACS.IRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-    byte IProperties_ACS.IProtectRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public byte IProtectStartIndex_Asingle { get; private set; }   
 
     #endregion
 
@@ -216,8 +213,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop ( )
     {
-        throw new NotImplementedException ( );
-        /// <inheritdoc/>
+        throw new NotImplementedException ( );        
     }
 
     /// <inheritdoc/>
@@ -338,7 +334,23 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData_Status ( )
     {
-        throw new NotImplementedException ( );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData_Status() , _methodOfCheckResponse );
+        var decodeResult=_decoder.DecodeReadData_Status_ACS(result);
+        if ( decodeResult.IsSuccess )
+        {
+            Flag_A = _decoder. Flag_A;
+            Flag_B=_decoder. Flag_B;
+            Flag_C = _decoder. Flag_C;
+            Freq = _decoder. Freq;
+            Freq_C = _decoder. Freq_C;
+            IPA = _decoder. IPA;
+            IPB = _decoder. IPB;
+            IPC = _decoder. IPC;
+            URange_CurrentValue=_decoder. URange_CurrentValue;
+            IRange_CurrentValue= _decoder. IRange_CurrentValue;
+            IProtectRange_CurrentValue=_decoder.IProtectRange_CurrentValue ;            
+        }
+        return result;
     }
 
     #endregion

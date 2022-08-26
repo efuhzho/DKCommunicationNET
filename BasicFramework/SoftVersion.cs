@@ -189,7 +189,7 @@ namespace DKCommunicationNET.BasicFramework
         /// </summary>
         /// <param name="obj">版本号</param>
         /// <returns>是否一致</returns>
-        public override bool Equals( object obj )
+        public override bool Equals ( object? obj )
         {
             return base.Equals( obj );
         }

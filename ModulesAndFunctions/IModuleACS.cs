@@ -189,7 +189,7 @@ public interface IProperties_ACS
     float IRange_CurrentValue { get; }
 
     /// <summary>
-    /// 保护电流档位的索引值，0为最大档位
+    /// 当前保护电流档位的索引值，0为最大档位
     /// </summary>
     byte IProtectRange_CurrentIndex { get; set; }
 
@@ -236,17 +236,17 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前接线模式
     /// </summary>
-    Enum WireMode { get; set; }
+    Enum? WireMode { get; set; }
 
     /// <summary>
     /// 当前闭环模式
     /// </summary>
-    Enum CloseLoopMode { get; set; }
+    Enum? CloseLoopMode { get; set; }
 
     /// <summary>
     /// 当前谐波模式
     /// </summary>
-    Enum HarmonicMode { get; set; }
+    Enum? HarmonicMode { get; set; }
 
     /// <summary>
     /// 频率(支持双频输出时为AB相频率)
@@ -254,7 +254,7 @@ public interface IProperties_ACS
     float Freq { get; set; }
 
     /// <summary>
-    /// C相频率(支持双频输出时有效)
+    /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
     float Freq_C { get; set; }
 
@@ -266,7 +266,7 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前谐波输出通道
     /// </summary>
-    Enum HarmonicChannels { get; set; }
+    Enum? HarmonicChannels { get; set; }
 
     /// <summary>
     /// 当前谐波输出数据
@@ -304,17 +304,17 @@ public interface IProperties_ACS
     float IC { get; set; }
 
     /// <summary>
-    /// A相保护电流数据
+    /// 【51F适用】A相保护电流数据
     /// </summary>
     float IPA { get; set; }
 
     /// <summary>
-    /// B相保护电流数据
+    /// 【51F适用】B相保护电流数据
     /// </summary>
     float IPB { get; set; }
 
     /// <summary>
-    /// C相保护电流数据
+    /// 【51F适用】C相保护电流数据
     /// </summary>
     float IPC { get; set; }
 

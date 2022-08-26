@@ -55,7 +55,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
 
         //初始化交流源模块
-        _ACS = new ACS ( ID , _protocolFactory , _SerialPort , CheckResponse );
+        _ACS = new ACS ( ID , _protocolFactory ,   CheckResponse ,ByteTransform);
 
         //初始化交流表功能模块
 
@@ -224,7 +224,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
     {
-        OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake , CheckResponse );
+        OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake() , CheckResponse );
         _Decoder. DecodeHandShake ( res );
         Model = _Decoder. Model;
         Firmware = _Decoder. Firmware;

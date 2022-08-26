@@ -202,9 +202,8 @@ internal interface IPacketBuilder_DCS
     /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <param name="amplitude">要设定的幅值</param>
     /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
-    /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type , IByteTransform byteTransform );
+    OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type  );
 
     /// <summary>
     /// 创建报文：读取直流源当前输出值

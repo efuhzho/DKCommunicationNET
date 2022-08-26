@@ -493,12 +493,39 @@ public enum HarmonicMode : byte
 [Flags]
 public enum ErrorCodes : byte
 {
+    /// <summary>
+    /// A相电压故障
+    /// </summary>
     ErrorUa = 0b_0000_0001,    // 0x01 // 1
+
+    /// <summary>
+    /// B相电压故障
+    /// </summary>
     ErrorUb = 0b_0000_0010,    // 0x02 // 2
+
+    /// <summary>
+    /// C相电压故障
+    /// </summary>
     ErrorUc = 0b_0000_0100,    // 0x04 // 4
+
+    /// <summary>
+    /// A相电流故障
+    /// </summary>
     ErrorIa = 0b_0000_1000,    // 0x08 // 8
+
+    /// <summary>
+    /// B相电流故障
+    /// </summary>
     ErrorIb = 0b_0001_0000,    // 0x10 // 16
+
+    /// <summary>
+    /// C相电流故障
+    /// </summary>
     ErrorIc = 0b_0010_0000,    // 0x20 // 32
+
+    /// <summary>
+    /// 直流源故障
+    /// </summary>
     ErrorDC = 0b_0100_0000     // 0x40 // 64
 }
 
