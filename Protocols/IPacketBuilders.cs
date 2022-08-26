@@ -142,19 +142,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channel">要设置的无功功率通道</param>
     /// <param name="q">要设置的无功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q );
-
-    /// <summary>
-    /// 创建报文：读取交流标准表测量值/标准源输出值
-    /// </summary>
-    /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_ReadData_ACS ( );
-
-    /// <summary>
-    /// 读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
-    /// </summary>
-    /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( );
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q );  
 }
 
 /// <summary>
@@ -162,6 +150,17 @@ internal interface IPacketsBuilder_ACS
 /// </summary>
 internal interface IPacketBuilder_ACM
 {
+    /// <summary>
+    /// 创建报文：读取交流标准表测量值/标准源输出值
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_ReadData ( );
+
+    /// <summary>
+    /// 创建报文：读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_GetReadDataStatus ( );
 }
 
 /// <summary>

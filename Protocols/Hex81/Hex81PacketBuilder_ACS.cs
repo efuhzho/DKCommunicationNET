@@ -134,17 +134,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             _byteTransform. TransByte ( q ). CopyTo ( data , 1 );
 
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetWattlessPower , Hex81Information. SetWattlessPowerLength , _id );
-        }
-
-        public OperateResult<byte[ ]> Packet_ReadData_ACS ( )
-        {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_ACS , _id );
-        }
-
-        public OperateResult<byte[ ]> Packet_GetReadDataStatus_ACS ( )
-        {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetStatus_ACS , _id );
-        }      
+        }   
 
         public OperateResult<byte[ ]> Packet_Stop ( )
         {
