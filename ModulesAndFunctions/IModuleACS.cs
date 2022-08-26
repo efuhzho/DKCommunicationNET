@@ -91,11 +91,11 @@ public interface IModuleACS : IProperties_ACS
     /// <summary>
     /// 设置相位：【A相电压相位作为基准参考相位点，始终为0°】
     /// </summary>
-    /// <param name="PhaseUb"></param>
-    /// <param name="PhaseUc"></param>
-    /// <param name="PhaseIa"></param>
-    /// <param name="PhaseIb"></param>
-    /// <param name="PhaseIc"></param>
+    /// <param name="PhaseUb">B相电压相位</param>
+    /// <param name="PhaseUc">C相电压相位</param>
+    /// <param name="PhaseIa">A相电流相位</param>
+    /// <param name="PhaseIb">B相电流相位</param>
+    /// <param name="PhaseIc">C相电流相位</param>
     /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
 
