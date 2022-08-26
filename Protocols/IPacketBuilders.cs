@@ -1,4 +1,6 @@
-﻿using DKCommunicationNET. Core;
+﻿using System. Security. Cryptography;
+using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
 
@@ -136,6 +138,18 @@ internal interface IPacketsBuilder_ACS
     /// <param name="q">要设置的无功功率值</param>
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q );
+
+    /// <summary>
+    /// 创建报文：读取交流标准表测量值/标准源输出值
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_ReadData ( );
+
+    /// <summary>
+    /// 创建报文：读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_ReadData_Status ( );
 }
 
 /// <summary>
@@ -153,7 +167,7 @@ internal interface IPacketBuilder_ACM
     /// 创建报文：读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_GetReadDataStatus ( );
+    public OperateResult<byte[ ]> Packet_ReadData_Status ( );
 }
 
 /// <summary>
@@ -261,7 +275,6 @@ internal interface IPacketBuilder_EPQ
     /// <param name="sourceQConst">无功脉冲常数</param>
     /// <param name="meterDIV">【表】分频系数</param>
     /// <param name="meterRounds">【表】校验圈数</param>
-    /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds );
 }

@@ -200,6 +200,9 @@ public class ACS : IModuleACS
 
     /// <inheritdoc/>
     public byte IProtectStartIndex_Asingle { get; private set; }
+    byte IProperties_ACS.URange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    byte IProperties_ACS.IRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    byte IProperties_ACS.IProtectRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
     #endregion
 
@@ -220,58 +223,53 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
+        //执行获取档位命令
         var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+
+        //解码下位机的回复报文：此处无需判断命令执行结果，判断下放
         var decodeResult = _decoder. DecodeGetRanges_ACS ( result );
+
+        //如果解码成功，则更新数据
         if ( decodeResult. IsSuccess )
         {
-            URanges_Count = decodeResult. Content1;
-            URangeStartIndex_Asingle = decodeResult. Content2;
-            IRanges_Count = decodeResult. Content3;
-            IRangeStartIndex_Asingle = decodeResult. Content4;
-            IProtectRanges_Count = decodeResult. Content5;
-            IProtectStartIndex_Asingle = decodeResult. Content6;
-            URanges = decodeResult. Content7;
-            IRanges = decodeResult. Content8;
-            IProtectRanges = decodeResult. Content9;
+            URanges_Count = _decoder. URanges_Count;
+            URangeStartIndex_Asingle = _decoder. URangeStartIndex_Asingle;
+            IRanges_Count = _decoder . IRanges_Count;
+            IRangeStartIndex_Asingle = _decoder.IRangeStartIndex_Asingle ;
+            IProtectRanges_Count = _decoder. IProtectRanges_Count;
+            IProtectStartIndex_Asingle = _decoder. IProtectStartIndex_Asingle;
+            URanges = _decoder.URanges;
+            IRanges = _decoder. IRanges;
+            IProtectRanges = _decoder. IProtectRanges;
         }
         return result;
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
-
-        return result;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );        
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
-
-        return result;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );        
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
     {
-        var result = CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
-
-        return result;
+        return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
-
-        return result;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
-
-        return result;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( Enum WireMode )
@@ -289,7 +287,24 @@ public class ACS : IModuleACS
         throw new NotImplementedException ( );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
+    public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
+    {
+        throw new NotImplementedException ( );
+    }
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> ReadData ( )
+    {
+        var result=CommandAction.Action(_PacketsBuilder.Packet_ReadData(), _methodOfCheckResponse );
+        var decodeResult=_decoder.DecodeReadData_ACS( result );
+        if ( decodeResult.IsSuccess )
+        {
+            Freq = _decoder. Freq;
+            URange_CurrentIndex=_decoder. URange_CurrentIndex;
+        }
+        return result;
+    }
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> ReadData_Status ( )
     {
         throw new NotImplementedException ( );
     }

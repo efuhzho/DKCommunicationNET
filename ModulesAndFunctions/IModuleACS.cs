@@ -1,32 +1,177 @@
 ﻿using DKCommunicationNET. Protocols. Hex81;
 using System. Collections. Generic;
 using System. IO. Ports;
+using System. Security. Cryptography;
 
 namespace DKCommunicationNET. ModulesAndFunctions;
 
 /// <summary>
 /// 【接口】交流源模块接口
 /// </summary>
-public interface IModuleACS
+public interface IModuleACS : IProperties_ACS
 {
 
     //TODO 添加输出精度信息
+
+    /// <summary>
+    /// 交流源打开命令
+    /// </summary>    
+    /// <returns>
+    ///     <list  type="table">
+    ///     <listheader>
+    ///         <term>返回对象属性</term>
+    ///         <description>描述</description>
+    ///     </listheader>     
+    ///     <item>
+    ///         <term>IsSuccess</term>
+    ///         <description>成功标志：指示操作是否成功；【重要】调用系统方法后必须判断此标志。</description>
+    ///     </item>      
+    ///     <item>
+    ///         <term>ErrorCode</term>
+    ///         <description>错误代码：IsSuccess为true时忽略。</description>
+    ///     </item>     
+    ///     <item>
+    ///          <term>Message</term>
+    ///          <description>错误信息：IsSuccess为true时忽略。</description>
+    ///     </item>
+    ///      <item>
+    ///          <term>Content</term>
+    ///          <description>下位机回复的原始报文（或字节数组），当怀疑系统解码错误时，可用于诊断和临时自行解码，IsSuccess为false时忽略。</description>
+    ///     </item>
+    ///      </list>    
+    /// </returns>
+    /// <exception cref="NotImplementedException" ></exception>
+    public OperateResult<byte[ ]> Open ( );
+
+    /// <summary>
+    /// 交流源关闭命令
+    /// </summary>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> Stop ( );
+
+    /// <summary>
+    /// 读取交流源档位
+    /// </summary>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> GetRanges ( );
+
+    /// <summary>
+    /// 设置交流源档位
+    /// </summary>
+    /// <param name="rangeIndexOfACU"></param>
+    /// <param name="rangeIndexOfACI"></param>
+    /// <param name="rangeIndexOfIP"></param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
+
+    /// <summary>
+    /// 设置交流源幅度
+    /// </summary>
+    /// <param name="UA">要设定的电压幅值</param>
+    /// <param name="UB">要设定的电压幅值</param>
+    /// <param name="UC">要设定的电压幅值</param>
+    /// <param name="IA">要设定的电流幅值</param>
+    /// <param name="IB">要设定的电流幅值</param>
+    /// <param name="IC">要设定的电流幅值</param>
+    /// <param name="IPA">要设定的保护电流幅值</param>
+    /// <param name="IPB">要设定的保护电流幅值</param>
+    /// <param name="IPC">要设定的保护电流幅值</param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 );
+
+    /// <summary>
+    /// <inheritdoc cref="SetAmplitude(float, float, float, float, float, float, float, float, float)"/>
+    /// </summary>
+    /// <param name="U">【所有相幅值相同】要设定的电压幅值</param>
+    /// <param name="I">【所有相幅值相同】要设定的电流幅值</param>
+    /// <param name="IP">【所有相幅值相同】要设定的保护电流幅值</param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 );
+
+    /// <summary>
+    /// 设置相位
+    /// </summary>
+    /// <param name="PhaseUa"></param>
+    /// <param name="PhaseUb"></param>
+    /// <param name="PhaseUc"></param>
+    /// <param name="PhaseIa"></param>
+    /// <param name="PhaseIb"></param>
+    /// <param name="PhaseIc"></param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
+
+    /// <summary>
+    /// 设置频率
+    /// </summary>
+    /// <param name="FreqOfAll"></param>
+    /// <param name="FreqOfC"></param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 );
+
+    /// <summary>
+    /// 设置接线模式
+    /// </summary>
+    /// <param name="WireMode">枚举类型：接线方式；【注意】需引用对应的命名空间</param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetWireMode ( Enum WireMode );
+
+    /// <summary>
+    /// 设置闭环模式
+    /// </summary>
+    /// <param name="ClosedLoopMode">枚举类型参数：闭环模式；【注意】需引用对应的命名空间</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode );
+
+    /// <summary>
+    /// 设置谐波模式
+    /// </summary>
+    /// <param name="HarmonicMode">枚举类型参数：谐波模式；【注意】需引用对应的协议类型的命名空间</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode );
+
+    /// <summary>
+    /// 设置谐波参数
+    /// </summary>
+    /// <param name="harmonicChannels">枚举类型参数：谐波通道；【注意】需引用对应的协议类型的命名空间</param>
+    /// <param name="harmonicArgs"></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs );
+
+    /// <summary>
+    /// 读取交流源当前输出数据
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> ReadData ( );
+
+    /// <summary>
+    /// 读取交流源当前输出状态
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> ReadData_Status ( );
+
+}
+
+/// <summary>
+/// 交流源属性
+/// </summary>
+public interface IProperties_ACS
+{
     #region 【属性】
 
     /// <summary>
     /// 电压档位个数
     /// </summary>
-     byte URanges_Count { get; }
+    byte URanges_Count { get; }
 
     /// <summary>
     /// 电流档位个数
     /// </summary>
-     byte IRanges_Count { get; }
+    byte IRanges_Count { get; }
 
     /// <summary>
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
-     int URange_CurrentIndex { get; set; }
+    byte URange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前交流电压档位值，单位V
@@ -36,7 +181,7 @@ public interface IModuleACS
     /// <summary>
     /// 当前电流档位的索引值，0为最大档位
     /// </summary>
-    internal int IRange_CurrentIndex { get; set; }
+    byte IRange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前交流电流档位值，单位A
@@ -46,32 +191,32 @@ public interface IModuleACS
     /// <summary>
     /// 保护电流档位的索引值，0为最大档位
     /// </summary>
-    internal int IProtectRange_CurrentIndex { get; set; }
+    byte IProtectRange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前保护电流档位值，单位A
     /// </summary>
-    float IProtectRange_CurrentValue{ get; }
+    float IProtectRange_CurrentValue { get; }
 
     /// <summary>
     /// 保护电流档位个数
     /// </summary>
-     byte IProtectRanges_Count { get; }
+    byte IProtectRanges_Count { get; }
 
     /// <summary>
     /// 只支持A相电压输出的起始档位号
     /// </summary>
-     byte URangeStartIndex_Asingle { get; }
+    byte URangeStartIndex_Asingle { get; }
 
     /// <summary>
     /// 只支持A相电流输出的起始档位号
     /// </summary>
-     byte IRangeStartIndex_Asingle { get; }
+    byte IRangeStartIndex_Asingle { get; }
 
     /// <summary>
     /// 只支持A相保护电流输出的起始档位号
     /// </summary>
-     byte IProtectStartIndex_Asingle { get; }
+    byte IProtectStartIndex_Asingle { get; }
 
     /// <summary>
     /// 电压档位集合
@@ -299,129 +444,5 @@ public interface IModuleACS
     byte Flag_C { get; }
 
     #endregion 属性
-
-    /// <summary>
-    /// 交流源打开命令
-    /// </summary>    
-    /// <returns>
-    ///     <list  type="table">
-    ///     <listheader>
-    ///         <term>返回对象属性</term>
-    ///         <description>描述</description>
-    ///     </listheader>     
-    ///     <item>
-    ///         <term>IsSuccess</term>
-    ///         <description>成功标志：指示操作是否成功；【重要】调用系统方法后必须判断此标志。</description>
-    ///     </item>      
-    ///     <item>
-    ///         <term>ErrorCode</term>
-    ///         <description>错误代码：IsSuccess为true时忽略。</description>
-    ///     </item>     
-    ///     <item>
-    ///          <term>Message</term>
-    ///          <description>错误信息：IsSuccess为true时忽略。</description>
-    ///     </item>
-    ///      <item>
-    ///          <term>Content</term>
-    ///          <description>下位机回复的原始报文（或字节数组），当怀疑系统解码错误时，可用于诊断和临时自行解码，IsSuccess为false时忽略。</description>
-    ///     </item>
-    ///      </list>    
-    /// </returns>
-    /// <exception cref="NotImplementedException" ></exception>
-    public OperateResult<byte[ ]> Open ( );
-
-    /// <summary>
-    /// 交流源关闭命令
-    /// </summary>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> Stop ( );
-
-    /// <summary>
-    /// 读取交流源档位
-    /// </summary>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> GetRanges ( );
-
-    /// <summary>
-    /// 设置交流源档位
-    /// </summary>
-    /// <param name="rangeIndexOfACU"></param>
-    /// <param name="rangeIndexOfACI"></param>
-    /// <param name="rangeIndexOfIP"></param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetRanges( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
-
-    /// <summary>
-    /// 设置交流源幅度
-    /// </summary>
-    /// <param name="UA">要设定的电压幅值</param>
-    /// <param name="UB">要设定的电压幅值</param>
-    /// <param name="UC">要设定的电压幅值</param>
-    /// <param name="IA">要设定的电流幅值</param>
-    /// <param name="IB">要设定的电流幅值</param>
-    /// <param name="IC">要设定的电流幅值</param>
-    /// <param name="IPA">要设定的保护电流幅值</param>
-    /// <param name="IPB">要设定的保护电流幅值</param>
-    /// <param name="IPC">要设定的保护电流幅值</param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 );
-
-    /// <summary>
-    /// <inheritdoc cref="SetAmplitude(float, float, float, float, float, float, float, float, float)"/>
-    /// </summary>
-    /// <param name="U">【所有相幅值相同】要设定的电压幅值</param>
-    /// <param name="I">【所有相幅值相同】要设定的电流幅值</param>
-    /// <param name="IP">【所有相幅值相同】要设定的保护电流幅值</param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 );
-
-    /// <summary>
-    /// 设置相位
-    /// </summary>
-    /// <param name="PhaseUa"></param>
-    /// <param name="PhaseUb"></param>
-    /// <param name="PhaseUc"></param>
-    /// <param name="PhaseIa"></param>
-    /// <param name="PhaseIb"></param>
-    /// <param name="PhaseIc"></param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
-
-    /// <summary>
-    /// 设置频率
-    /// </summary>
-    /// <param name="FreqOfAll"></param>
-    /// <param name="FreqOfC"></param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 );
-
-    /// <summary>
-    /// 设置接线模式
-    /// </summary>
-    /// <param name="WireMode">枚举类型：接线方式；【注意】需引用对应的命名空间</param>
-    /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetWireMode ( Enum WireMode );
-
-    /// <summary>
-    /// 设置闭环模式
-    /// </summary>
-    /// <param name="ClosedLoopMode">枚举类型参数：闭环模式；【注意】需引用对应的命名空间</param>
-    /// <returns></returns>
-    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode );
-
-    /// <summary>
-    /// 设置谐波模式
-    /// </summary>
-    /// <param name="HarmonicMode">枚举类型参数：谐波模式；【注意】需引用对应的协议类型的命名空间</param>
-    /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode );
-
-    /// <summary>
-    /// 设置谐波参数
-    /// </summary>
-    /// <param name="harmonicChannels">枚举类型参数：谐波通道；【注意】需引用对应的协议类型的命名空间</param>
-    /// <param name="harmonicArgs"></param>
-    /// <returns></returns>
-    OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs );
 }
 

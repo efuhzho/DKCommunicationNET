@@ -1,5 +1,6 @@
 ﻿using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. ModulesAndFunctions;
 using System. Text;
 
 namespace DKCommunicationNET. Protocols. Hex81;
@@ -58,6 +59,85 @@ internal class Hex81Decoder : IDecoder
     public bool IsEnabled_DCM_RIP { get; private set; }
 
     public bool IsEnabled_PPS { get; private set; }
+
+    public byte URanges_Count { get; private set; }
+
+    public byte IRanges_Count { get; private set; }
+
+    public byte URange_CurrentIndex { get; set; }
+
+    public float URange_CurrentValue { get; private set; }
+
+    public float IRange_CurrentValue { get; private set; }
+
+    public float IProtectRange_CurrentValue { get; private set; }
+
+    public byte IProtectRanges_Count { get; private set; }
+
+    public byte URangeStartIndex_Asingle { get; private set; }
+
+    public byte IRangeStartIndex_Asingle { get; private set; }
+
+    public byte IProtectStartIndex_Asingle { get; private set; }
+
+    public float[ ]? URanges { get; set; }
+    public float[ ]? IRanges { get; set; }
+    public float[ ]? IProtectRanges { get; set; }
+    public Enum WireMode { get; set; }
+    public Enum CloseLoopMode { get; set; }
+    public Enum HarmonicMode { get; set; }
+    public float Freq { get; set; }
+    public float Freq_C { get; set; }
+    public byte HarmonicCount { get; set; }
+    public Enum HarmonicChannels { get; set; }
+    public HarmonicArgs[ ] Harmonics { get; set; }
+    public float UA { get; set; }
+    public float UB { get; set; }
+    public float UC { get; set; }
+    public float IA { get; set; }
+    public float IB { get; set; }
+    public float IC { get; set; }
+    public float IPA { get; set; }
+    public float IPB { get; set; }
+    public float IPC { get; set; }
+    public float FAI_UA { get; set; }
+    public float FAI_UB { get; set; }
+    public float FAI_UC { get; set; }
+    public float FAI_IA { get; set; }
+    public float FAI_IB { get; set; }
+    public float FAI_IC { get; set; }
+    public float PA { get; set; }
+    public float PB { get; set; }
+    public float PC { get; set; }
+    public float P { get; set; }
+    public float QA { get; set; }
+    public float QB { get; set; }
+    public float QC { get; set; }
+    public float Q { get; set; }
+
+    public float SA { get; private set; }
+
+    public float SB { get; private set; }
+
+    public float SC { get; private set; }
+
+    public float S { get; private set; }
+
+    public float PFA { get; private set; }
+
+    public float PFB { get; private set; }
+
+    public float PFC { get; private set; }
+
+    public float PF { get; private set; }
+
+    public byte Flag_A { get; private set; }
+
+    public byte Flag_B { get; private set; }
+
+    public byte Flag_C { get; private set; }
+    public byte IRange_CurrentIndex { get; set; }
+    public byte IProtectRange_CurrentIndex { get; set; }
     #endregion 属性
 
     #region 【Decoders】
@@ -132,51 +212,98 @@ internal class Hex81Decoder : IDecoder
     ///     <item>T9:保护电流档位集合</item>
     /// </list>
     /// </returns>
-    public OperateResult<byte , byte , byte , byte , byte , byte , float[ ] , float[ ] , float[ ]> DecodeGetRanges_ACS ( OperateResult<byte[ ]> response )
+    public OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> response )
     {
-        if ( !response. IsSuccess || response. Content == null )
+        try
         {
-            return new OperateResult<byte , byte , byte , byte , byte , byte , float[ ] , float[ ] , float[ ]> ( response. Message );
+            if ( response. IsSuccess && response. Content != null )
+            {
+                //下位机回复的经验证的有效报文
+                byte[ ] responseBytes = response. Content;
+
+                //电压档位数量
+                URanges_Count = responseBytes[6];
+
+                //单相电压档位起始档位索引值
+                URangeStartIndex_Asingle = responseBytes[7];
+
+                //电流档位数量
+                IRanges_Count = responseBytes[8];
+
+                //单相电流档位起始档位索引值
+                IRangeStartIndex_Asingle = responseBytes[9];
+
+                //保护电流档位数量
+                IProtectRanges_Count = responseBytes[10];
+
+                //单相保护电流档位起始档位索引值
+                IProtectRange_CurrentIndex = responseBytes[11];
+
+                //电压档位集合
+                URanges = _byteTransform. TransSingle ( responseBytes , 12 , URanges_Count );
+
+                //电流档位集合
+                IRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count , IRanges_Count );
+
+                //保护电流档位集合
+                IProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count + 4 * IRanges_Count , IProtectRanges_Count );
+                return OperateResult. CreateSuccessResult ( );
+            }
+            return new OperateResult ( response. Message );
+        }
+        catch ( Exception ex )
+        {
+            return new OperateResult ( ex. Message );
         }
 
-        //下位机回复的经验证的有效报文
-        byte[ ] responseBytes = response. Content;
-
-        //电压档位数量
-        byte uRangesCount = responseBytes[6];
-
-        //单相电压档位起始档位索引值
-        byte uRanges_Asingle = responseBytes[7];
-
-        //电流档位数量
-        byte iRangesCount = responseBytes[8];
-
-        //单相电流档位起始档位索引值
-        byte iRanges_Asingle = responseBytes[9];
-
-        //保护电流档位数量
-        byte iProtectRangesCount = responseBytes[10];
-
-        //单相保护电流档位起始档位索引值
-        byte iProtectRanges_Asingle = responseBytes[11];
-
-        //电压档位集合
-        float[ ] uRanges;
-
-        //电流档位集合
-        float[ ] iRanges;
-
-        //保护电流档位集合
-        float[ ] iProtectRanges;
-
-        uRanges = _byteTransform. TransSingle ( responseBytes , 12 , uRangesCount );
-
-        iRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * uRangesCount , iRangesCount );
-
-        iProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * uRangesCount + 4 * iRangesCount , iProtectRangesCount );
-
-        return OperateResult. CreateSuccessResult ( uRangesCount , uRanges_Asingle , iRangesCount , iRanges_Asingle , iProtectRangesCount , iProtectRanges_Asingle , uRanges , iRanges , iProtectRanges );
     }
+
+    public OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult )
+    {
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+        byte[ ] responseBytes = responsResult. Content;
+        Freq = _byteTransform. TransSingle ( responseBytes , 6 );
+        URange_CurrentIndex = responseBytes[7];
+        IRange_CurrentIndex = responseBytes[10];
+
+        UA = _byteTransform. TransSingle ( responseBytes , 16 );
+        UB = _byteTransform. TransSingle ( responseBytes , 20 );
+        UC = _byteTransform. TransSingle ( responseBytes , 24 );
+        IA = _byteTransform. TransSingle ( responseBytes , 28 );
+        IB = _byteTransform. TransSingle ( responseBytes , 32 );
+        IC = _byteTransform. TransSingle ( responseBytes , 36 );
+        FAI_UA = _byteTransform. TransSingle ( responseBytes , 40 );
+        FAI_UB = _byteTransform. TransSingle ( responseBytes , 44 );
+        FAI_UC = _byteTransform. TransSingle ( responseBytes , 48 );
+        FAI_IA = _byteTransform. TransSingle ( responseBytes , 52 );
+        FAI_IB = _byteTransform. TransSingle ( responseBytes , 56 );
+        FAI_IC = _byteTransform. TransSingle ( responseBytes , 60 );
+        PA = _byteTransform. TransSingle ( responseBytes , 64 );
+        PB = _byteTransform. TransSingle ( responseBytes , 68 );
+        PC = _byteTransform. TransSingle ( responseBytes , 72 );
+        P = _byteTransform. TransSingle ( responseBytes , 76 );
+        QA = _byteTransform. TransSingle ( responseBytes , 80 );
+        QB = _byteTransform. TransSingle ( responseBytes , 84 );
+        QC = _byteTransform. TransSingle ( responseBytes , 88 );
+        Q = _byteTransform. TransSingle ( responseBytes , 92 );
+        SA = _byteTransform. TransSingle ( responseBytes , 96 );
+        SB = _byteTransform. TransSingle ( responseBytes , 100 );
+        SC = _byteTransform. TransSingle ( responseBytes , 104 );
+        S = _byteTransform. TransSingle ( responseBytes , 108 );
+        PFA = _byteTransform. TransSingle ( responseBytes , 112 );
+        PFB = _byteTransform. TransSingle ( responseBytes , 116 );
+        PFC = _byteTransform. TransSingle ( responseBytes , 120 );
+        PF = _byteTransform. TransSingle ( responseBytes , 124 );
+        WireMode = ( WireMode ) responseBytes[128];
+        CloseLoopMode = ( CloseLoopMode ) responseBytes[129];
+        HarmonicMode = ( HarmonicMode ) responseBytes[130];
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+
     #endregion Decoders
 
 }

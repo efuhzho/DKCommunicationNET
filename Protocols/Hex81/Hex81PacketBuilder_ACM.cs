@@ -20,7 +20,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_ACS , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_GetReadDataStatus ( )
+        public OperateResult<byte[ ]> Packet_ReadData_Status ( )
         {
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetStatus_ACS , _id );
         }
