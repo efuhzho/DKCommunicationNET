@@ -271,7 +271,7 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前谐波输出数据
     /// </summary>
-    HarmonicArgs[ ] Harmonics { get; set; }
+    HarmonicArgs[ ]? Harmonics { get; set; }
 
     /// <summary>
     /// A相电压数据

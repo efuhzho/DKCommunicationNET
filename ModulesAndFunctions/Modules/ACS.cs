@@ -95,7 +95,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public Enum? HarmonicChannels { get; set; }
     /// <inheritdoc/>
-    public HarmonicArgs[ ] Harmonics { get; set; }
+    public HarmonicArgs[ ]? Harmonics { get; set; }
     /// <inheritdoc/>
     public float UA { get; set; }
     /// <inheritdoc/>

@@ -82,14 +82,14 @@ internal class Hex81Decoder : IDecoder
     public float[ ]? URanges { get; set; }
     public float[ ]? IRanges { get; set; }
     public float[ ]? IProtectRanges { get; set; }
-    public Enum WireMode { get; set; }
-    public Enum CloseLoopMode { get; set; }
-    public Enum HarmonicMode { get; set; }
+    public Enum? WireMode { get; set; }
+    public Enum? CloseLoopMode { get; set; }
+    public Enum? HarmonicMode { get; set; }
     public float Freq { get; set; }
     public float Freq_C { get; set; }
     public byte HarmonicCount { get; set; }
-    public Enum HarmonicChannels { get; set; }
-    public HarmonicArgs[ ] Harmonics { get; set; }
+    public Enum? HarmonicChannels { get; set; }
+    public HarmonicArgs[ ]? Harmonics { get; set; }
     public float UA { get; set; }
     public float UB { get; set; }
     public float UC { get; set; }
