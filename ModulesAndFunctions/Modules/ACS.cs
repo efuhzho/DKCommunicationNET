@@ -258,9 +258,9 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
+    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )

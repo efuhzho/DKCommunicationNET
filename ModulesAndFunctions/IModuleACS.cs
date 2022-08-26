@@ -91,20 +91,19 @@ public interface IModuleACS : IProperties_ACS
     /// <summary>
     /// 设置相位
     /// </summary>
-    /// <param name="PhaseUa"></param>
     /// <param name="PhaseUb"></param>
     /// <param name="PhaseUc"></param>
     /// <param name="PhaseIa"></param>
     /// <param name="PhaseIb"></param>
     /// <param name="PhaseIc"></param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
+    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
 
     /// <summary>
     /// 设置频率
     /// </summary>
-    /// <param name="FreqOfAll"></param>
-    /// <param name="FreqOfC"></param>
+    /// <param name="FreqOfAll">要设置的频率值：【当支持双频时，为A相和B相频率】</param>
+    /// <param name="FreqOfC">【34B2适用，支持双频时有效】</param>
     /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 );
 
