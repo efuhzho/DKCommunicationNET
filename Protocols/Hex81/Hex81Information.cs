@@ -114,6 +114,10 @@ internal class Hex81Information
     public const byte SetWattlessPower = 0x51; //TODO 确认协议描述是否有误
     public const byte SetWattlessPowerLength = 12;
 
+    #endregion CommandCodes ==> [交流源/表]
+
+    #region 【CommandCodes】>>>交流标准表
+
     /// <summary>
     /// 读交流标准表参数/数据：读标准源输出值
     /// </summary>
@@ -123,7 +127,8 @@ internal class Hex81Information
     /// 读系统状态位：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
     /// </summary>
     public const byte GetStatus_ACS = 0x4E;
-    #endregion CommandCodes ==> [交流源/表]
+
+    #endregion 【CommandCodes】>>>交流标准表
 
     #region 【CommandCodes】>>>直流表
     /// <summary>
@@ -212,7 +217,63 @@ internal class Hex81Information
 
     #endregion 【CommandCodes】>>>电能
 
+    #region 【CommandCodes】>>>校准
 
+    /// <summary>
+    /// 清空校准参数，恢复初始状态
+    /// </summary>
+    public const byte Calibrate_ClearData = 0x20;
+    public const byte Calibrate_ClearDataLength = 10;
+
+    /// <summary>
+    /// 切换交流校准档位
+    /// </summary>
+    public const byte Calibrate_SwitchACRange = 0x21;
+    public const byte Calibrate_SwitchACRangeLength = 9;
+
+    /// <summary>
+    /// 切换交流源校准点命令
+    /// </summary>
+    public const byte Calibrate_SwitchACPoint = 0x22;
+    public const byte Calibrate_SwitchACPointLength = 34;
+
+    /// <summary>
+    /// 确认执行当前校准点的校准数据：在输入标准表数据后执行*！0x22还是0x23存疑，协议文档前后不一致 
+    /// </summary>
+    public const byte Calibrate_DoAC = 0x23;    //TODO 核实命令码
+    public const byte Calibrate_DoACLength = 34;
+
+    /// <summary>
+    /// 保存校准参数
+    /// </summary>
+    public const byte Calibrate_Save = 0x24;
+    public const byte Calibrate_SaveLength = 10;
+
+    /// <summary>
+    /// 执行交流标准表和钳形表校准命令
+    /// </summary>
+    public const byte Calibrate_DoACMeter = 0x25;
+    public const byte Calibrate_DoACMeterlength = 9;
+
+    /// <summary>
+    /// 切换直流源校准点
+    /// </summary>
+    public const byte Calibrate_SwitchDCPoint = 0x26;
+    public const byte Calibrate_SwitchDCPointLength = 14;
+
+    /// <summary>
+    /// 执行直流源校准
+    /// </summary>
+    public const byte Calibrate_DoDC = 0x27;
+    public const byte Calibrate_DoDClength = 14;
+
+    /// <summary>
+    /// 执行直流表校准
+    /// </summary>
+    public const byte Calibrate_DoDCMeter = 0x28;
+    public const byte Calibrate_DoDCMeterLength = 14;
+
+    #endregion 【CommandCodes】>>>校准
 
     #region 【Internal Methods】
     /// <summary>
