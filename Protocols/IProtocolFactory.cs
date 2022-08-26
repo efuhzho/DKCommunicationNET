@@ -18,19 +18,19 @@ internal interface IProtocolFactory
     /// 获取交流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS (ushort id );
+    OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS (ushort id ,IByteTransform byteTransform);
 
     /// <summary>
     /// 获取交流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id );
+    OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id  );
 
     /// <summary>
     /// 获取直流源报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id );
+    OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform );
 
     /// <summary>
     /// 获取直流表报文创建类对象
@@ -42,13 +42,13 @@ internal interface IProtocolFactory
     /// 获取开关量报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id );
+    OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform );
 
     /// <summary>
     /// 获取电能报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilder_PQ> GetPacketBuilderOfPQ ( ushort id );
+    OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id , IByteTransform byteTransform );
 
     //TODO 添加其他模块功能的报文创建器
 

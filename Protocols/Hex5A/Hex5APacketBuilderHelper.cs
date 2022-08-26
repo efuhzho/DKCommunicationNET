@@ -17,11 +17,23 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
     }
 
     /// <summary>
+    /// 无参指令报文创建
+    /// </summary>
+    /// <param name="commandCode">命令码</param>
+    /// <param name="id">设备ID</param>
+    /// <returns>带指令信息的结果：完整指令长度</returns>
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort id )
+    {
+        return PacketShellBuilder(commandCode, 11, id );
+    }
+
+
+    /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
     /// <param name="commandCode">命令码</param>
     /// <param name="commandLength">指令长度</param>
-    ///  /// <param name="id">可选参数：设备ID</param>
+    ///  /// <param name="id">设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
     public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id )
     {
@@ -77,11 +89,11 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
             OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilder ( commandCode , commandLength , id );
             if ( dataBytesWithoutData. IsSuccess )
             {
-#pragma warning disable CS8604 // 引用类型参数可能为 null。
+
 
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
 
-#pragma warning restore CS8604 // 引用类型参数可能为 null。
+
                 dataBytesWithoutData. Content[commandLength - 3] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[0];
                 dataBytesWithoutData. Content[commandLength - 2] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[1];
                 return dataBytesWithoutData;
@@ -158,5 +170,6 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
         }
     }
 
+  
     #endregion Private Methods ==> [帧类型和报文类型的字典]
 }

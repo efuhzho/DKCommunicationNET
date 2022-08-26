@@ -15,14 +15,14 @@ internal class Hex81PacketBuilder_DCM : IPacketBuilder_DCM
     /// 设备ID
     /// </summary>
     private readonly ushort _id;
-    public Hex81PacketBuilder_DCM ( ushort id)
+    public Hex81PacketBuilder_DCM ( ushort id )
     {
-        _id=id;
+        _id = id;
     }
 
     public OperateResult<byte[ ]> Packet_GetRanges ( )
     {
-        return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.GetRanges_DCS, _id);
+        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
     }
 
     public OperateResult<byte[ ]> Packet_ReadData ( )

@@ -12,33 +12,32 @@ internal class Hex81Factory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_ACM> ( StringResources. Language. NotSupportedModule );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACM(id) as IPacketBuilder_ACM );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )
+    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id ,IByteTransform byteTransform)
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS (  id ) as IPacketsBuilder_ACS );
-
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS (  id ,byteTransform) as IPacketsBuilder_ACS );
     }
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_DCM> ( StringResources. Language. NotSupportedModule );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCM ( id  ) as IPacketBuilder_DCM );
     }
 
-    public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id )
+    public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_DCS> ( StringResources. Language. NotSupportedModule );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCS ( id ,byteTransform) as IPacketBuilder_DCS );
     }
 
-    public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id )
+    public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
     {
         return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilder_PQ> GetPacketBuilderOfPQ ( ushort id )
+    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_PQ> ( StringResources. Language. NotSupportedModule );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_EPQ ( id,byteTransform )  as IPacketBuilder_EPQ );
     }
 
     public ICRCChecker GetCRCChecker ( )

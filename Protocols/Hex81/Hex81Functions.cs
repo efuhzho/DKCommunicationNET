@@ -86,7 +86,7 @@ internal class Hex81Functions : IProtocolFunctions
     //public void Hex81dosomething ( )
     //{
     //    _ModuleACS  = new ModuleACS ( Model );
-    //    _ModuleACS. SetAmplitudeOfACS ( 100.005f );
+    //    _ModuleACS. SetAmplitude ( 100.005f );
     //}
 
     #endregion

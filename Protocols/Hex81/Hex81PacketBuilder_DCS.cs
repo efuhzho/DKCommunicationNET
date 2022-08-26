@@ -9,10 +9,12 @@ namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilder_DCS : IPacketBuilder_DCS
     {
-        ushort _id;
-        public Hex81PacketBuilder_DCS ( ushort id )
+        private readonly ushort _id;
+        private readonly IByteTransform _transform;
+        public Hex81PacketBuilder_DCS ( ushort id , IByteTransform transform )
         {
             _id = id;
+            _transform = transform;
         }
         public OperateResult<byte[ ]> Packet_Stop ( byte? type = null )
         {
@@ -49,12 +51,12 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , Hex81Information. ReadData_DCS_Length , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type , IByteTransform byteTransform )
+        public OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type  )
         {
             byte[ ] data = new byte[6];
             data[0] = indexOfRange;
             data[5] = type;
-            byteTransform. TransByte ( amplitude ). CopyTo ( data , 1 );
+            _transform. TransByte ( amplitude ). CopyTo ( data , 1 );
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetAmplitude_DCS , Hex81Information. SetAmplitude_DCS_Length , data , _id );
         }
 
@@ -66,7 +68,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
-           return Hex81PacketBuilderHelper.Instance.PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
+            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
         }
     }
 }

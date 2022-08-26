@@ -1,11 +1,4 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Channels;
-using System. Threading. Tasks;
-using DKCommunicationNET. Core;
-using DKCommunicationNET. Protocols. Hex81;
+﻿using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols;
 
@@ -250,7 +243,7 @@ internal interface IPacketBuilder_IO
 /// <summary>
 /// 电能模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_PQ
+internal interface IPacketBuilder_EPQ
 {
     /// <summary>
     /// 创建报文：读取电能校验误差
@@ -270,7 +263,7 @@ internal interface IPacketBuilder_PQ
     /// <param name="meterRounds">【表】校验圈数</param>
     /// <param name="byteTransform">数据转换规则</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds , IByteTransform byteTransform );
+    OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds );
 }
 
 /// <summary>

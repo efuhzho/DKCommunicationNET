@@ -10,20 +10,24 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// 电能模块报文创建类
 /// </summary>
-internal class Hex81PacketBuilder_EPQ : IPacketBuilder_PQ
+internal class Hex81PacketBuilder_EPQ : IPacketBuilder_EPQ
 {
     /// <summary>
     /// 设备ID
     /// </summary>
     readonly ushort _id;
 
+    private readonly IByteTransform _transform;
+
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="id">设备ID</param>
-    public Hex81PacketBuilder_EPQ ( ushort id )
+    /// <param name="byteTransform"></param>
+    public Hex81PacketBuilder_EPQ ( ushort id ,IByteTransform byteTransform )
     {
         _id = id;
+        _transform = byteTransform;
     }
 
     public OperateResult<byte[ ]> Packet_ReadData ( )
@@ -31,14 +35,14 @@ internal class Hex81PacketBuilder_EPQ : IPacketBuilder_PQ
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_EPQ , _id );
     }
 
-    public OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds , IByteTransform byteTransform )
+    public OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds  )
     {
         byte[ ] data = new byte[25];
         data[0] = electricityType;
-        byteTransform. TransByte ( meterPConst ). CopyTo ( data , 1 );
-        byteTransform. TransByte ( meterQConst ). CopyTo ( data , 5 );
-        byteTransform. TransByte ( sourcePConst ). CopyTo ( data , 9 );
-        byteTransform. TransByte ( sourceQConst ). CopyTo ( data , 13 );
+        _transform. TransByte ( meterPConst ). CopyTo ( data , 1 );
+        _transform. TransByte ( meterQConst ). CopyTo ( data , 5 );
+        _transform. TransByte ( sourcePConst ). CopyTo ( data , 9 );
+        _transform. TransByte ( sourceQConst ). CopyTo ( data , 13 );
         BitConverter. GetBytes ( meterDIV ). CopyTo ( data , 17 );
         BitConverter. GetBytes ( meterRounds ). CopyTo ( data , 21 );
 

@@ -25,11 +25,6 @@ public class ACS : IModuleACS
     private readonly IProtocolFactory _protocolFactory;
 
     /// <summary>
-    /// 定义串口类变量
-    /// </summary>
-    private readonly SerialPort _serialPort;
-
-    /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
     private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
@@ -39,7 +34,6 @@ public class ACS : IModuleACS
     /// </summary>
     private readonly IPacketsBuilder_ACS? _PacketsBuilder;
 
-
     #endregion
 
     #region 构造函数
@@ -48,19 +42,21 @@ public class ACS : IModuleACS
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <param name="protocolFactory">协议工厂对象</param>
-    /// <param name="serialPort">串口对象</param>
-    /// <param name="byteTransform">数据转换规则</param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort,Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    /// <param name="byteTransform"></param>
+    internal ACS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
     {
+        //接收设备ID
         _id = id;
+
+        //接收协议工厂
         _protocolFactory = protocolFactory;
-        _serialPort = serialPort;
+
+        //接收执行报文发送接收的委托方法        
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-        _PacketsBuilder = _protocolFactory. GetPacketBuilderOfACS ( _id ). Content; //忽略空值，调用时会捕获解引用为null的异常
-
+        _PacketsBuilder = _protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
     }
 
     #endregion
@@ -202,61 +198,70 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte IProtectRanges_Asingle { get; }
 
-    #endregion       
+    #endregion
 
     #region 方法
-        
-     OperateResult<byte[ ]> IModuleACS.OpenACS ( )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Open ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
     }
 
-     OperateResult<byte[ ]> IModuleACS.CloseACS ( )
-    {
-        throw new NotImplementedException ( );
-    }
-
-/// <inheritdoc/>
-    public OperateResult<byte[ ]> GetRangesOfACS ( )
-    {
-        return CommandAction. Action ( _PacketsBuilder. Packet_GetRanges , _methodOfCheckResponse );
-    }
-
-    public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Stop ( )
     {
         throw new NotImplementedException ( );
+        /// <inheritdoc/>
     }
 
-    public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> GetRanges ( )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+    }
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
+    }
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
     }
 
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
+    {
+        return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
     }
-
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
     }
-
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( Enum WireMode )
     {
         throw new NotImplementedException ( );
     }
-
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode )
     {
         throw new NotImplementedException ( );
     }
-
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode )
     {
         throw new NotImplementedException ( );
     }
-
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> WriteHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
     {
         throw new NotImplementedException ( );

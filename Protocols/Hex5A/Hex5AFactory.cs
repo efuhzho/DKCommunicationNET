@@ -38,9 +38,9 @@ internal class Hex5AFactory : IProtocolFactory
 
     }
 
-    public OperateResult<IPacketBuilder_PQ> GetPacketBuilderOfPQ ( ushort id )
+    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_PQ>( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IPacketBuilder_EPQ>( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )

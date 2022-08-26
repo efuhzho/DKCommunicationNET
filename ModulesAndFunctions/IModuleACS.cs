@@ -89,17 +89,17 @@ public interface IModuleACS
     float[ ] IProtect_RangesList { get; set; }
 
     /// <summary>
-    /// 当前接线模式枚举
+    /// 当前接线模式
     /// </summary>
     Enum WireMode { get; set; }
 
     /// <summary>
-    /// 当前闭环模式枚举
+    /// 当前闭环模式
     /// </summary>
     Enum CloseLoopMode { get; set; }
 
     /// <summary>
-    /// 当前谐波模式枚举
+    /// 当前谐波模式
     /// </summary>
     Enum HarmonicMode { get; set; }
 
@@ -119,12 +119,12 @@ public interface IModuleACS
     byte HarmonicCount { get; set; }
 
     /// <summary>
-    /// 当前所有谐波输出通道
+    /// 当前谐波输出通道
     /// </summary>
     Enum HarmonicChannels { get; set; }
 
     /// <summary>
-    /// 当前所有谐波输出数据
+    /// 当前谐波输出数据
     /// </summary>
     HarmonicArgs[ ] Harmonics { get; set; }
 
@@ -328,19 +328,19 @@ public interface IModuleACS
     ///      </list>    
     /// </returns>
     /// <exception cref="NotImplementedException" ></exception>
-    internal OperateResult<byte[ ]> OpenACS ( );
+    public OperateResult<byte[ ]> Open ( );
 
     /// <summary>
     /// 交流源关闭命令
     /// </summary>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
-    internal OperateResult<byte[ ]> CloseACS ( );
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> Stop ( );
 
     /// <summary>
     /// 读取交流源档位
     /// </summary>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
-    public OperateResult<byte[ ]> GetRangesOfACS ( );
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> GetRanges ( );
 
     /// <summary>
     /// 设置交流源档位
@@ -348,15 +348,32 @@ public interface IModuleACS
     /// <param name="rangeIndexOfACU"></param>
     /// <param name="rangeIndexOfACI"></param>
     /// <param name="rangeIndexOfIP"></param>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
-    public OperateResult<byte[ ]> SetRangesOfACS ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetRanges( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
 
     /// <summary>
     /// 设置交流源幅度
     /// </summary>
-    /// <param name="amplitude"></param>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
-    public OperateResult<byte[ ]> SetAmplitudeOfACS ( float amplitude );
+    /// <param name="UA">要设定的电压幅值</param>
+    /// <param name="UB">要设定的电压幅值</param>
+    /// <param name="UC">要设定的电压幅值</param>
+    /// <param name="IA">要设定的电流幅值</param>
+    /// <param name="IB">要设定的电流幅值</param>
+    /// <param name="IC">要设定的电流幅值</param>
+    /// <param name="IPA">要设定的保护电流幅值</param>
+    /// <param name="IPB">要设定的保护电流幅值</param>
+    /// <param name="IPC">要设定的保护电流幅值</param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 );
+
+    /// <summary>
+    /// <inheritdoc cref="SetAmplitude(float, float, float, float, float, float, float, float, float)"/>
+    /// </summary>
+    /// <param name="U">【所有相幅值相同】要设定的电压幅值</param>
+    /// <param name="I">【所有相幅值相同】要设定的电流幅值</param>
+    /// <param name="IP">【所有相幅值相同】要设定的保护电流幅值</param>
+    /// <returns><inheritdoc cref="Open"/></returns>
+    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 );
 
     /// <summary>
     /// 设置相位
@@ -367,7 +384,7 @@ public interface IModuleACS
     /// <param name="PhaseIa"></param>
     /// <param name="PhaseIb"></param>
     /// <param name="PhaseIc"></param>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
+    /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
 
     /// <summary>
@@ -375,14 +392,14 @@ public interface IModuleACS
     /// </summary>
     /// <param name="FreqOfAll"></param>
     /// <param name="FreqOfC"></param>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
+    /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 );
 
     /// <summary>
     /// 设置接线模式
     /// </summary>
     /// <param name="WireMode"></param>
-    /// <returns><inheritdoc cref="OpenACS"/></returns>
+    /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetWireMode ( Enum WireMode );
 
     /// <summary>
