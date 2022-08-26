@@ -20,11 +20,6 @@ public class ACS : IModuleACS
     private readonly ushort _id;
 
     /// <summary>
-    /// 定义协议工厂变量
-    /// </summary>
-    private readonly IProtocolFactory _protocolFactory;
-
-    /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
     private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
@@ -33,6 +28,11 @@ public class ACS : IModuleACS
     /// 定义交流源模块对象
     /// </summary>
     private readonly IPacketsBuilder_ACS? _PacketsBuilder;
+
+    /// <summary>
+    /// 定义解码器对象
+    /// </summary>
+    private readonly IDecoder _decoder;
 
     #endregion
 
@@ -49,14 +49,14 @@ public class ACS : IModuleACS
         //接收设备ID
         _id = id;
 
-        //接收协议工厂
-        _protocolFactory = protocolFactory;
-
         //接收执行报文发送接收的委托方法        
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-        _PacketsBuilder = _protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+        _PacketsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+
+        //接收解码器
+        _decoder = protocolFactory. GetDecoder ( byteTransform );
     }
 
     #endregion
@@ -217,34 +217,46 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        
+        return result;
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
+
+        return result;
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
+
+        return result;
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
     {
-        return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
+
+        return result;
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( PhaseUa , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
+
+        return result;
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
+
+        return result;
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( Enum WireMode )
