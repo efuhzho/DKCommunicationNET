@@ -17,9 +17,9 @@ internal class Hex81Decoder : IDecoder
 
     #region 【属性】
 
-    public int Offset => Hex81Information.DataStartIndex;
+    public int Offset => Hex81Information. DataStartIndex;
 
-    public string? Model { get;  set; }
+    public string? Model { get; set; }
 
     public string? SN { get; set; }
 
@@ -62,15 +62,15 @@ internal class Hex81Decoder : IDecoder
 
     #region 【Decoders】
 
-    public void DecodeHandShake ( OperateResult<byte[ ]> result )
+    public void DecodeHandShake ( OperateResult<byte[ ]> response )
     {
-        if ( !result. IsSuccess || result. Content == null )
+        if ( !response. IsSuccess || response. Content == null )
         {
             return;
         }
 
         //下位机回复的原始报文
-        byte[ ] buffer = result. Content;
+        byte[ ] buffer = response. Content;
 
         //将缓存数据转换成List方便查找字符串的结束标志:0x00
         List<byte> bufferList = buffer. ToList ( );    //可忽略null异常
@@ -79,18 +79,18 @@ internal class Hex81Decoder : IDecoder
         int endIndex = bufferList. IndexOf ( 0x00 , Offset );
 
         //计算model字节长度，包含0x00结束符，5=报文头的字节数6再减去1
-        int modelLength = endIndex - Offset+1;
+        int modelLength = endIndex - Offset + 1;
         //解析的设备型号
         Model = _byteTransform. TransString ( buffer , Offset , modelLength , Encoding. ASCII );
 
         //解析下位机版本号
         byte verA = buffer[modelLength + Offset];
-        byte verB = buffer[modelLength + Offset+1];
+        byte verB = buffer[modelLength + Offset + 1];
         //下位机版本号
         Firmware = $"V{verA}.{verB}";
 
         //解析设备编号
-        int serialEndIndex = bufferList. IndexOf ( 0x00 , Offset+ modelLength + 2 );
+        int serialEndIndex = bufferList. IndexOf ( 0x00 , Offset + modelLength + 2 );
         int serialLength = serialEndIndex - 7 - modelLength;
         //设备编号字节长度，包含0x00结束符            
         SN = _byteTransform. TransString ( buffer , Offset + modelLength + 2 , serialLength , Encoding. ASCII );
@@ -115,6 +115,68 @@ internal class Hex81Decoder : IDecoder
         IsEnabled_PWM = funcS[5];
     }
 
+    /// <summary>
+    /// 【解码】读取交流源档位信息
+    /// </summary>
+    /// <param name="response"></param>
+    /// <returns>
+    /// <list type="bullet">  
+    ///     <item>T1:电压档位数量</item>
+    ///     <item>T2:单相电压档位起始档位索引值</item>
+    ///     <item>T3:电流档位数量</item>
+    ///     <item>T4:单相电流档位起始档位索引值</item>
+    ///     <item>T5:保护电流档位数量</item>
+    ///     <item>T6:单相保护电流档位起始档位索引值</item>
+    ///     <item>T7:电压档位集合</item>
+    ///     <item>T8:电流档位集合</item>
+    ///     <item>T9:保护电流档位集合</item>
+    /// </list>
+    /// </returns>
+    public OperateResult<byte , byte , byte , byte , byte , byte , float[ ] , float[ ] , float[ ]> DecodeGetRanges_ACS ( OperateResult<byte[ ]> response )
+    {
+        if ( !response. IsSuccess || response. Content == null )
+        {
+            return new OperateResult<byte , byte , byte , byte , byte , byte , float[ ] , float[ ] , float[ ]> ( response. Message );
+        }
+
+        //下位机回复的经验证的有效报文
+        byte[ ] responseBytes = response. Content;
+
+        //电压档位数量
+        byte uRangesCount = responseBytes[6];
+
+        //单相电压档位起始档位索引值
+        byte uRanges_Asingle = responseBytes[7];
+
+        //电流档位数量
+        byte iRangesCount = responseBytes[8];
+
+        //单相电流档位起始档位索引值
+        byte iRanges_Asingle = responseBytes[9];
+
+        //保护电流档位数量
+        byte iProtectRangesCount = responseBytes[10];
+
+        //单相保护电流档位起始档位索引值
+        byte iProtectRanges_Asingle = responseBytes[11];
+
+        //电压档位集合
+        float[ ] uRanges;
+
+        //电流档位集合
+        float[ ] iRanges;
+
+        //保护电流档位集合
+        float[ ] iProtectRanges;
+
+        uRanges = _byteTransform. TransSingle ( responseBytes , 12 , uRangesCount );
+
+        iRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * uRangesCount , iRangesCount );
+
+        iProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * uRangesCount + 4 * iRangesCount , iProtectRangesCount );
+
+        return OperateResult. CreateSuccessResult ( uRangesCount , uRanges_Asingle , iRangesCount , iRanges_Asingle , iProtectRangesCount , iProtectRanges_Asingle , uRanges , iRanges , iProtectRanges );
+    }
     #endregion Decoders
 
 }

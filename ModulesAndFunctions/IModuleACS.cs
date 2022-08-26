@@ -16,77 +16,77 @@ public interface IModuleACS
     /// <summary>
     /// 电压档位个数
     /// </summary>
-     byte RangesCount_ACU { get; }
+     byte URanges_Count { get; }
 
     /// <summary>
     /// 电流档位个数
     /// </summary>
-     byte RangesCount_ACI { get; }
+     byte IRanges_Count { get; }
 
     /// <summary>
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
-     int RangeIndex_ACU { get; set; }
+     int URange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前交流电压档位值，单位V
     /// </summary>
-    float Range_ACU { get; }
+    float URange_CurrentValue { get; }
 
     /// <summary>
     /// 当前电流档位的索引值，0为最大档位
     /// </summary>
-    internal int RangeIndex_ACI { get; set; }
+    internal int IRange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前交流电流档位值，单位A
     /// </summary>
-    float Range_ACI { get; }
+    float IRange_CurrentValue { get; }
 
     /// <summary>
     /// 保护电流档位的索引值，0为最大档位
     /// </summary>
-    internal int RangeIndex_IProtect { get; set; }
+    internal int IProtectRange_CurrentIndex { get; set; }
 
     /// <summary>
     /// 当前保护电流档位值，单位A
     /// </summary>
-    float Range_IProtect { get; }
+    float IProtectRange_CurrentValue{ get; }
 
     /// <summary>
     /// 保护电流档位个数
     /// </summary>
-     byte RangesCount_IProtect { get; }
+     byte IProtectRanges_Count { get; }
 
     /// <summary>
     /// 只支持A相电压输出的起始档位号
     /// </summary>
-     byte URanges_Asingle { get; }
+     byte URangeStartIndex_Asingle { get; }
 
     /// <summary>
     /// 只支持A相电流输出的起始档位号
     /// </summary>
-     byte IRanges_Asingle { get; }
+     byte IRangeStartIndex_Asingle { get; }
 
     /// <summary>
     /// 只支持A相保护电流输出的起始档位号
     /// </summary>
-     byte IProtectRanges_Asingle { get; }
+     byte IProtectStartIndex_Asingle { get; }
 
     /// <summary>
     /// 电压档位集合
     /// </summary>
-    float[ ] ACU_RangesList { get; set; }
+    float[ ]? URanges { get; set; }
 
     /// <summary>
     /// 电流档位集合
     /// </summary>
-    float[ ] ACI_RangesList { get; set; }
+    float[ ]? IRanges { get; set; }
 
     /// <summary>
     /// 保护电流档位集合
     /// </summary>
-    float[ ] IProtect_RangesList { get; set; }
+    float[ ]? IProtectRanges { get; set; }
 
     /// <summary>
     /// 当前接线模式

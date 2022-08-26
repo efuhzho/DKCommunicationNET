@@ -63,20 +63,23 @@ public class ACS : IModuleACS
 
     #region 属性
     /// <inheritdoc/>
-    public float Range_ACU { get; }
+    public float URange_CurrentValue { get; private set; }
 
     /// <inheritdoc/>
-    public float Range_ACI { get; }
+    public float IRange_CurrentValue { get; private set; }
 
     /// <inheritdoc/>
-    public float Range_IProtect { get; }
+    public float IProtectRange_CurrentValue { get; private set; }
 
     /// <inheritdoc/>
-    public float[ ] ACU_RangesList { get; set; }
+    public float[ ]? URanges { get; set; }
+
     /// <inheritdoc/>
-    public float[ ] ACI_RangesList { get; set; }
+    public float[ ]? IRanges { get; set; }
+
     /// <inheritdoc/>
-    public float[ ] IProtect_RangesList { get; set; }
+    public float[ ]? IProtectRanges { get; set; }
+
     /// <inheritdoc/>
     public Enum WireMode { get; set; }
     /// <inheritdoc/>
@@ -141,62 +144,62 @@ public class ACS : IModuleACS
     public float Q { get; set; }
 
     /// <inheritdoc/>
-    public float SA { get; }
+    public float SA { get; private set; }
 
     /// <inheritdoc/>
-    public float SB { get; }
+    public float SB { get; private set; }
 
     /// <inheritdoc/>
-    public float SC { get; }
+    public float SC { get; private set; }
 
     /// <inheritdoc/>
-    public float S { get; }
+    public float S { get; private set; }
 
     /// <inheritdoc/>
-    public float PFA { get; }
+    public float PFA { get; private set; }
 
     /// <inheritdoc/>
-    public float PFB { get; }
+    public float PFB { get; private set; }
 
     /// <inheritdoc/>
     public float PFC { get; }
 
     /// <inheritdoc/>
-    public float PF { get; }
+    public float PF { get; private set; }
 
     /// <inheritdoc/>
-    public byte Flag_A { get; }
+    public byte Flag_A { get; private set; }
 
     /// <inheritdoc/>
-    public byte Flag_B { get; }
+    public byte Flag_B { get; private set; }
 
     /// <inheritdoc/>
-    public byte Flag_C { get; }
+    public byte Flag_C { get; private set; }
 
     /// <inheritdoc/>
-    public byte RangesCount_ACU { get; }
+    public byte URanges_Count { get; private set; }
 
     /// <inheritdoc/>
-    public byte RangesCount_ACI { get; }
+    public byte IRanges_Count { get; private set; }
 
     /// <inheritdoc/>
-    public int RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public int URange_CurrentIndex { get; set; }
     /// <inheritdoc/>
-    public int RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public int IRange_CurrentIndex { get; set; }
     /// <inheritdoc/>
-    public int RangeIndex_IProtect { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+    public int IProtectRange_CurrentIndex { get; set; }
 
     /// <inheritdoc/>
-    public byte RangesCount_IProtect { get; }
+    public byte IProtectRanges_Count { get; private set; }
 
     /// <inheritdoc/>
-    public byte URanges_Asingle { get; }
+    public byte URangeStartIndex_Asingle { get; private set; }
 
     /// <inheritdoc/>
-    public byte IRanges_Asingle { get; }
+    public byte IRangeStartIndex_Asingle { get; private set; }
 
     /// <inheritdoc/>
-    public byte IProtectRanges_Asingle { get; }
+    public byte IProtectStartIndex_Asingle { get; private set; }
 
     #endregion
 
@@ -218,7 +221,19 @@ public class ACS : IModuleACS
     public OperateResult<byte[ ]> GetRanges ( )
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
-        
+        var decodeResult = _decoder. DecodeGetRanges_ACS ( result );
+        if ( decodeResult. IsSuccess )
+        {
+            URanges_Count = decodeResult. Content1;
+            URangeStartIndex_Asingle = decodeResult. Content2;
+            IRanges_Count = decodeResult. Content3;
+            IRangeStartIndex_Asingle = decodeResult. Content4;
+            IProtectRanges_Count = decodeResult. Content5;
+            IProtectStartIndex_Asingle = decodeResult. Content6;
+            URanges = decodeResult. Content7;
+            IRanges = decodeResult. Content8;
+            IProtectRanges = decodeResult. Content9;
+        }
         return result;
     }
     /// <inheritdoc/>
