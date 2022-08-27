@@ -31,17 +31,17 @@ public interface IModuleDCS:IProperties_DCS
     /// <param name="SData">要设置的幅值</param>
     /// <param name="dCSourceType">枚举类型：直流源输出类型</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetAmplitude ( byte rangeIndex , float SData , Enum dCSourceType );
+     OperateResult<byte[ ]> SetAmplitude ( byte rangeIndex , float SData , Enum dCSourceType );
 
     /// <summary>
     /// 打开直流源命令
     /// </summary>
-    public OperateResult<byte[ ]> Open ( );
+     OperateResult<byte[ ]> Open ( );
 
     /// <summary>
     /// 关闭直流源命令
     /// </summary>
-    public OperateResult<byte[ ]> Stop ( Enum? type = null );
+     OperateResult<byte[ ]> Stop ( Enum? type = null );
 
     /// <summary>
     /// 读取直流源数据
