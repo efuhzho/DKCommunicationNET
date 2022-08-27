@@ -105,7 +105,7 @@ internal interface IPacketsBuilder_ACS
     /// </summary>
     /// <param name="wireMode">接线方式</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWireMode ( byte wireMode );
+    public OperateResult<byte[ ]> Packet_SetWireMode ( WireMode wireMode );
 
     /// <summary>
     /// 【Hex81】创建报文：设置闭环模式
@@ -113,7 +113,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="closeLoopMode"></param>
     /// <param name="harmonicMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( byte closeLoopMode , byte harmonicMode );
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode=0 , HarmonicMode harmonicMode=0 );
 
     /// <summary>
     /// 【报文长度不可超过256】创建报文：设置谐波输出参数；如果谐波组为null,则指令为清空谐波

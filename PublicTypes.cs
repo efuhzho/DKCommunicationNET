@@ -50,6 +50,73 @@ public enum Models
     //TODO 完善设备型号
 }
 
+#region CloseLoop 闭环控制定义、谐波模式
+/// <summary>
+/// 接线方式枚举
+/// </summary>
+public enum WireMode : byte
+{
+    /// <summary>
+    /// 三相四线制
+    /// </summary>
+    WireMode_3P4L = 00,
+
+    /// <summary>
+    /// 三相三线制
+    /// </summary>
+    WireMode_3P3L = 01,
+
+    /// <summary>
+    /// 单相
+    /// </summary>
+    WireMode_1P1L = 02,
+
+    /// <summary>
+    /// 二线两元件（两个互感器）
+    /// </summary>
+    WireMode_2Component = 03,
+
+    /// <summary>
+    /// 二线三元件（三个互感器）
+    /// </summary>
+    WireMode_3Component = 04,
+}
+
+/// <summary>
+/// 闭环控制定义
+/// </summary>
+public enum CloseLoopMode : byte
+{
+    /// <summary>
+    /// 闭环
+    /// </summary>
+    CloseLoop = 0,
+
+    /// <summary>
+    /// 开环
+    /// </summary>
+    OpenLoop = 1
+}
+
+/// <summary>
+/// 谐波模式
+/// </summary>
+public enum HarmonicMode : byte
+{
+    /// <summary>
+    /// 以真有效值的百分比输入谐波
+    /// </summary>
+    ValidValuesConstant = 0,
+
+    /// <summary>
+    /// 以基波值的百分比输入谐波
+    /// </summary>
+    FundamentalConstant = 1
+}
+
+#endregion
+
+
 #region Structs
 /// <summary>
 /// 设置谐波参数:9个字节长度

@@ -1,6 +1,7 @@
 ﻿using System. IO. Ports;
 using DKCommunicationNET. Interface;
 using DKCommunicationNET. ModulesAndFunctions;
+using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Module;
 
@@ -9,7 +10,7 @@ namespace DKCommunicationNET. Module;
 /// </summary>
 public class DCS :  IModuleDCS
 {
-    internal DCS ( ushort id , IProtocolFactory protocolFactory , SerialPort serialPort , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse, IByteTransform byteTransform )
     {
 
     }

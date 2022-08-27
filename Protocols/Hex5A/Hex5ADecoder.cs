@@ -60,6 +60,92 @@ namespace DKCommunicationNET. Protocols. Hex5A
 
         public bool IsEnabled_DCM_RIP { get; private set; }
 
+        public byte URanges_Count => throw new NotImplementedException ( );
+
+        public byte IRanges_Count => throw new NotImplementedException ( );
+
+        public byte URange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public float URange_CurrentValue => throw new NotImplementedException ( );
+
+        public byte IRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public float IRange_CurrentValue => throw new NotImplementedException ( );
+
+        public byte IProtectRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public float IProtectRange_CurrentValue => throw new NotImplementedException ( );
+
+        public byte IProtectRanges_Count => throw new NotImplementedException ( );
+
+        public byte URangeStartIndex_Asingle => throw new NotImplementedException ( );
+
+        public byte IRangeStartIndex_Asingle => throw new NotImplementedException ( );
+
+        public byte IProtectStartIndex_Asingle => throw new NotImplementedException ( );
+
+        public float[ ]? URanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? IRanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? IProtectRanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public Enum? WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public Enum? CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public Enum? HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float Freq { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float Freq_C { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public byte HarmonicCount { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public Enum? HarmonicChannels { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public HarmonicArgs[ ]? Harmonics { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IPA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IPB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float IPC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_UA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_UB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_UC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_IA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_IB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float FAI_IC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float PA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float PB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float PC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float P { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float QA { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float QB { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float QC { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float Q { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public float SA => throw new NotImplementedException ( );
+
+        public float SB => throw new NotImplementedException ( );
+
+        public float SC => throw new NotImplementedException ( );
+
+        public float S => throw new NotImplementedException ( );
+
+        public float PFA => throw new NotImplementedException ( );
+
+        public float PFB => throw new NotImplementedException ( );
+
+        public float PFC => throw new NotImplementedException ( );
+
+        public float PF => throw new NotImplementedException ( );
+
+        public byte Flag_A => throw new NotImplementedException ( );
+
+        public byte Flag_B => throw new NotImplementedException ( );
+
+        public byte Flag_C => throw new NotImplementedException ( );
+
+        public OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
         public void DecodeHandShake ( OperateResult<byte[ ]> result )
         {
             if ( !result. IsSuccess || result. Content == null )
@@ -121,6 +207,16 @@ namespace DKCommunicationNET. Protocols. Hex5A
 
             //协议版本号B
             byte PT_VerB= buffer[^4];
+        }
+
+        public OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeReadData_Status_ACS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
         }
     }
 }

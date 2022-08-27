@@ -76,15 +76,15 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetPhase , Hex81Information. SetPhaseLength , buffer , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetWireMode ( byte wireMode )
+        public OperateResult<byte[ ]> Packet_SetWireMode ( WireMode wireMode )
         {
-            byte[ ] data = new byte[1] { wireMode };
+            byte[ ] data = new byte[1] { Convert.ToByte(wireMode) };
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetWireMode , Hex81Information. SetWireModeLength , data , _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetClosedLoop ( byte closeLoopMode , byte harmonicMode )
+        public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode )
         {
-            byte[ ] data = new byte[2] { closeLoopMode , harmonicMode };
+            byte[ ] data = new byte[2] {Convert.ToByte( closeLoopMode ),Convert.ToByte( harmonicMode )};
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetClosedLoop , Hex81Information. SetClosedLoopLength , data , _id );
         }
 

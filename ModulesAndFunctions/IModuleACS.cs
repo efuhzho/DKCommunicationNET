@@ -110,23 +110,23 @@ public interface IModuleACS : IProperties_ACS
     /// <summary>
     /// 设置接线模式
     /// </summary>
-    /// <param name="WireMode">枚举类型：接线方式；【注意】需引用对应的命名空间</param>
+    /// <param name="WireMode">枚举类型：接线方式；</param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetWireMode ( Enum WireMode );
+    public OperateResult<byte[ ]> SetWireMode ( WireMode WireMode );
 
     /// <summary>
     /// 设置闭环模式
     /// </summary>
-    /// <param name="ClosedLoopMode">枚举类型参数：闭环模式；【注意】需引用对应的命名空间</param>
+    /// <param name="ClosedLoopMode">枚举类型参数：闭环模式；</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode );
+    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode );
 
     /// <summary>
     /// 设置谐波模式
     /// </summary>
-    /// <param name="HarmonicMode">枚举类型参数：谐波模式；【注意】需引用对应的协议类型的命名空间</param>
+    /// <param name="HarmonicMode">枚举类型参数：谐波模式；</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode );
+    OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode );
 
     /// <summary>
     /// 设置谐波参数
@@ -235,17 +235,17 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前接线模式
     /// </summary>
-    Enum? WireMode { get; set; }
+    WireMode WireMode { get; set; }
 
     /// <summary>
     /// 当前闭环模式
     /// </summary>
-    Enum? CloseLoopMode { get; set; }
+    CloseLoopMode CloseLoopMode { get; set; }
 
     /// <summary>
     /// 当前谐波模式
     /// </summary>
-    Enum? HarmonicMode { get; set; }
+    HarmonicMode HarmonicMode { get; set; }
 
     /// <summary>
     /// 频率(支持双频输出时为AB相频率)

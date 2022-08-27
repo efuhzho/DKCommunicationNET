@@ -10,11 +10,7 @@
     <Version>$(VersionPrefix)</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
-<!--TODO 删除此段
-  <ItemGroup>
-    <Folder Include="Protocols\HexA5\" />
-  </ItemGroup>
--->
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />

@@ -82,9 +82,9 @@ internal class Hex81Decoder : IDecoder
     public float[ ]? URanges { get; set; }
     public float[ ]? IRanges { get; set; }
     public float[ ]? IProtectRanges { get; set; }
-    public Enum? WireMode { get; set; }
-    public Enum? CloseLoopMode { get; set; }
-    public Enum? HarmonicMode { get; set; }
+    public WireMode WireMode { get; set; }=WireMode.WireMode_3P4L;
+    public CloseLoopMode CloseLoopMode { get; set; } = CloseLoopMode. CloseLoop;
+    public HarmonicMode HarmonicMode { get; set; }=HarmonicMode.ValidValuesConstant;
     public float Freq { get; set; }
     public float Freq_C { get; set; }
     public byte HarmonicCount { get; set; }

@@ -62,7 +62,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         //初始化标准表钳表功能模块
 
         //初始化直流源功能模块
-        _DCS = new DCS ( ID , _protocolFactory , _SerialPort , CheckResponse );
+        _DCS = new DCS ( ID , _protocolFactory ,  CheckResponse ,ByteTransform);
         //初始化辅助直流源功能模块
 
         //初始化直流表功能模块

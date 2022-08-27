@@ -2,7 +2,7 @@
 using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
-
+using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Module;
 
@@ -81,11 +81,11 @@ public class ACS : IModuleACS
     public float[ ]? IProtectRanges { get; set; }
 
     /// <inheritdoc/>
-    public Enum? WireMode { get; set; }
+    public WireMode WireMode { get; set; } = WireMode. WireMode_3P4L;
     /// <inheritdoc/>
-    public Enum? CloseLoopMode { get; set; }
+    public CloseLoopMode CloseLoopMode { get; set; } = CloseLoopMode. CloseLoop;
     /// <inheritdoc/>
-    public Enum? HarmonicMode { get; set; }
+    public HarmonicMode HarmonicMode { get; set; }=HarmonicMode.ValidValuesConstant;
     /// <inheritdoc/>
     public float Freq { get; set; }
     /// <inheritdoc/>
@@ -213,7 +213,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop ( )
     {
-        throw new NotImplementedException ( );        
+        return CommandAction.Action(_PacketsBuilder.Packet_Stop(), _methodOfCheckResponse );       
     }
 
     /// <inheritdoc/>
@@ -268,24 +268,25 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetWireMode ( Enum WireMode )
-    {
-        throw new NotImplementedException ( );
+    public OperateResult<byte[ ]> SetWireMode ( WireMode WireMode )
+    {        
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetWireMode(WireMode) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetClosedLoop ( Enum ClosedLoopMode )
-    {
-        throw new NotImplementedException ( );
+    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode )
+    {      
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetClosedLoop ( ClosedLoopMode ,HarmonicMode) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetHarmonicMode ( Enum HarmonicMode )
-    {
-        throw new NotImplementedException ( );
+    public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
+    {        
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetClosedLoop (  CloseLoopMode,HarmonicMode ) ,_methodOfCheckResponse);
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ] harmonicArgs )
     {
-        throw new NotImplementedException ( );
+        byte channel=Convert.ToByte( harmonicChannels );
+        return CommandAction.Action(_PacketsBuilder.Packet_SetHarmonics(channel, harmonicArgs) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
