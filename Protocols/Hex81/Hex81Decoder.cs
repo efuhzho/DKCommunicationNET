@@ -19,6 +19,8 @@ internal class Hex81Decoder : IDecoder
 
     public int Offset => Hex81Information. DataStartIndex;
 
+    #region 属性>>>设备信息
+
     public string? Model { get; set; }
 
     public string? SN { get; set; }
@@ -26,6 +28,10 @@ internal class Hex81Decoder : IDecoder
     public string? Firmware { get; private set; }
 
     public string? ProtocolVer => string. Empty;
+
+    #endregion 属性>>>设备信息
+
+    #region 属性>>>功能状态
 
     public bool IsEnabled_ACS { get; private set; }
 
@@ -58,6 +64,10 @@ internal class Hex81Decoder : IDecoder
     public bool IsEnabled_DCM_RIP { get; private set; }
 
     public bool IsEnabled_PPS { get; private set; }
+
+    #endregion 属性>>>功能状态
+
+    #region 属性>>>交流源/表
 
     public byte URanges_Count { get; private set; }
 
@@ -137,6 +147,14 @@ internal class Hex81Decoder : IDecoder
     public byte Flag_C { get; private set; }
     public byte IRange_CurrentIndex { get; set; }
     public byte IProtectRange_CurrentIndex { get; set; }
+
+    #endregion 属性>>>交流源/表
+
+    #region 属性>>>直流源
+
+
+    #endregion 属性>>>直流源
+
     #endregion 属性
 
     #region 【Decoders】
@@ -193,6 +211,8 @@ internal class Hex81Decoder : IDecoder
         IsEnabled_HF = funcS[4];
         IsEnabled_PWM = funcS[5];
     }
+
+    #region Decoders>>>交流源/表解码器
 
     /// <summary>
     /// 【解码】读取交流源档位信息
@@ -318,6 +338,13 @@ internal class Hex81Decoder : IDecoder
         return OperateResult. CreateSuccessResult ( );
     }
 
+    #endregion Decoders>>>交流源/表解码器
+
+    #region Decoders>>>直流源解码器
+
+
+
+    #endregion Decoders>>>直流源解码器
 
     #endregion Decoders
 

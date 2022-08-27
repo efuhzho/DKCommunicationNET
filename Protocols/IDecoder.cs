@@ -39,4 +39,6 @@ internal interface IDecoder : IDeviceFunctions, IProperties_ACS
     /// <returns></returns>
     OperateResult DecodeReadData_Status_ACS ( OperateResult<byte[ ]> responsResult );
 
+
+
 }

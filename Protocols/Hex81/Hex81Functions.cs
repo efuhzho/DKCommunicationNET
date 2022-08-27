@@ -17,28 +17,28 @@ internal class Hex81Functions : IProtocolFunctions
     /// <summary>
     /// 基于本协议的设备：是否支持【交流源模块】：是
     /// </summary>
-    public bool IsSupportedForACS => true;
-    public bool IsSupportedForACM => true;
+    public bool IsSupported_ACS => true;
+    public bool IsSupported_ACM => true;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【直流源模块】：是
     /// </summary>
-    public bool IsSupportedForDCS => true;
+    public bool IsSupported_DCS => true;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【直流表模块】：是
     /// </summary>
-    public bool IsSupportedForDCM => true;
+    public bool IsSupported_DCM => true;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【开关量模块】：否
     /// </summary>
-    public bool IsSupportedForIO { get; }
+    public bool IsSupported_IO { get; }
 
     /// <summary>
     /// 基于本协议的设备：是否支持【电能模块】：是
     /// </summary>
-    public bool IsSupportedForPQ => true;
+    public bool IsSupported_EPQ => true;
 
 
     public OperateResult<byte[ ]> GetPacketOfHandShake ( )

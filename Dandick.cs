@@ -201,7 +201,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// </summary>
     public ACS ACS
     {
-        get { CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupportedForACS , IsEnabled_ACS); return _ACS; }
+        get { CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupported_ACS , IsEnabled_ACS); return _ACS; }
         set { _ACS = value; }
     }
 

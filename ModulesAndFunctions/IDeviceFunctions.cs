@@ -113,5 +113,7 @@ namespace DKCommunicationNET. ModulesAndFunctions
         public bool IsEnabled_PPS { get; }
 
         #endregion FuncS
+
+        //TODO 协议功能增加2
     }
 }
