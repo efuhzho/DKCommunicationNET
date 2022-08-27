@@ -3,13 +3,14 @@ using DKCommunicationNET. Interface;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols;
+using System. Security. AccessControl;
 
 namespace DKCommunicationNET. Module;
 
 /// <summary>
 /// 直流源功能模块
 /// </summary>
-public class DCS :  IModuleDCS
+public class DCS : IModuleDCS
 {
     #region 私有字段
 
@@ -26,7 +27,7 @@ public class DCS :  IModuleDCS
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketsBuilder_ACS? _PacketsBuilder;
+    private readonly IPacketBuilder_DCS? _PacketsBuilder;
 
     /// <summary>
     /// 定义解码器对象
@@ -34,7 +35,7 @@ public class DCS :  IModuleDCS
     private readonly IDecoder _decoder;
 
     #endregion
-    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse, IByteTransform byteTransform )
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
     {
         //接收设备ID
         _id = id;
@@ -42,34 +43,97 @@ public class DCS :  IModuleDCS
         //接收执行报文发送接收的委托方法        
         _methodOfCheckResponse = methodOfCheckResponse;
 
-        //初始化报文创建器
-        _PacketsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+        //初始化报文创建器对象
+        _PacketsBuilder = protocolFactory. GetPacketBuilderOfDCS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
 
-        //接收解码器
+        //接收解码器对象
         _decoder = protocolFactory. GetDecoder ( byteTransform );
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <exception cref="Exception" >ADS</exception>
-    public void GetRangesOfDCS ( )
+    /// <inheritdoc/>
+    public byte URanges_Count_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public byte IRanges_Count_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public float U_CurrentValue_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public float I_CurrentValue_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public byte Index_CurrentRange_DCS { get; set; }
+
+    /// <inheritdoc/>
+    public float[ ]? URanges_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public float[ ]? IRanges_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public Enum? OutPutType_DCS { get; set; }
+
+    /// <inheritdoc/>
+    public bool U_IsOpen_DCS { get; private set; }
+
+    /// <inheritdoc/>
+    public bool I_IsOpen_DCS { get; private set; }
+
+    public float R_CurrentValue_DCS => throw new NotImplementedException ( );
+
+    public bool R_IsOpen_DCS => throw new NotImplementedException ( );
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> GetRanges ( )
     {
-        throw new NotImplementedException ( );
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var decodeResult = _decoder. DecodeGetRanges_DCS ( result );
+        if ( decodeResult. IsSuccess )
+        {
+            URanges_Count_DCS = _decoder. URanges_Count_DCS;
+            IRanges_Count_DCS = _decoder. IRanges_Count_DCS;
+            URanges_DCS = _decoder. URanges_DCS;
+            IRanges_DCS = _decoder. IRanges_DCS;
+        }
+        return result;
     }
 
-    public void SetDCSAmplitude ( )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Open ( )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
     }
 
-    public void StartDCS ( )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> ReadData ( Enum? dCSourceType = null )
     {
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
 
+        return result;
     }
 
-    public void StopDCS ( )
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetAmplitude ( byte rangeIndex , float SData , Enum dCSourceType )
     {
-        throw new NotImplementedException ( );
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( rangeIndex , SData , Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRange ( byte rangeIndex , Enum dCSourceType )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange ( rangeIndex , Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRange_AutoMode ( Enum dCSourceType )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_Auto ( Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Stop ( Enum? type = null )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_Stop ( ) , _methodOfCheckResponse );
     }
 }

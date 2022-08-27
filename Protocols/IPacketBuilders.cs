@@ -188,13 +188,21 @@ internal interface IPacketBuilder_DCS
     /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_Open ( byte? type = null );
+
     /// <summary>
     /// 创建报文：设置直流源档位：【indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效】
     /// </summary>
     /// <param name="indexOfRange">档位索引值：indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效</param>
-    /// <param name="type">输出类型：‘U'=直流电压；’I‘=直流电流；’R‘=直流电阻</param>
+    /// <param name="type">输出类型</param>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_SetRange ( byte indexOfRange , byte type );
+
+    /// <summary>
+    /// 【支持自动档位时有效】创建报文：设置直流源档位为自动档位
+    /// </summary>
+    /// <param name="type">输出类型</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetRange_Auto (  byte type );
 
     /// <summary>
     /// 创建报文：设置直流源幅度

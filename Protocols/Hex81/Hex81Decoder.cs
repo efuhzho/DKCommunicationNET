@@ -1,4 +1,5 @@
-﻿using System. Text;
+﻿using System. Security. AccessControl;
+using System. Text;
 using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
 
@@ -92,9 +93,9 @@ internal class Hex81Decoder : IDecoder
     public float[ ]? URanges { get; set; }
     public float[ ]? IRanges { get; set; }
     public float[ ]? IProtectRanges { get; set; }
-    public WireMode WireMode { get; set; }=WireMode.WireMode_3P4L;
+    public WireMode WireMode { get; set; } = WireMode. WireMode_3P4L;
     public CloseLoopMode CloseLoopMode { get; set; } = CloseLoopMode. CloseLoop;
-    public HarmonicMode HarmonicMode { get; set; }=HarmonicMode.ValidValuesConstant;
+    public HarmonicMode HarmonicMode { get; set; } = HarmonicMode. ValidValuesConstant;
     public float Freq { get; set; }
     public float Freq_C { get; set; }
     public byte HarmonicCount { get; set; }
@@ -151,7 +152,28 @@ internal class Hex81Decoder : IDecoder
     #endregion 属性>>>交流源/表
 
     #region 属性>>>直流源
+    public byte URanges_Count_DCS { get; private set; }
 
+    public byte IRanges_Count_DCS { get; private set; }
+
+    public float U_CurrentValue_DCS { get; private set; }
+
+    public float I_CurrentValue_DCS { get; private set; }
+
+    public byte Index_CurrentRange_DCS { get; set; }
+
+    public float[ ]? URanges_DCS { get; private set; }
+
+    public float[ ]? IRanges_DCS { get; private set; }
+
+    public Enum? OutPutType_DCS { get; set; }
+
+    public bool U_IsOpen_DCS { get; private set; }
+
+    public bool I_IsOpen_DCS { get; private set; }
+    public bool R_IsOpen_DCS { get; private set; }
+
+    public float R_CurrentValue_DCS { get; private set; }
 
     #endregion 属性>>>直流源
 
@@ -334,6 +356,52 @@ internal class Hex81Decoder : IDecoder
         URange_CurrentValue = _byteTransform. TransSingle ( response , 33 );
         IRange_CurrentValue = _byteTransform. TransSingle ( response , 37 );
         IProtectRange_CurrentValue = _byteTransform. TransSingle ( response , 41 );
+
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    public OperateResult DecodeReadData_DCS ( OperateResult<byte[ ]> responsResult )
+    {
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+        byte[ ] response = responsResult. Content;
+
+        Index_CurrentRange_DCS = response[6];
+
+        OutPutType_DCS = ( DCS_Type ) response[11];
+
+        if ( OutPutType_DCS is DCS_Type. DCS_Type_U )
+        {
+            U_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
+            U_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
+        }
+        else if ( OutPutType_DCS is DCS_Type. DCS_Type_I )
+        {
+            I_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
+            I_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
+        }
+        else if ( OutPutType_DCS is DCS_Type. DCS_Type_R )
+        {
+            R_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
+            R_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
+        }
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    public OperateResult DecodeGetRanges_DCS ( OperateResult<byte[ ]> responsResult )
+    {
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+
+        byte[ ] response = responsResult. Content;
+        URanges_Count_DCS = response[6];
+        IRanges_Count_DCS = response[7];
+        URanges_DCS = _byteTransform. TransSingle ( response , 8 , URanges_Count_DCS );
+        IRanges_DCS = _byteTransform. TransSingle ( response , 8 + URanges_Count_DCS * 4 , IRanges_Count_DCS );
 
         return OperateResult. CreateSuccessResult ( );
     }

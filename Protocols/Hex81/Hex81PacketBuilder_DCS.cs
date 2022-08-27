@@ -70,5 +70,10 @@ namespace DKCommunicationNET. Protocols. Hex81
         {
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
         }
+
+        public OperateResult<byte[ ]> Packet_SetRange_Auto ( byte type )
+        {
+            return Packet_SetRange ( 0xFF , type );
+        }
     }
 }
