@@ -10,7 +10,7 @@ namespace DKCommunicationNET. Module;
 /// <summary>
 /// 直流源功能模块
 /// </summary>
-public class DCS : IModuleDCS,IProperties_DCS
+public class DCS : IModuleDCS, IProperties_DCS
 {
     #region 私有字段
 
@@ -110,17 +110,17 @@ public class DCS : IModuleDCS,IProperties_DCS
     public OperateResult<byte[ ]> ReadData ( Enum? dCSourceType = null )
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
-        var decodeResult=_decoder. DecodeReadData_DCS ( result );
-        if ( decodeResult.IsSuccess )
+        var decodeResult = _decoder. DecodeReadData_DCS ( result );
+        if ( decodeResult. IsSuccess )
         {
             Index_CurrentRange_DCS = _decoder. Index_CurrentRange_DCS;
-            OutPutType_DCS= _decoder. OutPutType_DCS;
+            OutPutType_DCS = _decoder. OutPutType_DCS;
             U_CurrentValue_DCS = _decoder. U_CurrentValue_DCS;
             U_IsOpen_DCS = _decoder. U_IsOpen_DCS;
-            I_CurrentValue_DCS= _decoder. I_CurrentValue_DCS;
-            I_IsOpen_DCS= _decoder. I_IsOpen_DCS;
+            I_CurrentValue_DCS = _decoder. I_CurrentValue_DCS;
+            I_IsOpen_DCS = _decoder. I_IsOpen_DCS;
             R_CurrentValue_DCS = _decoder. R_CurrentValue_DCS;
-            R_IsOpen_DCS=_decoder.R_IsOpen_DCS ;
+            R_IsOpen_DCS = _decoder. R_IsOpen_DCS;
         }
         return result;
     }
