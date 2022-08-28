@@ -139,6 +139,12 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Open_DCS , Hex81Information. Open_DCS_Length , data , _id );
         }
 
+        /// <summary>
+        /// 【暂时不用的方法】设置档位
+        /// </summary>
+        /// <param name="indexOfRange"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private OperateResult<byte[ ]> Packet_SetRange ( byte indexOfRange , OutputType_DCS type )
         {
             byte[ ] data = new byte[2] { indexOfRange , ( byte ) type };
