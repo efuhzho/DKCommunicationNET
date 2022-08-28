@@ -177,49 +177,70 @@ public class DCS : IModuleDCS, IProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCI ( float SData , byte? rangeIndex_DCI = null )
     {
+        //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCI == null )
         {
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , RangeIndex_DCI ) , _methodOfCheckResponse );
         }
+
+        //如果设置了档位则刷新当前档位
+        RangeIndex_DCI = ( byte ) rangeIndex_DCI;
+
+        //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCR ( float SData , byte? rangeIndex_DCR = null )
     {
+        //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCR == null )
         {
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , RangeIndex_DCR ) , _methodOfCheckResponse );
         }
+
+        //如果设置了档位则刷新当前档位
+        RangeIndex_DCR = ( byte ) rangeIndex_DCR;
+
+        //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCU ( float SData , byte? rangeIndex_DCU = null )
     {
+        //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCU == null )
         {
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
         }
+
+        //如果设置了档位则刷新当前档位
+        RangeIndex_DCU = ( byte ) rangeIndex_DCU;
+
+        //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI )
     {
-        throw new NotImplementedException ( );
+        RangeIndex_DCI = rangeIndex_DCI;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR )
     {
-        throw new NotImplementedException ( );
+        RangeIndex_DCR = rangeIndex_DCR;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU )
     {
-        throw new NotImplementedException ( );
+        RangeIndex_DCU = rangeIndex_DCU;
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
