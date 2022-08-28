@@ -262,6 +262,27 @@ internal interface IPacketBuilder_DCS
     /// </summary>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_GetRanges ( );
+
+    /// <summary>
+    /// 创建报文：设置直流电流幅度和档位
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetRange_DCI (  byte indexOfRange );
+
+    /// <summary>
+    /// 创建报文：设置直流电压幅度和档位
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetRange_DCU (  byte indexOfRange );
+
+    /// <summary>
+    /// 创建报文：设置直流电阻幅度和档位
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetRange_DCR ( byte indexOfRange );
 }
 
 /// <summary>

@@ -11,26 +11,26 @@ public interface IModuleDCS : IProperties_DCS
     public OperateResult<byte[ ]> GetRanges ( );
 
     /// <summary>
-    /// 设置直流源电压输出幅值和档位（可选）
+    /// 设置直流源电压输出幅值和档位（可选），如果要设置自动档位请设置属性：IsAutoRange_DCU
     /// </summary>
-    /// <param name="rangeIndex_DCU">要设置的直流源电压档位索引值</param>
     /// <param name="SData">要设置的幅值</param>
+    /// <param name="rangeIndex_DCU">要设置的直流源电压档位索引值，如果要设置自动档位请设置属性：IsAutoRange_DCU</param>
     /// <returns></returns>
     OperateResult<byte[ ]> SetAmplitude_DCU ( float SData , byte? rangeIndex_DCU = null );
 
     /// <summary>
-    /// 设置直流源电流输出幅值和档位（可选）
+    /// 设置直流源电流输出幅值和档位（可选），如果要设置自动档位请设置属性：IsAutoRange_DCI
     /// </summary>
     /// <param name="SData">要设置的幅值</param>
-    /// <param name="rangeIndex_DCI">要设置的直流源电流档位索引值</param>
+    /// <param name="rangeIndex_DCI">要设置的直流源电流档位索引值，如果要设置自动档位请设置属性：IsAutoRange_DCI</param>
     /// <returns></returns>
     OperateResult<byte[ ]> SetAmplitude_DCI ( float SData , byte? rangeIndex_DCI = null );
 
     /// <summary>
-    /// 设置直流电阻输出幅值和档位（可选）
+    /// 设置直流电阻输出幅值和档位（可选），如果要设置自动档位请设置属性：IsAutoRange_DCR
     /// </summary>
     /// <param name="SData">要设置的幅值</param>
-    /// <param name="rangeIndex_DCR">要设置的直流电阻档位索引值</param>
+    /// <param name="rangeIndex_DCR">要设置的直流电阻档位索引值，如果要设置自动档位请设置属性：IsAutoRange_DCR</param>
     /// <returns></returns>
     OperateResult<byte[ ]> SetAmplitude_DCR ( float SData , byte? rangeIndex_DCR = null );
 
@@ -71,35 +71,28 @@ public interface IModuleDCS : IProperties_DCS
     /// <returns></returns>
     OperateResult<byte[ ]> ReadData ( char? Resistor = null );
 
-    #region 暂时屏蔽的方法，原因是没有必要提供这些方法，优化了使用体验
-    ///// <summary>
-    ///// 设置直流源档位
-    ///// </summary>
-    ///// <param name="rangeIndex">要设置的直流源档位</param>
-    ///// <param name="dCSourceType">要设置的直流源输出类型</param>
-    ///// <returns></returns>
-    //OperateResult<byte[ ]> SetRange ( byte rangeIndex , Enum dCSourceType );
+    #region 暂时屏蔽的方法，原因是没有必要提供这些方法，优化了使用体验    
 
-    ///// <summary>
-    ///// 设置直流源电压档位
-    ///// </summary>
-    ///// <param name="rangeIndex_DCU">要设置的直流电压档位索引值</param>
-    ///// <returns></returns>
-    //OperateResult<byte[ ]> SetRange_U ( byte rangeIndex_DCU );
+    /// <summary>
+    /// 设置直流源电压档位
+    /// </summary>
+    /// <param name="rangeIndex_DCU">要设置的直流电压档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU );
 
-    ///// <summary>
-    ///// 设置直流源电流档位
-    ///// </summary>
-    ///// <param name="rangeIndex_DCI">要设置的直流电流档位索引值</param>
-    ///// <returns></returns>
-    //OperateResult<byte[ ]> SetRange_I ( byte rangeIndex_DCI );
+    /// <summary>
+    /// 设置直流源电流档位
+    /// </summary>
+    /// <param name="rangeIndex_DCI">要设置的直流电流档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI );
 
-    ///// <summary>
-    ///// 设置直流电阻档位
-    ///// </summary>
-    ///// <param name="rangeIndex_DCR">要设置的直流电阻档位索引值</param>
-    ///// <returns></returns>
-    //OperateResult<byte[ ]> SetRange_R ( byte rangeIndex_DCR );
+    /// <summary>
+    /// 设置直流电阻档位
+    /// </summary>
+    /// <param name="rangeIndex_DCR">要设置的直流电阻档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR );
     #endregion   
 }
 

@@ -108,8 +108,13 @@ public class DCS : IModuleDCS, IProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
+        //执行命令并获取回复报文
         var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+
+        //解码：连看都不看拿到的命令执行结果，直接甩给解码器
         var decodeResult = _decoder. DecodeGetRanges_DCS ( result );
+
+        //如果解码成功就刷新数据
         if ( decodeResult. IsSuccess )
         {
             RangesCount_DCU = _decoder. RangesCount_DCU;
@@ -120,6 +125,8 @@ public class DCS : IModuleDCS, IProperties_DCS
             Ranges_DCI = _decoder. Ranges_DCI;
             Ranges_DCR = _decoder. Ranges_DCR;
         }
+
+        //管他妈的解码成不成功，直接交出命令执行结果
         return result;
     }
 
@@ -145,7 +152,11 @@ public class DCS : IModuleDCS, IProperties_DCS
     public OperateResult<byte[ ]> ReadData ( char? Resistor = null )
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
+
+        //解码
         var decodeResult = _decoder. DecodeReadData_DCS ( result );
+
+        //如果解码成功
         if ( decodeResult. IsSuccess )
         {
             DCU = _decoder. DCU;
@@ -159,7 +170,6 @@ public class DCS : IModuleDCS, IProperties_DCS
             RangeIndex_DCU = _decoder. RangeIndex_DCU;
             RangeIndex_DCI = _decoder. RangeIndex_DCI;
             RangeIndex_DCR = _decoder. RangeIndex_DCR;
-
         }
         return result;
     }
@@ -192,6 +202,24 @@ public class DCS : IModuleDCS, IProperties_DCS
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
         }
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU )
+    {
+        throw new NotImplementedException ( );
     }
 
     /// <inheritdoc/>

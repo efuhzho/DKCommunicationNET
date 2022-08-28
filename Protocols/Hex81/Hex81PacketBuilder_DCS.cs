@@ -98,6 +98,21 @@ namespace DKCommunicationNET. Protocols. Hex81
             return Packet_SetAmplitude ( indexOfRange , amplitude , OutputType_DCS. DCS_Type_R );
         }
 
+        public OperateResult<byte[ ]> Packet_SetRange_DCI ( byte indexOfRange )
+        {
+            return Packet_SetRange ( indexOfRange , OutputType_DCS. DCS_Type_I );
+        }
+
+        public OperateResult<byte[ ]> Packet_SetRange_DCU ( byte indexOfRange )
+        {
+            return Packet_SetRange(indexOfRange , OutputType_DCS. DCS_Type_U );
+        }
+
+        public OperateResult<byte[ ]> Packet_SetRange_DCR ( byte indexOfRange )
+        {
+            return Packet_SetRange ( indexOfRange , OutputType_DCS. DCS_Type_R );
+        }
+
         #region Private
 
         /// <summary>
@@ -150,6 +165,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             byte[ ] data = new byte[2] { indexOfRange , ( byte ) type };
             return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetRange_DCS , Hex81Information. SetRange_DCS_Length , data , _id );
         }
+   
         #endregion
     }
 }
