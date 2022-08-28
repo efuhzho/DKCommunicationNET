@@ -4,6 +4,7 @@ using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols;
 using System. Security. AccessControl;
+using System. Runtime. CompilerServices;
 
 namespace DKCommunicationNET. Module;
 
@@ -51,40 +52,59 @@ public class DCS : IModuleDCS, IProperties_DCS
     }
 
     /// <inheritdoc/>
-    public byte URanges_Count_DCS { get; private set; }
+    public byte RangesCount_DCU { get; private set; }
 
     /// <inheritdoc/>
-    public byte IRanges_Count_DCS { get; private set; }
+    public byte RangesCount_DCI { get; private set; }
 
     /// <inheritdoc/>
-    public float U_CurrentValue_DCS { get; private set; }
+    public byte RangesCount_DCR { get; private set; }
 
     /// <inheritdoc/>
-    public float I_CurrentValue_DCS { get; private set; }
+    public float DCR { get; private set; }
 
     /// <inheritdoc/>
-    public byte Index_CurrentRange_DCS { get; set; }
+    public float DCU { get; private set; }
 
     /// <inheritdoc/>
-    public float[ ]? URanges_DCS { get; private set; }
+    public float DCI { get; private set; }
 
     /// <inheritdoc/>
-    public float[ ]? IRanges_DCS { get; private set; }
+    public float[ ]? Ranges_DCU { get; private set; }
 
     /// <inheritdoc/>
-    public Enum? OutPutType_DCS { get; set; }
+    public float[ ]? Ranges_DCI { get; private set; }
 
     /// <inheritdoc/>
-    public bool U_IsOpen_DCS { get; private set; }
+    public float[ ]? Ranges_DCR { get; private set; }
 
     /// <inheritdoc/>
-    public bool I_IsOpen_DCS { get; private set; }
+    public bool IsOpen_DCU { get; private set; }
 
     /// <inheritdoc/>
-    public float R_CurrentValue_DCS { get; private set; }
+    public bool IsOpen_DCI { get; private set; }
 
     /// <inheritdoc/>
-    public bool R_IsOpen_DCS { get; private set; }
+    public bool IsOpen_DCR { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsAutoRange_DCU { get => _PacketsBuilder. IsAutoRange_DCU; set => _PacketsBuilder. IsAutoRange_DCU = value; }
+
+    /// <inheritdoc/>
+    public bool IsAutoRange_DCI { get => _PacketsBuilder. IsAutoRange_DCI; set => _PacketsBuilder. IsAutoRange_DCI = value; }
+
+    /// <inheritdoc/>
+    public bool IsAutoRange_DCR { get => _PacketsBuilder. IsAutoRange_DCR; set => _PacketsBuilder. IsAutoRange_DCR = value; }
+
+    /// <inheritdoc/>
+    public byte RangeIndex_DCI { get; set; }
+
+    /// <inheritdoc/>
+    public byte RangeIndex_DCR { get; set; }
+
+    /// <inheritdoc/>
+    public byte RangeIndex_DCU { get; set; }
+
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
@@ -92,60 +112,103 @@ public class DCS : IModuleDCS, IProperties_DCS
         var decodeResult = _decoder. DecodeGetRanges_DCS ( result );
         if ( decodeResult. IsSuccess )
         {
-            URanges_Count_DCS = _decoder. URanges_Count_DCS;
-            IRanges_Count_DCS = _decoder. IRanges_Count_DCS;
-            URanges_DCS = _decoder. URanges_DCS;
-            IRanges_DCS = _decoder. IRanges_DCS;
+            RangesCount_DCU = _decoder. RangesCount_DCU;
+            RangesCount_DCI = _decoder. RangesCount_DCI;
+            RangesCount_DCR = _decoder. RangesCount_DCR;
+
+            Ranges_DCU = _decoder. Ranges_DCU;
+            Ranges_DCI = _decoder. Ranges_DCI;
+            Ranges_DCR = _decoder. Ranges_DCR;
         }
         return result;
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> Open ( )
+    public OperateResult<byte[ ]> Open_DCI ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCI ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( Enum? dCSourceType = null )
+    public OperateResult<byte[ ]> Open_DCR ( )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCR ( ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Open_DCU ( )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCU ( ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> ReadData ( char? Resistor = null )
+    {
+        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
         var decodeResult = _decoder. DecodeReadData_DCS ( result );
         if ( decodeResult. IsSuccess )
         {
-            Index_CurrentRange_DCS = _decoder. Index_CurrentRange_DCS;
-            OutPutType_DCS = _decoder. OutPutType_DCS;
-            U_CurrentValue_DCS = _decoder. U_CurrentValue_DCS;
-            U_IsOpen_DCS = _decoder. U_IsOpen_DCS;
-            I_CurrentValue_DCS = _decoder. I_CurrentValue_DCS;
-            I_IsOpen_DCS = _decoder. I_IsOpen_DCS;
-            R_CurrentValue_DCS = _decoder. R_CurrentValue_DCS;
-            R_IsOpen_DCS = _decoder. R_IsOpen_DCS;
+            DCU = _decoder. DCU;
+            DCI = _decoder. DCI;
+            DCR = _decoder. DCR;
+
+            IsOpen_DCU = _decoder. IsOpen_DCU;
+            IsOpen_DCI = _decoder. IsOpen_DCI;
+            IsOpen_DCR = _decoder. IsOpen_DCR;
+
+            RangeIndex_DCU = _decoder. RangeIndex_DCU;
+            RangeIndex_DCI = _decoder. RangeIndex_DCI;
+            RangeIndex_DCR = _decoder. RangeIndex_DCR;
+
         }
         return result;
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetAmplitude ( byte rangeIndex , float SData , Enum dCSourceType )
+    public OperateResult<byte[ ]> SetAmplitude_DCI ( float SData , byte? rangeIndex_DCI = null )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( rangeIndex , SData , Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+        if ( rangeIndex_DCI == null )
+        {
+            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , RangeIndex_DCI ) , _methodOfCheckResponse );
+        }
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetRange ( byte rangeIndex , Enum dCSourceType )
+    public OperateResult<byte[ ]> SetAmplitude_DCR ( float SData , byte? rangeIndex_DCR = null )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange ( rangeIndex , Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+        if ( rangeIndex_DCR == null )
+        {
+            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , RangeIndex_DCR ) , _methodOfCheckResponse );
+        }
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetRange_AutoMode ( Enum dCSourceType )
+    public OperateResult<byte[ ]> SetAmplitude_DCU ( float SData , byte? rangeIndex_DCU = null )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_Auto ( Convert. ToByte ( dCSourceType ) ) , _methodOfCheckResponse );
+        if ( rangeIndex_DCU == null )
+        {
+            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
+        }
+        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> Stop ( Enum? type = null )
+    public OperateResult<byte[ ]> Stop_DCI ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Stop ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCI ( ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Stop_DCR ( )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCR ( ) , _methodOfCheckResponse );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> Stop_DCU ( )
+    {
+        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCU ( ) , _methodOfCheckResponse );
     }
 }

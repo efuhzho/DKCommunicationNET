@@ -176,56 +176,92 @@ internal interface IPacketBuilder_ACM
 internal interface IPacketBuilder_DCS
 {
     /// <summary>
-    /// 关闭直流源
+    /// 直流电压档位是否为自动档
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
-    /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Stop ( byte? type = null );
+    public bool IsAutoRange_DCU { get; set; }
 
     /// <summary>
-    /// 打开直流源
+    /// 直流电流档位是否为自动档
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
-    /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Open ( byte? type = null );
+    public bool IsAutoRange_DCI { get; set; }
 
     /// <summary>
-    /// 创建报文：设置直流源档位：【indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效】
+    /// 直流电阻档位是否为自动档
     /// </summary>
-    /// <param name="indexOfRange">档位索引值：indexOfRange=0xFF时为自动档位，支持自动换挡模式时有效</param>
-    /// <param name="type">输出类型</param>
-    /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange ( byte indexOfRange , byte type );
+    public bool IsAutoRange_DCR { get; set; }
 
     /// <summary>
-    /// 【支持自动档位时有效】创建报文：设置直流源档位为自动档位
+    /// 创建报文：停止直流电压输出
     /// </summary>
-    /// <param name="type">输出类型</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange_Auto (  byte type );
+    OperateResult<byte[ ]> Packet_Stop_DCU (  );
 
     /// <summary>
-    /// 创建报文：设置直流源幅度
+    /// 创建报文：停止直流电压流输出
     /// </summary>
-    /// <param name="indexOfRange"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_Stop_DCI ( );
+
+    /// <summary>
+    /// 创建报文：停止直流电阻输出
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_Stop_DCR ( );
+
+    /// <summary>
+    /// 创建报文：打开直流电压输出
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_Open_DCU (  );
+
+    /// <summary>
+    /// 创建报文：打开直流电流输出
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_Open_DCI ( );
+
+    /// <summary>
+    /// 创建报文：打开直流电阻输出
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_Open_DCR ( );
+
+    /// <summary>
+    /// 创建报文：设置直流电流幅度和档位
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值</param>
     /// <param name="amplitude">要设定的幅值</param>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetAmplitude ( byte indexOfRange , float amplitude , byte type  );
+    OperateResult<byte[ ]> Packet_SetAmplitude_DCI (  float amplitude , byte indexOfRange );
+
+    /// <summary>
+    /// 创建报文：设置直流电压幅度和档位
+    /// </summary>
+    /// <param name="indexOfRange">档位索引值</param>
+    /// <param name="amplitude">要设定的幅值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetAmplitude_DCU ( float amplitude , byte indexOfRange );
+
+    /// <summary>
+    /// 创建报文：设置直流电阻幅度和档位
+    /// </summary>
+    /// <param name="amplitude">要设定的幅值</param>
+    /// <param name="indexOfRange">档位索引值</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetAmplitude_DCR ( float amplitude , byte indexOfRange );
 
     /// <summary>
     /// 创建报文：读取直流源当前输出值
     /// </summary>
-    /// <param name="type"><inheritdoc cref="Packet_SetRange(byte, byte)"/></param>
+    /// <param name="Resistor">【可选参数：当支持直流电阻输出时有效】当需要读取直流输出电阻值时：请输入字符 'R'</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ReadData ( byte? type = null );
+    OperateResult<byte[ ]> Packet_ReadData ( char? Resistor = null );
 
     /// <summary>
     /// 创建报文：获取直流源档位信息
     /// </summary>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_GetRanges ( );
-
 }
 
 /// <summary>
@@ -408,7 +444,7 @@ internal interface IPacketBuilder_Calibrate
     /// <summary>
     /// 设置直流校准点
     /// </summary>
-    /// <param name="dCSourceType">类型，’U’-电压，’I’-电流。</param>
+    /// <param name="dCSourceType">类型，’DCU’-电压，’I’-电流。</param>
     /// <param name="rangeIndex"></param>
     /// <param name="calibrateLevel"></param>
     /// <param name="sDCAmplitude">设置的校准点的标准值</param>
@@ -418,7 +454,7 @@ internal interface IPacketBuilder_Calibrate
     /// <summary>
     /// 直流源校准
     /// </summary>
-    /// <param name="dCSourceType">类型，’U’-电压，’I’-电流。</param>
+    /// <param name="dCSourceType">类型，’DCU’-电压，’I’-电流。</param>
     /// <param name="rangeIndex"></param>
     /// <param name="calibrateLevel"></param>
     /// <param name="mDCAmplitude">校准用的标准表读数</param>
@@ -428,7 +464,7 @@ internal interface IPacketBuilder_Calibrate
     /// <summary>
     /// 直流表校准
     /// </summary>
-    /// <param name="dCSourceType">类型，’U’-电压，’I’-电流。</param>
+    /// <param name="dCSourceType">类型，’DCU’-电压，’I’-电流。</param>
     /// <param name="rangeIndex"></param>
     /// <param name="calibrateLevel"></param>
     /// <param name="sDCAmplitude">校准用的标准源输出幅值</param>

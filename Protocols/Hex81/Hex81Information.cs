@@ -613,7 +613,7 @@ public enum ElectricityType : byte
 /// <summary>
 /// 直流表测量类型
 /// </summary>
-public enum DCMerterMeasureType : byte
+public enum MeasureType_DCM : byte
 {
     /// <summary>
     /// 直流电压
@@ -639,7 +639,7 @@ public enum DCMerterMeasureType : byte
 /// <summary>
 /// 直流源输出类型
 /// </summary>
-public enum DCS_Type : byte
+public enum OutputType_DCS : byte
 {
     /// <summary>
     /// 直流源电压输出

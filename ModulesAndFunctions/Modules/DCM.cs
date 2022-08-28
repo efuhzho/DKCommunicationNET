@@ -15,7 +15,7 @@ public class DCM :IModuleDCM
     /// </summary>
     private IPacketBuilder_ACM? _PacketBuilder;
 
-    public void GetRangesOfDCM ( )
+    public void GetRanges ( )
     {
         throw new NotImplementedException ( );
     }

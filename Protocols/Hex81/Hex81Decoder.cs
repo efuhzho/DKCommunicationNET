@@ -152,28 +152,37 @@ internal class Hex81Decoder : IDecoder
     #endregion 属性>>>交流源/表
 
     #region 属性>>>直流源
-    public byte URanges_Count_DCS { get; private set; }
+    public byte RangesCount_DCU { get; private set; }
 
-    public byte IRanges_Count_DCS { get; private set; }
+    public byte RangesCount_DCI { get; private set; }
 
-    public float U_CurrentValue_DCS { get; private set; }
+    public byte RangesCount_DCR { get; private set; }
 
-    public float I_CurrentValue_DCS { get; private set; }
+    public float DCU { get; private set; }
 
-    public byte Index_CurrentRange_DCS { get; set; }
+    public float DCI { get; private set; }
 
-    public float[ ]? URanges_DCS { get; private set; }
+    public float DCR { get; private set; }
 
-    public float[ ]? IRanges_DCS { get; private set; }
 
-    public Enum? OutPutType_DCS { get; set; }
+    public byte RangeIndex_DCU { get; set; }
+    public byte RangeIndex_DCI { get; set; }
+    public byte RangeIndex_DCR { get; set; }
 
-    public bool U_IsOpen_DCS { get; private set; }
+    public float[ ]? Ranges_DCU { get; private set; }
 
-    public bool I_IsOpen_DCS { get; private set; }
-    public bool R_IsOpen_DCS { get; private set; }
+    public float[ ]? Ranges_DCI { get; private set; }
 
-    public float R_CurrentValue_DCS { get; private set; }
+    public float[ ]? Ranges_DCR { get; private set; }    
+
+    public bool IsOpen_DCU { get; private set; }
+
+    public bool IsOpen_DCI { get; private set; }
+
+    public bool IsOpen_DCR { get; private set; }
+    public bool IsAutoRange_DCU { get; set; }
+    public bool IsAutoRange_DCI { get; set; }
+    public bool IsAutoRange_DCR { get; set; }
 
     #endregion 属性>>>直流源
 
@@ -368,25 +377,30 @@ internal class Hex81Decoder : IDecoder
         }
         byte[ ] response = responsResult. Content;
 
-        Index_CurrentRange_DCS = response[6];
 
-        OutPutType_DCS = ( DCS_Type ) response[11];
+        OutputType_DCS outputType_DCS = ( OutputType_DCS ) response[11];
 
-        if ( OutPutType_DCS is DCS_Type. DCS_Type_U )
+        switch ( outputType_DCS )
         {
-            U_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
-            U_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
+            case OutputType_DCS. DCS_Type_U:
+                RangeIndex_DCU = response[6];
+                DCU = _byteTransform. TransSingle ( response , 7 );
+                IsOpen_DCU = _byteTransform. TransBool ( response , 12 );
+                break;
+            case OutputType_DCS. DCS_Type_I:
+                RangeIndex_DCI = response[6];
+                DCI = _byteTransform. TransSingle ( response , 7 );
+                IsOpen_DCI = _byteTransform. TransBool ( response , 12 );
+                break;
+            case OutputType_DCS. DCS_Type_R:
+                RangeIndex_DCR = response[6];
+                DCR = _byteTransform. TransSingle ( response , 7 );
+                IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
+                break;
+            default:
+                return new OperateResult ( "Hex81:直流源回复数据解码失败!");
         }
-        else if ( OutPutType_DCS is DCS_Type. DCS_Type_I )
-        {
-            I_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
-            I_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
-        }
-        else if ( OutPutType_DCS is DCS_Type. DCS_Type_R )
-        {
-            R_CurrentValue_DCS = _byteTransform. TransSingle ( response , 7 );
-            R_IsOpen_DCS = _byteTransform. TransBool ( response , 12 );
-        }
+       
         return OperateResult. CreateSuccessResult ( );
     }
 
@@ -398,10 +412,10 @@ internal class Hex81Decoder : IDecoder
         }
 
         byte[ ] response = responsResult. Content;
-        URanges_Count_DCS = response[6];
-        IRanges_Count_DCS = response[7];
-        URanges_DCS = _byteTransform. TransSingle ( response , 8 , URanges_Count_DCS );
-        IRanges_DCS = _byteTransform. TransSingle ( response , 8 + URanges_Count_DCS * 4 , IRanges_Count_DCS );
+        RangesCount_DCU = response[6];
+        RangesCount_DCI = response[7];
+        Ranges_DCU = _byteTransform. TransSingle ( response , 8 , RangesCount_DCU );
+        Ranges_DCI = _byteTransform. TransSingle ( response , 8 + RangesCount_DCU * 4 , RangesCount_DCI );
 
         return OperateResult. CreateSuccessResult ( );
     }
