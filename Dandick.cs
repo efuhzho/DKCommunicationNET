@@ -133,19 +133,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     #endregion 公共属性>>>功能模块
 
-
-    #region 【公共属性】
-
-
-
-    #region 公共属性>>>功能状态指示标志
-
     #region 公共属性>>>功能状态指示>>>FuncB
 
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsEnabled_ACS { get; private set; } 
+    public bool IsEnabled_ACS { get; private set; }
 
     /// <summary>
     /// 指示是否激活交流表功能
@@ -183,7 +176,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     #endregion 公共属性>>>功能状态指示>>>FuncB
 
-
     #region 公共属性>>>功能状态指示>>>FuncS
 
     /// <summary>
@@ -219,12 +211,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc/>
     public bool IsEnabled_PPS { get; private set; }
 
-    #endregion 公共属性>>>功能状态指示>>>FuncS
-
-    #endregion 公共属性>>>功能状态指示
-
-
-    #endregion 【公共属性】
+    #endregion 公共属性>>>功能状态指示>>>FuncS    
 
     #region 【功能状态初始化】
 
@@ -237,7 +224,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         Firmware = _Decoder. Firmware;
         ProtocolVer = _Decoder. ProtocolVer;
         SN = _Decoder. SN;
-        IsEnabled_ACS = true; // TODO 释放注释_Decoder. IsEnabled_ACS;
+        IsEnabled_ACS = _Decoder. IsEnabled_ACS;  // TODO 释放注释_Decoder. IsEnabled_ACS;
         IsEnabled_ACM = _Decoder. IsEnabled_ACM;
         IsEnabled_ACM_Cap = _Decoder. IsEnabled_ACM_Cap;
         IsEnabled_DCS = _Decoder. IsEnabled_DCS;
