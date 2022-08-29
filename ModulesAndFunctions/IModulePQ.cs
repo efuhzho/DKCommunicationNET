@@ -1,76 +1,105 @@
 ﻿namespace DKCommunicationNET. ModulesAndFunctions;
 
-
-public interface IModulePQ
+/// <summary>
+/// 
+/// </summary>
+public interface IModuleEPQ : ISetProperties_EPQ,IReadProperies_EPQ
 {
     /// <summary>
     /// 读取电能误差数据
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> ReadData ( );
+    OperateResult<byte[ ]> ReadData ( Channels_EPQ Channels = Channels_EPQ. Channel1 );
 
     /// <summary>
     /// 设置参数并启动校验有功电能
     /// </summary>
+    /// <param name="Const_PM">表有功脉冲常数</param>
+    /// <param name="DIV">分频系数</param>
+    /// <param name="Rounds">校验圈数</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> StartTest_P ( );
+    OperateResult<byte[ ]> StartTest_P ( float Const_PM , uint Rounds = 10 , uint DIV = 1 );
 
     /// <summary>
     /// 设置参数并启动校验无功电能
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> StartTest_Q ( );
+    OperateResult<byte[ ]> StartTest_Q ( float Const_QM , uint Rounds = 10 , uint DIV = 1 );
+
+    /// <summary>
+    /// 设置输出脉冲常数
+    /// </summary>
+    /// <param name="Const_PS">源有功脉冲常数</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetConst_PS ( float Const_PS );
+
+    /// <summary>
+    /// 设置输出脉冲常数
+    /// </summary>
+    /// <param name="Const_QS">源无功脉冲常数</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> SetConst_QS ( float Const_QS );
+
 }
-public interface IProperties_EPQ
+
+/// <summary>
+/// 电能模块的设置属性
+/// </summary>
+public interface ISetProperties_EPQ
 {
     /// <summary>
     /// 表有功常数
     /// </summary>
-    float ElectricityMeterConst_EP { get; set; }
+    float Const_PM { get; set; }
 
     /// <summary>
     /// 表无功常数
     /// </summary>
-    float ElectricityMeterConst_EQ { get; set; }
+    float Const_QM { get; set; }
 
     /// <summary>
     /// 源有功常数
     /// </summary>
-    float ElectricitySourceConst_EP { get; set; }
+    float Const_PS { get; set; }
 
     /// <summary>
     /// 源无功常数
     /// </summary>
-    float ElectricitySourceConst_EQ { get; set; }
+    float Const_QS { get; set; }
 
     /// <summary>
     /// （表）分频系数
     /// </summary>
-    uint ElectricityMeterDIV { get; set; }
+    uint DIV { get; set; }
 
     /// <summary>
     /// （表）设置的校验圈数
     /// </summary>
-    uint ElectricitySetRounds { get; set; }
+    uint Rounds { get; set; }  
+}
 
+/// <summary>
+/// 电能模块的读取属性
+/// </summary>
+public interface IReadProperies_EPQ
+{
     /// <summary>
     /// 当前校验圈数
     /// </summary>
-    uint ElectricityCurrentRounds { get; }
+    uint Rounds_Current { get; }
 
     /// <summary>
     /// 当前校验次数
     /// </summary>
-    uint ElectricityCurrentCount { get; }
+    uint Counts_Current { get; }
 
     /// <summary>
-    /// 电能误差有效标志位:Flag=0 表示EV值无效，Flag=80 表示EV值为有功电能校验误差，Flag=81 表示EV值为无功电能校验误差
+    /// 有功电能误差数据
     /// </summary>
-    byte ElectricityDeviationDataFlag { get; }
+    float EValue_P { get; }
 
     /// <summary>
-    /// 电能误差数据
+    /// 无功电能误差数据
     /// </summary>
-    float EPQ { get; }
-
+    float EValue_Q { get; }
 }

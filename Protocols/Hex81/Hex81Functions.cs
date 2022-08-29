@@ -59,13 +59,13 @@ internal class Hex81Functions : IProtocolFunctions
     //public IModuleACS ModuleACS { get; set; }
     //public IModuleDCS ModuleDCS { get; set; }
     //public IModuleDCM ModuleDCM { get; set; }
-    //public IModulePQ ModulePQ { get; set; }
+    //public IModuleEPQ ModulePQ { get; set; }
     //public IModuleIO ModuleIO { get; set; }
 
     //private IModuleACS _ModuleACS;
     //private IModuleDCS _ModuleDCS;
     //private IModuleDCM _ModuleDCM;
-    //private IModulePQ _ModulePQ;
+    //private IModuleEPQ _ModulePQ;
 
     //public float Ua { get; set; }
     //public float Ub { get; set; }

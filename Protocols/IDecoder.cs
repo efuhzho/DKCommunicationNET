@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 协议解码器
 /// </summary>
-internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS,IProperties_DCM
+internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS,IProperties_DCM,IReadProperies_EPQ
 {
     /// <summary>
     /// 数据区起始索引值
@@ -67,6 +67,11 @@ internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS,
     /// <returns></returns>
     OperateResult DecodeReadData_DCM ( OperateResult<byte[ ]> responsResult );
 
-
+    /// <summary>
+    /// 【解码】解析读取电能校验命令的回复报文
+    /// </summary>
+    /// <param name="responsResult"></param>
+    /// <returns></returns>
+    OperateResult DecodeReadData_EPQ ( OperateResult<byte[ ]> responsResult );
 
 }

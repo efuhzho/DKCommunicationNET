@@ -1,5 +1,6 @@
 ﻿using System. Security. Cryptography;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
@@ -328,26 +329,46 @@ internal interface IPacketBuilder_IO
 /// <summary>
 /// 电能模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_EPQ
-{
+internal interface IPacketBuilder_EPQ:ISetProperties_EPQ
+{   
+
     /// <summary>
     /// 创建报文：读取电能校验误差
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ReadData ( );
+    OperateResult<byte[ ]> Packet_ReadData (Channels_EPQ Channels =Channels_EPQ.Channel1 );
 
     /// <summary>
-    /// 创建报文：设置电能校验参数并启动电能校验
+    /// 创建报文：设置电能校验参数并启动有功电能校验
     /// </summary>
-    /// <param name="electricityType">电能类型：’‘=有功；’‘=无功</param>
-    /// <param name="meterPConst">【表】有功脉冲常数</param>
-    /// <param name="meterQConst">【表】无功脉冲常数</param>
-    /// <param name="sourcePConst">有功脉冲常数</param>
-    /// <param name="sourceQConst">无功脉冲常数</param>
-    /// <param name="meterDIV">【表】分频系数</param>
-    /// <param name="meterRounds">【表】校验圈数</param>
+    /// <param name="Const_PM">表有功脉冲常数</param>
+    /// <param name="Rounds">校验圈数</param>
+    /// <param name="DIV">分频系数</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetElectricity ( byte electricityType , float meterPConst , float meterQConst , float sourcePConst , float sourceQConst , uint meterDIV , uint meterRounds );
+    OperateResult<byte[ ]> Packet_StartTest_P ( float Const_PM , uint Rounds = 10 , uint DIV = 1 );
+
+    /// <summary>
+    /// 创建报文：设置电能校验参数并启动无功电能校验
+    /// </summary>
+    /// <param name="Const_QM">表无功脉冲常数</param>
+    /// <param name="Rounds">校验圈数</param>
+    /// <param name="DIV">分频系数</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_StartTest_Q ( float Const_QM , uint Rounds = 10 , uint DIV = 1 );
+
+    /// <summary>
+    /// 创建报文：设置有功输出脉冲常数
+    /// </summary>
+    /// <param name="Const_PS">源有功脉冲常数</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetConst_PS ( float Const_PS);
+
+    /// <summary>
+    /// 创建报文：设置无功输出脉冲常数
+    /// </summary>
+    /// <param name="Const_QS">源无功脉冲常数</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetConst_QS ( float Const_QS );
 }
 
 /// <summary>

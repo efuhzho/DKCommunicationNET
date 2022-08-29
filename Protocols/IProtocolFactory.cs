@@ -48,7 +48,7 @@ internal interface IProtocolFactory
     /// 获取电能报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id , IByteTransform byteTransform );
+    OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform );
 
     //TODO 添加其他模块功能的报文创建器
 

@@ -114,6 +114,94 @@ public enum HarmonicMode : byte
     FundamentalConstant = 1
 }
 
+/// <summary>
+/// 电能误差查询通道
+/// </summary>
+[Flags]
+public enum Channels_EPQ
+{
+    /// <summary>
+    /// 通道1
+    /// </summary>
+    Channel1 = 0b_0000_0000_0000_0001,
+    /// <summary>
+    /// 通道2
+    /// </summary>
+    Channel2 = 0b_0000_0000_0000_0010,
+    /// <summary>
+    /// 通道3
+    /// </summary>
+    Channel3 = 0b_0000_0000_0000_0100,
+    /// <summary>
+    /// 通道4
+    /// </summary>
+    Channel4 = 0b_0000_0000_0000_1000,
+
+    /// <summary>
+    /// 通道5
+    /// </summary>
+    Channel5 = 0b_0000_0000_0001_0000,
+
+    /// <summary>
+    /// 通道6
+    /// </summary>
+    Channel6 = 0b_0000_0000_0010_0000,
+
+    /// <summary>
+    /// 通道7
+    /// </summary>
+    Channel7 = 0b_0000_0000_0100_0000,
+
+    /// <summary>
+    /// 通道8
+    /// </summary>
+    Channel8 = 0b_0000_0000_1000_0000,
+
+    /// <summary>
+    /// 通道9
+    /// </summary>
+    Channel9 = 0b_0000_0001_0000_0000,
+
+    /// <summary>
+    /// 通道10
+    /// </summary>
+    Channel10 = 0b_0000_0010_0000_0000,
+
+    /// <summary>
+    /// 通道11
+    /// </summary>
+    Channel11 = 0b_0000_0100_0000_0000,
+
+    /// <summary>
+    /// 通道12
+    /// </summary>
+    Channel12 = 0b_0000_1000_0000_0000,
+
+    /// <summary>
+    /// 通道13
+    /// </summary>
+    Channel13 = 0b_0001_0000_0000_0000,
+
+    /// <summary>
+    /// 通道14
+    /// </summary>
+    Channel14 = 0b_0010_0000_0000_0000,
+
+    /// <summary>
+    /// 通道15
+    /// </summary>
+    Channel15 = 0b_0100_0000_0000_0000,
+
+    /// <summary>
+    /// 通道16
+    /// </summary>
+    Channel16 = 0b_1000_0000_0000_0000,
+
+    /// <summary>
+    /// 所有通道
+    /// </summary>
+    Channel_All = 0xFF
+}
 #endregion
 
 

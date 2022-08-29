@@ -73,7 +73,7 @@ public IProtocolFunctions GetProtocolFunctions ( )
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );
     }

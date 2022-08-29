@@ -274,6 +274,14 @@ internal class Hex81Decoder : IDecoder
     /// </summary>
     public byte RangesCount_DCMI_Ripple { get; private set; }
 
+    public uint Rounds_Current { get; private set; }
+
+    public uint Counts_Current { get; private set; }
+
+    public float EValue_P { get; private set; }
+
+    public float EValue_Q { get; private set; }
+
     #endregion 属性>>>直流表
 
 
@@ -465,8 +473,6 @@ internal class Hex81Decoder : IDecoder
         return OperateResult. CreateSuccessResult ( );
     }
 
-
-
     #endregion Decoders>>>交流源/表解码器
 
     #region Decoders>>>直流源解码器
@@ -584,8 +590,41 @@ internal class Hex81Decoder : IDecoder
                 DCMI_Ripple = _byteTransform. TransSingle ( response , 7 );
                 break;
             default:
-                break;
+                return new OperateResult ( "（Hex81）MeasureType_DCM:回复数据解码失败:没能找到匹配的MeasureType_DCM枚举项" );
         }        
+        //返回解析成功结果
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    public OperateResult DecodeReadData_EPQ ( OperateResult<byte[ ]> responsResult )
+    {
+        //判断回复结果
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+
+        //提取原始报文
+        byte[ ] response = responsResult. Content;
+
+        DecodeEPQ_Flag decodeEPQ_Flag = ( DecodeEPQ_Flag ) response[6];
+
+        switch ( decodeEPQ_Flag )
+        {
+            case DecodeEPQ_Flag. Invalid:
+                Rounds_Current = _byteTransform. TransUInt32 ( response , 11 );
+                break;
+            case DecodeEPQ_Flag. EValue_P:
+                EValue_P=_byteTransform. TransSingle ( response , 7 );
+                Rounds_Current = _byteTransform. TransUInt32 ( response , 11 );
+                break;
+            case DecodeEPQ_Flag. EValue_Q:
+                EValue_Q = _byteTransform. TransSingle ( response , 7 );
+                Rounds_Current = _byteTransform. TransUInt32 ( response , 11 );
+                break;
+            default:
+                return new OperateResult ( "（Hex81）DecodeReadData_EPQ:直流源回复数据解码失败：没能找到匹配的DecodeEPQ_Flag枚举项" );
+        }
         //返回解析成功结果
         return OperateResult. CreateSuccessResult ( );
     }

@@ -35,7 +35,7 @@ internal class Hex81Factory : IProtocolFactory
         return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
         return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_EPQ ( id,byteTransform )  as IPacketBuilder_EPQ );
     }

@@ -20,7 +20,7 @@ namespace DKCommunicationNET. Interface;
 //    public IModuleACS ModuleACS { get; set; }
 //    public IModuleDCS ModuleDCS { get; set; }
 //    public IModuleDCM ModuleDCM { get; set; }
-//    public IModulePQ ModulePQ { get; set; }
+//    public IModuleEPQ ModulePQ { get; set; }
 //    public IModuleIO ModuleIO { get; set; }
 //    public float Ua { get; set; }
 //    public float Ub { get; set; }

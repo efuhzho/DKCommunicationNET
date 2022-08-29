@@ -611,6 +611,16 @@ public enum ElectricityType : byte
 }
 
 /// <summary>
+/// 解析电能误差的枚举参数FLAG
+/// </summary>
+internal enum DecodeEPQ_Flag:byte
+{
+    Invalid=0,
+    EValue_P =(byte) 'P',
+    EValue_Q =(byte) 'Q',
+}
+
+/// <summary>
 /// 直流表测量类型
 /// </summary>
 public enum MeasureType_DCM : byte
