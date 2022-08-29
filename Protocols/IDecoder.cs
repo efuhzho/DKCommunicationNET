@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 协议解码器
 /// </summary>
-internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS
+internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS,IProperties_DCM
 {
     /// <summary>
     /// 数据区起始索引值
@@ -52,6 +52,21 @@ internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
     OperateResult DecodeGetRanges_DCS ( OperateResult<byte[ ]> responsResult );
+
+    /// <summary>
+    /// 【解码】解析获取直流表档位信息命令的回复报文
+    /// </summary>
+    /// <param name="responsResult">指令操作结果</param>
+    /// <returns></returns>
+    OperateResult DecodeGetRanges_DCM ( OperateResult<byte[ ]> responsResult );
+
+    /// <summary>
+    /// 【解码】解析读取直流表数据命令的回复报文
+    /// </summary>
+    /// <param name="responsResult">指令操作结果</param>
+    /// <returns></returns>
+    OperateResult DecodeReadData_DCM ( OperateResult<byte[ ]> responsResult );
+
 
 
 }

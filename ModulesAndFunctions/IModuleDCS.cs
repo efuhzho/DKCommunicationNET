@@ -149,32 +149,32 @@ public interface IProperties_DCS
     /// <summary>
     /// 当前档位索引值
     /// </summary>
-    byte RangeIndex_DCU { get; set; }
+    byte RangeIndex_DCU { get; }
 
     /// <summary>
     /// 当前档位索引值
     /// </summary>
-    byte RangeIndex_DCI { get; set; }
+    byte RangeIndex_DCI { get;  }
 
     /// <summary>
     /// 当前档位索引值
     /// </summary>
-    byte RangeIndex_DCR { get; set; }
+    byte RangeIndex_DCR { get;  }
 
     /// <summary>
     /// 直流源电压档位列表
     /// </summary>
-    float[ ]? Ranges_DCU { get; }
+    float[ ]? Ranges_DCU { get; set; }
 
     /// <summary>
     /// 直流源电流档位列表
     /// </summary>
-    float[ ]? Ranges_DCI { get; }
+    float[ ]? Ranges_DCI { get; set; }
 
     /// <summary>
     /// 直流源电阻档位列表
     /// </summary>
-    float[ ]? Ranges_DCR { get; }
+    float[ ]? Ranges_DCR { get; set;  }
 
     /// <summary>
     /// 当前直流电压输出状态：true=源打开；false=源关闭

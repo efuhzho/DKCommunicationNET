@@ -134,7 +134,7 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="harmonicChannels">枚举类型参数：谐波通道；【注意】需引用对应的协议类型的命名空间</param>
     /// <param name="harmonicArgs">要设置的谐波参数组【可选参数，当参数为null时，将清空所选通道的谐波。清空谐波还可以调用方法：ClearHarmonics】</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs=null );
+    OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null );
 
     /// <summary>
     /// 清除谐波
@@ -167,82 +167,82 @@ public interface IProperties_ACS
     /// <summary>
     /// 电压档位个数
     /// </summary>
-    byte URanges_Count { get; }
+    byte RangesCount_ACU { get; }
 
     /// <summary>
     /// 电流档位个数
     /// </summary>
-    byte IRanges_Count { get; }
+    byte RangesCount_ACI { get; }
 
     /// <summary>
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
-    byte URange_CurrentIndex { get; set; }
+    byte RangeIndex_ACU { get; }
 
     /// <summary>
     /// 当前交流电压档位值，单位V
     /// </summary>
-    float URange_CurrentValue { get; }
+    float RangeValue_ACU { get; }
 
     /// <summary>
     /// 当前电流档位的索引值，0为最大档位
     /// </summary>
-    byte IRange_CurrentIndex { get; set; }
+    byte RangeIndex_ACI { get; }
 
     /// <summary>
     /// 当前交流电流档位值，单位A
     /// </summary>
-    float IRange_CurrentValue { get; }
+    float RangeValue_ACI { get; }
 
     /// <summary>
     /// 当前保护电流档位的索引值，0为最大档位
     /// </summary>
-    byte IProtectRange_CurrentIndex { get; set; }
+    byte RangeIndex_IPr { get; }
 
     /// <summary>
     /// 当前保护电流档位值，单位A
     /// </summary>
-    float IProtectRange_CurrentValue { get; }
+    float RangeValue_IPr { get; }
 
     /// <summary>
     /// 保护电流档位个数
     /// </summary>
-    byte IProtectRanges_Count { get; }
+    byte RangesCount_IPr { get; }
 
     /// <summary>
     /// 只支持A相电压输出的起始档位号
     /// </summary>
-    byte URangeStartIndex_Asingle { get; }
+    byte OnlyAStartIndex_ACU { get; }
 
     /// <summary>
     /// 只支持A相电流输出的起始档位号
     /// </summary>
-    byte IRangeStartIndex_Asingle { get; }
+    byte OnlyAStartIndex_ACI { get; }
 
     /// <summary>
     /// 只支持A相保护电流输出的起始档位号
     /// </summary>
-    byte IProtectStartIndex_Asingle { get; }
+    byte OnlyAStartIndex_IPr { get; }
 
     /// <summary>
     /// 电压档位集合
     /// </summary>
-    float[ ]? URanges { get; set; }
+    float[ ]? Ranges_ACU { get; set; }
 
     /// <summary>
     /// 电流档位集合
     /// </summary>
-    float[ ]? IRanges { get; set; }
+    float[ ]? Ranges_ACI { get; set; }
 
     /// <summary>
     /// 保护电流档位集合
     /// </summary>
-    float[ ]? IProtectRanges { get; set; }
+    float[ ]? Ranges_IPr { get; set; }
 
     /// <summary>
     /// 当前接线模式
     /// </summary>
-    WireMode WireMode { get; set; }
+    WireMode WireMode { get; set ; }
 
     /// <summary>
     /// 当前闭环模式
@@ -257,142 +257,141 @@ public interface IProperties_ACS
     /// <summary>
     /// 频率(支持双频输出时为AB相频率)
     /// </summary>
-    float Freq { get; set; }
+    float Freq { get; }
 
     /// <summary>
     /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
-    float Freq_C { get; set; }
+    float Freq_C { get; }
 
     /// <summary>
     /// 当前输出的谐波个数
     /// </summary>
-    byte HarmonicCount { get; set; }
+    byte HarmonicCount { get; }
 
     /// <summary>
     /// 当前谐波输出通道
     /// </summary>
-    Enum? HarmonicChannels { get; set; }
+    Enum? HarmonicChannels { get; }
 
     /// <summary>
     /// 当前谐波输出数据
     /// </summary>
-    HarmonicArgs[ ]? Harmonics { get; set; }
+    HarmonicArgs[ ]? Harmonics { get; }
 
     /// <summary>
     /// A相电压数据
     /// </summary>
-    float UA { get; set; }
+    float UA { get; }
 
     /// <summary>
     /// B相电压数据
     /// </summary>
-    float UB { get; set; }
+    float UB { get; }
 
     /// <summary>
     /// C相电压数据
     /// </summary>
-    float UC { get; set; }
+    float UC { get; }
 
     /// <summary>
     /// A相电流数据
     /// </summary>
-    float IA { get; set; }
-
+    float IA { get; }
     /// <summary>
     /// B相电流数据
     /// </summary>
-    float IB { get; set; }
+    float IB { get; }
 
     /// <summary>
     /// C相电流数据
     /// </summary>
-    float IC { get; set; }
+    float IC { get; }
 
     /// <summary>
     /// 【51F适用】A相保护电流数据
     /// </summary>
-    float IPA { get; set; }
+    float IPA { get; }
 
     /// <summary>
     /// 【51F适用】B相保护电流数据
     /// </summary>
-    float IPB { get; set; }
+    float IPB { get; }
 
     /// <summary>
     /// 【51F适用】C相保护电流数据
     /// </summary>
-    float IPC { get; set; }
+    float IPC { get; }
 
     /// <summary>
     /// A相电压相位数据
     /// </summary>
-    float FAI_UA { get; set; }
+    float FAI_UA { get; }
 
     /// <summary>
     /// B相电压相位数据
     /// </summary>
-    float FAI_UB { get; set; }
+    float FAI_UB { get; }
 
     /// <summary>
     /// C相电压相位数据
     /// </summary>
-    float FAI_UC { get; set; }
+    float FAI_UC { get; }
 
     /// <summary>
     /// A相电流相位数据
     /// </summary>
-    float FAI_IA { get; set; }
+    float FAI_IA { get; }
 
     /// <summary>
     /// B相电流相位数据
     /// </summary>
-    float FAI_IB { get; set; }
+    float FAI_IB { get; }
 
     /// <summary>
     /// C相电流相位数据
     /// </summary>
-    float FAI_IC { get; set; }
+    float FAI_IC { get; }
 
     /// <summary>
     /// A相有功功率数据
     /// </summary>
-    float PA { get; set; }
+    float PA { get; }
 
     /// <summary>
     /// B相有功功率数据
     /// </summary>
-    float PB { get; set; }
+    float PB { get; }
 
     /// <summary>
     /// C相有功功率数据
     /// </summary>
-    float PC { get; set; }
+    float PC { get; }
 
     /// <summary>
     /// 总有功功率数据
     /// </summary>
-    float P { get; set; }
+    float P { get; }
 
     /// <summary>
     /// A相无功功率数据
     /// </summary>
-    float QA { get; set; }
+    float QA { get; }
 
     /// <summary>
     /// B相无功功率数据
     /// </summary>
-    float QB { get; set; }
+    float QB { get; }
 
     /// <summary>
     /// C相无功功率数据
     /// </summary>
-    float QC { get; set; }
+    float QC { get; }
 
     /// <summary>
     /// 总无功功率数据
     /// </summary>    
-    float Q { get; set; }
+    float Q { get; }
 
     /// <summary>
     /// A相视在功率，单位：VA

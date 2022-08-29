@@ -52,40 +52,40 @@ public class DCS : IModuleDCS, IProperties_DCS
     }
 
     /// <inheritdoc/>
-    public byte RangesCount_DCU { get; private set; }
+    public byte RangesCount_DCU => _decoder. RangesCount_DCU;
 
     /// <inheritdoc/>
-    public byte RangesCount_DCI { get; private set; }
+    public byte RangesCount_DCI => _decoder. RangesCount_DCI;
 
     /// <inheritdoc/>
-    public byte RangesCount_DCR { get; private set; }
+    public byte RangesCount_DCR => _decoder. RangesCount_DCR;
 
     /// <inheritdoc/>
-    public float DCR { get; private set; }
+    public float DCR => _decoder. DCR;
 
     /// <inheritdoc/>
-    public float DCU { get; private set; }
+    public float DCU => _decoder. DCU;
+    /// <inheritdoc/>
+    public float DCI => _decoder. DCI;
 
     /// <inheritdoc/>
-    public float DCI { get; private set; }
+    public float[ ]? Ranges_DCU { get => _decoder. Ranges_DCU; set => _decoder. Ranges_DCU = value; }
+
 
     /// <inheritdoc/>
-    public float[ ]? Ranges_DCU { get; private set; }
+    public float[ ]? Ranges_DCI { get => _decoder. Ranges_DCI; set => _decoder. Ranges_DCI = value; }
 
     /// <inheritdoc/>
-    public float[ ]? Ranges_DCI { get; private set; }
+    public float[ ]? Ranges_DCR { get => _decoder. Ranges_DCR; set => _decoder. Ranges_DCR = value; } 
 
     /// <inheritdoc/>
-    public float[ ]? Ranges_DCR { get; private set; }
+    public bool IsOpen_DCU => _decoder. IsOpen_DCU;
 
     /// <inheritdoc/>
-    public bool IsOpen_DCU { get; private set; }
+    public bool IsOpen_DCI => _decoder. IsOpen_DCI;
 
     /// <inheritdoc/>
-    public bool IsOpen_DCI { get; private set; }
-
-    /// <inheritdoc/>
-    public bool IsOpen_DCR { get; private set; }
+    public bool IsOpen_DCR => _decoder. IsOpen_DCR;
 
     /// <inheritdoc/>
     public bool IsAutoRange_DCU { get => _PacketsBuilder. IsAutoRange_DCU; set => _PacketsBuilder. IsAutoRange_DCU = value; }
@@ -97,13 +97,13 @@ public class DCS : IModuleDCS, IProperties_DCS
     public bool IsAutoRange_DCR { get => _PacketsBuilder. IsAutoRange_DCR; set => _PacketsBuilder. IsAutoRange_DCR = value; }
 
     /// <inheritdoc/>
-    public byte RangeIndex_DCI { get; set; }
+    public byte RangeIndex_DCI => _decoder. RangeIndex_DCI;
 
     /// <inheritdoc/>
-    public byte RangeIndex_DCR { get; set; }
+    public byte RangeIndex_DCR => _decoder. RangeIndex_DCR;
 
     /// <inheritdoc/>
-    public byte RangeIndex_DCU { get; set; }
+    public byte RangeIndex_DCU => _decoder. RangeIndex_DCU;
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
@@ -111,22 +111,20 @@ public class DCS : IModuleDCS, IProperties_DCS
         //执行命令并获取回复报文
         var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
-        //解码：连看都不看拿到的命令执行结果，直接甩给解码器
+        if ( !result. IsSuccess )
+        {
+            return result;
+        }
+        //解码
         var decodeResult = _decoder. DecodeGetRanges_DCS ( result );
 
-        //如果解码成功就刷新数据
-        if ( decodeResult. IsSuccess )
+        //如果解码失败
+        if ( !decodeResult. IsSuccess )
         {
-            RangesCount_DCU = _decoder. RangesCount_DCU;
-            RangesCount_DCI = _decoder. RangesCount_DCI;
-            RangesCount_DCR = _decoder. RangesCount_DCR;
-
-            Ranges_DCU = _decoder. Ranges_DCU;
-            Ranges_DCI = _decoder. Ranges_DCI;
-            Ranges_DCR = _decoder. Ranges_DCR;
+            result. IsSuccess = false;            
+            result. Message = StringResources. Language. DecodeError;
         }
 
-        //管他妈的解码成不成功，直接交出命令执行结果
         return result;
     }
 
@@ -153,24 +151,19 @@ public class DCS : IModuleDCS, IProperties_DCS
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
 
+        if ( !result. IsSuccess )
+        {
+            return result;
+        }
         //解码
         var decodeResult = _decoder. DecodeReadData_DCS ( result );
 
-        //如果解码成功
-        if ( decodeResult. IsSuccess )
+        //如果解码失败
+        if ( !decodeResult. IsSuccess )
         {
-            DCU = _decoder. DCU;
-            DCI = _decoder. DCI;
-            DCR = _decoder. DCR;
-
-            IsOpen_DCU = _decoder. IsOpen_DCU;
-            IsOpen_DCI = _decoder. IsOpen_DCI;
-            IsOpen_DCR = _decoder. IsOpen_DCR;
-
-            RangeIndex_DCU = _decoder. RangeIndex_DCU;
-            RangeIndex_DCI = _decoder. RangeIndex_DCI;
-            RangeIndex_DCR = _decoder. RangeIndex_DCR;
+            result. Message = StringResources. Language. DecodeError;
         }
+
         return result;
     }
 
@@ -182,9 +175,6 @@ public class DCS : IModuleDCS, IProperties_DCS
         {
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , RangeIndex_DCI ) , _methodOfCheckResponse );
         }
-
-        //如果设置了档位则刷新当前档位
-        RangeIndex_DCI = ( byte ) rangeIndex_DCI;
 
         //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
@@ -199,9 +189,6 @@ public class DCS : IModuleDCS, IProperties_DCS
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , RangeIndex_DCR ) , _methodOfCheckResponse );
         }
 
-        //如果设置了档位则刷新当前档位
-        RangeIndex_DCR = ( byte ) rangeIndex_DCR;
-
         //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
     }
@@ -215,9 +202,6 @@ public class DCS : IModuleDCS, IProperties_DCS
             return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
         }
 
-        //如果设置了档位则刷新当前档位
-        RangeIndex_DCU = ( byte ) rangeIndex_DCU;
-
         //执行用户设置的档位
         return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
     }
@@ -225,21 +209,18 @@ public class DCS : IModuleDCS, IProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI )
     {
-        RangeIndex_DCI = rangeIndex_DCI;
         return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR )
     {
-        RangeIndex_DCR = rangeIndex_DCR;
         return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU )
     {
-        RangeIndex_DCU = rangeIndex_DCU;
         return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 

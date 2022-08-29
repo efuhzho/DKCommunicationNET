@@ -23,6 +23,14 @@ internal class Chinese
     public virtual string ErrorDC => "故障：DC；";
     #endregion 设备错误码信息
 
+    #region 解码器相关
+
+    /// <summary>
+    /// 解析数据失败
+    /// </summary>
+    public virtual string DecodeError => "解析数据失败。";
+    #endregion
+
     #region 设备功能状态
     /// <summary>
     /// 设备未激活功能

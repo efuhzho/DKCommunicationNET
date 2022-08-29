@@ -291,12 +291,19 @@ internal interface IPacketBuilder_DCS
 internal interface IPacketBuilder_DCM
 {
     /// <summary>
+    /// 是否是多通道直流表
+    /// </summary>
+    public bool IsMultiChannel { get; }
+
+    /// <summary>
     /// 设置直流表量程和测量类型
     /// </summary>
     /// <param name="rangeIndex">量程索引值</param>
-    /// <param name="type">测量类型：0-直流电压；1-直流电流；2-纹波电压；3-纹波电流。</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange ( byte rangeIndex , byte type );
+    OperateResult<byte[ ]> Packet_SetRange_DCMU ( byte rangeIndex  );
+    OperateResult<byte[ ]> Packet_SetRange_DCMI ( byte rangeIndex  );
+    OperateResult<byte[ ]> Packet_SetRange_DCMU_Ripple( byte rangeIndex  );
+    OperateResult<byte[ ]> Packet_SetRange_DCMI_Ripple( byte rangeIndex  );
 
     /// <summary>
     /// 读取直流表数据

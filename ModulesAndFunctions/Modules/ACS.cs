@@ -63,143 +63,142 @@ public class ACS : IModuleACS
 
     #region 属性
     /// <inheritdoc/>
-    public float URange_CurrentValue { get; private set; }
+    public float RangeValue_ACU => _decoder. RangeValue_ACU;
 
     /// <inheritdoc/>
-    public float IRange_CurrentValue { get; private set; }
+    public float RangeValue_ACI => _decoder. RangeValue_ACI;
 
     /// <inheritdoc/>
-    public float IProtectRange_CurrentValue { get; private set; }
+    public float RangeValue_IPr { get => _decoder. RangeValue_IPr; }
 
     /// <inheritdoc/>
-    public float[ ]? URanges { get; set; }
+    public float[ ]? Ranges_ACU { get => _decoder. Ranges_ACU; set => _decoder. Ranges_ACU = value; }
 
     /// <inheritdoc/>
-    public float[ ]? IRanges { get; set; }
+    public float[ ]? Ranges_ACI { get => _decoder. Ranges_ACI; set => _decoder. Ranges_ACU = value; }
 
     /// <inheritdoc/>
-    public float[ ]? IProtectRanges { get; set; }
+    public float[ ]? Ranges_IPr { get => _decoder. Ranges_IPr; set => _decoder. Ranges_IPr = value; }
 
     /// <inheritdoc/>
-    public WireMode WireMode { get; set; } = WireMode. WireMode_3P4L;
+    public WireMode WireMode { get => _decoder. WireMode; set => SetWireMode ( value ); }
     /// <inheritdoc/>
-    public CloseLoopMode CloseLoopMode { get; set; } = CloseLoopMode. CloseLoop;
+    public CloseLoopMode CloseLoopMode { get => _decoder. CloseLoopMode; set => SetClosedLoop ( value ); }
     /// <inheritdoc/>
-    public HarmonicMode HarmonicMode { get; set; } = HarmonicMode. ValidValuesConstant;
+    public HarmonicMode HarmonicMode { get => _decoder. HarmonicMode; set => SetHarmonicMode ( value ); }
     /// <inheritdoc/>
-    public float Freq { get; set; }
+    public float Freq => _decoder. Freq;
     /// <inheritdoc/>
-    public float Freq_C { get; set; }
+    public float Freq_C => _decoder. Freq_C;
     /// <inheritdoc/>
-    public byte HarmonicCount { get; set; }
+    public byte HarmonicCount => _decoder. HarmonicCount;
     /// <inheritdoc/>
-    public Enum? HarmonicChannels { get; set; }
+    public Enum? HarmonicChannels => _decoder. HarmonicChannels;
     /// <inheritdoc/>
-    public HarmonicArgs[ ]? Harmonics { get; set; }
+    public HarmonicArgs[ ]? Harmonics => _decoder. Harmonics;
     /// <inheritdoc/>
-    public float UA { get; set; }
+    public float UA => _decoder. UA;
     /// <inheritdoc/>
-    public float UB { get; set; }
+    public float UB => _decoder. UB;
     /// <inheritdoc/>
-    public float UC { get; set; }
+    public float UC => _decoder. UC;
     /// <inheritdoc/>
-    public float IA { get; set; }
+    public float IA => _decoder. IA;
     /// <inheritdoc/>
-    public float IB { get; set; }
+    public float IB => _decoder. IB;
     /// <inheritdoc/>
-    public float IC { get; set; }
+    public float IC => _decoder. IC;
     /// <inheritdoc/>
-    public float IPA { get; set; }
+    public float IPA => _decoder. IPA;
     /// <inheritdoc/>
-    public float IPB { get; set; }
+    public float IPB => _decoder. IPB;
     /// <inheritdoc/>
-    public float IPC { get; set; }
+    public float IPC => _decoder. IPC;
     /// <inheritdoc/>
-    public float FAI_UA { get; set; }
+    public float FAI_UA => _decoder. FAI_UA;
     /// <inheritdoc/>
-    public float FAI_UB { get; set; }
+    public float FAI_UB => _decoder. FAI_UB;
     /// <inheritdoc/>
-    public float FAI_UC { get; set; }
+    public float FAI_UC => _decoder. FAI_UC;
     /// <inheritdoc/>
-    public float FAI_IA { get; set; }
+    public float FAI_IA => _decoder. FAI_IA;
     /// <inheritdoc/>
-    public float FAI_IB { get; set; }
+    public float FAI_IB => _decoder. FAI_IB;
     /// <inheritdoc/>
-    public float FAI_IC { get; set; }
+    public float FAI_IC => _decoder. FAI_IC;
     /// <inheritdoc/>
-    public float PA { get; set; }
+    public float PA => _decoder. PA;
     /// <inheritdoc/>
-    public float PB { get; set; }
+    public float PB => _decoder. PB;
     /// <inheritdoc/>
-    public float PC { get; set; }
+    public float PC => _decoder. PC;
     /// <inheritdoc/>
-    public float P { get; set; }
+    public float P => _decoder. P;
     /// <inheritdoc/>
-    public float QA { get; set; }
+    public float QA => _decoder. QA;
     /// <inheritdoc/>
-    public float QB { get; set; }
+    public float QB => _decoder. QB;
     /// <inheritdoc/>
-    public float QC { get; set; }
+    public float QC => _decoder. QC;
     /// <inheritdoc/>
-    public float Q { get; set; }
+    public float Q => _decoder. Q;
 
     /// <inheritdoc/>
-    public float SA { get; private set; }
+    public float SA => _decoder. SA;
 
     /// <inheritdoc/>
-    public float SB { get; private set; }
+    public float SB => _decoder. SB;
+    /// <inheritdoc/>
+    public float SC => _decoder. SC;
 
     /// <inheritdoc/>
-    public float SC { get; private set; }
+    public float S => _decoder. S;
 
     /// <inheritdoc/>
-    public float S { get; private set; }
+    public float PFA => _decoder. PFA;
 
     /// <inheritdoc/>
-    public float PFA { get; private set; }
+    public float PFB => _decoder. PFB;
 
     /// <inheritdoc/>
-    public float PFB { get; private set; }
+    public float PFC => _decoder. PFC;
 
     /// <inheritdoc/>
-    public float PFC { get; private set; }
+    public float PF => _decoder. PF;
 
     /// <inheritdoc/>
-    public float PF { get; private set; }
+    public byte Flag_A => _decoder. Flag_A;
 
     /// <inheritdoc/>
-    public byte Flag_A { get; private set; }
+    public byte Flag_B => _decoder. Flag_B;
 
     /// <inheritdoc/>
-    public byte Flag_B { get; private set; }
+    public byte Flag_C => _decoder. Flag_C;
 
     /// <inheritdoc/>
-    public byte Flag_C { get; private set; }
+    public byte RangesCount_ACU => _decoder. RangesCount_ACU;
 
     /// <inheritdoc/>
-    public byte URanges_Count { get; private set; }
+    public byte RangesCount_ACI => _decoder. RangesCount_ACI;
 
     /// <inheritdoc/>
-    public byte IRanges_Count { get; private set; }
+    public byte RangeIndex_ACU => _decoder. RangeIndex_ACU;
+    /// <inheritdoc/>
+    public byte RangeIndex_ACI => _decoder. RangeIndex_ACI;
+    /// <inheritdoc/>
+    public byte RangeIndex_IPr => _decoder. RangeIndex_IPr;
 
     /// <inheritdoc/>
-    public byte URange_CurrentIndex { get; set; }
-    /// <inheritdoc/>
-    public byte IRange_CurrentIndex { get; set; }
-    /// <inheritdoc/>
-    public byte IProtectRange_CurrentIndex { get; set; }
+    public byte RangesCount_IPr => _decoder. RangesCount_IPr;
 
     /// <inheritdoc/>
-    public byte IProtectRanges_Count { get; private set; }
+    public byte OnlyAStartIndex_ACU => _decoder. OnlyAStartIndex_ACU;
 
     /// <inheritdoc/>
-    public byte URangeStartIndex_Asingle { get; private set; }
+    public byte OnlyAStartIndex_ACI => _decoder. OnlyAStartIndex_ACI;
 
     /// <inheritdoc/>
-    public byte IRangeStartIndex_Asingle { get; private set; }
-
-    /// <inheritdoc/>
-    public byte IProtectStartIndex_Asingle { get; private set; }
+    public byte OnlyAStartIndex_IPr => _decoder. OnlyAStartIndex_IPr;
 
     #endregion
 
@@ -222,21 +221,19 @@ public class ACS : IModuleACS
         //执行获取档位命令
         var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
+        if ( !result. IsSuccess )
+        {
+            return result;
+        }
+
         //解码下位机的回复报文：此处无需判断命令执行结果，判断下放
         var decodeResult = _decoder. DecodeGetRanges_ACS ( result );
 
-        //如果解码成功，则更新数据
+        //如果解码不成功
         if ( decodeResult. IsSuccess )
         {
-            URanges_Count = _decoder. URanges_Count;
-            URangeStartIndex_Asingle = _decoder. URangeStartIndex_Asingle;
-            IRanges_Count = _decoder. IRanges_Count;
-            IRangeStartIndex_Asingle = _decoder. IRangeStartIndex_Asingle;
-            IProtectRanges_Count = _decoder. IProtectRanges_Count;
-            IProtectStartIndex_Asingle = _decoder. IProtectStartIndex_Asingle;
-            URanges = _decoder. URanges;
-            IRanges = _decoder. IRanges;
-            IProtectRanges = _decoder. IProtectRanges;
+            result. IsSuccess = false;
+            result. Message = StringResources. Language. DecodeError;
         }
         return result;
     }
@@ -293,43 +290,15 @@ public class ACS : IModuleACS
     public OperateResult<byte[ ]> ReadData ( )
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
-        var decodeResult = _decoder. DecodeReadData_ACS ( result );
-        if ( decodeResult. IsSuccess )
+        if ( !result. IsSuccess )
         {
-            Freq = _decoder. Freq;
-            URange_CurrentIndex = _decoder. URange_CurrentIndex;
-            IRange_CurrentIndex = _decoder. IRange_CurrentIndex;
-            UA = _decoder. UA;
-            UB = _decoder. UB;
-            UC = _decoder. UC;
-            IA = _decoder. IA;
-            IB = _decoder. IB;
-            IC = _decoder. IC;
-            FAI_UA = _decoder. FAI_UA;
-            FAI_UB = _decoder. FAI_UB;
-            FAI_UC = _decoder. FAI_UC;
-            FAI_IA = _decoder. FAI_IA;
-            FAI_IB = _decoder. FAI_IB;
-            FAI_IC = _decoder. FAI_IC;
-            PA = _decoder. PA;
-            PB = _decoder. PB;
-            PC = _decoder. PC;
-            P = _decoder. P;
-            QA = _decoder. QA;
-            QB = _decoder. QB;
-            QC = _decoder. QC;
-            Q = _decoder. Q;
-            SA = _decoder. SA;
-            SB = _decoder. SB;
-            SC = _decoder. SC;
-            S = _decoder. S;
-            PFA = _decoder. PFA;
-            PFB = _decoder. PFB;
-            PFC = _decoder. PFC;
-            PF = _decoder. PF;
-            WireMode = _decoder. WireMode;
-            CloseLoopMode = _decoder. CloseLoopMode;
-            HarmonicMode = _decoder. HarmonicMode;
+            return result;
+        }
+        var decodeResult = _decoder. DecodeReadData_ACS ( result );
+        if ( !decodeResult. IsSuccess )
+        {
+            result. IsSuccess = false;
+            result. Message = StringResources. Language. DecodeError;
         }
         return result;
     }
@@ -338,20 +307,16 @@ public class ACS : IModuleACS
     public OperateResult<byte[ ]> ReadData_Status ( )
     {
         var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData_Status ( ) , _methodOfCheckResponse );
-        var decodeResult = _decoder. DecodeReadData_Status_ACS ( result );
-        if ( decodeResult. IsSuccess )
+
+        if ( !result. IsSuccess )
         {
-            Flag_A = _decoder. Flag_A;
-            Flag_B = _decoder. Flag_B;
-            Flag_C = _decoder. Flag_C;
-            Freq = _decoder. Freq;
-            Freq_C = _decoder. Freq_C;
-            IPA = _decoder. IPA;
-            IPB = _decoder. IPB;
-            IPC = _decoder. IPC;
-            URange_CurrentValue = _decoder. URange_CurrentValue;
-            IRange_CurrentValue = _decoder. IRange_CurrentValue;
-            IProtectRange_CurrentValue = _decoder. IProtectRange_CurrentValue;
+            return result;
+        }
+        var decodeResult = _decoder. DecodeReadData_Status_ACS ( result );
+        if ( !decodeResult. IsSuccess )
+        {
+            result. IsSuccess = false;
+            result. Message = StringResources. Language. DecodeError;
         }
         return result;
     }

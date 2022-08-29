@@ -20,6 +20,8 @@ internal class Hex81PacketBuilder_DCM : IPacketBuilder_DCM
         _id = id;
     }
 
+    public bool IsMultiChannel { get; }
+
     public OperateResult<byte[ ]> Packet_GetRanges ( )
     {
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
@@ -30,9 +32,36 @@ internal class Hex81PacketBuilder_DCM : IPacketBuilder_DCM
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCM , _id );
     }
 
-    public OperateResult<byte[ ]> Packet_SetRange ( byte rangeIndex , byte type )
+    public OperateResult<byte[ ]> Packet_SetRange_DCMI ( byte rangeIndex )
     {
-        byte[ ] data = new byte[ ] { rangeIndex , type };
+        return Packet_SetRange ( rangeIndex , MeasureType_DCM. DCM_CurrentRipple );
+    }
+
+    public OperateResult<byte[ ]> Packet_SetRange_DCMI_Ripple ( byte rangeIndex )
+    {
+        return Packet_SetRange(rangeIndex,MeasureType_DCM.DCM_CurrentRipple);
+    }
+
+    public OperateResult<byte[ ]> Packet_SetRange_DCMU ( byte rangeIndex )
+    {
+        return Packet_SetRange ( rangeIndex , MeasureType_DCM. DCM_Voltage );
+    }
+
+    public OperateResult<byte[ ]> Packet_SetRange_DCMU_Ripple ( byte rangeIndex )
+    {
+        return Packet_SetRange(rangeIndex , MeasureType_DCM.DCM_VoltageRipple );
+    }
+
+    /// <summary>
+    /// 设置量程的原始方法
+    /// </summary>
+    /// <param name="rangeIndex"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
+
+    private OperateResult<byte[ ]> Packet_SetRange ( byte rangeIndex , MeasureType_DCM type )
+    {
+        byte[ ] data = new byte[ ] { rangeIndex , ( byte ) type };
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetRange_DCM , Hex81Information. SetRange_DCM_Length , _id );
     }
 }

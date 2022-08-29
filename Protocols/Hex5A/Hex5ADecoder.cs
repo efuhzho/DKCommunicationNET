@@ -60,33 +60,33 @@ namespace DKCommunicationNET. Protocols. Hex5A
 
         public bool IsEnabled_DCM_RIP { get; private set; }
 
-        public byte URanges_Count => throw new NotImplementedException ( );
+        public byte RangesCount_ACU => throw new NotImplementedException ( );
 
-        public byte IRanges_Count => throw new NotImplementedException ( );
+        public byte RangesCount_ACI => throw new NotImplementedException ( );
 
-        public byte URange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public byte RangeIndex_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
-        public float URange_CurrentValue => throw new NotImplementedException ( );
+        public float RangeValue_ACU => throw new NotImplementedException ( );
 
-        public byte IRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public byte RangeIndex_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
-        public float IRange_CurrentValue => throw new NotImplementedException ( );
+        public float RangeValue_ACI => throw new NotImplementedException ( );
 
-        public byte IProtectRange_CurrentIndex { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public byte RangeIndex_IPr { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
 
-        public float IProtectRange_CurrentValue => throw new NotImplementedException ( );
+        public float RangeValue_IPr => throw new NotImplementedException ( );
 
-        public byte IProtectRanges_Count => throw new NotImplementedException ( );
+        public byte RangesCount_IPr => throw new NotImplementedException ( );
 
-        public byte URangeStartIndex_Asingle => throw new NotImplementedException ( );
+        public byte OnlyAStartIndex_ACU => throw new NotImplementedException ( );
 
-        public byte IRangeStartIndex_Asingle => throw new NotImplementedException ( );
+        public byte OnlyAStartIndex_ACI => throw new NotImplementedException ( );
 
-        public byte IProtectStartIndex_Asingle => throw new NotImplementedException ( );
+        public byte OnlyAStartIndex_IPr => throw new NotImplementedException ( );
 
-        public float[ ]? URanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-        public float[ ]? IRanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
-        public float[ ]? IProtectRanges { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_ACU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_ACI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_IPr { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
         public Enum? WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
         public Enum? CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
         public Enum? HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }

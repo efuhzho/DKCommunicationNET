@@ -70,29 +70,29 @@ internal class Hex81Decoder : IDecoder
 
     #region 属性>>>交流源/表
 
-    public byte URanges_Count { get; private set; }
+    public byte RangesCount_ACU { get; private set; }
 
-    public byte IRanges_Count { get; private set; }
+    public byte RangesCount_ACI { get; private set; }
 
-    public byte URange_CurrentIndex { get; set; }
+    public byte RangeIndex_ACU { get; set; }
 
-    public float URange_CurrentValue { get; private set; }
+    public float RangeValue_ACU { get; private set; }
 
-    public float IRange_CurrentValue { get; private set; }
+    public float RangeValue_ACI { get; private set; }
 
-    public float IProtectRange_CurrentValue { get; private set; }
+    public float RangeValue_IPr { get; private set; }
 
-    public byte IProtectRanges_Count { get; private set; }
+    public byte RangesCount_IPr { get; private set; }
 
-    public byte URangeStartIndex_Asingle { get; private set; }
+    public byte OnlyAStartIndex_ACU { get; private set; }
 
-    public byte IRangeStartIndex_Asingle { get; private set; }
+    public byte OnlyAStartIndex_ACI { get; private set; }
 
-    public byte IProtectStartIndex_Asingle { get; private set; }
+    public byte OnlyAStartIndex_IPr { get; private set; }
 
-    public float[ ]? URanges { get; set; }
-    public float[ ]? IRanges { get; set; }
-    public float[ ]? IProtectRanges { get; set; }
+    public float[ ]? Ranges_ACU { get; set; }
+    public float[ ]? Ranges_ACI { get; set; }
+    public float[ ]? Ranges_IPr { get; set; }
     public WireMode WireMode { get; set; } = WireMode. WireMode_3P4L;
     public CloseLoopMode CloseLoopMode { get; set; } = CloseLoopMode. CloseLoop;
     public HarmonicMode HarmonicMode { get; set; } = HarmonicMode. ValidValuesConstant;
@@ -146,8 +146,8 @@ internal class Hex81Decoder : IDecoder
     public byte Flag_B { get; private set; }
 
     public byte Flag_C { get; private set; }
-    public byte IRange_CurrentIndex { get; set; }
-    public byte IProtectRange_CurrentIndex { get; set; }
+    public byte RangeIndex_ACI { get; set; }
+    public byte RangeIndex_IPr { get; set; }
 
     #endregion 属性>>>交流源/表
 
@@ -169,11 +169,11 @@ internal class Hex81Decoder : IDecoder
     public byte RangeIndex_DCI { get; set; }
     public byte RangeIndex_DCR { get; set; }
 
-    public float[ ]? Ranges_DCU { get; private set; }
+    public float[ ]? Ranges_DCU { get;  set; }
 
-    public float[ ]? Ranges_DCI { get; private set; }
+    public float[ ]? Ranges_DCI { get;  set; }
 
-    public float[ ]? Ranges_DCR { get; private set; }    
+    public float[ ]? Ranges_DCR { get;  set; }
 
     public bool IsOpen_DCU { get; private set; }
 
@@ -186,12 +186,104 @@ internal class Hex81Decoder : IDecoder
 
     #endregion 属性>>>直流源
 
+
+    #region 属性>>>直流表
+
+    /// <summary>
+    /// 是否是多通道直流表
+    /// </summary>
+    public bool IsMultiChannel { get; private set; }
+
+    /// <summary>
+    /// 直流表电压档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMU { get;  set; }
+
+    /// <summary>
+    /// 直流表电流档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMI { get;  set; }
+
+    /// <summary>
+    /// 直流纹波电压表档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMU_Ripple { get;  set; }
+
+    /// <summary>
+    /// 直流纹波电流表的档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMI_Ripple { get;  set; }
+
+    /// <summary>
+    /// 直流表电压测量值
+    /// </summary>
+    public float DCMU { get; private set; }
+
+    /// <summary>
+    /// 直流表电流测量值
+    /// </summary>
+    public float DCMI { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电压测量值
+    /// </summary>
+    public float DCMU_Ripple { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电流测量值
+    /// </summary>
+    public float DCMI_Ripple { get; private set; }
+
+    /// <summary>
+    /// 直流表电压量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMU { get; private set; }
+
+    /// <summary>
+    /// 直流表电流量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMI { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电压量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMU_Ripple { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电流量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMI_Ripple { get; private set; }
+
+    /// <summary>
+    /// 直流表电压量程数量
+    /// </summary>
+    public byte RangesCount_DCMU { get; private set; }
+
+    /// <summary>
+    /// 直流表电流量程数量
+    /// </summary>
+    public byte RangesCount_DCMI { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电压量程数量
+    /// </summary>
+    public byte RangesCount_DCMU_Ripple { get; private set; }
+
+    /// <summary>
+    /// 直流纹波电流量程数量
+    /// </summary>
+    public byte RangesCount_DCMI_Ripple { get; private set; }
+
+    #endregion 属性>>>直流表
+
+
     #endregion 属性
 
     #region 【Decoders】
 
     public void DecodeHandShake ( OperateResult<byte[ ]> response )
     {
+        //判断回复结果
         if ( !response. IsSuccess || response. Content == null )
         {
             return;
@@ -264,38 +356,38 @@ internal class Hex81Decoder : IDecoder
     /// </returns>
     public OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> response )
     {
-
+        //判断回复结果
         if ( response. IsSuccess && response. Content != null )
         {
             //下位机回复的经验证的有效报文
             byte[ ] responseBytes = response. Content;
 
             //电压档位数量
-            URanges_Count = responseBytes[Offset];
+            RangesCount_ACU = responseBytes[Offset];
 
             //单相电压档位起始档位索引值
-            URangeStartIndex_Asingle = responseBytes[7];
+            OnlyAStartIndex_ACU = responseBytes[7];
 
             //电流档位数量
-            IRanges_Count = responseBytes[8];
+            RangesCount_ACI = responseBytes[8];
 
             //单相电流档位起始档位索引值
-            IRangeStartIndex_Asingle = responseBytes[9];
+            OnlyAStartIndex_ACI = responseBytes[9];
 
             //保护电流档位数量
-            IProtectRanges_Count = responseBytes[10];
+            RangesCount_IPr = responseBytes[10];
 
             //单相保护电流档位起始档位索引值
-            IProtectRange_CurrentIndex = responseBytes[11];
+            RangeIndex_IPr = responseBytes[11];
 
             //电压档位集合
-            URanges = _byteTransform. TransSingle ( responseBytes , 12 , URanges_Count );
+            Ranges_ACU = _byteTransform. TransSingle ( responseBytes , 12 , RangesCount_ACU );
 
             //电流档位集合
-            IRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count , IRanges_Count );
+            Ranges_ACI = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU , RangesCount_ACI );
 
             //保护电流档位集合
-            IProtectRanges = _byteTransform. TransSingle ( responseBytes , 12 + 4 * URanges_Count + 4 * IRanges_Count , IProtectRanges_Count );
+            Ranges_IPr = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU + 4 * RangesCount_ACI , RangesCount_IPr );
             return OperateResult. CreateSuccessResult ( );
         }
         return new OperateResult ( response. Message );
@@ -303,15 +395,17 @@ internal class Hex81Decoder : IDecoder
 
     public OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult )
     {
+        //判断回复结果
         if ( !responsResult. IsSuccess || responsResult. Content == null )
         {
             return new OperateResult ( responsResult. Message );
         }
+        //提取原始报文
         byte[ ] responseBytes = responsResult. Content;
 
         Freq = _byteTransform. TransSingle ( responseBytes , Offset );
-        URange_CurrentIndex = responseBytes[Offset + 4];  //取UA的档位索引
-        IRange_CurrentIndex = responseBytes[Offset + 7];  //取IA的档位索引
+        RangeIndex_ACU = responseBytes[Offset + 4];  //取UA的档位索引
+        RangeIndex_ACI = responseBytes[Offset + 7];  //取IA的档位索引
         UA = _byteTransform. TransSingle ( responseBytes , 16 );
         UB = _byteTransform. TransSingle ( responseBytes , 20 );
         UC = _byteTransform. TransSingle ( responseBytes , 24 );
@@ -348,10 +442,12 @@ internal class Hex81Decoder : IDecoder
 
     public OperateResult DecodeReadData_Status_ACS ( OperateResult<byte[ ]> responsResult )
     {
+        //判断回复结果
         if ( !responsResult. IsSuccess || responsResult. Content == null )
         {
             return new OperateResult ( responsResult. Message );
         }
+        //提取原始报文
         byte[ ] response = responsResult. Content;
 
         Flag_A = response[6];
@@ -362,19 +458,27 @@ internal class Hex81Decoder : IDecoder
         IPA = _byteTransform. TransSingle ( response , 21 );
         IPB = _byteTransform. TransSingle ( response , 25 );
         IPC = _byteTransform. TransSingle ( response , 29 );
-        URange_CurrentValue = _byteTransform. TransSingle ( response , 33 );
-        IRange_CurrentValue = _byteTransform. TransSingle ( response , 37 );
-        IProtectRange_CurrentValue = _byteTransform. TransSingle ( response , 41 );
+        RangeValue_ACU = _byteTransform. TransSingle ( response , 33 );
+        RangeValue_ACI = _byteTransform. TransSingle ( response , 37 );
+        RangeValue_IPr = _byteTransform. TransSingle ( response , 41 );
 
         return OperateResult. CreateSuccessResult ( );
     }
 
+
+
+    #endregion Decoders>>>交流源/表解码器
+
+    #region Decoders>>>直流源解码器
+
     public OperateResult DecodeReadData_DCS ( OperateResult<byte[ ]> responsResult )
     {
+        //判断回复结果
         if ( !responsResult. IsSuccess || responsResult. Content == null )
         {
             return new OperateResult ( responsResult. Message );
         }
+        //提取原始报文
         byte[ ] response = responsResult. Content;
 
 
@@ -398,19 +502,21 @@ internal class Hex81Decoder : IDecoder
                 IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
                 break;
             default:
-                return new OperateResult ( "Hex81:直流源回复数据解码失败!");
+                return new OperateResult ( "Hex81:直流源回复数据解码失败!" );
         }
-       
+
         return OperateResult. CreateSuccessResult ( );
     }
 
     public OperateResult DecodeGetRanges_DCS ( OperateResult<byte[ ]> responsResult )
     {
+        //判断回复结果
         if ( !responsResult. IsSuccess || responsResult. Content == null )
         {
             return new OperateResult ( responsResult. Message );
         }
 
+        //提取原始报文
         byte[ ] response = responsResult. Content;
         RangesCount_DCU = response[6];
         RangesCount_DCI = response[7];
@@ -420,13 +526,71 @@ internal class Hex81Decoder : IDecoder
         return OperateResult. CreateSuccessResult ( );
     }
 
-    #endregion Decoders>>>交流源/表解码器
-
-    #region Decoders>>>直流源解码器
-
-
-
     #endregion Decoders>>>直流源解码器
+
+    #region Decoders>>>直流表解码器
+
+   public OperateResult DecodeGetRanges_DCM ( OperateResult<byte[ ]> responsResult )
+    {
+        //判断回复结果
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+
+        //提取原始报文
+        byte[ ] response = responsResult. Content;
+
+        RangesCount_DCMU = response[8];
+        RangesCount_DCMI = response[9];
+
+        Ranges_DCMU = _byteTransform. TransSingle ( response , 10 , RangesCount_DCMU );
+        Ranges_DCMI = _byteTransform. TransSingle ( response , 10 + 4 * RangesCount_DCMU , RangesCount_DCMI );
+        //返回解析成功结果
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    public OperateResult DecodeReadData_DCM ( OperateResult<byte[ ]> responsResult )
+    {
+        //判断回复结果
+        if ( !responsResult. IsSuccess || responsResult. Content == null )
+        {
+            return new OperateResult ( responsResult. Message );
+        }
+
+        //提取原始报文
+        byte[ ] response = responsResult. Content;
+
+        //解析测量类型
+        MeasureType_DCM measureType_DCM = ( MeasureType_DCM ) response[11];
+
+        //根据测量类型解析数据
+        switch ( measureType_DCM )
+        {
+            case MeasureType_DCM. DCM_Voltage:
+                RangeIndex_DCMU=response[6];
+                DCMU = _byteTransform. TransSingle ( response , 7 );
+                break;
+            case MeasureType_DCM. DCM_Current:
+                RangeIndex_DCMI = response[6];
+                DCMI = _byteTransform. TransSingle ( response , 7 );
+                break;
+            case MeasureType_DCM. DCM_VoltageRipple:
+                RangeIndex_DCMU_Ripple = response[6];
+                DCMU_Ripple = _byteTransform. TransSingle ( response , 7 );
+                break;
+            case MeasureType_DCM. DCM_CurrentRipple:
+                RangeIndex_DCMI_Ripple = response[6];
+                DCMI_Ripple = _byteTransform. TransSingle ( response , 7 );
+                break;
+            default:
+                break;
+        }        
+        //返回解析成功结果
+        return OperateResult. CreateSuccessResult ( );
+    }
+
+    #endregion
 
     #endregion Decoders
 
