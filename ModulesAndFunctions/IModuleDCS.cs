@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流源功能模块接口
 /// </summary>
-public interface IModuleDCS : IProperties_DCS
+public interface IModuleDCS : IReadProperties_DCS,ISetProperties_DCS
 {
     /// <summary>
     /// 获取直流源档位信息
@@ -97,9 +97,9 @@ public interface IModuleDCS : IProperties_DCS
 }
 
 /// <summary>
-/// 直流源属性接口
+/// 直流源设置属性
 /// </summary>
-public interface IProperties_DCS
+public interface ISetProperties_DCS
 {
     /// <summary>
     /// 直流电压档位是否为自动档
@@ -115,7 +115,13 @@ public interface IProperties_DCS
     /// 直流电阻档位是否为自动档
     /// </summary>
     public bool IsAutoRange_DCR { get; set; }
+}
 
+/// <summary>
+/// 直流源属性接口
+/// </summary>
+public interface IReadProperties_DCS
+{  
     /// <summary>
     /// 直流源电压档位个数
     /// </summary>

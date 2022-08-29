@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 协议解码器
 /// </summary>
-internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IProperties_DCS,IProperties_DCM,IReadProperies_EPQ
+internal interface IDecoder : IDeviceFunctions, IProperties_ACS,IReadProperties_DCS,IReadProperties_DCM,IReadProperies_EPQ
 {
     /// <summary>
     /// 数据区起始索引值

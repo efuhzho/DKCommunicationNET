@@ -180,19 +180,11 @@ internal class Hex81Decoder : IDecoder
     public bool IsOpen_DCI { get; private set; }
 
     public bool IsOpen_DCR { get; private set; }
-    public bool IsAutoRange_DCU { get; set; }
-    public bool IsAutoRange_DCI { get; set; }
-    public bool IsAutoRange_DCR { get; set; }
 
     #endregion 属性>>>直流源
 
 
-    #region 属性>>>直流表
-
-    /// <summary>
-    /// 是否是多通道直流表
-    /// </summary>
-    public bool IsMultiChannel { get; private set; }
+    #region 属性>>>直流表    
 
     /// <summary>
     /// 直流表电压档位集合

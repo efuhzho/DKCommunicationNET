@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流表模块接口
 /// </summary>
-public interface IModuleDCM:IProperties_DCM
+public interface IModuleDCM:IReadProperties_DCM,ISetProperties_DCM
 {
     /// <summary>
     /// 获取直流表档位信息
@@ -48,13 +48,8 @@ public interface IModuleDCM:IProperties_DCM
 /// <summary>
 /// 直流表属性
 /// </summary>
-public interface IProperties_DCM
-{
-    /// <summary>
-    /// 是否是多通道直流表
-    /// </summary>
-    public bool IsMultiChannel { get; }
-
+public interface IReadProperties_DCM
+{  
     /// <summary>
     /// 直流表电压档位集合
     /// </summary>
@@ -74,7 +69,6 @@ public interface IProperties_DCM
     /// 直流纹波电流表的档位集合
     /// </summary>
     float[ ]? Ranges_DCMI_Ripple { get; set; }
-
 
     /// <summary>
     /// 直流表电压测量值
@@ -135,4 +129,15 @@ public interface IProperties_DCM
     /// 直流纹波电流量程数量
     /// </summary>
     byte RangesCount_DCMI_Ripple { get;  }
+}
+
+/// <summary>
+/// 直流表设置属性
+/// </summary>
+public interface ISetProperties_DCM
+{
+    /// <summary>
+    /// 是否是多通道直流表
+    /// </summary>
+    public bool IsMultiChannel { get; }
 }

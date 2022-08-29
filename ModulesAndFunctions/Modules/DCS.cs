@@ -11,7 +11,7 @@ namespace DKCommunicationNET. Module;
 /// <summary>
 /// 直流源功能模块
 /// </summary>
-public class DCS : IModuleDCS, IProperties_DCS
+public class DCS : IModuleDCS, IReadProperties_DCS
 {
     #region 私有字段
 

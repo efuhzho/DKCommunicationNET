@@ -174,23 +174,8 @@ internal interface IPacketBuilder_ACM
 /// <summary>
 /// 直流源报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCS
+internal interface IPacketBuilder_DCS:ISetProperties_DCS
 {
-    /// <summary>
-    /// 直流电压档位是否为自动档
-    /// </summary>
-    public bool IsAutoRange_DCU { get; set; }
-
-    /// <summary>
-    /// 直流电流档位是否为自动档
-    /// </summary>
-    public bool IsAutoRange_DCI { get; set; }
-
-    /// <summary>
-    /// 直流电阻档位是否为自动档
-    /// </summary>
-    public bool IsAutoRange_DCR { get; set; }
-
     /// <summary>
     /// 创建报文：停止直流电压输出
     /// </summary>
@@ -289,13 +274,8 @@ internal interface IPacketBuilder_DCS
 /// <summary>
 /// 直流表模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCM
-{
-    /// <summary>
-    /// 是否是多通道直流表
-    /// </summary>
-    public bool IsMultiChannel { get; }
-
+internal interface IPacketBuilder_DCM:ISetProperties_DCM
+{    
     /// <summary>
     /// 设置直流表量程和测量类型
     /// </summary>

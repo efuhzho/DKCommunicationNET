@@ -119,6 +119,4 @@ public class EPQ : IModuleEPQ
     {
         return CommandAction. Action ( _PacketsBuilder. Packet_StartTest_Q ( Const_QM , Rounds , DIV ) , _methodOfCheckResponse );
     }
-
-
 }
