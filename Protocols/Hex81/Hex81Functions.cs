@@ -9,46 +9,42 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// </summary>
 internal class Hex81Functions : IProtocolFunctions
 {
-    ///// <summary>
-    ///// 本类设备的协议类型：Hex81
-    ///// </summary>
-    //public Models Model => Models. Hex81;
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【交流源模块】：是
-    /// </summary>
     public bool IsSupported_ACS => true;
-    public bool IsSupported_ACM => true;
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【直流源模块】：是
-    /// </summary>
+    
+    public bool IsSupported_ACM { get; }
+   
     public bool IsSupported_DCS => true;
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【直流表模块】：是
-    /// </summary>
+   
     public bool IsSupported_DCM => true;
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【开关量模块】：否
-    /// </summary>
+   
     public bool IsSupported_IO { get; }
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【电能模块】：是
-    /// </summary>
+    
     public bool IsSupported_EPQ => true;
 
+    public bool IsSupported_ACM_Cap { get; }
+
+    public bool IsSupported_DCS_AUX { get; }
+
+    public bool IsSupported_DCM_RIP { get; }
+
+    public bool IsSupported_DualFreqs { get; }
+
+    public bool IsSupported_IProtect { get; }
+
+    public bool IsSupported_PST { get; }
+
+    public bool IsSupported_YX { get; }
+
+    public bool IsSupported_HF { get; }
+
+    public bool IsSupported_PWM { get; }
+
+    public bool IsSupported_PPS { get; }
 
     public OperateResult<byte[ ]> GetPacketOfHandShake ( )
     {
         return OperateResult. CreateSuccessResult ( Hex81Information. HandShakePacket );
     }
-
-
-
-
     #region MyRegion
 
 

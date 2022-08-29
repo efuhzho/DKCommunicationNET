@@ -1,12 +1,17 @@
-﻿using DKCommunicationNET. Core;
+﻿using System;
+using System. Collections. Generic;
+using System. Linq;
+using System. Text;
+using System. Threading. Tasks;
+using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols;
 
-namespace DKCommunicationNET. ModulesAndFunctions;
+namespace DKCommunicationNET. ModulesAndFunctions. Modules;
 
 /// <summary>
-/// 开关量功能模块
+/// 交流表模块
 /// </summary>
-public class IO : IModuleIO
+public class ACM : IModuleACM
 {
     /// <summary>
     /// 设备ID
@@ -28,7 +33,7 @@ public class IO : IModuleIO
     /// </summary>
     private readonly IDecoder _decoder;
 
-    internal IO ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
+    internal ACM ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
     {
         //接收设备ID
         _id = id;
@@ -42,4 +47,17 @@ public class IO : IModuleIO
         //接收解码器
         _decoder = protocolFactory. GetDecoder ( byteTransform );
     }
+
+    ///// <inheritdoc/>
+
+    //public OperateResult<byte[ ]> ReadData ( )
+    //{
+    //    throw new NotImplementedException ( );
+    //}
+    ///// <inheritdoc/>
+
+    //public OperateResult<byte[ ]> ReadData_Status ( )
+    //{
+    //    throw new NotImplementedException ( );
+    //}
 }

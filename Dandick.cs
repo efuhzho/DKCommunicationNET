@@ -90,8 +90,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     }
     #endregion 构造函数
 
-    #region 【公共属性】
-
     #region 公共属性>>>设备信息
 
     /// <inheritdoc/>
@@ -107,6 +105,38 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     public string? ProtocolVer { get; private set; }
 
     #endregion 公共属性>>>设备信息
+
+    #region 公共属性>>>功能模块
+
+    private ACS _ACS;
+    /// <summary>
+    /// <inheritdoc cref="Module.ACS"/>
+    /// </summary>
+    public ACS ACS
+    {
+        get
+        {           
+            CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupported_ACS , IsEnabled_ACS ); return _ACS; 
+        }
+        set { _ACS = value; }
+    }
+
+    private DCS _DCS;
+    /// <summary>
+    /// <inheritdoc cref="Module.DCS"/>
+    /// </summary>
+    public DCS DCS
+    {
+        get { return _DCS; }
+        set { _DCS = value; }
+    }
+
+    #endregion 公共属性>>>功能模块
+
+
+    #region 【公共属性】
+
+
 
     #region 公共属性>>>功能状态指示标志
 
@@ -193,29 +223,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
     #endregion 公共属性>>>功能状态指示
 
-    #region 公共属性>>>功能模块
-
-    private ACS _ACS;
-    /// <summary>
-    /// <inheritdoc cref="Module.ACS"/>
-    /// </summary>
-    public ACS ACS
-    {
-        get { CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupported_ACS , IsEnabled_ACS); return _ACS; }
-        set { _ACS = value; }
-    }
-
-    private DCS _DCS;
-    /// <summary>
-    /// <inheritdoc cref="Module.DCS"/>
-    /// </summary>
-    public DCS DCS
-    {
-        get { return _DCS; }
-        set { _DCS = value; }
-    }
-
-    #endregion 公共属性>>>功能模块
 
     #endregion 【公共属性】
 
