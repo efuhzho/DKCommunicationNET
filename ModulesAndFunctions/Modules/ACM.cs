@@ -26,7 +26,7 @@ public class ACM : IModuleACM
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketsBuilder_ACS? _PacketsBuilder;
+    private readonly IPacketsBuilder_ACS? _packetsBuilder;
 
     /// <summary>
     /// 定义解码器对象
@@ -42,7 +42,7 @@ public class ACM : IModuleACM
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-        _PacketsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+        _packetsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
 
         //接收解码器
         _decoder = protocolFactory. GetDecoder ( byteTransform );

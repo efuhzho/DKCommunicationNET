@@ -1,10 +1,6 @@
-﻿using System. IO. Ports;
-using DKCommunicationNET. Interface;
+﻿using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
-using DKCommunicationNET. Core;
 using DKCommunicationNET. Protocols;
-using System. Security. AccessControl;
-using System. Runtime. CompilerServices;
 
 namespace DKCommunicationNET. Module;
 
@@ -34,11 +30,10 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// 定义解码器对象
     /// </summary>
     private readonly IDecoder _decoder;
-
-    bool _isEnabled;
+    readonly bool _isEnabled;
 
     #endregion
-    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform ,bool isEnabled)
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform , bool isEnabled )
     {
         //接收设备ID
         _id = id;
@@ -51,6 +46,8 @@ public class DCS : IModuleDCS, IReadProperties_DCS
 
         //接收解码器对象
         _decoder = protocolFactory. GetDecoder ( byteTransform );
+
+        //模块功能是否激活
         _isEnabled = isEnabled;
     }
 
@@ -162,6 +159,13 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
         //执行命令并获取回复报文
         var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
@@ -185,24 +189,56 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCI ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Open_DCI ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCR ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Open_DCR ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCU ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Open_DCU ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( char? Resistor = null )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
 
         if ( !result. IsSuccess )
@@ -224,6 +260,13 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCI ( float SData , byte? rangeIndex_DCI = null )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCI == null )
         {
@@ -237,6 +280,13 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCR ( float SData , byte? rangeIndex_DCR = null )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCR == null )
         {
@@ -250,6 +300,13 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude_DCU ( float SData , byte? rangeIndex_DCU = null )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCU == null )
         {
@@ -262,42 +319,89 @@ public class DCS : IModuleDCS, IReadProperties_DCS
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI )
-    {
+    {//执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCI ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCI ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCR ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCR ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCU ( )
     {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCU ( ) , _methodOfCheckResponse );
     }
 
     #region Private Methods
 
- 
+
     #endregion
 }

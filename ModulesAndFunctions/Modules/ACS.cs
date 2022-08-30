@@ -251,16 +251,17 @@ public class ACS : IModuleACS
         //执行获取档位命令
         var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
+        //如果命令执行失败
         if ( !result. IsSuccess )
         {
             return result;
         }
-
+       
         //解码下位机的回复报文：此处无需判断命令执行结果，判断下放
         var decodeResult = _decoder. DecodeGetRanges_ACS ( result );
 
         //如果解码不成功
-        if ( decodeResult. IsSuccess )
+        if ( !decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
             result. Message = StringResources. Language. DecodeError;

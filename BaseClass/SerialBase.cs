@@ -297,7 +297,7 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 当前的日志情况
         /// </summary>
-        public ILogNet LogNet
+        public ILogNet? LogNet
         {
             get { return logNet; }
             set { logNet = value; }
@@ -360,7 +360,7 @@ namespace DKCommunicationNET. BaseClass
         private readonly SimpleHybirdLock hybirdLock;
 
         // 日志存储
-        private ILogNet? logNet;
+        private ILogNet logNet;
 
         // 接收数据的超时时间
         private int receiveTimeout = 1000;

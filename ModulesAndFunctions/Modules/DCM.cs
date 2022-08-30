@@ -8,12 +8,12 @@ namespace DKCommunicationNET. Module;
 /// <summary>
 /// 直流表功能模块
 /// </summary>
-public class DCM :IModuleDCM
+public class DCM : IModuleDCM
 {
     /// <summary>
     /// 定义交流表模块对象
     /// </summary>
-    private IPacketBuilder_DCM? _PacketBuilder;
+    private IPacketBuilder_DCM? _packetsBuilder;
 
     /// <summary>
     /// 设备ID
@@ -23,15 +23,20 @@ public class DCM :IModuleDCM
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
-    private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
 
     /// <summary>
     /// 定义解码器对象
     /// </summary>
     private readonly IDecoder _decoder;
 
+    /// <summary>
+    /// 模块功能是否激活
+    /// </summary>
+    bool _isEnabled;
 
-    internal DCM ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
+
+    internal DCM ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform , bool isEnabled )
     {
         //接收设备ID
         _id = id;
@@ -40,10 +45,12 @@ public class DCM :IModuleDCM
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器对象
-        _PacketBuilder = protocolFactory. GetPacketBuilderOfDCM ( _id  ). Content; //忽略空值，调用时会捕获解引用为null的异常
+        _packetsBuilder = protocolFactory. GetPacketBuilderOfDCM ( _id ). Content; 
 
         //接收解码器对象
         _decoder = protocolFactory. GetDecoder ( byteTransform );
+
+        _isEnabled = isEnabled;
     }
 
     #region 属性>>>直流表
@@ -51,23 +58,33 @@ public class DCM :IModuleDCM
     /// <summary>
     /// 是否是多通道直流表
     /// </summary>
-    public bool IsMultiChannel => _PacketBuilder.IsMultiChannel;
+    public bool IsMultiChannel
+    {
+        get
+        {
+            if ( _packetsBuilder==null )
+            {
+                return false;
+            }
+            return _packetsBuilder. IsMultiChannel;
+        }
+    }
 
     /// <summary>
     /// 直流表电压档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMU { get=> _decoder. Ranges_DCMU; set=> _decoder. Ranges_DCMU = value; }
-    
+    public float[ ]? Ranges_DCMU { get => _decoder. Ranges_DCMU; set => _decoder. Ranges_DCMU = value; }
+
 
     /// <summary>
     /// 直流表电流档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMI { get => _decoder. Ranges_DCMI; set => _decoder. Ranges_DCMI = value; } 
+    public float[ ]? Ranges_DCMI { get => _decoder. Ranges_DCMI; set => _decoder. Ranges_DCMI = value; }
 
     /// <summary>
     /// 直流纹波电压表档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMU_Ripple { get => _decoder. Ranges_DCMU_Ripple; set => _decoder. Ranges_DCMU_Ripple = value; } 
+    public float[ ]? Ranges_DCMU_Ripple { get => _decoder. Ranges_DCMU_Ripple; set => _decoder. Ranges_DCMU_Ripple = value; }
 
     /// <summary>
     /// 直流纹波电流表的档位集合
@@ -139,20 +156,40 @@ public class DCM :IModuleDCM
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        var result= CommandAction. Action ( _PacketBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
-        var decodeResult=_decoder.DecodeGetRanges_DCM ( result );
-        if ( !decodeResult.IsSuccess )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
+        var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var decodeResult = _decoder. DecodeGetRanges_DCM ( result );
+
+        //如果解码成功
+        if ( !decodeResult. IsSuccess )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. DecodeError );
         }
+
+        //返回执行结果       
         return result;
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
     {
-        var result=CommandAction.Action(_PacketBuilder.Packet_ReadData(), _methodOfCheckResponse );
-        var decodeResult=_decoder.DecodeReadData_DCM ( result );
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
+        var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
+        var decodeResult = _decoder. DecodeReadData_DCM ( result );
         if ( !decodeResult. IsSuccess )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. DecodeError );
@@ -163,27 +200,58 @@ public class DCM :IModuleDCM
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCMI ( byte rangeIndex_DCMI )
     {
-        return CommandAction. Action ( _PacketBuilder. Packet_SetRange_DCMI (rangeIndex_DCMI ) , _methodOfCheckResponse );
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCMU ( byte rangeIndex_DCMU )
     {
-        return CommandAction. Action ( _PacketBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU ) , _methodOfCheckResponse );
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行命令并获取回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU ) , _methodOfCheckResponse );
 
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCMI_Ripple ( byte rangeIndex_DCMU_Ripple )
     {
-        return CommandAction. Action ( _PacketBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU_Ripple ) , _methodOfCheckResponse );
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
 
-    } 
+        //执行命令并获取回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU_Ripple ) , _methodOfCheckResponse );
+
+    }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCMU_Ripple ( byte rangeIndex_DCMI_Ripple )
     {
-        return CommandAction. Action ( _PacketBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMI_Ripple ) , _methodOfCheckResponse );
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
 
+        //执行命令并获取回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMI_Ripple ) , _methodOfCheckResponse );
     }
 }

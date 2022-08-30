@@ -82,7 +82,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// <inheritdoc cref="Module.DCS"/>
     /// </summary>
-    public DCS DCS => new( ID , _protocolFactory , CheckResponse , ByteTransform );
+    public DCS DCS => new( ID , _protocolFactory , CheckResponse , ByteTransform ,IsEnabled_DCS);
 
     #endregion 公共属性>>>功能模块
 
