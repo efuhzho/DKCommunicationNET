@@ -13,12 +13,12 @@ internal class Hex5AFactory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return OperateResult.CreateSuccessResult( new Hex5APacketBuilder_ACM ( ) as IPacketBuilder_ACM);
+        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACM ( ) as IPacketBuilder_ACM );
     }
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )
     {
-        return OperateResult.CreateSuccessResult(new Hex5APacketBuilder_ACS ( id ) as IPacketsBuilder_ACS);
+        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACS ( id ) as IPacketsBuilder_ACS );
     }
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
@@ -40,7 +40,7 @@ internal class Hex5AFactory : IProtocolFactory
 
     public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_EPQ>( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IPacketBuilder_EPQ> ( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )
@@ -48,14 +48,16 @@ internal class Hex5AFactory : IProtocolFactory
         return new Hex5ACRCChecker ( );
     }
 
-public IProtocolFunctions GetProtocolFunctions ( )
+    public IProtocolFunctions GetProtocolFunctions ( )
     {
-        return new Hex5AFunctions ( );
+        throw new NotImplementedException ( );
+        // return new Hex5AFunctions ( );
     }
 
     public IDecoder GetDecoder ( IByteTransform byteTransform )
     {
-        return new Hex5ADecoder( byteTransform );
+        throw new NotImplementedException ( );
+        // return new Hex5ADecoder( byteTransform );
     }
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id , IByteTransform byteTransform )

@@ -53,40 +53,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
 
         //初始化解码器
         _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
-
-        //初始化交流源模块
-        _ACS = new ACS ( ID , _protocolFactory ,   CheckResponse ,ByteTransform);
-
-        //初始化交流表功能模块
-
-        //初始化标准表钳表功能模块
-
-        //初始化直流源功能模块
-        _DCS = new DCS ( ID , _protocolFactory ,  CheckResponse ,ByteTransform);
-        //初始化辅助直流源功能模块
-
-        //初始化直流表功能模块
-
-        //初始化直流纹波表功能模块
-
-        //初始化电能校验功能模块
-
-        //初始化开关量功能模块
-
-        //初始化双频输出功能模块
-
-        //初始化保护电流功能模块
-
-        //初始化闪变输出功能模块
-
-        //初始化遥信功能功能模块
-
-        //初始化高频输出功能模块
-
-        //初始化电机控制功能模块
-
-        //初始化对时功能功能模块
-
     }
     #endregion 构造函数
 
@@ -107,29 +73,16 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     #endregion 公共属性>>>设备信息
 
     #region 公共属性>>>功能模块
-
-    private ACS _ACS;
+    
     /// <summary>
     /// <inheritdoc cref="Module.ACS"/>
     /// </summary>
-    public ACS ACS
-    {
-        get
-        {           
-            CheckFunctionsStatus. CheckFunctionsState ( _prodocolFunctions. IsSupported_ACS , IsEnabled_ACS ); return _ACS; 
-        }
-        set { _ACS = value; }
-    }
+    public  ACS ACS => new ( ID , _protocolFactory , CheckResponse , ByteTransform ,IsEnabled_ACS);
 
-    private DCS _DCS;
     /// <summary>
     /// <inheritdoc cref="Module.DCS"/>
     /// </summary>
-    public DCS DCS
-    {
-        get { return _DCS; }
-        set { _DCS = value; }
-    }
+    public DCS DCS => new( ID , _protocolFactory , CheckResponse , ByteTransform );
 
     #endregion 公共属性>>>功能模块
 
@@ -249,11 +202,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// 发送报文，获取并校验下位机的回复报文。
     /// </summary>
     /// <param name="send">发送的报文</param>
+    /// <param name="awaitData"></param>
     /// <returns></returns>
-    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send )
+    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send ,bool awaitData=true)
     {
         // 发送报文并获取回复报文
-        OperateResult<byte[ ]> response = ReadBase ( send );
+        OperateResult<byte[ ]> response = ReadBase ( send ,awaitData);
 
         //获取回复不成功
         if ( !response. IsSuccess ||response.Content==null)

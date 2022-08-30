@@ -127,8 +127,9 @@ namespace DKCommunicationNET. BaseClass
         /// 读取串口的数据
         /// </summary>
         /// <param name="send">发送的原始字节数据</param>
+        /// <param name="awaitData">是否必须要等待数据返回</param>
         /// <returns>带接收字节的结果对象</returns>
-        public OperateResult<byte[ ]> ReadBase ( byte[ ] send )
+        public OperateResult<byte[ ]> ReadBase ( byte[ ] send ,bool awaitData=true)
         {
             hybirdLock. Enter ( );
 
@@ -141,7 +142,7 @@ namespace DKCommunicationNET. BaseClass
                 return OperateResult. CreateFailedResult<byte[ ]> ( sendResult );
             }
 
-            OperateResult<byte[ ]> receiveResult = SPReceived ( _SerialPort , true );
+            OperateResult<byte[ ]> receiveResult = SPReceived ( _SerialPort , awaitData );
             hybirdLock. Leave ( );
 
             return receiveResult;
@@ -228,7 +229,7 @@ namespace DKCommunicationNET. BaseClass
         /// <param name="serialPort">串口对象</param>
         /// <param name="awaitData">是否必须要等待数据返回</param>
         /// <returns>结果数据对象</returns>
-        protected virtual OperateResult<byte[ ]> SPReceived ( SerialPort serialPort , bool awaitData )
+        protected virtual OperateResult<byte[ ]> SPReceived ( SerialPort serialPort , bool awaitData=true )
         {
             byte[ ] buffer = new byte[1024];
             MemoryStream ms = new MemoryStream ( );
@@ -330,7 +331,7 @@ namespace DKCommunicationNET. BaseClass
         }
 
         /// <summary>
-        /// 写入串口数据超时时间
+        /// 写入串口数据超时时间,默认1000ms
         /// </summary>
         public int WriteTimeOut
         {
@@ -339,7 +340,7 @@ namespace DKCommunicationNET. BaseClass
         }
 
         /// <summary>
-        /// 写入串口数据超时时间
+        /// 写入串口数据超时时间,默认1000ms
         /// </summary>
         public int ReadTimeOut
         {
@@ -350,11 +351,13 @@ namespace DKCommunicationNET. BaseClass
         #endregion
 
         #region Private Member
-        // 串口交互的核心
+        /// <summary>
+        /// 串口对象
+        /// </summary>
         protected readonly SerialPort _SerialPort;
 
         // 数据交互的锁
-        private SimpleHybirdLock hybirdLock;
+        private readonly SimpleHybirdLock hybirdLock;
 
         // 日志存储
         private ILogNet? logNet;

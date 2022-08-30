@@ -22,17 +22,22 @@ public class ACS : IModuleACS
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
-    private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
 
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketsBuilder_ACS? _PacketsBuilder;
+    private readonly IPacketsBuilder_ACS? _packetsBuilder;
 
     /// <summary>
     /// 定义解码器对象
     /// </summary>
     private readonly IDecoder _decoder;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public bool IsEnabled { get; set; }
 
     #endregion
 
@@ -44,7 +49,8 @@ public class ACS : IModuleACS
     /// <param name="protocolFactory">协议工厂对象</param>
     /// <param name="methodOfCheckResponse"></param>
     /// <param name="byteTransform"></param>
-    internal ACS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
+    /// <param name="isEnabled"></param>
+    internal ACS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform , bool isEnabled )
     {
         //接收设备ID
         _id = id;
@@ -53,10 +59,13 @@ public class ACS : IModuleACS
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-        _PacketsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+
+        _packetsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content;
 
         //接收解码器
         _decoder = protocolFactory. GetDecoder ( byteTransform );
+
+        IsEnabled = isEnabled;
     }
 
     #endregion
@@ -205,21 +214,33 @@ public class ACS : IModuleACS
     #region 方法
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open ( )
-    {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
+    {   
+        if ( !ExtraBeforeAction().IsSuccess||_packetsBuilder==null)
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Stop ( ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_Stop ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
         //执行获取档位命令
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
         if ( !result. IsSuccess )
         {
@@ -240,56 +261,96 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
     {
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
         return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( WireMode WireMode )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetWireMode ( WireMode ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetWireMode ( WireMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetClosedLoop ( ClosedLoopMode , HarmonicMode ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode , HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetClosedLoop ( CloseLoopMode , HarmonicMode ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( CloseLoopMode , HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
+    public OperateResult<byte[ ]> SetHarmonics ( Channels_Harmonic harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
     {
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
         byte channel = Convert. ToByte ( harmonicChannels );
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetHarmonics ( channel , harmonicArgs ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonics ( channel , harmonicArgs ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
         if ( !result. IsSuccess )
         {
             return result;
@@ -306,7 +367,11 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData_Status ( )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData_Status ( ) , _methodOfCheckResponse );
+        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        {
+            return ExtraBeforeAction ( );
+        }
+        var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData_Status ( ) , _methodOfCheckResponse );
 
         if ( !result. IsSuccess )
         {
@@ -322,10 +387,25 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels )
-    {
+    public OperateResult<byte[ ]> ClearHarmonics ( Channels_Harmonic harmonicChannels )
+    {       
         return SetHarmonics ( harmonicChannels );
     }
+
+    #endregion
+
+    #region Private Methods
+    OperateResult<byte[ ]> ExtraBeforeAction ( )
+    {
+        var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , IsEnabled );
+
+        if ( !result. IsSuccess || _packetsBuilder == null )
+        {
+            return result;
+        }
+        return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
+    }
+
 
     #endregion
 

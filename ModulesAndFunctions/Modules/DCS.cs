@@ -23,7 +23,7 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
-    private readonly Func<byte[ ] , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private readonly Func<byte[ ],bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
 
     /// <summary>
     /// 定义交流源模块对象
@@ -36,7 +36,7 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     private readonly IDecoder _decoder;
 
     #endregion
-    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ],bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
     {
         //接收设备ID
         _id = id;

@@ -62,17 +62,17 @@ public class DCM :IModuleDCM
     /// <summary>
     /// 直流表电流档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMI => _decoder. Ranges_DCMI;
+    public float[ ]? Ranges_DCMI { get => _decoder. Ranges_DCMI; set => _decoder. Ranges_DCMI = value; } 
 
     /// <summary>
     /// 直流纹波电压表档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMU_Ripple =>_decoder.Ranges_DCMU_Ripple;
+    public float[ ]? Ranges_DCMU_Ripple { get => _decoder. Ranges_DCMU_Ripple; set => _decoder. Ranges_DCMU_Ripple = value; } 
 
     /// <summary>
     /// 直流纹波电流表的档位集合
     /// </summary>
-    public float[ ]? Ranges_DCMI_Ripple => _decoder. Ranges_DCMI_Ripple;
+    public float[ ]? Ranges_DCMI_Ripple { get => _decoder. Ranges_DCMI_Ripple; set => _decoder. Ranges_DCMI_Ripple = value; }
 
     /// <summary>
     /// 直流表电压测量值

@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. Protocols. Hex5A
 {
-    internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
+    internal class Hex5APacketBuilder_ACS //: IPacketsBuilder_ACS
     {
         private readonly ushort _id;
 
@@ -21,84 +21,6 @@ namespace DKCommunicationNET. Protocols. Hex5A
             return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. GetRanges_ACS , Hex5AInformation. GetRanges_ACS_Len ,data, _id );
         }
 
-        public OperateResult<byte[ ]> Packet_SetAmplitude ( float amplitude )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        public OperateResult<byte[ ]> Packet_SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        public OperateResult<byte[ ]> Packet_SetRanges ( int rangeIndexOfACU , int rangeIndexOfACI , int rangeIndexOfIP = 0 )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        public OperateResult<byte[ ]> Packet_SetWireMode ( string wireMode )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Open ( )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_ReadData ( )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_ReadData_Status ( )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA , float IPB , float IPC )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetClosedLoop ( byte closeLoopMode , byte harmonicMode )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetHarmonics ( byte channels , HarmonicArgs[ ]? harmonics )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWattLessPower ( byte channel , float q )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWattPower ( byte channel , float p )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_SetWireMode ( byte wireMode )
-        {
-            throw new NotImplementedException ( );
-        }
-
-        OperateResult<byte[ ]> IPacketsBuilder_ACS.Packet_Stop ( )
-        {
-            throw new NotImplementedException ( );
-        }
+       
     }
 }

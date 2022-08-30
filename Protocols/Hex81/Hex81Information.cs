@@ -493,57 +493,7 @@ internal enum FuncS
     Enabled_PWM = 0B_0010_0000,
 }
 
-/// <summary>
-/// 谐波设置通道选择
-/// </summary>
-[Flags]
-public enum ChannelsHarmonic : byte
-{
-    /// <summary>
-    /// A相电压
-    /// </summary>
-    Channel_Ua = 0b_0000_0001,  // 0x01 // 1
 
-    /// <summary>
-    /// B相电压
-    /// </summary>
-    Channel_Ub = 0b_0000_0010,  // 0x02 // 2
-
-    /// <summary>
-    /// C相电压
-    /// </summary>
-    Channel_Uc = 0b_0000_0100,  // 0x04 // 4
-
-    /// <summary>
-    /// A相电流
-    /// </summary>
-    Channel_Ia = 0b_0000_1000,  // 0x08 // 8
-
-    /// <summary>
-    /// B相电流
-    /// </summary>
-    Channel_Ib = 0b_0001_0000,  // 0x10 // 16
-
-    /// <summary>
-    /// C相电流
-    /// </summary>
-    Channel_Ic = 0b_0010_0000,  // 0x20 // 32
-
-    /// <summary>
-    /// 所有相电压
-    /// </summary>
-    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,    // 0x07 // 7
-
-    /// <summary>
-    /// 所有相电流
-    /// </summary>
-    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   // 0x38 // 56
-
-    /// <summary>
-    /// 电压所有相和电流所有相
-    /// </summary>
-    Channel_All = Channel_U | Channel_I   // 0x3F // 63
-}
 
 /// <summary>
 /// 设置有功功率通道枚举

@@ -4,7 +4,7 @@ using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex5A
 {
-    internal class Hex5ADecoder : IDecoder
+    internal class Hex5ADecoder //: IDecoder
     {
         //数据转换规则
         private readonly IByteTransform _byteTransform;

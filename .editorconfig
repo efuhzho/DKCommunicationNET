@@ -1,7 +1,7 @@
 ﻿[*.cs]
 
 # CS8602: 解引用可能出现空引用。
-dotnet_diagnostic.CS8602.severity = suggestion
+dotnet_diagnostic.CS8602.severity = warning
 csharp_space_around_binary_operators = before_and_after
 csharp_indent_labels = one_less_than_current
 csharp_using_directive_placement = outside_namespace:silent

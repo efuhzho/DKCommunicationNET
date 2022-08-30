@@ -12,12 +12,16 @@ internal class Hex81Factory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACM(id) as IPacketBuilder_ACM );
+        return new OperateResult<IPacketBuilder_ACM> ( StringResources.Language.NotSupportedModule);
     }
 
     public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id ,IByteTransform byteTransform)
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS (  id ,byteTransform) as IPacketsBuilder_ACS );
+        // return new OperateResult<IPacketsBuilder_ACS> ( StringResources.Language.NotSupportedModule);
+
+        // TODO
+
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS ( id , byteTransform ) as IPacketsBuilder_ACS );
     }
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )

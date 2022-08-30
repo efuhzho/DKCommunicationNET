@@ -134,14 +134,14 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="harmonicChannels">枚举类型参数：谐波通道；【注意】需引用对应的协议类型的命名空间</param>
     /// <param name="harmonicArgs">要设置的谐波参数组【可选参数，当参数为null时，将清空所选通道的谐波。清空谐波还可以调用方法：ClearHarmonics】</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null );
+    OperateResult<byte[ ]> SetHarmonics ( Channels_Harmonic harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null );
 
     /// <summary>
     /// 清除谐波
     /// </summary>
     /// <param name="harmonicChannels">需要清除的谐波通道</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels );
+    OperateResult<byte[ ]> ClearHarmonics ( Channels_Harmonic harmonicChannels );
 
     /// <summary>
     /// 读取交流源当前输出数据
