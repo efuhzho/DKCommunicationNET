@@ -272,7 +272,7 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前谐波输出通道
     /// </summary>
-    Enum? HarmonicChannels { get; }
+    Channels_Harmonic? HarmonicChannels { get; }
 
     /// <summary>
     /// 当前谐波输出数据

@@ -1,8 +1,6 @@
-﻿using System. IO. Ports;
-using DKCommunicationNET. Core;
+﻿using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
-using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Module;
 
@@ -35,9 +33,9 @@ public class ACS : IModuleACS
     private readonly IDecoder _decoder;
 
     /// <summary>
-    /// 
+    /// 功能是否激活
     /// </summary>
-    public bool IsEnabled { get; set; }
+    private bool _isEnabled;
 
     #endregion
 
@@ -59,13 +57,12 @@ public class ACS : IModuleACS
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-
         _packetsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content;
 
         //接收解码器
         _decoder = protocolFactory. GetDecoder ( byteTransform );
 
-        IsEnabled = isEnabled;
+        _isEnabled = isEnabled;
     }
 
     #endregion
@@ -102,7 +99,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte HarmonicCount => _decoder. HarmonicCount;
     /// <inheritdoc/>
-    public Enum? HarmonicChannels => _decoder. HarmonicChannels;
+    public Channels_Harmonic? HarmonicChannels => _decoder. HarmonicChannels;
     /// <inheritdoc/>
     public HarmonicArgs[ ]? Harmonics => _decoder. Harmonics;
     /// <inheritdoc/>
@@ -214,31 +211,43 @@ public class ACS : IModuleACS
     #region 方法
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open ( )
-    {   
-        if ( !ExtraBeforeAction().IsSuccess||_packetsBuilder==null)
+    {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Open ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop ( )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_Stop ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         //执行获取档位命令
         var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
@@ -261,84 +270,120 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( WireMode WireMode )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetWireMode ( WireMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode , HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( CloseLoopMode , HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Channels_Harmonic harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         byte channel = Convert. ToByte ( harmonicChannels );
         return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonics ( channel , harmonicArgs ) , _methodOfCheckResponse );
     }
@@ -346,10 +391,14 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData ( ) , _methodOfCheckResponse );
         if ( !result. IsSuccess )
         {
@@ -367,46 +416,58 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData_Status ( )
     {
-        if ( !ExtraBeforeAction ( ). IsSuccess || _packetsBuilder == null )
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
         {
-            return ExtraBeforeAction ( );
+            return checkResult;
         }
+
+        //执行报文发送并接收下位机回复报文
         var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData_Status ( ) , _methodOfCheckResponse );
 
+        //如果执行失败
         if ( !result. IsSuccess )
         {
             return result;
         }
+
+        //执行成功则解码
         var decodeResult = _decoder. DecodeReadData_Status_ACS ( result );
         if ( !decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
             result. Message = StringResources. Language. DecodeError;
         }
+
+        //返回执行结果
         return result;
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ClearHarmonics ( Channels_Harmonic harmonicChannels )
-    {       
+    {
         return SetHarmonics ( harmonicChannels );
     }
 
     #endregion
 
-    #region Private Methods
-    OperateResult<byte[ ]> ExtraBeforeAction ( )
-    {
-        var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , IsEnabled );
+    //#region Private Methods
 
-        if ( !result. IsSuccess || _packetsBuilder == null )
-        {
-            return result;
-        }
-        return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
-    }
+    ///// <summary>
+    ///// 执行命令前的功能状态校验,处理空引用异常
+    ///// </summary>
+    ///// <returns></returns>
+    //OperateResult<byte[ ]> ExtraBeforeAction ( )
+    //{
+    //    var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
 
-
-    #endregion
+    //    if ( !result. IsSuccess || _packetsBuilder == null )
+    //    {
+    //        return result;
+    //    }
+    //    return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
+    //}
+    //#endregion
 
 }

@@ -23,20 +23,22 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文的委托方法
     /// </summary>
-    private readonly Func<byte[ ],bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
 
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketBuilder_DCS? _PacketsBuilder;
+    private readonly IPacketBuilder_DCS? _packetsBuilder;
 
     /// <summary>
     /// 定义解码器对象
     /// </summary>
     private readonly IDecoder _decoder;
 
+    bool _isEnabled;
+
     #endregion
-    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ],bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
+    internal DCS ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform ,bool isEnabled)
     {
         //接收设备ID
         _id = id;
@@ -45,10 +47,11 @@ public class DCS : IModuleDCS, IReadProperties_DCS
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器对象
-        _PacketsBuilder = protocolFactory. GetPacketBuilderOfDCS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
+        _packetsBuilder = protocolFactory. GetPacketBuilderOfDCS ( _id , byteTransform ). Content; //忽略空值，调用时会捕获解引用为null的异常
 
         //接收解码器对象
         _decoder = protocolFactory. GetDecoder ( byteTransform );
+        _isEnabled = isEnabled;
     }
 
     /// <inheritdoc/>
@@ -76,7 +79,7 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     public float[ ]? Ranges_DCI { get => _decoder. Ranges_DCI; set => _decoder. Ranges_DCI = value; }
 
     /// <inheritdoc/>
-    public float[ ]? Ranges_DCR { get => _decoder. Ranges_DCR; set => _decoder. Ranges_DCR = value; } 
+    public float[ ]? Ranges_DCR { get => _decoder. Ranges_DCR; set => _decoder. Ranges_DCR = value; }
 
     /// <inheritdoc/>
     public bool IsOpen_DCU => _decoder. IsOpen_DCU;
@@ -88,13 +91,64 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     public bool IsOpen_DCR => _decoder. IsOpen_DCR;
 
     /// <inheritdoc/>
-    public bool IsAutoRange_DCU { get => _PacketsBuilder. IsAutoRange_DCU; set => _PacketsBuilder. IsAutoRange_DCU = value; }
+    public bool IsAutoRange_DCU
+    {
+        get
+        {
+            if ( _packetsBuilder == null )
+            {
+                return false;
+            }
+            return _packetsBuilder. IsAutoRange_DCU;
+        }
+        set
+        {
+            if ( _packetsBuilder != null )
+            {
+                _packetsBuilder. IsAutoRange_DCU = value;
+            }
+        }
+    }
 
     /// <inheritdoc/>
-    public bool IsAutoRange_DCI { get => _PacketsBuilder. IsAutoRange_DCI; set => _PacketsBuilder. IsAutoRange_DCI = value; }
+    public bool IsAutoRange_DCI
+    {
+        get
+        {
+            if ( _packetsBuilder == null )
+            {
+                return false;
+            }
+            return _packetsBuilder. IsAutoRange_DCI;
+        }
+        set
+        {
+            if ( _packetsBuilder != null )
+            {
+                _packetsBuilder. IsAutoRange_DCI = value;
+            }
+        }
+    }
 
     /// <inheritdoc/>
-    public bool IsAutoRange_DCR { get => _PacketsBuilder. IsAutoRange_DCR; set => _PacketsBuilder. IsAutoRange_DCR = value; }
+    public bool IsAutoRange_DCR
+    {
+        get
+        {
+            if ( _packetsBuilder == null )
+            {
+                return false;
+            }
+            return _packetsBuilder. IsAutoRange_DCR;
+        }
+        set
+        {
+            if ( _packetsBuilder != null )
+            {
+                _packetsBuilder. IsAutoRange_DCR = value;
+            }
+        }
+    }
 
     /// <inheritdoc/>
     public byte RangeIndex_DCI => _decoder. RangeIndex_DCI;
@@ -109,7 +163,7 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     public OperateResult<byte[ ]> GetRanges ( )
     {
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _packetsBuilder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
         if ( !result. IsSuccess )
         {
@@ -121,7 +175,7 @@ public class DCS : IModuleDCS, IReadProperties_DCS
         //如果解码失败
         if ( !decodeResult. IsSuccess )
         {
-            result. IsSuccess = false;            
+            result. IsSuccess = false;
             result. Message = StringResources. Language. DecodeError;
         }
 
@@ -131,25 +185,25 @@ public class DCS : IModuleDCS, IReadProperties_DCS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCI ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCI ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Open_DCI ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCR ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCR ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Open_DCR ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open_DCU ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Open_DCU ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Open_DCU ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( char? Resistor = null )
     {
-        var result = CommandAction. Action ( _PacketsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _packetsBuilder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
 
         if ( !result. IsSuccess )
         {
@@ -173,11 +227,11 @@ public class DCS : IModuleDCS, IReadProperties_DCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCI == null )
         {
-            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , RangeIndex_DCI ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCI ( SData , RangeIndex_DCI ) , _methodOfCheckResponse );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
@@ -186,11 +240,11 @@ public class DCS : IModuleDCS, IReadProperties_DCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCR == null )
         {
-            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , RangeIndex_DCR ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCR ( SData , RangeIndex_DCR ) , _methodOfCheckResponse );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
@@ -199,46 +253,51 @@ public class DCS : IModuleDCS, IReadProperties_DCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCU == null )
         {
-            return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCU ( SData , RangeIndex_DCU ) , _methodOfCheckResponse );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCI ( byte rangeIndex_DCI )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRange_DCU ( byte rangeIndex_DCU )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCI ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCI ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCI ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCR ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCR ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCR ( ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Stop_DCU ( )
     {
-        return CommandAction. Action ( _PacketsBuilder. Packet_Stop_DCU ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_Stop_DCU ( ) , _methodOfCheckResponse );
     }
+
+    #region Private Methods
+
+ 
+    #endregion
 }
