@@ -1,5 +1,4 @@
 ﻿using DKCommunicationNET. Core;
-using DKCommunicationNET. Interface;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
 
@@ -45,7 +44,7 @@ public class DCM : IModuleDCM
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器对象
-        _packetsBuilder = protocolFactory. GetPacketBuilderOfDCM ( _id ). Content; 
+        _packetsBuilder = protocolFactory. GetPacketBuilderOfDCM ( _id ). Content;
 
         //接收解码器对象
         _decoder = protocolFactory. GetDecoder ( byteTransform );
@@ -62,7 +61,7 @@ public class DCM : IModuleDCM
     {
         get
         {
-            if ( _packetsBuilder==null )
+            if ( _packetsBuilder == null )
             {
                 return false;
             }
@@ -223,7 +222,6 @@ public class DCM : IModuleDCM
 
         //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU ) , _methodOfCheckResponse );
-
     }
 
     /// <inheritdoc/>
@@ -238,7 +236,6 @@ public class DCM : IModuleDCM
 
         //执行命令并获取回复报文
         return CommandAction. Action ( _packetsBuilder. Packet_SetRange_DCMI ( rangeIndex_DCMU_Ripple ) , _methodOfCheckResponse );
-
     }
 
     /// <inheritdoc/>

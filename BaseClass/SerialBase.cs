@@ -360,7 +360,7 @@ namespace DKCommunicationNET. BaseClass
         private readonly SimpleHybirdLock hybirdLock;
 
         // 日志存储
-        private ILogNet logNet;
+        private ILogNet? logNet;
 
         // 接收数据的超时时间
         private int receiveTimeout = 1000;

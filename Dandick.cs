@@ -4,6 +4,7 @@ using DKCommunicationNET. Core;
 using DKCommunicationNET. Module;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
+using DKCommunicationNET. ModulesAndFunctions. Functions;
 
 namespace DKCommunicationNET;
 
@@ -83,6 +84,11 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc cref="Module.DCS"/>
     /// </summary>
     public DCS DCS => new( ID , _protocolFactory , CheckResponse , ByteTransform ,IsEnabled_DCS);
+
+    /// <summary>
+    /// [警告:错误使用此功能将可能导致严重的后果]
+    /// </summary>
+    public Calibrate Calibrate => new Calibrate ( ID , _protocolFactory , CheckResponse , ByteTransform , true );
 
     #endregion 公共属性>>>功能模块
 

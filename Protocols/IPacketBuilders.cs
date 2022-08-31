@@ -364,7 +364,7 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="iRangeIndex">要清除的电流档位索引值。该命令会清除该档位下的幅值和相位校准参数。</param>
     /// <remarks>【注意】协议类型Hex81:当 Type=3 或 4 时，如果要清空电压档位参数，则设置电流档位为一个大于电流总档位数的值（建议设置为 100）；如果要清空电流档位参数，则设置电压档位为一个大于电压总档位数的值（建议设置为 100）。</remarks>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ClearData ( byte calibrateType , byte uRangeIndex , byte iRangeIndex );
+    OperateResult<byte[ ]> Packet_ClearData ( CalibrateType calibrateType , byte uRangeIndex , byte iRangeIndex );
 
     /// <summary>
     /// 设置交流源和交流标准表校准档位
@@ -390,7 +390,7 @@ internal interface IPacketBuilder_Calibrate
     /// Level=0时为 0.0；level=1 时为 20%RG；level=2 时为 100%RG；以上为幅值校准。level = 3 时为相位校准，建议 SUa = SIa = 0；SUb = SIb = 120°；SUc = SIc = 240°
     /// </remarks>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SwitchACPoint ( byte uRangeIndex , byte iRangeIndex , byte calibrateLevel , float sUA , float sUB , float sUC , float sIA , float sIB , float sIC );
+    OperateResult<byte[ ]> Packet_SwitchACPoint ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float sUA , float sUB , float sUC , float sIA , float sIB , float sIC );
 
     /// <summary>
     /// 交流源校准命令
@@ -406,7 +406,7 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="mIC">当前所接的校准用标准表的读数，float</param>
     /// <remarks>【注意】输入的标准表读数限制在校准点标准值（SXx）的±20%之内，如果大于±20%，不发送校准命令。</remarks>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_DoAC ( byte uRangeIndex , byte iRangeIndex , byte calibrateLevel , float mUA , float mUB , float mUC , float mIA , float mIB , float mIC );
+    OperateResult<byte[ ]> Packet_DoAC ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float mUA , float mUB , float mUC , float mIA , float mIB , float mIC );
 
     /// <summary>
     /// 确认交流源校准，保存校准参数
@@ -441,7 +441,7 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="iRangeIndex">当前校准的电流档位</param>
     /// <param name="calibrateLevel">当前校准点</param>    /// 
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Save ( byte uRangeIndex , byte iRangeIndex , byte calibrateLevel );
+    OperateResult<byte[ ]> Packet_Save ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel );
 
     /// <summary>
     /// 交流标准表和钳形表校准命令
@@ -468,7 +468,7 @@ internal interface IPacketBuilder_Calibrate
     ///     </list>
     /// </remarks>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_DoACMeter ( byte uRangeIndex , byte iRangeIndex , byte calibrateLevel , float UA , float UB , float UC , float IA , float IB , float IC );
+    OperateResult<byte[ ]> Packet_DoACMeter ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float UA , float UB , float UC , float IA , float IB , float IC );
 
     /// <summary>
     /// 设置直流校准点
@@ -478,7 +478,7 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="calibrateLevel"></param>
     /// <param name="sDCAmplitude">设置的校准点的标准值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SwitchDCPoint ( byte dCSourceType , byte rangeIndex , byte calibrateLevel , float sDCAmplitude );
+    OperateResult<byte[ ]> Packet_SwitchDCPoint ( Calibrate_DCSourceType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float sDCAmplitude );
 
     /// <summary>
     /// 直流源校准
@@ -488,7 +488,7 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="calibrateLevel"></param>
     /// <param name="mDCAmplitude">校准用的标准表读数</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_DoDC ( byte dCSourceType , byte rangeIndex , byte calibrateLevel , float mDCAmplitude );
+    OperateResult<byte[ ]> Packet_DoDC ( Calibrate_DCSourceType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float mDCAmplitude );
 
     /// <summary>
     /// 直流表校准
@@ -498,6 +498,6 @@ internal interface IPacketBuilder_Calibrate
     /// <param name="calibrateLevel"></param>
     /// <param name="sDCAmplitude">校准用的标准源输出幅值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_DoDCMeter ( byte dCSourceType , byte rangeIndex , byte calibrateLevel , float sDCAmplitude );
+    OperateResult<byte[ ]> Packet_DoDCMeter ( Calibrate_DCMeterType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float sDCAmplitude );
 }
 

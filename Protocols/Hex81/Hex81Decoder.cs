@@ -500,7 +500,7 @@ internal class Hex81Decoder : IDecoder
                 IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
                 break;
             default:
-                return new OperateResult ( "Hex81:直流源回复数据解码失败!" );
+                return new OperateResult (StringResources.GetLineNum(), StringResources.Language.DecodeError+StringResources.GetCurSourceFileName());
         }
 
         return OperateResult. CreateSuccessResult ( );

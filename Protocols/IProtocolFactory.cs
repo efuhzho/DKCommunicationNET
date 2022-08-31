@@ -50,6 +50,12 @@ internal interface IProtocolFactory
     /// <returns></returns>
     OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform );
 
+    /// <summary>
+    /// 获取校准报文创建类对象
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform );
+
     //TODO 添加其他模块功能的报文创建器
 
     /// <summary>

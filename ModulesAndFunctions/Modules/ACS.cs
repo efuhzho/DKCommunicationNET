@@ -35,7 +35,7 @@ public class ACS : IModuleACS
     /// <summary>
     /// 功能是否激活
     /// </summary>
-    private bool _isEnabled;
+    private readonly bool _isEnabled;
 
     #endregion
 
@@ -461,7 +461,7 @@ public class ACS : IModuleACS
     ///// <returns></returns>
     //OperateResult<byte[ ]> ExtraBeforeAction ( )
     //{
-    //    var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+    //    var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
 
     //    if ( !result. IsSuccess || _packetsBuilder == null )
     //    {

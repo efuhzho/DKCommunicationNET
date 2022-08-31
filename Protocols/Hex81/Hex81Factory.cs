@@ -12,10 +12,10 @@ internal class Hex81Factory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_ACM> ( StringResources.Language.NotSupportedModule);
+        return new OperateResult<IPacketBuilder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id ,IByteTransform byteTransform)
+    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id , IByteTransform byteTransform )
     {
         // return new OperateResult<IPacketsBuilder_ACS> ( StringResources.Language.NotSupportedModule);
 
@@ -26,12 +26,12 @@ internal class Hex81Factory : IProtocolFactory
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCM ( id  ) as IPacketBuilder_DCM );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCM ( id ) as IPacketBuilder_DCM );
     }
 
     public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCS ( id ,byteTransform) as IPacketBuilder_DCS );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCS ( id , byteTransform ) as IPacketBuilder_DCS );
     }
 
     public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
@@ -41,7 +41,7 @@ internal class Hex81Factory : IProtocolFactory
 
     public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_EPQ ( id,byteTransform )  as IPacketBuilder_EPQ );
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_EPQ ( id , byteTransform ) as IPacketBuilder_EPQ );
     }
 
     public ICRCChecker GetCRCChecker ( )
@@ -54,8 +54,13 @@ internal class Hex81Factory : IProtocolFactory
         return new Hex81Functions ( );
     }
 
-    public IDecoder GetDecoder (IByteTransform byteTransform )
+    public IDecoder GetDecoder ( IByteTransform byteTransform )
     {
         return new Hex81Decoder ( byteTransform );
+    }
+
+    public OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
+    {
+        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_Calibrate ( id , byteTransform ) as IPacketBuilder_Calibrate );
     }
 }
