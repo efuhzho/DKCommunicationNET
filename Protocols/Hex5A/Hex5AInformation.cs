@@ -2,7 +2,7 @@
 
 internal class Hex5AInformation
 {
-    #region 【CommandCodes】
+   
 
     #region CommandCodes>>> 系统
     /// <summary>
@@ -46,7 +46,10 @@ internal class Hex5AInformation
 
     #endregion CommandCodes>>>ACS
 
-    #endregion 【CommandCodes】
+    #region CommandCodes>>>PPS
+    public const byte CompareTime = 0x13;
+    public const byte CompareTime_L = 17;
+    #endregion
 
     #region 【Internal Methods】
 
@@ -217,96 +220,127 @@ internal class Hex5AInformation
 
     #endregion 【Private Methods】
 
-    #region 【枚举类型】
-    public enum SystemModes : byte
-    {
-        /// <summary>
-        /// 标准源模式
-        /// </summary>
-        ModeDefault = 0,
-
-        /// <summary>
-        /// 标准表模式
-        /// </summary>
-        ModeStandardMeter = 1,
-
-        /// <summary>
-        /// 标准表（钳表）模式
-        /// </summary>
-        ModeStandardMeterClamp = 2,
-
-        /// <summary>
-        /// 标准源校准模式
-        /// </summary>
-        ModeStandardSourceCalibrate = 10,
-
-        /// <summary>
-        /// 标准表校准模式
-        /// </summary>
-        ModeStandardMeterCalibrate = 11,
-
-        /// <summary>
-        /// 钳表校准模式
-        /// </summary>
-        ModeStandardClampCalibrate = 12,
-
-        /// <summary>
-        /// 直流源校准模式
-        /// </summary>
-        ModeDCSourceCalibrate = 13,
-
-        /// <summary>
-        /// 直流表校准模式
-        /// </summary>
-        ModeDCMeterCalibrate = 14
-    }
-
-    /// <summary>
-    /// 获取档位类型
-    /// </summary>
-    public enum GetRangeType : byte
-    {
-        /// <summary>
-        /// 交流源
-        /// </summary>
-        ACS = 1,
-
-        /// <summary>
-        /// 钳表
-        /// </summary>
-        ACM_Cap = 2,
-
-        /// <summary>
-        /// 直流源
-        /// </summary>
-        DCS = 3,
-
-        /// <summary>
-        /// 直流表
-        /// </summary>
-        DCM = 4,
-
-        /// <summary>
-        /// 交流表
-        /// </summary>
-        ACM = 7           
-    }
-
-    /// <summary>
-    /// 故障码定义：枚举。此为获取故障信息的第二种方式
-    /// </summary>
-    [Flags]
-    public enum ErrorCodes : byte
-    {
-        ErrorUa = 0b_0000_0001,    // 0x01 // 1
-        ErrorUb = 0b_0000_0010,    // 0x02 // 2
-        ErrorUc = 0b_0000_0100,    // 0x04 // 4
-        ErrorIa = 0b_0000_1000,    // 0x08 // 8
-        ErrorIb = 0b_0001_0000,    // 0x10 // 16
-        ErrorIc = 0b_0010_0000,    // 0x20 // 32
-        ErrorDC = 0b_0100_0000     // 0x40 // 64
-    }
-
-
-    #endregion 枚举类型
+    
 }
+#region 【枚举类型】
+public enum SystemModes : byte
+{
+    /// <summary>
+    /// 标准源模式
+    /// </summary>
+    ModeDefault = 0,
+
+    /// <summary>
+    /// 标准表模式
+    /// </summary>
+    ModeStandardMeter = 1,
+
+    /// <summary>
+    /// 标准表（钳表）模式
+    /// </summary>
+    ModeStandardMeterClamp = 2,
+
+    /// <summary>
+    /// 标准源校准模式
+    /// </summary>
+    ModeStandardSourceCalibrate = 10,
+
+    /// <summary>
+    /// 标准表校准模式
+    /// </summary>
+    ModeStandardMeterCalibrate = 11,
+
+    /// <summary>
+    /// 钳表校准模式
+    /// </summary>
+    ModeStandardClampCalibrate = 12,
+
+    /// <summary>
+    /// 直流源校准模式
+    /// </summary>
+    ModeDCSourceCalibrate = 13,
+
+    /// <summary>
+    /// 直流表校准模式
+    /// </summary>
+    ModeDCMeterCalibrate = 14
+}
+
+/// <summary>
+/// 获取档位类型
+/// </summary>
+public enum Type_Module : byte
+{
+    /// <summary>
+    /// 交流源
+    /// </summary>
+    ACS = 1,
+
+    /// <summary>
+    /// 钳表
+    /// </summary>
+    ACM_Cap = 2,
+
+    /// <summary>
+    /// 直流源
+    /// </summary>
+    DCS = 3,
+
+    /// <summary>
+    /// 直流表
+    /// </summary>
+    DCM = 4,
+
+    /// <summary>
+    /// 交流表
+    /// </summary>
+    ACM = 7
+}
+
+/// <summary>
+/// 故障码定义：枚举。此为获取故障信息的第二种方式
+/// </summary>
+[Flags]
+public enum ErrorCodes : byte
+{
+    ErrorUa = 0b_0000_0001,    // 0x01 // 1
+    ErrorUb = 0b_0000_0010,    // 0x02 // 2
+    ErrorUc = 0b_0000_0100,    // 0x04 // 4
+    ErrorIa = 0b_0000_1000,    // 0x08 // 8
+    ErrorIb = 0b_0001_0000,    // 0x10 // 16
+    ErrorIc = 0b_0010_0000,    // 0x20 // 32
+    ErrorDC = 0b_0100_0000     // 0x40 // 64
+}
+
+/// <summary>
+/// 对时方式
+/// </summary>
+public enum Type_CompareTime : byte
+{
+    /// <summary>
+    /// 手动设置（B-RS485 出）
+    /// </summary>
+    Manual_B485 = 0,
+
+    /// <summary>
+    /// GPS 入/B-RS485 出
+    /// </summary>
+    GPS = 1,
+    /// <summary>
+    /// B-RS485 入出
+    /// </summary>
+    B_485 = 2,
+
+    /// <summary>
+    /// B-RS232 入出
+    /// </summary>
+    B_232 = 3,
+
+    /// <summary>
+    /// TTL 秒脉冲入出
+    /// </summary>
+    Manual_TTL = 4
+}
+
+
+#endregion 枚举类型

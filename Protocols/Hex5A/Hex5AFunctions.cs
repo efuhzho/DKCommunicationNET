@@ -7,7 +7,7 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 /// <summary>
 /// 基于Hex5AA5协议的设备所支持的功能状态
 /// </summary>
-internal class Hex5AFunctions //: IProtocolFunctions
+internal class Hex5AFunctions : IProtocolFunctions
 {
     /// <summary>
     /// 本类设备的协议类型：Hex5A
@@ -18,7 +18,7 @@ internal class Hex5AFunctions //: IProtocolFunctions
     /// 基于本协议的设备：是否支持【交流源模块】：是
     /// </summary>
     public bool IsSupported_ACS => true;
-    public bool IsSupported_ACM => true;
+    public bool IsSupported_ACM => false;
 
     /// <summary>
     /// 基于本协议的设备：是否支持【直流源模块】：是
@@ -40,6 +40,26 @@ internal class Hex5AFunctions //: IProtocolFunctions
     /// </summary>
     public bool IsSupported_EPQ => true;
 
+    public bool IsSupported_ACM_Cap => false;
+
+    public bool IsSupported_DCS_AUX => false;
+
+    public bool IsSupported_DCM_RIP => false;
+
+    public bool IsSupported_DualFreqs => false;
+
+    public bool IsSupported_IProtect => false;
+
+    public bool IsSupported_PST => false;
+
+    public bool IsSupported_YX => true;
+
+    public bool IsSupported_HF => false;
+
+    public bool IsSupported_PWM =>false;
+
+    public bool IsSupported_PPS => true;
+
     public OperateResult<byte[ ]> GetPacketOfHandShake ( )
     {
         return OperateResult. CreateSuccessResult ( Hex5AInformation.HandShakePacket );
@@ -47,35 +67,5 @@ internal class Hex5AFunctions //: IProtocolFunctions
 }
 
 
-/// <summary>
-/// 基于Hex5AA5协议的设备所支持的功能状态
-/// </summary>
-[Flags]
-internal enum FunctionsHex5A
-{
-    /// <summary>
-    /// 基于本协议的设备：是否支持【交流源模块】：是
-    /// </summary>
-    IsACSModuleSupported = 0b_0000_0001,
 
-    /// <summary>
-    /// 基于本协议的设备：是否支持【直流源模块】：是
-    /// </summary>
-    IsDCSModuleSupported = 0b_0000_0010,
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【直流表模块】：是
-    /// </summary>
-    IsDCMModuleSupported = 0b_0000_0100,
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【开关量模块】：是
-    /// </summary>
-    IsIOModuleSupported = 0b_0000_1000,
-
-    /// <summary>
-    /// 基于本协议的设备：是否支持【电能模块】：是
-    /// </summary>
-    IsPQModuleSupported = 0b_0001_0000
-}
 

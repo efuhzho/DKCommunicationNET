@@ -501,3 +501,26 @@ internal interface IPacketBuilder_Calibrate
     OperateResult<byte[ ]> Packet_DoDCMeter ( Calibrate_DCMeterType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float sDCAmplitude );
 }
 
+/// <summary>
+/// 对时功能报文创建类接口
+/// </summary>
+internal interface IPacketBuilder_PPS
+{
+    /// <summary>
+    /// 自动对时方式
+    /// </summary>
+    /// <param name="Type_CompareTime"></param>
+    /// <param name="timeZones"></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> CompareTime_Auto ( Enum Type_CompareTime , short timeZones );
+
+    /// <summary>
+    /// 手动对时方式
+    /// </summary>
+    /// <param name="Type_CompareTime"></param>
+    /// <param name="dateTime"></param>
+    /// <param name="timeZones"></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> CompareTime_Manual(Enum Type_CompareTime , DateTime dateTime , short timeZones = 8 );
+}
+

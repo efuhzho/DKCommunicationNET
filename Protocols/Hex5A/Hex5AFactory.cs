@@ -13,12 +13,12 @@ internal class Hex5AFactory : IProtocolFactory
 {
     public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACM ( ) as IPacketBuilder_ACM );
+        return new OperateResult<IPacketBuilder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id )
+    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id,IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACS ( id ) as IPacketsBuilder_ACS );
+        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACS ( id, byteTransform ) as IPacketsBuilder_ACS );
     }
 
     public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
@@ -76,6 +76,11 @@ internal class Hex5AFactory : IProtocolFactory
     }
 
     public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );
     }
