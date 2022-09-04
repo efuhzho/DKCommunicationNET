@@ -165,6 +165,11 @@ internal class Hex81PacketBuilder_ACS : IPacketsBuilder_ACS
         return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
+    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels )
+    {
+      return  Packet_SetHarmonics ( harmonicChannels );
+    }
+
     #region 私有方法和字段
 
     private CloseLoopMode _CloseLoopMode = CloseLoopMode. CloseLoop;
@@ -210,6 +215,8 @@ internal class Hex81PacketBuilder_ACS : IPacketsBuilder_ACS
         }
     }
 
- 
+  
+
+
     #endregion
 }

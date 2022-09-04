@@ -448,7 +448,14 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels )
     {
-        return SetHarmonics ( harmonicChannels ); //TODO 重写
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+        //执行报文发送并接收下位机回复报文
+        return CommandAction.Action(_packetsBuilder.Packet_ClearHarmonics(harmonicChannels), _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>

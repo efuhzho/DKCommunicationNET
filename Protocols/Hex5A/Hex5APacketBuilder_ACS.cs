@@ -142,6 +142,12 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
+    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels )
+    {
+        throw new NotImplementedException ( );
+    }
+
+
     #region 私有方法和字段
 
     private byte _rangeIndex_ACU;
@@ -211,6 +217,7 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetStandardSource , ( ushort ) ( 11 + data. Length ) , data );
     }
 
-  
+    
+
     #endregion
 }
