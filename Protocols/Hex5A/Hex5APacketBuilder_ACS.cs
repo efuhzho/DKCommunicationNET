@@ -28,7 +28,9 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
 
     public OperateResult<byte[ ]> Packet_Open ( )
     {
-        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
+        SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
+        args[0] = new SetStandardSourceArgs ( Channels. Channel_All , 0);
+        return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
     public OperateResult<byte[ ]> Packet_ReadData ( )
@@ -41,17 +43,17 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx  , float IPBOrIX , float IPC  )
+    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx , float IPBOrIX , float IPC )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[8];
-        args[0] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ua , UA );
-        args[1] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ub , UB );
-        args[2] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Uc , UC );
-        args[3] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ia , IA );
-        args[4] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ib , IB );
-        args[5] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ic , IC );
-        args[6] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ux , IPAOrUx );
-        args[7] = new SetStandardSourceArgs ( SetStandardSource_Channels. Channel_Ix , IPBOrIX );
+        args[0] = new SetStandardSourceArgs ( Channels. Channel_Ua , UA );
+        args[1] = new SetStandardSourceArgs ( Channels. Channel_Ub , UB );
+        args[2] = new SetStandardSourceArgs ( Channels. Channel_Uc , UC );
+        args[3] = new SetStandardSourceArgs ( Channels. Channel_Ia , IA );
+        args[4] = new SetStandardSourceArgs ( Channels. Channel_Ib , IB );
+        args[5] = new SetStandardSourceArgs ( Channels. Channel_Ic , IC );
+        args[6] = new SetStandardSourceArgs ( Channels. Channel_Ux , IPAOrUx );
+        args[7] = new SetStandardSourceArgs ( Channels. Channel_Ix , IPBOrIX );
         return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
@@ -73,26 +75,45 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return SetModeAndRanges_ACS ( Flag_SetType. SetHarmonicMode , 0 , 0 , 0 , harmonicMode , 0 , Array. Empty<byte> ( ) );
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonics ( Channels channels , HarmonicArgs[ ]? harmonics = null )
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ]? harmonics = null )
     {
         throw new NotImplementedException ( );
     }
 
     public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
     {
-        throw new NotImplementedException ( );
+        SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[6];
+        args[0] = new SetStandardSourceArgs ( Channels. Channel_Ua , PhaseUa );
+        args[1] = new SetStandardSourceArgs ( Channels. Channel_Ub , PhaseUb );
+        args[2] = new SetStandardSourceArgs ( Channels. Channel_Uc , PhaseUc );
+        args[3] = new SetStandardSourceArgs ( Channels. Channel_Ia , PhaseIa );
+        args[4] = new SetStandardSourceArgs ( Channels. Channel_Ib , PhaseIb );
+        args[5] = new SetStandardSourceArgs ( Channels. Channel_Ic , PhaseIc );
+        return SetArgs_ACS ( Type_SetStandardSource. Phase , args );
     }
 
-    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
+    
+    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI )
     {
-        byte[ ] ranges = new byte[8] { rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , 0 , 0 };
+        _rangeIndex_ACU = rangeIndexOfACU;
+        _rangeIndex_ACI = rangeIndexOfACI;
+        byte[ ] ranges = new byte[8] { rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , _rangeIndex_Ux , _rangeIndex_Ix };
         return SetModeAndRanges_ACS ( Flag_SetType. SetRanges , 0 , 0 , 0 , 0 , 0 , ranges );
     }
 
-    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndex_Ux , byte rangeIndex_Ix )
+    public OperateResult<byte[ ]> Packet_SetRanges_X ( byte rangeIndex_Ux , byte rangeIndex_Ix )
     {
-        byte[ ] ranges = new byte[8] { rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfACU , rangeIndexOfACI , rangeIndex_Ux , rangeIndex_Ix };
+        _rangeIndex_Ux = rangeIndex_Ux;
+        _rangeIndex_Ix = rangeIndex_Ix;
+
+        byte[ ] ranges = new byte[8] { _rangeIndex_ACU , _rangeIndex_ACI , _rangeIndex_ACU , _rangeIndex_ACI , _rangeIndex_ACU , _rangeIndex_ACI , rangeIndex_Ux , rangeIndex_Ix };
         return SetModeAndRanges_ACS ( Flag_SetType. SetRanges , 0 , 0 , 0 , 0 , 0 , ranges );
+    }
+
+    public OperateResult<byte[ ]> Packet_SetRanges_IP ( byte rangeIndex_IP )
+    {
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
     public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q )
@@ -112,10 +133,30 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
 
     public OperateResult<byte[ ]> Packet_Stop ( )
     {
-        throw new NotImplementedException ( );
+        SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
+        args[0] = new SetStandardSourceArgs ( Channels.Channel_All , -1 );
+        return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
-    #region 私有方法
+    #region 私有方法和字段
+
+    private byte _rangeIndex_ACU;
+    private byte _rangeIndex_ACI;
+
+    private byte _rangeIndex_Ux;
+    private byte _rangeIndex_Ix;
+
+    /// <summary>
+    /// 设置模式及档位
+    /// </summary>
+    /// <param name="flag_Type"></param>
+    /// <param name="workMode"></param>
+    /// <param name="wireMode"></param>
+    /// <param name="closeLoopMode"></param>
+    /// <param name="harmonicMode"></param>
+    /// <param name="qP_Mode"></param>
+    /// <param name="rangs"></param>
+    /// <returns></returns>
     public OperateResult<byte[ ]> SetModeAndRanges_ACS ( Flag_SetType flag_Type , WorkMode workMode , WireMode wireMode , CloseLoopMode closeLoopMode , HarmonicMode harmonicMode , QP_Mode qP_Mode , byte[ ] rangs )
     {
         byte[ ] data = new byte[14];
@@ -141,10 +182,17 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
     /// <returns></returns>
     private OperateResult<byte[ ]> SetArgs_ACS ( Type_SetStandardSource type , SetStandardSourceArgs[ ] args )
     {
+        //参数组数
         int count = args. Length;
+
+        //数据区字节定义
         byte[ ] data = new byte[2 + 5 * count];
+
+        //填充数据
         data[0] = ( byte ) type;
         data[1] = ( byte ) count;
+
+        //参数组结构体转字节
         for ( int i = 0 ; i < count ; i++ )
         {
             var result = SetStandardSourceArgs. SourceArgsToBytes ( args[i] , _transform );
@@ -155,7 +203,10 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
             result. Content. CopyTo ( data , index: 2 + ( i * 5 ) );
         }
 
+        //返回结果
         return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetStandardSource , ( ushort ) ( 11 + data. Length ) , data );
     }
+
+  
     #endregion
 }

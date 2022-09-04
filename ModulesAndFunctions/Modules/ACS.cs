@@ -452,22 +452,6 @@ public class ACS : IModuleACS
 
     #endregion
 
-    //#region Private Methods
-
-    ///// <summary>
-    ///// 执行命令前的功能状态校验,处理空引用异常
-    ///// </summary>
-    ///// <returns></returns>
-    //OperateResult<byte[ ]> ExtraBeforeAction ( )
-    //{
-    //    var result = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-
-    //    if ( !result. IsSuccess || _packetsBuilder == null )
-    //    {
-    //        return result;
-    //    }
-    //    return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
-    //}
-    //#endregion
+   
 
 }

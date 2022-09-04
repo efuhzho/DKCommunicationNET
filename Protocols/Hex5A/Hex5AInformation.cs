@@ -475,7 +475,7 @@ public enum Type_SetStandardSource : byte
 /// 通道号
 /// </summary>
 [Flags]
-public enum SetStandardSource_Channels : byte
+public enum Channels : byte
 {
     /// <summary>
     /// A相电压
@@ -526,6 +526,11 @@ public enum SetStandardSource_Channels : byte
     /// 所有相电流[不含X相]
     /// </summary>
     Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   
+
+    /// <summary>
+    /// 所有电压电流通道
+    /// </summary>
+    Channel_All=0xFF
 }
 
 /// <summary>
@@ -603,7 +608,6 @@ public struct SetStandardSourceArgs
         {
             return new OperateResult<byte[ ]> ( ex. Message );
         }
-
     }
 }
 #endregion

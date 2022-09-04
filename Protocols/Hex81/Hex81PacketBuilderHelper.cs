@@ -1,9 +1,10 @@
 ﻿using System;
 using System. Collections. Generic;
 using System. Linq;
+using System. Security. Cryptography;
 using System. Text;
 using System. Threading. Tasks;
-using DKCommunicationNET.Protocols;
+using DKCommunicationNET. Protocols;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -13,7 +14,13 @@ namespace DKCommunicationNET. Protocols. Hex81;
 [Model ( Models. Hex81 )]
 internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
 {
-    public static readonly Hex81PacketBuilderHelper Instance = new Hex81PacketBuilderHelper ();
+    readonly ushort _id;
+
+    public Hex81PacketBuilderHelper ( ushort id )
+    {
+        _id = id;
+    }
+
     /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
@@ -21,23 +28,17 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public  OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id  )
+    private OperateResult<byte[ ]> PacketShellBuilderHelper ( byte commandCode , ushort commandLength )
     {
         byte _RxID;
         byte _TxID;
 
-        if (! AnalysisID ( id ). IsSuccess )
-        {
-            return AnalysisID ( id );
-        }
-      
-        _RxID = AnalysisID ( id ). Content[0];
-        _TxID = AnalysisID ( id ). Content[1];
-
         //尝试预创建报文
         try
         {
-            byte[] buffer = new byte[commandLength];
+            _RxID = AnalysisID ( _id )[0];
+            _TxID = AnalysisID ( _id )[1];
+            byte[ ] buffer = new byte[commandLength];
             buffer[0] = Hex81Information. FrameID;
             buffer[1] = _RxID;
             buffer[2] = _TxID;
@@ -54,7 +55,7 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
         //发生异常回报当前代码位置和异常信息
         catch ( Exception ex )
         {
-            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
         }
     }
 
@@ -66,12 +67,12 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
     /// <param name="data">参数</param>
     /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public  OperateResult<byte[]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[] data , ushort id  )
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data )
     {
         try
         {
-            OperateResult<byte[]> shell = PacketShellBuilder ( commandCode , commandLength , id );
-            if ( !shell. IsSuccess ||shell.Content==null)
+            OperateResult<byte[ ]> shell = PacketShellBuilderHelper ( commandCode , commandLength );
+            if ( !shell. IsSuccess || shell. Content == null )
             {
                 return shell;
             }
@@ -83,7 +84,7 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
         }
         catch ( Exception ex )
         {
-            return new OperateResult<byte[]> ( StringResources. GetLineNum ( ) , "From:" + StringResources. GetCurSourceFileName ( ) + ex. Message );
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , "From:" + StringResources. GetCurSourceFileName ( ) + ex. Message );
         }
     }
 
@@ -93,9 +94,9 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
     /// <param name="commandCode"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> PacketShellBuilder(byte commandCode,ushort id )
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode )
     {
-        return PacketShellBuilder(commandCode,7,id);
+        return PacketShellBuilderHelper ( commandCode , 7 );
     }
 
     #region 【Private Methods】
@@ -104,17 +105,11 @@ internal class Hex81PacketBuilderHelper : IPacketBuilderHelper
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
-    private  OperateResult<byte[]> AnalysisID ( ushort id )
+    private static byte[ ] AnalysisID ( ushort id )
     {
-        try
-        {
-            byte[] twoBytesID = BitConverter. GetBytes ( id );  //低位在前            
-            return OperateResult. CreateSuccessResult ( twoBytesID );
-        }
-        catch ( Exception )
-        {
-            return new OperateResult<byte[]> ( 1001 , "请输入正确的ID!" );
-        }
+
+        byte[ ] twoBytesID = BitConverter. GetBytes ( id );  //低位在前            
+        return twoBytesID;
     }
     #endregion Private Methods
 }

@@ -74,23 +74,27 @@ internal interface IPacketsBuilder_ACS
     public OperateResult<byte[ ]> Packet_GetRanges ( );
 
     /// <summary>
-    /// 创建报文：[具备保护电流]设置交流源档位
+    /// 创建报文：设置交流源档位
     /// </summary>
-    /// <param name="rangeIndexOfACU">电压档位索引值</param>
-    /// <param name="rangeIndexOfACI">电流档位索引值</param>
-    /// <param name="rangeIndexOfIP">保护电流档位索引值</param>  
+    /// <param name="rangeIndex_ACU">电压档位索引值</param>
+    /// <param name="rangeIndex_ACI">电流档位索引值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
+    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndex_ACU , byte rangeIndex_ACI  );
+
+    /// <summary>
+    /// 创建报文：设置保护电流档位[具备保护电流]
+    /// </summary>
+    /// <param name="rangeIndex_IP">保护电流档位索引值</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetRanges_IP ( byte rangeIndex_IP );
 
     /// <summary>
     /// 创建报文：[具备X相]设置交流源档位
     /// </summary>
-    /// <param name="rangeIndexOfACU"></param>
-    /// <param name="rangeIndexOfACI"></param>
     /// <param name="rangeIndex_Ux"></param>
     /// <param name="rangeIndex_Ix"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndex_Ux =0, byte rangeIndex_Ix =0);
+    public OperateResult<byte[ ]> Packet_SetRanges_X (  byte rangeIndex_Ux, byte rangeIndex_Ix );
 
     /// <summary>
     /// 创建【设置交流源幅度】的报文
@@ -166,7 +170,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channels">要设置的谐波通道</param>
     /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonics ( Channels channels , HarmonicArgs[ ]? harmonics = null );
+    public OperateResult<byte[ ]> Packet_SetHarmonics (  Enum channels , HarmonicArgs[ ]? harmonics = null );
 
     /// <summary>
     /// 创建报文：设置有功功率
