@@ -16,37 +16,35 @@ internal class Hex5APacketBuilder_PPS : IPacketBuilder_PPS
         _byteTransform = byteTransform;
     }
 
-    /// <summary>
-    /// 自动对时
-    /// </summary>
-    /// <param name="Type_CompareTime"></param>
-    /// <param name="timeZones"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public OperateResult<byte[ ]> CompareTime_Auto ( Enum Type_CompareTime, short timeZones = 8 )
+    public OperateResult<byte[ ]> CompareTime_Auto ( Enum Type_CompareTime , short timeZones = 8 )
     {
         return CompareTime ( ( Type_CompareTime ) Type_CompareTime , DateTime. Now , timeZones );
     }
 
-    /// <summary>
-    /// 手动对时
-    /// </summary>
-    /// <param name="Type_CompareTime"></param>
-    /// <param name="dateTime"></param>
-    /// <param name="timeZones"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+
     public OperateResult<byte[ ]> CompareTime_Manual ( Enum Type_CompareTime , DateTime dateTime , short timeZones = 8 )
     {
-        return CompareTime ( ( Type_CompareTime ) Type_CompareTime , dateTime, timeZones );
+        return CompareTime ( ( Type_CompareTime ) Type_CompareTime , dateTime , timeZones );
     }
 
-    private OperateResult<byte[ ]> CompareTime ( Type_CompareTime type, DateTime dateTime , short timeZones = 8 )
+    public OperateResult<byte[ ]> ReadData_PPS ( )
     {
-        byte[] data = new byte[6];
-        data[0] = (byte)type;
-        BitConverter. GetBytes ( dateTime.Ticks ). CopyTo ( data , 1 );
-        data[5] = (byte)timeZones;
+        return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. ReadData_PPS , Hex5AInformation. ReadData_PPS_L , _id );
+    }
+
+
+    
+    #region 私有方法
+
+    private OperateResult<byte[ ]> CompareTime ( Type_CompareTime type , DateTime dateTime , short timeZones = 8 )
+    {
+        byte[ ] data = new byte[6];
+        data[0] = ( byte ) type;
+        BitConverter. GetBytes ( dateTime. Ticks ). CopyTo ( data , 1 );
+        data[5] = ( byte ) timeZones;
         return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. CompareTime , Hex5AInformation. CompareTime_L , data , _id );
     }
+    #endregion
+
+
 }

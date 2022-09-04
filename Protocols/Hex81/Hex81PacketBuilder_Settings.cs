@@ -30,7 +30,7 @@ internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
     /// </summary>
     /// <param name="displayPage">显示页面</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetDisplayPage (byte displayPage )
+    public OperateResult<byte[ ]> Packet_SetDisplayPage (byte displayPage )
     {
         byte[] data = new byte[ displayPage ];
         return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetDisplayPage , Hex81Information. SetDisplayPage_Length ,data,_id);
@@ -41,7 +41,7 @@ internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
     /// </summary>
     /// <param name="systemMdoe">系统模式</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetSystemMode (byte systemMdoe )
+    public OperateResult<byte[ ]> Packet_SetSystemMode (byte systemMdoe )
     {
         byte[ ] data = new byte[systemMdoe];
         return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.SetSystemMode,Hex81Information.SetSystemMode_Length ,data,_id);

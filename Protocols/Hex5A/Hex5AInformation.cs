@@ -2,7 +2,7 @@
 
 internal class Hex5AInformation
 {
-   
+
 
     #region CommandCodes>>> 系统
     /// <summary>
@@ -35,20 +35,46 @@ internal class Hex5AInformation
     /// </summary>
     internal const byte SetDisplayPage = 0x4A;
     internal const ushort SetDisplayPageCommandLength = 8;
+
+    /// <summary>
+    /// 设置设备信息
+    /// </summary>
+    public const byte SetDeviceInfo = 0x17;
+    public const byte SetDeviceInfo_L = 42;
+
+    /// <summary>
+    /// 设置波特率
+    /// </summary>
+    public const byte SetBaudRate = 0x18;
+    public const byte SetBaudRate_L = 13;
+
+   
     #endregion CommandCodes>>>系统
 
     #region CommandCodes>>>ACS
     /// <summary>
     /// 【命令码】获取交流源档位
     /// </summary>
-   internal const byte GetRanges_ACS = 0x12;
-   internal const byte GetRanges_ACS_Len = 12;
+    internal const byte GetRanges_ACS = 0x12;
+    internal const byte GetRanges_ACS_Len = 12;
+
+    /// <summary>
+    /// 设置模式及档位
+    /// </summary>
+    public const byte SetSystemModeAndRanges = 0x31;
+    public const byte SetSystemModeAndRanges_L = 25;
 
     #endregion CommandCodes>>>ACS
 
     #region CommandCodes>>>PPS
+    /// <summary>
+    /// 对时
+    /// </summary>
     public const byte CompareTime = 0x13;
     public const byte CompareTime_L = 17;
+
+    public const byte ReadData_PPS = 0x14;
+    public const byte ReadData_PPS_L = 28;
     #endregion
 
     #region 【Internal Methods】
@@ -220,7 +246,7 @@ internal class Hex5AInformation
 
     #endregion 【Private Methods】
 
-    
+
 }
 #region 【枚举类型】
 public enum SystemModes : byte
@@ -303,12 +329,33 @@ public enum Type_Module : byte
 [Flags]
 public enum ErrorCodes : byte
 {
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorUa = 0b_0000_0001,    // 0x01 // 1
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorUb = 0b_0000_0010,    // 0x02 // 2
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorUc = 0b_0000_0100,    // 0x04 // 4
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorIa = 0b_0000_1000,    // 0x08 // 8
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorIb = 0b_0001_0000,    // 0x10 // 16
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorIc = 0b_0010_0000,    // 0x20 // 32
+    /// <summary>
+    /// 
+    /// </summary>
     ErrorDC = 0b_0100_0000     // 0x40 // 64
 }
 
@@ -340,6 +387,47 @@ public enum Type_CompareTime : byte
     /// TTL 秒脉冲入出
     /// </summary>
     Manual_TTL = 4
+}
+
+/// <summary>
+/// 设置模式及档位的【参数】：类型标识
+/// </summary>
+[Flags]
+public enum Flag_Type : byte
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    工作模式 = 0b_0000_0001,
+    /// <summary>
+    /// 
+    /// </summary>
+    接线模式 = 0B_0000_0010,
+    /// <summary>
+    /// 
+    /// </summary>
+    控制模式 = 0b_0000_0100,
+    /// <summary>
+    /// 
+    /// </summary>
+    谐波模式 = 0b_0000_1000,
+    /// <summary>
+    /// 
+    /// </summary>
+    无功计算方法 = 0b_0001_0000,
+    /// <summary>
+    /// 
+    /// </summary>
+    档位 = 0b_0010_0000
+}
+
+/// <summary>
+/// 设置模式及档位的【参数】：工作模式
+/// </summary>
+public enum WorkMode
+{
+    标准源=0b_0000_0001,
+    功耗测试=0b_0000_0100
 }
 
 

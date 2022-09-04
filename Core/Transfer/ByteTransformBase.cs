@@ -590,7 +590,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( double[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)
@@ -607,15 +607,32 @@ namespace DKCommunicationNET.Core
         /// <param name="value">等待转化的数据</param>
         /// <param name="encoding">字符串的编码方式</param>
         /// <returns>buffer数据</returns>
-        public virtual byte[] TransByte( string value, Encoding encoding )
+        public virtual byte[] TransByte ( string value, Encoding encoding )
         {
-            if (value == null) return null;
+            if ( value == null ) return Array.Empty<byte>();
 
             return encoding.GetBytes( value );
 
         }
 
-
+        /// <summary>
+        /// 将字符数组转换为字节数组
+        /// </summary>
+        /// <param name="chars"></param>
+        /// <returns></returns>
+        public virtual byte[ ] TransByte ( char[ ] chars )
+        {
+            if ( chars==null )
+            {
+                return Array.Empty<byte>();
+            }
+            byte[] buffer = new byte[ chars.Length*2 ];
+            for ( int i = 0 ; i < chars.Length ; i++ )
+            {
+                BitConverter. GetBytes ( i ). CopyTo ( buffer , i*2 );
+            }
+            return buffer;
+        }
         #endregion
 
         #region DataFormat Support

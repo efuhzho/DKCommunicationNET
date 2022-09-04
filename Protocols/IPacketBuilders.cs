@@ -10,10 +10,21 @@ namespace DKCommunicationNET. Protocols;
 /// </summary>
 internal interface IPacketBuilderHelper
 {
-    //TODO 添加注释
-    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id );
-    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data , ushort id );
-    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort id );
+    /// <summary>
+    /// 有参数
+    /// </summary>
+    /// <param name="commandCode">命令码</param>
+    /// <param name="commandLength">完成命令长度</param>
+    /// <param name="data">数据</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data );
+
+    /// <summary>
+    /// 无参数简化
+    /// </summary>
+    /// <param name="commandCode"><inheritdoc cref="PacketShellBuilder(byte, ushort, byte[])"/></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode );
 }
 
 /// <summary>
@@ -25,13 +36,29 @@ internal interface IPacketBuilder_Settings
     /// 设置系统模式
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetSystemMode ( byte systemMode );
+    OperateResult<byte[ ]> Packet_SetSystemMode ( byte systemMode );
 
     /// <summary>
     /// 设置显示页面
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetDisplayPage ( byte displayPage );
+    OperateResult<byte[ ]> Packet_SetDisplayPage ( byte displayPage );
+
+    /// <summary>
+    /// 【高级别权限】设备信息设置
+    /// </summary>
+    /// <param name="password">密码</param>
+    /// <param name="id"></param>
+    /// <param name="sn">设备序列号</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetDeviceInfo ( char[ ] password , byte id , string sn );
+
+    /// <summary>
+    /// 设置波特率；设备不保存 固件V5.26 以后版本支持，该命令设置后不应答，可在设置界面查询当前波特率
+    /// </summary>
+    /// <param name="baudRate">要设置的波特率</param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_SetBaudRate ( ushort baudRate );
 }
 
 /// <summary>
@@ -112,9 +139,15 @@ internal interface IPacketsBuilder_ACS
     /// 【Hex81】创建报文：设置闭环模式
     /// </summary>
     /// <param name="closeLoopMode"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode );
+
+    /// <summary>
+    /// 设置谐波模式
+    /// </summary>
     /// <param name="harmonicMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode=0 , HarmonicMode harmonicMode=0 );
+    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode );
 
     /// <summary>
     /// 【报文长度不可超过256】创建报文：设置谐波输出参数；如果谐波组为null,则指令为清空谐波
@@ -174,13 +207,13 @@ internal interface IPacketBuilder_ACM
 /// <summary>
 /// 直流源报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCS:ISetProperties_DCS
+internal interface IPacketBuilder_DCS : ISetProperties_DCS
 {
     /// <summary>
     /// 创建报文：停止直流电压输出
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Stop_DCU (  );
+    OperateResult<byte[ ]> Packet_Stop_DCU ( );
 
     /// <summary>
     /// 创建报文：停止直流电压流输出
@@ -198,7 +231,7 @@ internal interface IPacketBuilder_DCS:ISetProperties_DCS
     /// 创建报文：打开直流电压输出
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_Open_DCU (  );
+    OperateResult<byte[ ]> Packet_Open_DCU ( );
 
     /// <summary>
     /// 创建报文：打开直流电流输出
@@ -218,7 +251,7 @@ internal interface IPacketBuilder_DCS:ISetProperties_DCS
     /// <param name="indexOfRange">档位索引值</param>
     /// <param name="amplitude">要设定的幅值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetAmplitude_DCI (  float amplitude , byte indexOfRange );
+    OperateResult<byte[ ]> Packet_SetAmplitude_DCI ( float amplitude , byte indexOfRange );
 
     /// <summary>
     /// 创建报文：设置直流电压幅度和档位
@@ -254,14 +287,14 @@ internal interface IPacketBuilder_DCS:ISetProperties_DCS
     /// </summary>
     /// <param name="indexOfRange">档位索引值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange_DCI (  byte indexOfRange );
+    OperateResult<byte[ ]> Packet_SetRange_DCI ( byte indexOfRange );
 
     /// <summary>
     /// 创建报文：设置直流电压幅度和档位
     /// </summary>
     /// <param name="indexOfRange">档位索引值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange_DCU (  byte indexOfRange );
+    OperateResult<byte[ ]> Packet_SetRange_DCU ( byte indexOfRange );
 
     /// <summary>
     /// 创建报文：设置直流电阻幅度和档位
@@ -274,17 +307,17 @@ internal interface IPacketBuilder_DCS:ISetProperties_DCS
 /// <summary>
 /// 直流表模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCM:ISetProperties_DCM
-{    
+internal interface IPacketBuilder_DCM : ISetProperties_DCM
+{
     /// <summary>
     /// 设置直流表量程和测量类型
     /// </summary>
     /// <param name="rangeIndex">量程索引值</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetRange_DCMU ( byte rangeIndex  );
-    OperateResult<byte[ ]> Packet_SetRange_DCMI ( byte rangeIndex  );
-    OperateResult<byte[ ]> Packet_SetRange_DCMU_Ripple( byte rangeIndex  );
-    OperateResult<byte[ ]> Packet_SetRange_DCMI_Ripple( byte rangeIndex  );
+    OperateResult<byte[ ]> Packet_SetRange_DCMU ( byte rangeIndex );
+    OperateResult<byte[ ]> Packet_SetRange_DCMI ( byte rangeIndex );
+    OperateResult<byte[ ]> Packet_SetRange_DCMU_Ripple ( byte rangeIndex );
+    OperateResult<byte[ ]> Packet_SetRange_DCMI_Ripple ( byte rangeIndex );
 
     /// <summary>
     /// 读取直流表数据
@@ -309,14 +342,14 @@ internal interface IPacketBuilder_IO
 /// <summary>
 /// 电能模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_EPQ:ISetProperties_EPQ
-{   
+internal interface IPacketBuilder_EPQ : ISetProperties_EPQ
+{
 
     /// <summary>
     /// 创建报文：读取电能校验误差
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ReadData (Channels_EPQ Channels =Channels_EPQ.Channel1 );
+    OperateResult<byte[ ]> Packet_ReadData ( Channels_EPQ Channels = Channels_EPQ. Channel1 );
 
     /// <summary>
     /// 创建报文：设置电能校验参数并启动有功电能校验
@@ -341,7 +374,7 @@ internal interface IPacketBuilder_EPQ:ISetProperties_EPQ
     /// </summary>
     /// <param name="Const_PS">源有功脉冲常数</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetConst_PS ( float Const_PS);
+    OperateResult<byte[ ]> Packet_SetConst_PS ( float Const_PS );
 
     /// <summary>
     /// 创建报文：设置无功输出脉冲常数
@@ -521,6 +554,14 @@ internal interface IPacketBuilder_PPS
     /// <param name="dateTime"></param>
     /// <param name="timeZones"></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> CompareTime_Manual(Enum Type_CompareTime , DateTime dateTime , short timeZones = 8 );
+    OperateResult<byte[ ]> CompareTime_Manual ( Enum Type_CompareTime , DateTime dateTime , short timeZones = 8 );
+
+    /// <summary>
+    /// 查询对时模块状态数据
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]> ReadData_PPS ( );
+
+
 }
 

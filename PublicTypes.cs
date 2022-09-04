@@ -254,6 +254,13 @@ public enum Channels_EPQ
     /// </summary>
     Channel_All = 0xFF
 }
+
+public enum QP_Mode
+{
+    滤波法 = 0,
+    三角法 = 1,
+    时延法 = 2
+}
 #endregion
 
 

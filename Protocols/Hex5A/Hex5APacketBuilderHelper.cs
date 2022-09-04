@@ -7,12 +7,12 @@ using System. Threading. Tasks;
 namespace DKCommunicationNET. Protocols. Hex5A;
 
 [Model ( Models. Hex5A )]
-internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
+internal class Hex5APacketBuilderHelper : IPacketBuilderHelper
 {
-    public static readonly Hex5APacketBuilderHelper Instance = new  ( );
-
-    public Hex5APacketBuilderHelper ( )
+    readonly ushort _id;
+    internal Hex5APacketBuilderHelper ( ushort id )
     {
+        _id = id;
         InitDic ( );
     }
 
@@ -22,12 +22,46 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
     /// <param name="commandCode">命令码</param>
     /// <param name="id">设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort id )
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode )
     {
-        return PacketShellBuilder(commandCode, 11, id );
+        return PacketShellBuilderHelper ( commandCode , 11 );
     }
 
+    /// <summary>
+    /// 带参数的完整报文可直接发送给串口
+    /// </summary>
+    /// <param name="commandCode">命令码</param>
+    /// <param name="commandLength">指令长度</param>
+    /// <param name="data">参数</param>
+    /// <param name="id">可选参数：设备ID</param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data )
+    {
+        OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilderHelper ( commandCode , commandLength );
+        try
+        {
 
+            if ( dataBytesWithoutData. IsSuccess )
+            {
+                Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
+
+
+                dataBytesWithoutData. Content[commandLength - 3] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[0];
+                dataBytesWithoutData. Content[commandLength - 2] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[1];
+                return dataBytesWithoutData;
+            }
+            else
+            {
+                return dataBytesWithoutData;
+            }
+        }
+        catch ( Exception ex )
+        {
+            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
+        }
+    }
+
+    #region  私有方法>>>PacketShellBuilderHelper
     /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
@@ -35,19 +69,12 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , ushort id )
+    private OperateResult<byte[ ]> PacketShellBuilderHelper ( byte commandCode , ushort commandLength )
     {
-        byte ID;
-        if ( !AnalysisID ( id ). IsSuccess )
-        {
-            return AnalysisID ( id );
-
-        }
-        ID = AnalysisID ( id ). Content[0];
-
         //尝试预创建报文
         try
         {
+            byte ID = AnalysisID ( _id );
             byte[ ] buffer = new byte[commandLength];
             buffer[0] = Hex5AInformation. Sync0;
             buffer[1] = Hex5AInformation. Sync1;
@@ -73,41 +100,7 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
             return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
         }
     }
-
-    /// <summary>
-    /// 带参数的完整报文可直接发送给串口
-    /// </summary>
-    /// <param name="commandCode">命令码</param>
-    /// <param name="commandLength">指令长度</param>
-    /// <param name="data">参数</param>
-    /// <param name="id">可选参数：设备ID</param>
-    /// <returns></returns>
-    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data , ushort id  )
-    {
-        try
-        {
-            OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilder ( commandCode , commandLength , id );
-            if ( dataBytesWithoutData. IsSuccess )
-            {
-
-
-                Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
-
-
-                dataBytesWithoutData. Content[commandLength - 3] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[0];
-                dataBytesWithoutData. Content[commandLength - 2] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[1];
-                return dataBytesWithoutData;
-            }
-            else
-            {
-                return dataBytesWithoutData;
-            }
-        }
-        catch ( Exception ex )
-        {
-            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
-        }
-    }
+    #endregion
 
     #region Private Methods ==> [解析ID]
     /// <summary>
@@ -115,20 +108,12 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
-    private OperateResult<byte[ ]> AnalysisID ( ushort id )
+    private static byte AnalysisID ( ushort id )
     {
-        try
-        {
-            byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
-            return OperateResult. CreateSuccessResult ( oneByteID );
-        }
-        catch ( Exception )
-        {
-            return new OperateResult<byte[ ]> ( 1001 , "请输入正确的ID!" );
-        }
+        byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
+        return oneByteID[0];
     }
     #endregion Private Methods ==> [解析ID]
-
 
     #region Private Methods ==> [帧类型和报文类型的字典]
 
@@ -170,6 +155,6 @@ internal class Hex5APacketBuilderHelper:IPacketBuilderHelper
         }
     }
 
-  
+
     #endregion Private Methods ==> [帧类型和报文类型的字典]
 }
