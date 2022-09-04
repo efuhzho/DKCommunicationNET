@@ -48,12 +48,14 @@ internal class Hex5APacketBuilder_Settings:IPacketBuilder_Settings
 
     public OperateResult<byte[ ]> Packet_SetSystemMode ( byte systemMode )
     {
-        throw new NotImplementedException ( );
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
     public OperateResult<byte[ ]> Packet_SetDisplayPage ( byte displayPage )
     {
-        throw new NotImplementedException ( );
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
    

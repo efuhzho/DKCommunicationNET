@@ -451,6 +451,7 @@ public class ACS : IModuleACS
         return SetHarmonics ( harmonicChannels ); //TODO 重写
     }
 
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetRanges_IP ( byte rangeIndex_IP )
     {
         //执行命令前的功能状态检查
