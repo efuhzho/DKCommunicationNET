@@ -60,11 +60,6 @@ internal class Hex5AFactory : IProtocolFactory
         // return new Hex5ADecoder( byteTransform );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id , IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
-
     public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );

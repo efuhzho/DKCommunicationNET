@@ -8,12 +8,10 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 /// </summary>
 internal class Hex5APacketBuilder_PPS : IPacketBuilder_PPS
 {
-    private readonly ushort _id;
-    private readonly IByteTransform _byteTransform;
-    public Hex5APacketBuilder_PPS ( ushort id , IByteTransform byteTransform )
+    private readonly Hex5APacketBuilderHelper _PBHelper;
+    public Hex5APacketBuilder_PPS ( ushort id )
     {
-        _id = id;
-        _byteTransform = byteTransform;
+        _PBHelper = new Hex5APacketBuilderHelper ( id );
     }
 
     public OperateResult<byte[ ]> CompareTime_Auto ( Enum Type_CompareTime , short timeZones = 8 )
@@ -29,11 +27,9 @@ internal class Hex5APacketBuilder_PPS : IPacketBuilder_PPS
 
     public OperateResult<byte[ ]> ReadData_PPS ( )
     {
-        return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. ReadData_PPS , Hex5AInformation. ReadData_PPS_L , _id );
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. ReadData_PPS );
     }
 
-
-    
     #region 私有方法
 
     private OperateResult<byte[ ]> CompareTime ( Type_CompareTime type , DateTime dateTime , short timeZones = 8 )
@@ -42,7 +38,7 @@ internal class Hex5APacketBuilder_PPS : IPacketBuilder_PPS
         data[0] = ( byte ) type;
         BitConverter. GetBytes ( dateTime. Ticks ). CopyTo ( data , 1 );
         data[5] = ( byte ) timeZones;
-        return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. CompareTime , Hex5AInformation. CompareTime_L , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. CompareTime , Hex5AInformation. CompareTime_L , data );
     }
     #endregion
 

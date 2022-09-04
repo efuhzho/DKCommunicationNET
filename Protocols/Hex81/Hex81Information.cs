@@ -92,7 +92,7 @@ internal class Hex81Information
     public const ushort SetWireModeLength = 8;
 
     /// <summary>
-    /// 闭环控制使能命令：HarmonicMode ：谐波模式，0-以真有效值的百分比输入谐波（有效值恒定）；1-以基波值的百分比输入谐波（基波恒定）
+    /// 闭环控制使能命令：SetHarmonicMode ：SetHarmonicMode，0-以真有效值的百分比输入谐波（有效值恒定）；1-以基波值的百分比输入谐波（基波恒定）
     /// </summary>
     public const byte SetClosedLoop = 0x36;
     public const ushort SetClosedLoopLength = 9;

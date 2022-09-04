@@ -10,13 +10,13 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 
 
 internal class Hex5APacketBuilder_Settings:IPacketBuilder_Settings
-{
-    private readonly ushort _id;
+{    
     private readonly IByteTransform _byteTransform;
+    private readonly Hex5APacketBuilderHelper _PBHelper;
     public Hex5APacketBuilder_Settings ( ushort id , IByteTransform byteTransform )
-    {
-        _id = id;
+    {      
         _byteTransform = byteTransform;
+        _PBHelper=new Hex5APacketBuilderHelper(id);
     }
 
     public OperateResult<byte[ ]> Packet_SetDeviceInfo ( char[ ] password , byte id , string sn )
@@ -41,7 +41,7 @@ internal class Hex5APacketBuilder_Settings:IPacketBuilder_Settings
         else return new OperateResult<byte[ ]> ( "设备编号长度超限" );
 
         //返回结果
-        return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. SetDeviceInfo , Hex5AInformation. SetDeviceInfo_L , data , _id );
+        return _PBHelper.PacketShellBuilder ( Hex5AInformation. SetDeviceInfo , Hex5AInformation. SetDeviceInfo_L , data );
     }
 
 
@@ -49,13 +49,12 @@ internal class Hex5APacketBuilder_Settings:IPacketBuilder_Settings
     {
         byte[ ] data = new byte[2];
         BitConverter. GetBytes ( baudRate ). CopyTo ( data , 0 );
-        return Hex5APacketBuilderHelper. Instance. PacketShellBuilder ( Hex5AInformation. SetBaudRate , Hex5AInformation. SetBaudRate_L , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetBaudRate , Hex5AInformation. SetBaudRate_L , data );
     }
 
     public OperateResult<byte[ ]> Packet_SetSystemMode ( byte systemMode )
     {
         throw new NotImplementedException ( );
-
     }
 
     public OperateResult<byte[ ]> Packet_SetDisplayPage ( byte displayPage )

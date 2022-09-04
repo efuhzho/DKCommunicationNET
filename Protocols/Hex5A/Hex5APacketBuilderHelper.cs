@@ -33,9 +33,8 @@ internal class Hex5APacketBuilderHelper : IPacketBuilderHelper
     /// <param name="commandCode">命令码</param>
     /// <param name="commandLength">指令长度</param>
     /// <param name="data">参数</param>
-    /// <param name="id">可选参数：设备ID</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data )
+    public  OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data )
     {
         OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilderHelper ( commandCode , commandLength );
         try
@@ -69,7 +68,7 @@ internal class Hex5APacketBuilderHelper : IPacketBuilderHelper
     /// <param name="commandLength">指令长度</param>
     ///  /// <param name="id">设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    private OperateResult<byte[ ]> PacketShellBuilderHelper ( byte commandCode , ushort commandLength )
+    private  OperateResult<byte[ ]> PacketShellBuilderHelper ( byte commandCode , ushort commandLength )
     {
         //尝试预创建报文
         try

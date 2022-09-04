@@ -1,4 +1,6 @@
-﻿namespace DKCommunicationNET. Protocols. Hex5A;
+﻿using DKCommunicationNET. Core;
+
+namespace DKCommunicationNET. Protocols. Hex5A;
 
 internal class Hex5AInformation
 {
@@ -48,7 +50,7 @@ internal class Hex5AInformation
     public const byte SetBaudRate = 0x18;
     public const byte SetBaudRate_L = 13;
 
-   
+
     #endregion CommandCodes>>>系统
 
     #region CommandCodes>>>ACS
@@ -63,6 +65,11 @@ internal class Hex5AInformation
     /// </summary>
     public const byte SetSystemModeAndRanges = 0x31;
     public const byte SetSystemModeAndRanges_L = 25;
+
+    /// <summary>
+    /// 设置标准源参数
+    /// </summary>
+    public const byte SetStandardSource = 0x32;
 
     #endregion CommandCodes>>>ACS
 
@@ -393,42 +400,210 @@ public enum Type_CompareTime : byte
 /// 设置模式及档位的【参数】：类型标识
 /// </summary>
 [Flags]
-public enum Flag_Type : byte
+public enum Flag_SetType : byte
 {
     /// <summary>
-    /// 
+    /// 设置工作模式
     /// </summary>
-    工作模式 = 0b_0000_0001,
+    SetWorkMode = 0b_0000_0001,
     /// <summary>
-    /// 
+    /// 设置接线模式
     /// </summary>
-    接线模式 = 0B_0000_0010,
+    SetWireMode = 0B_0000_0010,
     /// <summary>
-    /// 
+    /// 设置控制模式
     /// </summary>
-    控制模式 = 0b_0000_0100,
+    SetCloseLoopMode = 0b_0000_0100,
     /// <summary>
-    /// 
+    /// 设置谐波模式
     /// </summary>
-    谐波模式 = 0b_0000_1000,
+    SetHarmonicMode = 0b_0000_1000,
     /// <summary>
-    /// 
+    /// 设置无功计算方法
     /// </summary>
-    无功计算方法 = 0b_0001_0000,
+    SetWattLessMethod = 0b_0001_0000,
     /// <summary>
-    /// 
+    /// 设置档位
     /// </summary>
-    档位 = 0b_0010_0000
+    SetRanges = 0b_0010_0000
 }
 
 /// <summary>
-/// 设置模式及档位的【参数】：工作模式
+/// 设置模式及档位的【参数】：SetWorkMode
 /// </summary>
-public enum WorkMode
+public enum WorkMode : byte
 {
-    标准源=0b_0000_0001,
-    功耗测试=0b_0000_0100
+    /// <summary>
+    /// 标准源
+    /// </summary>
+    StandardSource = 0b_0000_0001,
+
+    /// <summary>
+    /// 
+    /// </summary>
+    Consumption = 0b_0000_0100
 }
 
+/// <summary>
+/// 设置标准源的参数:类型
+/// </summary>
+public enum Type_SetStandardSource : byte
+{
+    /// <summary>
+    /// 幅值
+    /// </summary>
+    Amplitude = 1,
+    /// <summary>
+    /// 相位
+    /// </summary>
+    Phase = 2,
+    /// <summary>
+    /// 频率
+    /// </summary>
+    Freqency = 3,
+    /// <summary>
+    /// 有功
+    /// </summary>
+    WattPower = 4,
+    /// <summary>
+    /// 无功
+    /// </summary>
+    WattlessPower = 5,
+}
+
+/// <summary>
+/// 通道号
+/// </summary>
+[Flags]
+public enum SetStandardSource_Channels : byte
+{
+    /// <summary>
+    /// A相电压
+    /// </summary>
+    Channel_Ua = 0b_0000_0001,
+
+    /// <summary>
+    /// B相电压
+    /// </summary>
+    Channel_Ub = 0b_0000_0100,
+
+    /// <summary>
+    /// C相电压
+    /// </summary>
+    Channel_Uc = 0b_0001_0000,
+
+    /// <summary>
+    /// A相电流
+    /// </summary>
+    Channel_Ia = 0b_0000_0010,
+
+    /// <summary>
+    /// B相电流
+    /// </summary>
+    Channel_Ib = 0b_0000_1000,
+
+    /// <summary>
+    /// C相电流
+    /// </summary>
+    Channel_Ic = 0b_0010_0000,
+
+    /// <summary>
+    /// X相电压
+    /// </summary>
+    Channel_Ux = 0b_0100_0000,
+
+    /// <summary>
+    /// X相电流
+    /// </summary>
+    Channel_Ix = 0b_1000_0000,
+
+    /// <summary>
+    /// 所有相电压[不含X相]
+    /// </summary>
+    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,   
+
+    /// <summary>
+    /// 所有相电流[不含X相]
+    /// </summary>
+    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   
+}
+
+/// <summary>
+/// 频率通道
+/// </summary>
+[Flags]
+public enum SetStandardSource_Channels_Freq : byte
+{
+    /// <summary>
+    /// 频率
+    /// </summary>
+    Freq = 0b_0000_0001,
+
+    /// <summary>
+    /// X相频率
+    /// </summary>
+    Freq_X = 0b_0100_0000
+}
+
+/// <summary>
+/// 功率通道
+/// </summary>
+[Flags]
+public enum SetStandardSource_Channels_PQ : byte    //TODO 功率通道选择需核实
+{
+    /// <summary>
+    /// 总有功功率
+    /// </summary>
+    P_Sum = 0b_1000_0000
+}
 
 #endregion 枚举类型
+
+#region 结构体
+/// <summary>
+/// 设置标准源参数
+/// </summary>
+public struct SetStandardSourceArgs
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="channels"></param>
+    /// <param name="value"></param>
+    public SetStandardSourceArgs ( Enum channels , float value )
+    {
+        Channels = channels;
+        Value = value;
+    }
+    /// <summary>
+    /// 通道
+    /// </summary>
+    public Enum Channels { get; set; }
+    /// <summary>
+    /// 数据
+    /// </summary>
+    public float Value { get; set; }
+
+    /// <summary>
+    /// 解数据
+    /// </summary>
+    /// <param name="setSourceArgs"></param>
+    /// <param name="byteTransform"></param>
+    /// <returns></returns>
+    public static OperateResult<byte[ ]> SourceArgsToBytes ( SetStandardSourceArgs setSourceArgs , IByteTransform byteTransform )
+    {
+        try
+        {
+            byte[ ] bytes = new byte[5];
+            bytes[0] = Convert. ToByte ( setSourceArgs. Channels );
+            byteTransform. TransByte ( setSourceArgs. Value ). CopyTo ( bytes , 1 );
+            return OperateResult. CreateSuccessResult ( bytes );
+        }
+        catch ( Exception ex )
+        {
+            return new OperateResult<byte[ ]> ( ex. Message );
+        }
+
+    }
+}
+#endregion

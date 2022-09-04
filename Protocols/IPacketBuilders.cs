@@ -1,6 +1,7 @@
 ﻿using System. Security. Cryptography;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
+using DKCommunicationNET. Protocols. Hex5A;
 using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
@@ -73,13 +74,23 @@ internal interface IPacketsBuilder_ACS
     public OperateResult<byte[ ]> Packet_GetRanges ( );
 
     /// <summary>
-    /// 创建报文：设置交流源档位
+    /// 创建报文：[具备保护电流]设置交流源档位
     /// </summary>
     /// <param name="rangeIndexOfACU">电压档位索引值</param>
     /// <param name="rangeIndexOfACI">电流档位索引值</param>
     /// <param name="rangeIndexOfIP">保护电流档位索引值</param>  
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
+
+    /// <summary>
+    /// 创建报文：[具备X相]设置交流源档位
+    /// </summary>
+    /// <param name="rangeIndexOfACU"></param>
+    /// <param name="rangeIndexOfACI"></param>
+    /// <param name="rangeIndex_Ux"></param>
+    /// <param name="rangeIndex_Ix"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndex_Ux =0, byte rangeIndex_Ix =0);
 
     /// <summary>
     /// 创建【设置交流源幅度】的报文
@@ -90,12 +101,12 @@ internal interface IPacketsBuilder_ACS
     /// <param name="IA">要设定的输出值：IA</param>
     /// <param name="IB">要设定的输出值：IB</param>
     /// <param name="IC">要设定的输出值：IC</param>
-    /// <param name="IPA">要设定的输出值：IPA</param>
-    /// <param name="IPB">要设定的输出值：IPB</param>
+    /// <param name="IPAOrUx">保护电流或X相电压</param>
+    /// <param name="IPBOrIX">要设定的输出值：保护电流或X相电流</param>
     /// <param name="IPC">要设定的输出值：IPC</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 );
-
+    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx, float IPBOrIX  , float IPC );
+      
     /// <summary>
     /// 创建【打开交流源】的报文
     /// </summary>
@@ -155,7 +166,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channels">要设置的谐波通道</param>
     /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonics ( byte channels , HarmonicArgs[ ]? harmonics = null );
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( Channels channels , HarmonicArgs[ ]? harmonics = null );
 
     /// <summary>
     /// 创建报文：设置有功功率

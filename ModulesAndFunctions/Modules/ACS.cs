@@ -99,7 +99,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte HarmonicCount => _decoder. HarmonicCount;
     /// <inheritdoc/>
-    public Channels_Harmonic? HarmonicChannels => _decoder. HarmonicChannels;
+    public Channels? HarmonicChannels => _decoder. HarmonicChannels;
     /// <inheritdoc/>
     public HarmonicArgs[ ]? Harmonics => _decoder. Harmonics;
     /// <inheritdoc/>
@@ -359,7 +359,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode , HarmonicMode ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode  ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
@@ -372,10 +372,10 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( CloseLoopMode , HarmonicMode ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonicMode (HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetHarmonics ( Channels_Harmonic harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
+    public OperateResult<byte[ ]> SetHarmonics ( Channels harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
     {
         //执行命令前的功能状态检查
         var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
@@ -385,8 +385,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        byte channel = Convert. ToByte ( harmonicChannels );
-        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonics ( channel , harmonicArgs ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonics ( harmonicChannels , harmonicArgs ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
@@ -446,7 +445,7 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ClearHarmonics ( Channels_Harmonic harmonicChannels )
+    public OperateResult<byte[ ]> ClearHarmonics ( Channels harmonicChannels )
     {
         return SetHarmonics ( harmonicChannels );
     }

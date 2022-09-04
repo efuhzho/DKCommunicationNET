@@ -66,20 +66,20 @@ public enum WireMode : byte
     /// </summary>
     WireMode_3P3L = 01,
 
-    /// <summary>
-    /// 单相
-    /// </summary>
-    WireMode_1P1L = 02,
+    ///// <summary>
+    ///// 单相
+    ///// </summary>
+    //WireMode_1P1L = 02,
 
-    /// <summary>
-    /// 二线两元件（两个互感器）
-    /// </summary>
-    WireMode_2Component = 03,
+    ///// <summary>
+    ///// 二线两元件（两个互感器）
+    ///// </summary>
+    //WireMode_2Component = 03,
 
-    /// <summary>
-    /// 二线三元件（三个互感器）
-    /// </summary>
-    WireMode_3Component = 04,
+    ///// <summary>
+    ///// 二线三元件（三个互感器）
+    ///// </summary>
+    //WireMode_3Component = 04,
 }
 
 /// <summary>
@@ -99,7 +99,7 @@ public enum CloseLoopMode : byte
 }
 
 /// <summary>
-/// 谐波模式
+/// SetHarmonicMode
 /// </summary>
 public enum HarmonicMode : byte
 {
@@ -115,10 +115,10 @@ public enum HarmonicMode : byte
 }
 
 /// <summary>
-/// 谐波设置通道选择
+/// 获取或设置输出通道
 /// </summary>
 [Flags]
-public enum Channels_Harmonic : byte
+public enum Channels : byte
 {
     /// <summary>
     /// A相电压
@@ -151,17 +151,27 @@ public enum Channels_Harmonic : byte
     Channel_Ic = 0b_0010_0000,  // 0x20 // 32
 
     /// <summary>
-    /// 所有相电压
+    /// X相电压
+    /// </summary>
+    Channel_Ux = 0b_0100_0000,
+
+    /// <summary>
+    /// X相电流
+    /// </summary>
+    Channel_Ix = 0b_1000_0000,
+
+    /// <summary>
+    /// 所有相电压:不包含X相
     /// </summary>
     Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,    // 0x07 // 7
 
     /// <summary>
-    /// 所有相电流
+    /// 所有相电流:不包含X相
     /// </summary>
     Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   // 0x38 // 56
 
     /// <summary>
-    /// 电压所有相和电流所有相
+    /// 电压所有相和电流所有相:不包含X相
     /// </summary>
     Channel_All = Channel_U | Channel_I   // 0x3F // 63
 }
@@ -255,12 +265,16 @@ public enum Channels_EPQ
     Channel_All = 0xFF
 }
 
-public enum QP_Mode
+/// <summary>
+/// 无功计算方法
+/// </summary>
+public enum QP_Mode : byte
 {
     滤波法 = 0,
     三角法 = 1,
     时延法 = 2
 }
+
 #endregion
 
 
@@ -273,20 +287,19 @@ public struct HarmonicArgs
     /// <summary>
     /// 支持的最大谐波次数
     /// </summary>
-    internal readonly byte harmonicTimesMax;
+    internal readonly byte harmonicTimesMax = 100;
     /// <summary>
     /// 支持的最大谐波幅度
     /// </summary>
-    internal readonly float amplitudeMax;
+    internal readonly float amplitudeMax = 1F;
     /// <summary>
     /// 谐波参数构造函数
     /// </summary>    
-    /// <param name="harmonicTimesMax">支持的最大谐波次数</param>
-    /// <param name="amplitudeMax">支持的最大谐波幅度</param>
-    public HarmonicArgs ( byte harmonicTimesMax = 100 , float amplitudeMax = 1F )
+    public HarmonicArgs ( byte HarmonicTimes , float Amplitude , float Angle )
     {
-        this. harmonicTimesMax = harmonicTimesMax;
-        this. amplitudeMax = amplitudeMax;
+        _harmonicTimes = HarmonicTimes;
+        _amplitude = Amplitude;
+        _angle = Angle;
     }
 
     private byte _harmonicTimes = 0;
@@ -378,6 +391,8 @@ public struct HarmonicArgs
         return $"谐波次数：{HarmonicTimes}；谐波幅度：{Amplitude}；谐波相位：{Angle}。支持的最大谐波次数：{harmonicTimesMax}；支持的最大谐波幅度：{amplitudeMax}";
     }
 }
+
+
 #endregion Structs
 
 
