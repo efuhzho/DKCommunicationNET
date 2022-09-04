@@ -62,7 +62,22 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="rangeIndexOfACI"></param>
     /// <param name="rangeIndexOfIP"></param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 );
+    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI );
+
+    /// <summary>
+    /// 设置保护电流档位
+    /// </summary>
+    /// <param name="rangeIndex_IP"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> SetRanges_IP ( byte rangeIndex_IP );
+
+    /// <summary>
+    /// 设置X相档位
+    /// </summary>
+    /// <param name="rangeIndex_Ux"></param>
+    /// <param name="rangeIndex_Ix"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> SetRanges_X ( byte rangeIndex_Ux , byte rangeIndex_Ix );
 
     /// <summary>
     /// 设置交流源幅度
@@ -134,14 +149,14 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="harmonicChannels">枚举类型参数：谐波通道；【注意】需引用对应的协议类型的命名空间</param>
     /// <param name="harmonicArgs">要设置的谐波参数组【可选参数，当参数为null时，将清空所选通道的谐波。清空谐波还可以调用方法：ClearHarmonics】</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonics ( Channels harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null );
+    OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null );
 
     /// <summary>
     /// 清除谐波
     /// </summary>
     /// <param name="harmonicChannels">需要清除的谐波通道</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> ClearHarmonics ( Channels harmonicChannels );
+    OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels );
 
     /// <summary>
     /// 读取交流源当前输出数据
@@ -272,7 +287,7 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前谐波输出通道
     /// </summary>
-    Channels? HarmonicChannels { get; }
+    Enum? HarmonicChannels { get; }
 
     /// <summary>
     /// 当前谐波输出数据

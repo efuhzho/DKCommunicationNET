@@ -551,15 +551,23 @@ public enum SetStandardSource_Channels_Freq : byte
 }
 
 /// <summary>
-/// 功率通道
+/// 设置有功功率通道枚举
 /// </summary>
 [Flags]
-public enum SetStandardSource_Channels_PQ : byte    //TODO 功率通道选择需核实
+public enum Channel_WattPower  : byte    //TODO 功率通道选择需核实
 {
     /// <summary>
     /// 总有功功率
     /// </summary>
     P_Sum = 0b_1000_0000
+}
+
+/// <summary>
+/// 设置无功功率通道枚举
+/// </summary>
+public enum Channel_WattLessPower : byte
+{
+
 }
 
 #endregion 枚举类型

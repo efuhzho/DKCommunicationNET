@@ -1,6 +1,7 @@
 ﻿using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
+using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Module;
 
@@ -99,7 +100,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public byte HarmonicCount => _decoder. HarmonicCount;
     /// <inheritdoc/>
-    public Channels? HarmonicChannels => _decoder. HarmonicChannels;
+    public Enum? HarmonicChannels => _decoder. HarmonicChannels;
     /// <inheritdoc/>
     public HarmonicArgs[ ]? Harmonics => _decoder. Harmonics;
     /// <inheritdoc/>
@@ -269,7 +270,7 @@ public class ACS : IModuleACS
         return result;
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI , byte rangeIndexOfIP = 0 )
+    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI )
     {
         //执行命令前的功能状态检查
         var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
@@ -279,7 +280,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI , rangeIndexOfIP ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
@@ -375,7 +376,7 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonicMode (HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetHarmonics ( Channels harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
+    public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
     {
         //执行命令前的功能状态检查
         var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
@@ -445,13 +446,40 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ClearHarmonics ( Channels harmonicChannels )
+    public OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels )
     {
-        return SetHarmonics ( harmonicChannels );
+        return SetHarmonics ( harmonicChannels ); //TODO 重写
     }
 
+    public OperateResult<byte[ ]> SetRanges_IP ( byte rangeIndex_IP )
+    {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行报文发送并接收下位机回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_IP(rangeIndex_IP) , _methodOfCheckResponse );
+    }
+
+    public OperateResult<byte[ ]> SetRanges_X ( byte rangeIndex_Ux , byte rangeIndex_Ix )
+    {
+        //执行命令前的功能状态检查
+        var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isEnabled );
+        if ( !checkResult. IsSuccess || _packetsBuilder == null )
+        {
+            return checkResult;
+        }
+
+        //执行报文发送并接收下位机回复报文
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_X( rangeIndex_Ux,rangeIndex_Ix ) , _methodOfCheckResponse );
+    }
+
+ 
     #endregion
 
-   
+
 
 }

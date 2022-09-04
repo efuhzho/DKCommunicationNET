@@ -108,19 +108,19 @@ internal class Hex81PacketBuilder_ACS : IPacketsBuilder_ACS
         return _PBHelper. PacketShellBuilder ( Hex81Information. SetHarmonics , ( ushort ) ( data. Length + 7 ) , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattPower ( byte channel , float p )
+    public OperateResult<byte[ ]> Packet_SetWattPower ( Enum channel , float p )
     {
         byte[ ] data = new byte[5];
-        data[0] = channel;
+        data[0] =Convert.ToByte( channel);
         _byteTransform. TransByte ( p ). CopyTo ( data , 1 );
 
         return _PBHelper. PacketShellBuilder ( Hex81Information. SetWattPower , Hex81Information. SetWattPowerLength , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q )
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum channel , float q )
     {
         byte[ ] data = new byte[5];
-        data[0] = channel;
+        data[0] = Convert. ToByte ( channel );
         _byteTransform. TransByte ( q ). CopyTo ( data , 1 );
 
         return _PBHelper. PacketShellBuilder ( Hex81Information. SetWattlessPower , Hex81Information. SetWattlessPowerLength , data );

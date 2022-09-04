@@ -116,14 +116,18 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q )
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum Channel_WattLessPower , float q )
     {
-        throw new NotImplementedException ( );
+        SetStandardSourceArgs[] args = new SetStandardSourceArgs[1];
+        args[ 0]=new SetStandardSourceArgs(Channel_WattLessPower, q);
+        return SetArgs_ACS(Type_SetStandardSource.WattlessPower, args);
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattPower ( byte channel , float p )
+    public OperateResult<byte[ ]> Packet_SetWattPower ( Enum Channel_WattPower , float p )
     {
-        throw new NotImplementedException ( );
+        SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
+        args[0] = new SetStandardSourceArgs ( Channel_WattPower , p);
+        return SetArgs_ACS ( Type_SetStandardSource. WattPower , args );
     }
 
     public OperateResult<byte[ ]> Packet_SetWireMode ( WireMode wireMode )

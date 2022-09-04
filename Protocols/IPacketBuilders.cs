@@ -175,18 +175,18 @@ internal interface IPacketsBuilder_ACS
     /// <summary>
     /// 创建报文：设置有功功率
     /// </summary>
-    /// <param name="channel">要设置的有功功率通道</param>
+    /// <param name="Channel_WattPower"></param>
     /// <param name="p">要设置的有功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattPower ( byte channel , float p );
+    public OperateResult<byte[ ]> Packet_SetWattPower ( Enum Channel_WattPower , float p );
 
     /// <summary>
     ///  创建报文：设置无功功率
     /// </summary>
-    /// <param name="channel">要设置的无功功率通道</param>
+    /// <param name="Channel_WattLessPower"></param>
     /// <param name="q">要设置的无功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( byte channel , float q );
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum Channel_WattLessPower , float q );
 
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
@@ -199,6 +199,8 @@ internal interface IPacketsBuilder_ACS
     /// </summary>
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_ReadData_Status ( );
+
+    OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels );
 }
 
 /// <summary>
