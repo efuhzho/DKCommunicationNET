@@ -4,12 +4,14 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilder_DCS : IPacketBuilder_DCS
     {
-        private readonly ushort _id;
+        private readonly Hex5APacketBuilderHelper _PBHelper;
+
         private readonly IByteTransform _transform;
 
         public bool IsAutoRange_DCU { get; set; }
@@ -18,7 +20,8 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public Hex81PacketBuilder_DCS ( ushort id , IByteTransform transform )
         {
-            _id = id;
+            _PBHelper = new Hex5APacketBuilderHelper ( id );
+
             _transform = transform;
         }
 
@@ -26,12 +29,12 @@ namespace DKCommunicationNET. Protocols. Hex81
         {
             if ( Resistor == null )
             {
-                return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , _id );
+                _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_DCS  );
             }
 
             //如果Type不为空，则创建兼容报文
             byte[ ] data = new byte[1] { ( byte ) Resistor };
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_DCS , Hex81Information. ReadData_DCS_Length , data , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_DCS , Hex81Information. ReadData_DCS_Length , data );
         }
 
         public OperateResult<byte[ ]> Packet_Stop_DCU ( )
@@ -66,7 +69,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetRanges_DCS , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. GetRanges_DCS );
         }
 
         public OperateResult<byte[ ]> Packet_SetAmplitude_DCI ( float amplitude , byte indexOfRange )
@@ -128,7 +131,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             data[0] = indexOfRange;
             _transform. TransByte ( amplitude ). CopyTo ( data , 1 );
             data[5] = ( byte ) type;
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetAmplitude_DCS , Hex81Information. SetAmplitude_DCS_Length , data , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. SetAmplitude_DCS , Hex81Information. SetAmplitude_DCS_Length , data );
         }
 
         /// <summary>
@@ -139,7 +142,7 @@ namespace DKCommunicationNET. Protocols. Hex81
         private OperateResult<byte[ ]> Packet_Stop ( OutputType_DCS type )
         {
             byte[ ] data = new byte[1] { ( byte ) type };
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Stop_DCS , Hex81Information. Stop_DCS_Length , data , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. Stop_DCS , Hex81Information. Stop_DCS_Length , data);
         }
 
         /// <summary>
@@ -151,7 +154,7 @@ namespace DKCommunicationNET. Protocols. Hex81
         {
 
             byte[ ] data = new byte[1] { ( byte ) type };
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Open_DCS , Hex81Information. Open_DCS_Length , data , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. Open_DCS , Hex81Information. Open_DCS_Length , data );
         }
 
         /// <summary>
@@ -163,7 +166,7 @@ namespace DKCommunicationNET. Protocols. Hex81
         private OperateResult<byte[ ]> Packet_SetRange ( byte indexOfRange , OutputType_DCS type )
         {
             byte[ ] data = new byte[2] { indexOfRange , ( byte ) type };
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetRange_DCS , Hex81Information. SetRange_DCS_Length , data , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. SetRange_DCS , Hex81Information. SetRange_DCS_Length , data );
         }
    
         #endregion

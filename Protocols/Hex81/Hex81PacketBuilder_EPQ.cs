@@ -4,6 +4,7 @@ using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -15,7 +16,8 @@ internal class Hex81PacketBuilder_EPQ : IPacketBuilder_EPQ
     /// <summary>
     /// 设备ID
     /// </summary>
-    readonly ushort _id;
+    private readonly Hex5APacketBuilderHelper _PBHelper;
+
 
     private readonly IByteTransform _transform;
 
@@ -26,7 +28,8 @@ internal class Hex81PacketBuilder_EPQ : IPacketBuilder_EPQ
     /// <param name="byteTransform"></param>
     public Hex81PacketBuilder_EPQ ( ushort id , IByteTransform byteTransform )
     {
-        _id = id;
+        _PBHelper = new Hex5APacketBuilderHelper ( id );
+
         _transform = byteTransform;
     }
 
@@ -64,7 +67,7 @@ internal class Hex81PacketBuilder_EPQ : IPacketBuilder_EPQ
 
     public OperateResult<byte[ ]> Packet_ReadData ( Channels_EPQ Channels = Channels_EPQ. Channel1 )
     {
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_EPQ , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_EPQ );
     }
 
     public OperateResult<byte[ ]> Packet_SetConst_PS ( float Const_PS )
@@ -98,6 +101,6 @@ internal class Hex81PacketBuilder_EPQ : IPacketBuilder_EPQ
         BitConverter. GetBytes ( DIV ). CopyTo ( data , 17 );
         BitConverter. GetBytes ( Rounds ). CopyTo ( data , 21 );
 
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetElectricity , Hex81Information. SetElectricity_Length , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. SetElectricity , Hex81Information. SetElectricity_Length ,data);
     }
 }

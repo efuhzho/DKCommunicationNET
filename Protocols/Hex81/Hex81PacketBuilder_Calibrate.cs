@@ -1,4 +1,5 @@
 ﻿using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -7,7 +8,8 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// </summary>
 internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
 {
-    private readonly ushort _id;
+    private readonly Hex5APacketBuilderHelper _PBHelper;
+
     private readonly IByteTransform _transform;
 
     /// <summary>
@@ -17,13 +19,14 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
     /// <param name="byteTransform">数据转换规则</param>
     public Hex81PacketBuilder_Calibrate ( ushort id , IByteTransform byteTransform )
     {
-        _id = id;
+        _PBHelper = new Hex5APacketBuilderHelper ( id );
+
         _transform = byteTransform;
     }
     public OperateResult<byte[ ]> Packet_ClearData ( CalibrateType calibrateType , byte uRangeIndex , byte iRangeIndex )
     {
         byte[ ] data = new byte[3] { ( byte ) calibrateType , uRangeIndex , iRangeIndex };
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_ClearData , Hex81Information. Calibrate_ClearDataLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_ClearData , Hex81Information. Calibrate_ClearDataLength , data );
     }
 
     public OperateResult<byte[ ]> Packet_DoAC ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float mUA , float mUB , float mUC , float mIA , float mIB , float mIC )
@@ -38,7 +41,7 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         _transform. TransByte ( mIA ). CopyTo ( data , 15 );
         _transform. TransByte ( mIB ). CopyTo ( data , 19 );
         _transform. TransByte ( mIC ). CopyTo ( data , 23 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_DoAC , Hex81Information. Calibrate_DoACLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_DoAC , Hex81Information. Calibrate_DoACLength , data  );
     }
 
     public OperateResult<byte[ ]> Packet_DoACMeter ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float UA , float UB , float UC , float IA , float IB , float IC )
@@ -53,7 +56,7 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         _transform. TransByte ( IA ). CopyTo ( data , 15 );
         _transform. TransByte ( IB ). CopyTo ( data , 19 );
         _transform. TransByte ( IC ). CopyTo ( data , 23 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_DoACMeter , Hex81Information. Calibrate_DoACMeterlength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_DoACMeter , Hex81Information. Calibrate_DoACMeterlength , data );
     }
 
     public OperateResult<byte[ ]> Packet_DoDC ( Calibrate_DCSourceType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float mDCAmplitude )
@@ -63,7 +66,7 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         data[1] = rangeIndex;
         data[2] = ( byte ) calibrateLevel;
         _transform. TransByte ( mDCAmplitude ). CopyTo ( data , 3 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_DoDC , Hex81Information. Calibrate_DoDClength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_DoDC , Hex81Information. Calibrate_DoDClength , data );
     }
 
     public OperateResult<byte[ ]> Packet_DoDCMeter ( Calibrate_DCMeterType dCMeterType , byte rangeIndex , CalibrateLevel calibrateLevel , float sDCAmplitude )
@@ -73,13 +76,13 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         data[1] = rangeIndex;
         data[2] = ( byte ) calibrateLevel;
         _transform. TransByte ( sDCAmplitude ). CopyTo ( data , 3 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_DoDCMeter , Hex81Information. Calibrate_DoDCMeterLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_DoDCMeter , Hex81Information. Calibrate_DoDCMeterLength , data );
     }
 
     public OperateResult<byte[ ]> Packet_Save ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel )
     {
         byte[ ] data = new byte[3] { uRangeIndex , iRangeIndex , ( byte ) calibrateLevel };
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_Save , Hex81Information. Calibrate_SaveLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_Save , Hex81Information. Calibrate_SaveLength , data  );
     }
 
     public OperateResult<byte[ ]> Packet_SwitchACPoint ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float sUA , float sUB , float sUC , float sIA , float sIB , float sIC )
@@ -94,13 +97,13 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         _transform. TransByte ( sIA ). CopyTo ( data , 15 );
         _transform. TransByte ( sIB ). CopyTo ( data , 19 );
         _transform. TransByte ( sIC ). CopyTo ( data , 23 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_SwitchACPoint , Hex81Information. Calibrate_SwitchACPointLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_SwitchACPoint , Hex81Information. Calibrate_SwitchACPointLength , data );
     }
 
     public OperateResult<byte[ ]> Packet_SwitchACRange ( byte uRangeIndex , byte iRangeIndex )
     {
         byte[ ] data = new byte[2] { uRangeIndex , iRangeIndex };
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_SwitchACRange , Hex81Information. Calibrate_SwitchACRangeLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_SwitchACRange , Hex81Information. Calibrate_SwitchACRangeLength , data );
     }
 
     public OperateResult<byte[ ]> Packet_SwitchDCPoint ( Calibrate_DCSourceType dCSourceType , byte rangeIndex , CalibrateLevel calibrateLevel , float sDCAmplitude )
@@ -110,6 +113,6 @@ internal class Hex81PacketBuilder_Calibrate : IPacketBuilder_Calibrate
         data[1] = rangeIndex;
         data[2] = ( byte ) calibrateLevel;
         _transform. TransByte ( sDCAmplitude ). CopyTo ( data , 3 );
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. Calibrate_SwitchDCPoint , Hex81Information. Calibrate_SwitchDCPointLength , data , _id );
+        return _PBHelper. PacketShellBuilder ( Hex81Information. Calibrate_SwitchDCPoint , Hex81Information. Calibrate_SwitchDCPointLength , data );
     }
 }

@@ -4,25 +4,27 @@ using System. Linq;
 using System. Security. Cryptography;
 using System. Text;
 using System. Threading. Tasks;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilder_ACM:IPacketBuilder_ACM
     {
-        readonly ushort _id;
+        private readonly Hex5APacketBuilderHelper _PBHelper;
+
         public Hex81PacketBuilder_ACM ( ushort id )
         {
-            _id = id;
+            _PBHelper = new Hex5APacketBuilderHelper ( id );
         }
 
         public OperateResult<byte[ ]> Packet_ReadData ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. ReadData_ACS , _id );
+            return _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_ACS );
         }
 
         public OperateResult<byte[ ]> Packet_ReadData_Status ( )
         {
-            return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. GetStatus_ACS , _id );
+          return  _PBHelper. PacketShellBuilder ( Hex81Information. GetStatus_ACS );
         }
     }
 }

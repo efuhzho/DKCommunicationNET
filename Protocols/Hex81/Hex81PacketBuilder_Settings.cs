@@ -3,6 +3,7 @@ using System. Collections. Generic;
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -11,10 +12,7 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// </summary>
 internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
 {
-    /// <summary>
-    /// 设备ID
-    /// </summary>
-    private ushort _id;
+    private readonly Hex5APacketBuilderHelper _PBHelper;
 
     /// <summary>
     /// 构造函数
@@ -22,7 +20,20 @@ internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
     /// <param name="id">设备ID</param>
     public Hex81PacketBuilder_Settings (ushort id )
     {
-        _id = id;
+        _PBHelper = new Hex5APacketBuilderHelper ( id );
+
+    }
+
+    public OperateResult<byte[ ]> Packet_SetBaudRate ( ushort baudRate )
+    {
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
+    }
+
+    public OperateResult<byte[ ]> Packet_SetDeviceInfo ( char[ ] password , byte id , string sn )
+    {
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
     /// <summary>
@@ -33,7 +44,7 @@ internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
     public OperateResult<byte[ ]> Packet_SetDisplayPage (byte displayPage )
     {
         byte[] data = new byte[ displayPage ];
-        return Hex81PacketBuilderHelper. Instance. PacketShellBuilder ( Hex81Information. SetDisplayPage , Hex81Information. SetDisplayPage_Length ,data,_id);
+        return _PBHelper. PacketShellBuilder ( Hex81Information. SetDisplayPage , Hex81Information. SetDisplayPage_Length ,data);
     }
 
     /// <summary>
@@ -44,6 +55,6 @@ internal class Hex81PacketBuilder_Settings : IPacketBuilder_Settings
     public OperateResult<byte[ ]> Packet_SetSystemMode (byte systemMdoe )
     {
         byte[ ] data = new byte[systemMdoe];
-        return Hex81PacketBuilderHelper.Instance.PacketShellBuilder(Hex81Information.SetSystemMode,Hex81Information.SetSystemMode_Length ,data,_id);
+        return _PBHelper.PacketShellBuilder(Hex81Information.SetSystemMode,Hex81Information.SetSystemMode_Length ,data);
     }
 }
