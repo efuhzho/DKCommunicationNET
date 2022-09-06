@@ -1,10 +1,11 @@
 ﻿using System. Text;
 using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. ModulesAndFunctions;
 
 namespace DKCommunicationNET. Protocols. Hex5A
 {
-    internal class Hex5ADecoder //: IDecoder
+    internal class Hex5ADecoder : IDecoder
     {
         //数据转换规则
         private readonly IByteTransform _byteTransform;
@@ -141,7 +142,86 @@ namespace DKCommunicationNET. Protocols. Hex5A
 
         public byte Flag_C => throw new NotImplementedException ( );
 
+        public byte RangesCount_DCU => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCI => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCR => throw new NotImplementedException ( );
+
+        public float DCU => throw new NotImplementedException ( );
+
+        public float DCI => throw new NotImplementedException ( );
+
+        public float DCR => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCU => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCI => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCR => throw new NotImplementedException ( );
+
+        public float[ ]? Ranges_DCU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_DCI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_DCR { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public bool IsOpen_DCU => throw new NotImplementedException ( );
+
+        public bool IsOpen_DCI => throw new NotImplementedException ( );
+
+        public bool IsOpen_DCR => throw new NotImplementedException ( );
+
+        public float[ ]? Ranges_DCMU { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_DCMI { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_DCMU_Ripple { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        public float[ ]? Ranges_DCMI_Ripple { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
+        public float DCMU => throw new NotImplementedException ( );
+
+        public float DCMI => throw new NotImplementedException ( );
+
+        public float DCMU_Ripple => throw new NotImplementedException ( );
+
+        public float DCMI_Ripple => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCMU => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCMI => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCMU_Ripple => throw new NotImplementedException ( );
+
+        public byte RangeIndex_DCMI_Ripple => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCMU => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCMI => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCMU_Ripple => throw new NotImplementedException ( );
+
+        public byte RangesCount_DCMI_Ripple => throw new NotImplementedException ( );
+
+        public uint Rounds_Current => throw new NotImplementedException ( );
+
+        public uint Counts_Current => throw new NotImplementedException ( );
+
+        public float EValue_P => throw new NotImplementedException ( );
+
+        public float EValue_Q => throw new NotImplementedException ( );
+
+        WireMode IProperties_ACS.WireMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        CloseLoopMode IProperties_ACS.CloseLoopMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+        HarmonicMode IProperties_ACS.HarmonicMode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
+
         public OperateResult DecodeGetRanges_ACS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeGetRanges_DCM ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeGetRanges_DCS ( OperateResult<byte[ ]> responsResult )
         {
             throw new NotImplementedException ( );
         }
@@ -210,6 +290,21 @@ namespace DKCommunicationNET. Protocols. Hex5A
         }
 
         public OperateResult DecodeReadData_ACS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeReadData_DCM ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeReadData_DCS ( OperateResult<byte[ ]> responsResult )
+        {
+            throw new NotImplementedException ( );
+        }
+
+        public OperateResult DecodeReadData_EPQ ( OperateResult<byte[ ]> responsResult )
         {
             throw new NotImplementedException ( );
         }

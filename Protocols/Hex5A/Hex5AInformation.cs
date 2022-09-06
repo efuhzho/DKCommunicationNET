@@ -71,6 +71,18 @@ internal class Hex5AInformation
     /// </summary>
     public const byte SetStandardSource = 0x32;
 
+    /// <summary>
+    /// 设置谐波参数
+    /// </summary>
+    public const byte SetHarmonics = 0x33;
+    public const byte SetHarmonics_Clear_L = 13;
+
+    /// <summary>
+    /// 查询交流源数据
+    /// </summary>
+    public const byte ReadData_ACS = 0x40;
+
+
     #endregion CommandCodes>>>ACS
 
     #region CommandCodes>>>PPS

@@ -97,8 +97,16 @@ namespace DKCommunicationNET. BaseClass
         {
             if ( !_SerialPort. IsOpen )
             {
-                _SerialPort. Open ( );
-                InitializationOnOpen ( );
+                try
+                {
+                    _SerialPort. Open ( );
+                    InitializationOnOpen ( );
+                }
+                catch ( Exception )
+                {
+                                        
+                }
+               
             }
         }
 

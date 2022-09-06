@@ -1,10 +1,4 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Core;
-using DKCommunicationNET. ModulesAndFunctions;
+﻿using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex5A;
 
@@ -29,18 +23,19 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
     public OperateResult<byte[ ]> Packet_Open ( )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
-        args[0] = new SetStandardSourceArgs ( Channels. Channel_All , 0);
+        args[0] = new SetStandardSourceArgs ( Channels. Channel_All , 0 );
         return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
     public OperateResult<byte[ ]> Packet_ReadData ( )
     {
-        throw new NotImplementedException ( );
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. ReadData_ACS );
     }
 
     public OperateResult<byte[ ]> Packet_ReadData_Status ( )
     {
-        throw new NotImplementedException ( );
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
     public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx , float IPBOrIX , float IPC )
@@ -75,9 +70,25 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return SetModeAndRanges_ACS ( Flag_SetType. SetHarmonicMode , 0 , 0 , 0 , harmonicMode , 0 , Array. Empty<byte> ( ) );
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ]? harmonics = null )
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ] harmonics )
     {
-        throw new NotImplementedException ( );
+        //参数组数
+        byte count = ( byte ) harmonics. Length;
+        if ( count == 0 )
+        {
+            return Packet_ClearHarmonics ( channels );
+        }
+        //定义数据区数组
+        byte[ ] data = new byte[2 + count * 9];
+        data[0] = Convert. ToByte ( channels );
+        data[1] =   count ;
+        //将谐波组分别转换成字节数组并复制到数据字节数组中
+        for ( int i = 0 ; i < count ; i++ )
+        {
+            HarmonicArgs. HarmonicToBytes ( harmonics[i] , _transform ). CopyTo ( data , 2 + i * 9 );
+
+        }
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetHarmonics , ( ushort ) ( 11 + data. Length ) , data );
     }
 
     public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
@@ -92,7 +103,7 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return SetArgs_ACS ( Type_SetStandardSource. Phase , args );
     }
 
-    
+
     public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI )
     {
         _rangeIndex_ACU = rangeIndexOfACU;
@@ -118,15 +129,15 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
 
     public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum Channel_WattLessPower , float q )
     {
-        SetStandardSourceArgs[] args = new SetStandardSourceArgs[1];
-        args[ 0]=new SetStandardSourceArgs(Channel_WattLessPower, q);
-        return SetArgs_ACS(Type_SetStandardSource.WattlessPower, args);
+        SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
+        args[0] = new SetStandardSourceArgs ( Channel_WattLessPower , q );
+        return SetArgs_ACS ( Type_SetStandardSource. WattlessPower , args );
     }
 
     public OperateResult<byte[ ]> Packet_SetWattPower ( Enum Channel_WattPower , float p )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
-        args[0] = new SetStandardSourceArgs ( Channel_WattPower , p);
+        args[0] = new SetStandardSourceArgs ( Channel_WattPower , p );
         return SetArgs_ACS ( Type_SetStandardSource. WattPower , args );
     }
 
@@ -138,13 +149,16 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
     public OperateResult<byte[ ]> Packet_Stop ( )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
-        args[0] = new SetStandardSourceArgs ( Channels.Channel_All , -1 );
+        args[0] = new SetStandardSourceArgs ( Channels. Channel_All , -1 );
         return SetArgs_ACS ( Type_SetStandardSource. Amplitude , args );
     }
 
-    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels )
+    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum Channels )
     {
-        throw new NotImplementedException ( );
+        byte[ ] data = new byte[2];
+        data[0] = Convert. ToByte ( Channels );
+        data[1] = 0;
+        return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetHarmonics , Hex5AInformation. SetHarmonics_Clear_L , data );
     }
 
 
@@ -217,7 +231,7 @@ internal class Hex5APacketBuilder_ACS : IPacketsBuilder_ACS
         return _PBHelper. PacketShellBuilder ( Hex5AInformation. SetStandardSource , ( ushort ) ( 11 + data. Length ) , data );
     }
 
-    
+
 
     #endregion
 }

@@ -42,14 +42,5 @@ public class DandickSerialBase<TTransform> : SerialBase where TTransform : IByte
     public virtual OperateResult<byte[ ]> HandShake ( )
     {
         return OperateResult. CreateSuccessResult ( Array. Empty<byte> ( ) );
-    }
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    /// <returns><inheritdoc/></returns>
-    protected override OperateResult InitializationOnOpen ( )
-    {
-        return HandShake ( );
-    }
+    }   
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System. Threading. Channels;
 using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 
@@ -78,16 +79,16 @@ internal class Hex81PacketBuilder_ACS : IPacketsBuilder_ACS
         return Packet_SetClosedLoopAndHarmonicMode ( _CloseLoopMode , harmonicMode );
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ]? harmonics = null )
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ] harmonics  )
     {
-        //如果谐波组为空，则指令为清空谐波
-        if ( harmonics == null )
-        {
-            byte[ ] dataClear = new byte[2] { Convert. ToByte ( channels ) , 0 };
-            return _PBHelper. PacketShellBuilder ( Hex81Information. SetHarmonics , ( ushort ) ( dataClear. Length + 7 ) , dataClear );
-        }
         //要设置的谐波个数
         byte count = ( byte ) harmonics. Length;
+
+        //如果谐波组为空，则指令为清空谐波
+        if (count==0 )
+        {
+            return Packet_ClearHarmonics ( channels );
+        }       
 
         //当协议报文长度超过256个时，禁止发送报文以避免下位机出错。【来源于Hex81协议要求】
         if ( count > 27 )
@@ -165,9 +166,10 @@ internal class Hex81PacketBuilder_ACS : IPacketsBuilder_ACS
         return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
     }
 
-    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels )
+    public OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum Channels )
     {
-      return  Packet_SetHarmonics ( harmonicChannels );
+        byte[ ] dataClear = new byte[2] { Convert. ToByte ( Channels ) , 0 };
+        return _PBHelper. PacketShellBuilder ( Hex81Information. SetHarmonics , ( ushort ) ( dataClear. Length + 7 ) , dataClear );
     }
 
     #region 私有方法和字段

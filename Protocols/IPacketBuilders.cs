@@ -170,7 +170,7 @@ internal interface IPacketsBuilder_ACS
     /// <param name="channels">要设置的谐波通道</param>
     /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonics (  Enum channels , HarmonicArgs[ ]? harmonics = null );
+    public OperateResult<byte[ ]> Packet_SetHarmonics (  Enum channels , HarmonicArgs[ ] harmonics );
 
     /// <summary>
     /// 创建报文：设置有功功率
@@ -200,7 +200,12 @@ internal interface IPacketsBuilder_ACS
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_ReadData_Status ( );
 
-    OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum harmonicChannels );
+    /// <summary>
+    /// 清空谐波
+    /// </summary>
+    /// <param name="Channels"></param>
+    /// <returns></returns>
+    OperateResult<byte[ ]> Packet_ClearHarmonics ( Enum Channels );
 }
 
 /// <summary>

@@ -35,7 +35,6 @@ internal class Hex5AFactory : IProtocolFactory
     public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id )
     {
         return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
-
     }
 
     public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id )
@@ -50,33 +49,36 @@ internal class Hex5AFactory : IProtocolFactory
 
     public IProtocolFunctions GetProtocolFunctions ( )
     {
-        throw new NotImplementedException ( );
-        // return new Hex5AFunctions ( );
+
+        return new Hex5AFunctions ( );
     }
 
     public IDecoder GetDecoder ( IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
-        // return new Hex5ADecoder( byteTransform );
+
+        return new Hex5ADecoder ( byteTransform );
     }
 
     public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilder_DCS> ( StringResources. Language. NotSupportedModule );
+
     }
 
     public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
+
     }
 
     public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilder_EPQ> ( StringResources. Language. NotSupportedModule );
+
     }
 
     public OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IPacketBuilder_Calibrate> ( StringResources. Language. NotSupportedModule );
     }
 }

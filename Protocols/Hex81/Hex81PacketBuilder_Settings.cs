@@ -1,9 +1,4 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Protocols. Hex5A;
+﻿using DKCommunicationNET. Protocols. Hex5A;
 
 namespace DKCommunicationNET. Protocols. Hex81;
 

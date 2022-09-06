@@ -58,6 +58,7 @@ public class ACS : IModuleACS
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
+
         _packetsBuilder = protocolFactory. GetPacketBuilderOfACS ( _id , byteTransform ). Content;
 
         //接收解码器
@@ -257,7 +258,7 @@ public class ACS : IModuleACS
         {
             return result;
         }
-       
+
         //解码下位机的回复报文：此处无需判断命令执行结果，判断下放
         var decodeResult = _decoder. DecodeGetRanges_ACS ( result );
 
@@ -360,7 +361,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode  ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetClosedLoop ( ClosedLoopMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
@@ -373,7 +374,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonicMode (HarmonicMode ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetHarmonicMode ( HarmonicMode ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
@@ -455,7 +456,7 @@ public class ACS : IModuleACS
             return checkResult;
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction.Action(_packetsBuilder.Packet_ClearHarmonics(harmonicChannels), _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_ClearHarmonics ( harmonicChannels ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
@@ -469,9 +470,15 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_IP(rangeIndex_IP) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_IP ( rangeIndex_IP ) , _methodOfCheckResponse );
     }
 
+    /// <summary>
+    /// 设置X相档位
+    /// </summary>
+    /// <param name="rangeIndex_Ux"></param>
+    /// <param name="rangeIndex_Ix"></param>
+    /// <returns></returns>
     public OperateResult<byte[ ]> SetRanges_X ( byte rangeIndex_Ux , byte rangeIndex_Ix )
     {
         //执行命令前的功能状态检查
@@ -482,10 +489,10 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_X( rangeIndex_Ux,rangeIndex_Ix ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _packetsBuilder. Packet_SetRanges_X ( rangeIndex_Ux , rangeIndex_Ix ) , _methodOfCheckResponse );
     }
 
- 
+
     #endregion
 
 

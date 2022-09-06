@@ -99,7 +99,7 @@ internal class Hex81Decoder : IDecoder
     public float Freq { get; set; }
     public float Freq_C { get; set; }
     public byte HarmonicCount { get; set; }
-    public Channels? HarmonicChannels { get; set; }
+    public Enum? HarmonicChannels { get; set; }
     public HarmonicArgs[ ]? Harmonics { get; set; }
     public float UA { get; set; }
     public float UB { get; set; }
