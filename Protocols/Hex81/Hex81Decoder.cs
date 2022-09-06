@@ -8,7 +8,7 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// Hex81协议解码器
 /// </summary>
-internal class Hex81Decoder : IDecoder
+public class Hex81Decoder : IDecoder
 {
     private readonly IByteTransform _byteTransform;
     public Hex81Decoder ( IByteTransform byteTransform )
@@ -101,7 +101,7 @@ internal class Hex81Decoder : IDecoder
     public byte HarmonicCount { get; set; }
     public Enum? HarmonicChannels { get; set; }
     public HarmonicArgs[ ]? Harmonics { get; set; }
-    public float UA { get; set; }
+    public float UA { get; set; } = 155f;   //TOTO
     public float UB { get; set; }
     public float UC { get; set; }
     public float IA { get; set; }

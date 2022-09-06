@@ -5,6 +5,7 @@ using DKCommunicationNET. Module;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
 using DKCommunicationNET. ModulesAndFunctions. Functions;
+using System. Security. Cryptography;
 
 namespace DKCommunicationNET;
 
@@ -19,17 +20,22 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 定义协议所支持的功能对象
     /// </summary>
-     readonly IProtocolFunctions _prodocolFunctions;
+    readonly IProtocolFunctions _prodocolFunctions;
 
     /// <summary>
     /// CRC校验器
     /// </summary>
-     readonly ICRCChecker _CRCChecker;
+    readonly ICRCChecker _CRCChecker;
 
     /// <summary>
     /// 解码器
     /// </summary>
-     public IDecoder Decoder { get; }
+    public IDecoder Decoder { get; }
+
+    /// <summary>
+    /// 定义交流源模块对象
+    /// </summary>
+    private readonly IPacketsBuilder_ACS? _packetsBuilder_ACS;
     #endregion 【私有字段】
 
     #region 【构造函数】
@@ -44,7 +50,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         ID = id;
 
         //由抽象协议工厂根据客户选择的设备型号返回对应的协议工厂实例。
-        _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );       
+        _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
 
         //初始化CRC校验器
         _CRCChecker = _protocolFactory. GetCRCChecker ( );
@@ -52,8 +58,14 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         //初始化当前协议（设备型号）所支持的功能标志
         _prodocolFunctions = _protocolFactory. GetProtocolFunctions ( );
 
+        _packetsBuilder_ACS = _protocolFactory. GetPacketBuilderOfACS ( ID , ByteTransform ). Content;
+
         //初始化解码器
         Decoder = _protocolFactory. GetDecoder ( ByteTransform );
+
+        _packetsBuilder_ACS = _protocolFactory. GetPacketBuilderOfACS ( ID , ByteTransform ). Content;
+
+        ACS = new ( _packetsBuilder_ACS , Decoder , CheckResponse , true );
     }
     #endregion 构造函数
 
@@ -74,16 +86,16 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     #endregion 公共属性>>>设备信息
 
     #region 公共属性>>>功能模块
-    
+
     /// <summary>
     /// <inheritdoc cref="Module.ACS"/>
     /// </summary>
-    public  ACS ACS => new ( ID , _protocolFactory , CheckResponse , ByteTransform ,IsEnabled_ACS);
+    public ACS ACS { get; }
 
     /// <summary>
     /// <inheritdoc cref="Module.DCS"/>
     /// </summary>
-    public DCS DCS => new( ID , _protocolFactory , CheckResponse , ByteTransform ,IsEnabled_DCS);
+    public DCS DCS => new ( ID , _protocolFactory , CheckResponse , ByteTransform , IsEnabled_DCS );
 
     /// <summary>
     /// [警告:错误使用此功能将可能导致严重的后果]
@@ -97,7 +109,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 指示是否激活交流源功能
     /// </summary>
-    public bool IsEnabled_ACS { get; private set; }
+    public bool _IsEnabled_ACS;
 
     /// <summary>
     /// 指示是否激活交流表功能
@@ -170,6 +182,8 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc/>
     public bool IsEnabled_PPS { get; private set; }
 
+    bool IDeviceFunctions.IsEnabled_ACS => throw new NotImplementedException ( );
+
     #endregion 公共属性>>>功能状态指示>>>FuncS    
 
     #region 【功能状态初始化】
@@ -177,13 +191,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <inheritdoc/>   
     public override OperateResult<byte[ ]> HandShake ( )
     {
-        OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake() , CheckResponse );
+        OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake ( ) , CheckResponse );
         Decoder. DecodeHandShake ( res );
         Model = Decoder. Model;
         Firmware = Decoder. Firmware;
         ProtocolVer = Decoder. ProtocolVer;
         SN = Decoder. SN;
-        IsEnabled_ACS = Decoder. IsEnabled_ACS;  
+        _IsEnabled_ACS = Decoder. IsEnabled_ACS;
         IsEnabled_ACM = Decoder. IsEnabled_ACM;
         IsEnabled_ACM_Cap = Decoder. IsEnabled_ACM_Cap;
         IsEnabled_DCS = Decoder. IsEnabled_DCS;
@@ -210,13 +224,13 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <param name="send">发送的报文</param>
     /// <param name="awaitData"></param>
     /// <returns></returns>
-    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send ,bool awaitData=true)
+    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
     {
         // 发送报文并获取回复报文
-        OperateResult<byte[ ]> response = ReadBase ( send ,awaitData);
+        OperateResult<byte[ ]> response = ReadBase ( send , awaitData );
 
         //获取回复不成功
-        if ( !response. IsSuccess ||response.Content==null)
+        if ( !response. IsSuccess || response. Content == null )
         {
             return response;
         }
@@ -234,7 +248,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         }
         return response;
     }
-    
+
     #endregion 【Core Interative 核心交互】
 }
 
