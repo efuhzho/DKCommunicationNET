@@ -93,7 +93,7 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 打开一个新的串行端口连接
         /// </summary>
-        public OperateResult Open ( )
+        public OperateResult<string> Open ( )
         {
             if ( !_SerialPort. IsOpen )
             {
@@ -105,7 +105,7 @@ namespace DKCommunicationNET. BaseClass
                 }
                 catch ( Exception ex)
                 {
-                    return new OperateResult ( ex.Message );
+                    return new OperateResult<string> ( ex.Message );
                 }
             }
             else
@@ -126,7 +126,7 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 关闭端口连接
         /// </summary>
-        public OperateResult Close ( )
+        public OperateResult<string> Close ( )
         {
             if ( _SerialPort. IsOpen )
             {
@@ -138,7 +138,7 @@ namespace DKCommunicationNET. BaseClass
                 }
                 catch ( Exception ex )
                 {
-                    return new OperateResult ( ex. Message );
+                    return new OperateResult<string> ( ex. Message );
                 }
             }
             else
