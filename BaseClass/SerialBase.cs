@@ -93,7 +93,7 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 打开一个新的串行端口连接
         /// </summary>
-        public void Open ( )
+        public OperateResult Open ( )
         {
             if ( !_SerialPort. IsOpen )
             {
@@ -101,12 +101,16 @@ namespace DKCommunicationNET. BaseClass
                 {
                     _SerialPort. Open ( );
                     InitializationOnOpen ( );
+                    return OperateResult. CreateSuccessResult ( $"成功地打开了{_SerialPort. PortName}。");
                 }
-                catch ( Exception )
+                catch ( Exception ex)
                 {
-                                        
+                    return new OperateResult ( ex.Message );
                 }
-               
+            }
+            else
+            {
+                return OperateResult. CreateSuccessResult ( $"串行端口{_SerialPort.PortName}已经处于打开状态。" );
             }
         }
 
@@ -122,12 +126,24 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 关闭端口连接
         /// </summary>
-        public void Close ( )
+        public OperateResult Close ( )
         {
             if ( _SerialPort. IsOpen )
             {
-                ExtraOnClose ( );
-                _SerialPort. Close ( );
+                try
+                {
+                    ExtraOnClose ( );
+                    _SerialPort. Close ( );
+                    return OperateResult. CreateSuccessResult ( $"成功地关闭了{_SerialPort. PortName}。" );
+                }
+                catch ( Exception ex )
+                {
+                    return new OperateResult ( ex. Message );
+                }
+            }
+            else
+            {
+                return OperateResult. CreateSuccessResult ( $"串行端口{_SerialPort. PortName}已经处于关闭状态。" );
             }
         }
 
@@ -137,7 +153,7 @@ namespace DKCommunicationNET. BaseClass
         /// <param name="send">发送的原始字节数据</param>
         /// <param name="awaitData">是否必须要等待数据返回</param>
         /// <returns>带接收字节的结果对象</returns>
-        public OperateResult<byte[ ]> ReadBase ( byte[ ] send ,bool awaitData=true)
+        public OperateResult<byte[ ]> ReadBase ( byte[ ] send , bool awaitData = true )
         {
             hybirdLock. Enter ( );
 
@@ -237,7 +253,7 @@ namespace DKCommunicationNET. BaseClass
         /// <param name="serialPort">串口对象</param>
         /// <param name="awaitData">是否必须要等待数据返回</param>
         /// <returns>结果数据对象</returns>
-        protected virtual OperateResult<byte[ ]> SPReceived ( SerialPort serialPort , bool awaitData=true )
+        protected virtual OperateResult<byte[ ]> SPReceived ( SerialPort serialPort , bool awaitData = true )
         {
             byte[ ] buffer = new byte[1024];
             MemoryStream ms = new MemoryStream ( );
@@ -374,7 +390,7 @@ namespace DKCommunicationNET. BaseClass
         private int receiveTimeout = 1000;
 
         // 睡眠的时间
-        private int sleepTime = 20;
+        private int sleepTime = 50;
 
         // 是否在发送前清除缓冲
         private bool isClearCacheBeforeRead = false;

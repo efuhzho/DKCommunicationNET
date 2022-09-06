@@ -20,32 +20,32 @@ public enum Models
     /// <summary>
     /// 【设备型号】<inheritdoc cref="Hex81" />
     /// </summary>
-    DK34B1 = Hex81,
+    DK_34B1 = Hex81,
 
     /// <summary>
     /// 【设备型号】<inheritdoc cref="Hex81" />
     /// </summary>
-    DK34B2 = Hex81,
+    DK_34B2 = Hex81,
 
     /// <summary>
     /// 【设备型号】<inheritdoc cref = "Hex81" />
     /// </summary>
-    DK34F1 = Hex81,
+    DK_34F1 = Hex81,
 
     /// <summary>
     /// 【设备型号】<inheritdoc cref = "Hex5A" />
     /// </summary>
-    DK34B3 = Hex5A,
+    DK_34B3 = Hex5A,
 
     /// <summary>
     /// 【设备型号】<inheritdoc cref = "Hex5A" />
     /// </summary>
-    DKPTS1 = Hex5A,
+    DK_PTS1 = Hex5A,
 
     /// <summary>
     /// 【设备型号】<inheritdoc cref = "Hex5A" />
     /// </summary>
-    DKPTS = Hex5A,
+    DK_PTS = Hex5A,
 
     //TODO 完善设备型号
 }

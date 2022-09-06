@@ -10,7 +10,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 {
     internal class Hex81PacketBuilder_DCS : IPacketBuilder_DCS
     {
-        private readonly Hex5APacketBuilderHelper _PBHelper;
+        private readonly Hex81PacketBuilderHelper _PBHelper;
 
         private readonly IByteTransform _transform;
 
@@ -20,7 +20,7 @@ namespace DKCommunicationNET. Protocols. Hex81
 
         public Hex81PacketBuilder_DCS ( ushort id , IByteTransform transform )
         {
-            _PBHelper = new Hex5APacketBuilderHelper ( id );
+            _PBHelper = new Hex81PacketBuilderHelper ( id );
 
             _transform = transform;
         }
@@ -29,7 +29,7 @@ namespace DKCommunicationNET. Protocols. Hex81
         {
             if ( Resistor == null )
             {
-                _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_DCS  );
+              return  _PBHelper. PacketShellBuilder ( Hex81Information. ReadData_DCS  );
             }
 
             //如果Type不为空，则创建兼容报文
