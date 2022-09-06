@@ -29,7 +29,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     /// <summary>
     /// 解码器
     /// </summary>
-     readonly IDecoder _Decoder;  
+     public IDecoder Decoder { get; }
     #endregion 【私有字段】
 
     #region 【构造函数】
@@ -53,7 +53,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
         _prodocolFunctions = _protocolFactory. GetProtocolFunctions ( );
 
         //初始化解码器
-        _Decoder = _protocolFactory. GetDecoder ( ByteTransform );
+        Decoder = _protocolFactory. GetDecoder ( ByteTransform );
     }
     #endregion 构造函数
 
@@ -178,27 +178,27 @@ public class Dandick : DandickSerialBase<RegularByteTransform>, IDeviceFunctions
     public override OperateResult<byte[ ]> HandShake ( )
     {
         OperateResult<byte[ ]> res = CommandAction. Action ( _prodocolFunctions. GetPacketOfHandShake() , CheckResponse );
-        _Decoder. DecodeHandShake ( res );
-        Model = _Decoder. Model;
-        Firmware = _Decoder. Firmware;
-        ProtocolVer = _Decoder. ProtocolVer;
-        SN = _Decoder. SN;
-        IsEnabled_ACS = _Decoder. IsEnabled_ACS;  
-        IsEnabled_ACM = _Decoder. IsEnabled_ACM;
-        IsEnabled_ACM_Cap = _Decoder. IsEnabled_ACM_Cap;
-        IsEnabled_DCS = _Decoder. IsEnabled_DCS;
-        IsEnabled_DCS_AUX = _Decoder. IsEnabled_DCS_AUX;
-        IsEnabled_DCM = _Decoder. IsEnabled_DCM;
-        IsEnabled_DCM_RIP = _Decoder. IsEnabled_DCM_RIP;
-        IsEnabled_EPQ = _Decoder. IsEnabled_EPQ;
-        IsEnabled_IO = _Decoder. IsEnabled_IO;
-        IsEnabled_DualFreqs = _Decoder. IsEnabled_DualFreqs;
-        IsEnabled_IProtect = _Decoder. IsEnabled_IProtect;
-        IsEnabled_PST = _Decoder. IsEnabled_PST;
-        IsEnabled_YX = _Decoder. IsEnabled_YX;
-        IsEnabled_HF = _Decoder. IsEnabled_HF;
-        IsEnabled_PWM = _Decoder. IsEnabled_PWM;
-        IsEnabled_PPS = _Decoder. IsEnabled_PPS;
+        Decoder. DecodeHandShake ( res );
+        Model = Decoder. Model;
+        Firmware = Decoder. Firmware;
+        ProtocolVer = Decoder. ProtocolVer;
+        SN = Decoder. SN;
+        IsEnabled_ACS = Decoder. IsEnabled_ACS;  
+        IsEnabled_ACM = Decoder. IsEnabled_ACM;
+        IsEnabled_ACM_Cap = Decoder. IsEnabled_ACM_Cap;
+        IsEnabled_DCS = Decoder. IsEnabled_DCS;
+        IsEnabled_DCS_AUX = Decoder. IsEnabled_DCS_AUX;
+        IsEnabled_DCM = Decoder. IsEnabled_DCM;
+        IsEnabled_DCM_RIP = Decoder. IsEnabled_DCM_RIP;
+        IsEnabled_EPQ = Decoder. IsEnabled_EPQ;
+        IsEnabled_IO = Decoder. IsEnabled_IO;
+        IsEnabled_DualFreqs = Decoder. IsEnabled_DualFreqs;
+        IsEnabled_IProtect = Decoder. IsEnabled_IProtect;
+        IsEnabled_PST = Decoder. IsEnabled_PST;
+        IsEnabled_YX = Decoder. IsEnabled_YX;
+        IsEnabled_HF = Decoder. IsEnabled_HF;
+        IsEnabled_PWM = Decoder. IsEnabled_PWM;
+        IsEnabled_PPS = Decoder. IsEnabled_PPS;
         return res;
     }
     #endregion 【功能状态初始化】

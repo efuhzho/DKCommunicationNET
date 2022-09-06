@@ -6,7 +6,7 @@ using System. Threading. Tasks;
 
 namespace DKCommunicationNET. ModulesAndFunctions
 {
-    internal interface IDeviceFunctions
+    public interface IDeviceFunctions
     {
         /// <summary>
         /// 设备型号

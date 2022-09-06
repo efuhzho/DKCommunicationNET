@@ -267,7 +267,9 @@ public class ACS : IModuleACS
         {
             result. IsSuccess = false;
             result. Message = StringResources. Language. DecodeError;
+            return result;
         }
+        Ranges_ACU=_decoder.Ranges_ACU;
         return result;
     }
     /// <inheritdoc/>
