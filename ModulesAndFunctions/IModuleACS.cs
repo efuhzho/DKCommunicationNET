@@ -8,10 +8,9 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// <summary>
 /// 【接口】交流源模块接口
 /// </summary>
-public interface IModuleACS //: IProperties_ACS
+public interface IModuleACS : IProperties_ACS
 {
-
-    //TODO 添加输出精度信息
+    //TODO 添加输出精度信息？
 
     /// <summary>
     /// 交流源打开命令
@@ -60,7 +59,6 @@ public interface IModuleACS //: IProperties_ACS
     /// </summary>
     /// <param name="rangeIndexOfACU"></param>
     /// <param name="rangeIndexOfACI"></param>
-    /// <param name="rangeIndexOfIP"></param>
     /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetRanges ( byte rangeIndexOfACU , byte rangeIndexOfACI );
 
@@ -169,7 +167,6 @@ public interface IModuleACS //: IProperties_ACS
     /// </summary>
     /// <returns></returns>
     public OperateResult<byte[ ]> ReadData_Status ( );
-
 }
 
 /// <summary>

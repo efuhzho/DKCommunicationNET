@@ -29,9 +29,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// CRC校验器
     /// </summary>
     readonly ICRCChecker _CRCChecker;
-    #endregion 校验器》
-
-    public IDecoders Decoder { get; }    //TODO 删除
+    #endregion 校验器》   
 
     #region 《编码器    
     private readonly IEncoder_ACS? _packetsBuilder_ACS;
@@ -44,17 +42,17 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 交流源解码器
     /// </summary>
-    public IDecoder_ACS? Decoder_ACS { get; }
+    private readonly IDecoder_ACS? _decoder_ACS;
 
     /// <summary>
     /// 直流源解码器
     /// </summary>
-    public IDecoder_DCS? Decoder_DCS { get; }
+    private readonly IDecoder_DCS? _decoder_DCS;
 
     /// <summary>
-    /// 
+    /// 系统设置解码器
     /// </summary>
-    public IDecoder_Settings Decoder_Settings { get; }
+    private readonly IDecoder_Settings _decoder_Settings;
     #endregion 解码器》    
 
     #region 《功能模块
@@ -78,7 +76,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// </summary>
     public Settings Settings { get; }
     #endregion 功能模块》
-
 
     /// <summary>
     /// 构造函数
@@ -107,25 +104,24 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
         }
 
         //【解码器】实例化
-        {
-            Decoder = _protocolFactory. GetDecoder ( ByteTransform );
-            Decoder_ACS = _protocolFactory. GetDecoder_ACS ( ByteTransform );
-            Decoder_DCS = _protocolFactory. GetDecoder_DCS ( ByteTransform );
+        {            
+            _decoder_ACS = _protocolFactory. GetDecoder_ACS ( ByteTransform );
+            _decoder_DCS = _protocolFactory. GetDecoder_DCS ( ByteTransform );
         }
 
         //【功能模块】实例化
         {
             if ( _packetsBuilder_ACS != null )
             {
-                ACS = new ACS ( _packetsBuilder_ACS , Decoder_ACS , CheckResponse );
+                ACS = new ACS ( _packetsBuilder_ACS , _decoder_ACS , CheckResponse );
             }
 
             if ( _packetsBuilder_DCS != null )
             {
-                DCS = new DCS ( _packetsBuilder_DCS , Decoder_DCS , CheckResponse );
+                DCS = new DCS ( _packetsBuilder_DCS , _decoder_DCS , CheckResponse );
             }
 
-            Settings = new Settings ( _packetBuilder_Settings , Decoder_Settings , CheckResponse );
+            Settings = new Settings ( _packetBuilder_Settings , _decoder_Settings , CheckResponse );
         }
     }
 
@@ -161,10 +157,6 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
         return response;
     }
     #endregion Core Interative 核心交互》
-
-    #region 《看门狗
-    //准备添加
-    #endregion 看门狗》
 }
 
 

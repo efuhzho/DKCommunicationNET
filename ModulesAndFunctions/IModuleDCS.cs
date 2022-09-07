@@ -121,7 +121,9 @@ public interface ISetProperties_DCS
 /// 直流源属性接口
 /// </summary>
 public interface IReadProperties_DCS
-{  
+{
+    #region 《档位数量
+
     /// <summary>
     /// 直流源电压档位个数
     /// </summary>
@@ -137,6 +139,9 @@ public interface IReadProperties_DCS
     /// </summary>
     byte RangesCount_DCR { get; }
 
+    #endregion 档位数量》
+
+    #region 《幅值
     /// <summary>
     /// 当前直流源电压幅值
     /// </summary>
@@ -152,6 +157,10 @@ public interface IReadProperties_DCS
     /// </summary>
     float DCR { get; }
 
+    #endregion 幅值》
+
+    #region 《档位索引
+
     /// <summary>
     /// 当前档位索引值
     /// </summary>
@@ -160,12 +169,16 @@ public interface IReadProperties_DCS
     /// <summary>
     /// 当前档位索引值
     /// </summary>
-    byte RangeIndex_DCI { get;  }
+    byte RangeIndex_DCI { get; }
 
     /// <summary>
     /// 当前档位索引值
     /// </summary>
-    byte RangeIndex_DCR { get;  }
+    byte RangeIndex_DCR { get; }
+
+    #endregion 档位索引》
+
+    #region 《档位列表
 
     /// <summary>
     /// 直流源电压档位列表
@@ -180,7 +193,11 @@ public interface IReadProperties_DCS
     /// <summary>
     /// 直流源电阻档位列表
     /// </summary>
-    float[ ]? Ranges_DCR { get; set;  }
+    float[ ]? Ranges_DCR { get; set; }
+
+    #endregion 档位列表》
+
+    #region 《输出状态
 
     /// <summary>
     /// 当前直流电压输出状态：true=源打开；false=源关闭
@@ -196,4 +213,6 @@ public interface IReadProperties_DCS
     /// 当前直流电阻输出状态：true=源打开；false=源关闭
     /// </summary>
     bool IsOpen_DCR { get; }
+
+    #endregion 输出状态》
 }

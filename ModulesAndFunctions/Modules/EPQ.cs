@@ -160,7 +160,57 @@ public class EPQ : IModuleEPQ
     #endregion 编码器属性：设置属性，可读写》
 
     #region 《解码器属性：读取属性，只读
-    //TODO 将解码器属性同步到类
+    /// <inheritdoc/>
+    public uint Rounds_Current
+    {
+        get
+        {
+            if ( _decoder!=null )
+            {
+                return _decoder. Rounds_Current;
+            }
+            return 0;
+        }
+    }
+
+    /// <inheritdoc/>
+    public uint Counts_Current
+    {
+        get
+        {
+            if ( _decoder != null )
+            {
+                return _decoder. Counts_Current;
+            }
+            return 0;
+        }
+    }
+
+    /// <inheritdoc/>
+    public float EValue_P
+    {
+        get
+        {
+            if ( _decoder != null )
+            {
+                return _decoder. EValue_P;
+            }
+            return 0;
+        }
+    }
+
+    /// <inheritdoc/>
+    public float EValue_Q {
+        get
+        {
+            if ( _decoder != null )
+            {
+                return _decoder. EValue_Q;
+            }
+            return 0;
+        }
+    }
+
     #endregion 解码器属性：读取属性，只读》
 
     /// <inheritdoc/>
@@ -179,7 +229,7 @@ public class EPQ : IModuleEPQ
             return result;
         }
 
-        var decodeResult = _decoder. DecodeReadData_EPQ ( result.Content );
+        var decodeResult = _decoder. DecodeReadData_EPQ ( result. Content );
         if ( decodeResult. IsSuccess == false )
         {
             result. IsSuccess = false;

@@ -44,6 +44,219 @@ public class ACS : IModuleACS
         _decoder = decoder;
     }
 
+    #region 《档位数量
+    /// <inheritdoc/>
+    public byte RangesCount_ACU => ( byte ) ( _decoder == null ? 0 : _decoder. RangesCount_ACU );
+    /// <inheritdoc/>
+    public byte RangesCount_ACI => ( byte ) ( _decoder == null ? 0 : _decoder. RangesCount_ACI );
+    /// <inheritdoc/>
+    public byte RangesCount_IPr => ( byte ) ( _decoder == null ? 0 : _decoder. RangesCount_IPr );
+
+    #endregion 档位数量》
+
+    #region 《当前档位索引值
+    /// <inheritdoc/>
+    public byte RangeIndex_ACU => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_ACU );
+    /// <inheritdoc/>
+    public byte RangeIndex_ACI => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_ACI );
+    /// <inheritdoc/>
+    public byte RangeIndex_IPr => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_IPr );
+
+    #endregion 当前档位索引值》
+
+    #region 《当前档位值
+    /// <inheritdoc/>
+    public float RangeValue_ACU => _decoder == null ? 0 : _decoder. RangeValue_ACU;
+
+    /// <inheritdoc/>
+    public float RangeValue_ACI => _decoder == null ? 0 : _decoder. RangeValue_ACI;
+
+    /// <inheritdoc/>
+    public float RangeValue_IPr => _decoder == null ? 0 : _decoder. RangeValue_IPr;
+
+    #endregion 当前档位值》
+
+    #region 《单相档位起始索引值：如果值为0，说明设备是单相输出
+
+    /// <inheritdoc/>
+    public byte OnlyAStartIndex_ACU => ( byte ) ( _decoder == null ? 0 : _decoder. OnlyAStartIndex_ACU );
+
+    /// <inheritdoc/>
+    public byte OnlyAStartIndex_ACI => ( byte ) ( _decoder == null ? 0 : _decoder. OnlyAStartIndex_ACI );
+
+    /// <inheritdoc/>
+    public byte OnlyAStartIndex_IPr => ( byte ) ( _decoder == null ? 0 : _decoder. OnlyAStartIndex_IPr );
+
+    #endregion 单相档位起始索引值》
+
+    #region 《档位列表
+
+    /// <inheritdoc/>
+    public float[ ]? Ranges_ACU
+    {
+        get => _decoder?.Ranges_ACU; set
+        {
+            if ( _decoder != null )
+            {
+                _decoder. Ranges_ACU = value;
+            }
+        }
+    }
+    /// <inheritdoc/>
+    public float[ ]? Ranges_ACI
+    {
+        get => _decoder?.Ranges_ACI; set
+        {
+            if ( _decoder != null )
+            {
+                _decoder. Ranges_ACI = value;
+            }
+        }
+    }
+    /// <inheritdoc/>
+    public float[ ]? Ranges_IPr
+    {
+        get => _decoder?.Ranges_IPr; set
+        {
+            if ( _decoder != null )
+            {
+                _decoder. Ranges_IPr = value;
+            }
+        }
+    }
+
+    #endregion 档位列表》
+
+    #region 《枚举直设
+
+    /// <inheritdoc/>
+    public WireMode WireMode { get => _decoder == null ? 0 : _decoder. WireMode; set => SetWireMode ( value ); }
+    /// <inheritdoc/>
+    public CloseLoopMode CloseLoopMode { get => _decoder == null ? 0 : _decoder. CloseLoopMode; set => SetClosedLoop ( value ); }
+    /// <inheritdoc/>
+    public HarmonicMode HarmonicMode { get => _decoder == null ? 0 : _decoder. HarmonicMode; set => SetHarmonicMode ( value ); }
+
+    #endregion 枚举直设》
+
+    #region 《谐波数据
+
+    /// <inheritdoc/>
+    public byte HarmonicCount => ( byte ) ( _decoder == null ? 0 : _decoder. HarmonicCount );
+
+    /// <inheritdoc/>
+    public Enum? HarmonicChannels => _decoder?.HarmonicChannels;
+
+    /// <inheritdoc/>
+    public HarmonicArgs[ ]? Harmonics => _decoder?.Harmonics;
+
+    #endregion 谐波数据》
+
+    #region 《频率值
+    /// <inheritdoc/>
+    public float Freq => _decoder == null ? 0 : _decoder. Freq;
+    /// <inheritdoc/>
+    public float Freq_C => _decoder == null ? 0 : _decoder. Freq_C;
+
+    #endregion 频率值》
+
+    #region 《电压幅值
+
+    /// <inheritdoc/>
+    public float UA => _decoder == null ? 0 : _decoder. UA;
+    /// <inheritdoc/>
+    public float UB => _decoder == null ? 0 : _decoder. UB;
+    /// <inheritdoc/>
+    public float UC => _decoder == null ? 0 : _decoder. UC;
+
+    #endregion 电压幅值》
+
+    #region 《电流幅值
+
+    /// <inheritdoc/>
+    public float IA => _decoder == null ? 0 : _decoder. IA;
+    /// <inheritdoc/>
+    public float IB => _decoder == null ? 0 : _decoder. IB;
+    /// <inheritdoc/>
+    public float IC => _decoder == null ? 0 : _decoder. IC;
+
+    #endregion 电流幅值》
+
+    #region 《保护电流幅值
+
+    /// <inheritdoc/>
+    public float IPA => _decoder == null ? 0 : _decoder. IPA;
+    /// <inheritdoc/>
+    public float IPB => _decoder == null ? 0 : _decoder. IPB;
+    /// <inheritdoc/>
+    public float IPC => _decoder == null ? 0 : _decoder. IPC;
+
+    #endregion 保护电流幅值
+
+    #region 《相位
+
+    /// <inheritdoc/>
+    public float FAI_UA => _decoder == null ? 0 : _decoder. FAI_UA;
+    /// <inheritdoc/>
+    public float FAI_UB => _decoder == null ? 0 : _decoder. FAI_UB;
+    /// <inheritdoc/>
+    public float FAI_UC => _decoder == null ? 0 : _decoder. FAI_UC;
+    /// <inheritdoc/>
+    public float FAI_IA => _decoder == null ? 0 : _decoder. FAI_IA;
+    /// <inheritdoc/>
+    public float FAI_IB => _decoder == null ? 0 : _decoder. FAI_IB;
+    /// <inheritdoc/>
+    public float FAI_IC => _decoder == null ? 0 : _decoder. FAI_IC;
+
+    #endregion 相位》
+
+    #region 《其他幅值
+
+    /// <inheritdoc/>
+    public float PA => _decoder == null ? 0 : _decoder. PA;
+    /// <inheritdoc/>
+    public float PB => _decoder == null ? 0 : _decoder. PB;
+    /// <inheritdoc/>
+    public float PC => _decoder == null ? 0 : _decoder. PC;
+    /// <inheritdoc/>
+    public float P => _decoder == null ? 0 : _decoder. P;
+    /// <inheritdoc/>
+    public float QA => _decoder == null ? 0 : _decoder. QA;
+    /// <inheritdoc/>
+    public float QB => _decoder == null ? 0 : _decoder. QB;
+    /// <inheritdoc/>
+    public float QC => _decoder == null ? 0 : _decoder. QC;
+    /// <inheritdoc/>
+    public float Q => _decoder == null ? 0 : _decoder. Q;
+    /// <inheritdoc/>
+    public float SA => _decoder == null ? 0 : _decoder. SA;
+    /// <inheritdoc/>
+    public float SB => _decoder == null ? 0 : _decoder. SB;
+    /// <inheritdoc/>
+    public float SC => _decoder == null ? 0 : _decoder. SC;
+    /// <inheritdoc/>
+    public float S => _decoder == null ? 0 : _decoder. S;
+    /// <inheritdoc/>
+    public float PFA => _decoder == null ? 0 : _decoder. PFA;
+    /// <inheritdoc/>
+    public float PFB => _decoder == null ? 0 : _decoder. PFB;
+    /// <inheritdoc/>
+    public float PFC => _decoder == null ? 0 : _decoder. PFC;
+    /// <inheritdoc/>
+    public float PF => _decoder == null ? 0 : _decoder. PF;
+
+    #endregion 其他幅值》
+
+    #region 《输出稳定状态
+
+    /// <inheritdoc/>
+    public byte Flag_A => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_A );
+    /// <inheritdoc/>
+    public byte Flag_B => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_B );
+    /// <inheritdoc/>
+    public byte Flag_C => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_C );
+
+    #endregion 输出稳定状态》
+
     #region 《方法
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open ( )
@@ -275,7 +488,4 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _encoder. Packet_SetRanges_X ( rangeIndex_Ux , rangeIndex_Ix ) , _methodOfCheckResponse );
     }
     #endregion 方法》
-
-
-
 }
