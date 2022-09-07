@@ -1,7 +1,4 @@
-﻿using System. Security. Cryptography;
-using DKCommunicationNET. Core;
-using DKCommunicationNET. ModulesAndFunctions;
-using DKCommunicationNET. Protocols. Hex5A;
+﻿using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Protocols;
@@ -65,7 +62,7 @@ internal interface IEncoder_Settings
     /// 创建报文：联机命令，在实例化本通讯类库后，必须先执行该方法方可解锁设备功能，否则无法发送命令
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]>Packet_HandShake ( );
+    OperateResult<byte[ ]> Packet_HandShake ( );
 }
 
 /// <summary>
@@ -85,7 +82,7 @@ internal interface IEncoder_ACS
     /// <param name="rangeIndex_ACU">电压档位索引值</param>
     /// <param name="rangeIndex_ACI">电流档位索引值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndex_ACU , byte rangeIndex_ACI  );
+    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndex_ACU , byte rangeIndex_ACI );
 
     /// <summary>
     /// 创建报文：设置保护电流档位[具备保护电流]
@@ -100,7 +97,7 @@ internal interface IEncoder_ACS
     /// <param name="rangeIndex_Ux"></param>
     /// <param name="rangeIndex_Ix"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetRanges_X (  byte rangeIndex_Ux, byte rangeIndex_Ix );
+    public OperateResult<byte[ ]> Packet_SetRanges_X ( byte rangeIndex_Ux , byte rangeIndex_Ix );
 
     /// <summary>
     /// 创建【设置交流源幅度】的报文
@@ -115,8 +112,8 @@ internal interface IEncoder_ACS
     /// <param name="IPBOrIX">要设定的输出值：保护电流或X相电流</param>
     /// <param name="IPC">要设定的输出值：IPC</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx, float IPBOrIX  , float IPC );
-      
+    public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx , float IPBOrIX , float IPC );
+
     /// <summary>
     /// 创建【打开交流源】的报文
     /// </summary>
@@ -176,7 +173,7 @@ internal interface IEncoder_ACS
     /// <param name="channels">要设置的谐波通道</param>
     /// <param name="harmonics">谐波组,如果谐波组为null,则指令为清空谐波</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonics (  Enum channels , HarmonicArgs[ ] harmonics );
+    public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ] harmonics );
 
     /// <summary>
     /// 创建报文：设置有功功率
@@ -335,7 +332,7 @@ internal interface IEncoder_DCS : ISetProperties_DCS
 /// <summary>
 /// 直流表模块报文创建类接口
 /// </summary>
-internal interface IEncoder : ISetProperties_DCM
+internal interface IEncoder_DCM : ISetProperties_DCM
 {
     /// <summary>
     /// 设置直流表量程和测量类型

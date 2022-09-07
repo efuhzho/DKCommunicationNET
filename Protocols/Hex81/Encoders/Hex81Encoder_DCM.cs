@@ -1,9 +1,9 @@
 ﻿namespace DKCommunicationNET. Protocols. Hex81. Encoders;
 
 /// <summary>
-/// <inheritdoc cref="IEncoder"/>
+/// <inheritdoc cref="IEncoder_DCM"/>
 /// </summary>
-internal class Hex81Encoder_DCM : IEncoder
+internal class Hex81Encoder_DCM : IEncoder_DCM
 {
     private readonly Hex81EncodeHelper _encoderHelper;
 

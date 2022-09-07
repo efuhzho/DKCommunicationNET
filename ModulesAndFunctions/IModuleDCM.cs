@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流表模块接口
 /// </summary>
-public interface IModuleDCM:IReadProperties_DCM,ISetProperties_DCM
+public interface IModuleDCM:ISetProperties_DCM
 {
     /// <summary>
     /// 获取直流表档位信息

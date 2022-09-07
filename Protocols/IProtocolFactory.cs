@@ -37,7 +37,7 @@ internal interface IProtocolFactory
     /// 获取直流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IEncoder> GetPacketBuilderOfDCM ( ushort id );
+    OperateResult<IEncoder_DCM> GetPacketBuilderOfDCM ( ushort id );
 
     /// <summary>
     /// 获取开关量报文创建类对象

@@ -24,9 +24,9 @@ internal class Hex81Factory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex81Encoder_ACS ( id , byteTransform ) as IEncoder_ACS );
     }
 
-    public OperateResult<IEncoder> GetPacketBuilderOfDCM ( ushort id )
+    public OperateResult<IEncoder_DCM> GetPacketBuilderOfDCM ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81Encoder_DCM ( id ) as IEncoder );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_DCM ( id ) as IEncoder_DCM );
     }
 
     public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )

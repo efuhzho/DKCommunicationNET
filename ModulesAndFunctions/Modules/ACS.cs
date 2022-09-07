@@ -24,33 +24,33 @@ public class ACS : IModuleACS
     /// 定义解码器对象
     /// </summary>
     private readonly IDecoder_ACS? _decoder;
-    
+
     /// <summary>
     /// 构造函数
     /// </summary>
-    /// <param name="packetsBuilder_ACS"></param>
+    /// <param name="encoder"></param>
     /// <param name="decoder"></param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS (IEncoder_ACS  packetsBuilder_ACS , IDecoder_ACS decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal ACS ( IEncoder_ACS encoder , IDecoder_ACS decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
 
         //接收执行报文发送接收的委托方法        
         _methodOfCheckResponse = methodOfCheckResponse;
 
         //初始化报文创建器
-        _encoder =packetsBuilder_ACS;
+        _encoder = encoder;
 
         //接收解码器
-        _decoder = decoder ;
+        _decoder = decoder;
     }
 
     #region 《方法
     /// <inheritdoc/>
     public OperateResult<byte[ ]> Open ( )
     {
-        if ( _encoder==null )
+        if ( _encoder == null )
         {
-            return  new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _encoder. Packet_Open ( ) , _methodOfCheckResponse );
@@ -82,15 +82,15 @@ public class ACS : IModuleACS
         {
             return result;
         }
-               
-        //解码下位机的回复报文：此处无需判断命令执行结果，判断下放
-        var decodeResult = _decoder. DecodeGetRanges_ACS ( result.Content );
+
+        //解码下位机的回复报文
+        var decodeResult = _decoder. DecodeGetRanges_ACS ( result. Content );
 
         //如果解码不成功
         if ( !decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
-            result. Message = StringResources. Language. DecodeError;          
+            result. Message = StringResources. Language. DecodeError;
         }
         return result;
     }
@@ -190,7 +190,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( )
     {
-        if ( _encoder == null||_decoder==null )
+        if ( _encoder == null || _decoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
@@ -200,7 +200,7 @@ public class ACS : IModuleACS
         {
             return result;
         }
-        var decodeResult = _decoder. DecodeReadData_ACS ( result.Content );
+        var decodeResult = _decoder. DecodeReadData_ACS ( result. Content );
         if ( !decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
@@ -226,7 +226,7 @@ public class ACS : IModuleACS
         }
 
         //执行成功则解码
-        var decodeResult = _decoder. DecodeReadData_Status_ACS ( result.Content );
+        var decodeResult = _decoder. DecodeReadData_Status_ACS ( result. Content );
         if ( !decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
@@ -240,7 +240,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ClearHarmonics ( Enum harmonicChannels )
     {
-        if ( _encoder == null  )
+        if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }

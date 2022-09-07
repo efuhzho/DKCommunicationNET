@@ -24,13 +24,13 @@ public class DCS : IModuleDCS
     /// </summary>
     private readonly IDecoder_DCS? _decoder;   
 
-    internal DCS ( IEncoder_DCS encoder_DCS , IDecoder_DCS decoder_DCS, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse  )
+    internal DCS ( IEncoder_DCS encoder , IDecoder_DCS decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse  )
     {
         //编码器
-        _encoder = encoder_DCS;
+        _encoder = encoder;
 
         //解码器
-        _decoder = decoder_DCS;
+        _decoder = decoder;
        
         //接收执行报文发送接收的委托方法        
         _methodOfCheckResponse = methodOfCheckResponse;          

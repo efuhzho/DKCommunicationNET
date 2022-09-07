@@ -21,9 +21,9 @@ internal class Hex5AFactory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex5AEncoder_ACS ( id, byteTransform ) as IEncoder_ACS );
     }
 
-    public OperateResult<IEncoder> GetPacketBuilderOfDCM ( ushort id )
+    public OperateResult<IEncoder_DCM> GetPacketBuilderOfDCM ( ushort id )
     {
-        return new OperateResult<IEncoder> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_DCM> ( StringResources. Language. NotSupportedModule );
     }
 
     public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id )

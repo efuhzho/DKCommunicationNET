@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-public interface IModuleEPQ : ISetProperties_EPQ,IReadProperies_EPQ
+public interface IModuleEPQ : ISetProperties_EPQ
 {
     /// <summary>
     /// 读取电能误差数据
