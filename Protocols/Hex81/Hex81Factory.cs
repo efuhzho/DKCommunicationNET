@@ -10,38 +10,38 @@ namespace DKCommunicationNET. Protocols. Hex81;
 [Model ( Models. Hex81 )]
 internal class Hex81Factory : IProtocolFactory
 {
-    public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
+    public OperateResult<IEncoder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_ACM> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_ACS> GetPacketBuilderOfACS ( ushort id , IByteTransform byteTransform )
     {
-        // return new OperateResult<IPacketsBuilder_ACS> ( StringResources.Language.NotSupportedModule);
+        // return new OperateResult<IEncoder_ACS> ( StringResources.Language.NotSupportedModule);
 
         // TODO
 
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_ACS ( id , byteTransform ) as IPacketsBuilder_ACS );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_ACS ( id , byteTransform ) as IEncoder_ACS );
     }
 
-    public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
+    public OperateResult<IEncoder> GetPacketBuilderOfDCM ( ushort id )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCM ( id ) as IPacketBuilder_DCM );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_DCM ( id ) as IEncoder );
     }
 
-    public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_DCS ( id , byteTransform ) as IPacketBuilder_DCS );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_DCS ( id , byteTransform ) as IEncoder_DCS );
     }
 
-    public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_EPQ ( id , byteTransform ) as IPacketBuilder_EPQ );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_EPQ ( id , byteTransform ) as IEncoder_EPQ );
     }
 
     public ICRCChecker GetCRCChecker ( )
@@ -54,13 +54,26 @@ internal class Hex81Factory : IProtocolFactory
         return new Hex81Functions ( );
     }
 
-    public IDecoder GetDecoder ( IByteTransform byteTransform )
+    public IDecoders GetDecoder ( IByteTransform byteTransform )
     {
         return new Hex81Decoder ( byteTransform );
     }
 
-    public OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
+   
+    public OperateResult<IEncoder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81PacketBuilder_Calibrate ( id , byteTransform ) as IPacketBuilder_Calibrate );
+        return OperateResult. CreateSuccessResult ( new Hex81Encoder_Calibrate ( id , byteTransform ) as IEncoder_Calibrate );
+    }
+
+   
+    public IDecoder_ACS GetDecoder_ACS ( IByteTransform byteTransform )
+    {
+        return new Hex81Decoder_ACS ( byteTransform );
+    }
+
+   
+    public IDecoder_DCS GetDecoder_DCS ( IByteTransform byteTransform )
+    {
+        return new Hex81Decoder_DCS ( byteTransform );
     }
 }

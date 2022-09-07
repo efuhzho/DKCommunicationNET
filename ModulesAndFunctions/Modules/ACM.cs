@@ -26,12 +26,12 @@ public class ACM : IModuleACM
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketsBuilder_ACS? _packetsBuilder;
+    private readonly IEncoder_ACS? _packetsBuilder;
 
     /// <summary>
     /// 定义解码器对象
     /// </summary>
-    private readonly IDecoder _decoder;
+    private readonly IDecoders _decoder;
 
     internal ACM ( ushort id , IProtocolFactory protocolFactory , Func<byte[ ] , OperateResult<byte[ ]>> methodOfCheckResponse , IByteTransform byteTransform )
     {

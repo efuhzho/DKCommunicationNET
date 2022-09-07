@@ -24,12 +24,12 @@ public class EPQ : IModuleEPQ
     /// <summary>
     /// 定义交流源模块对象
     /// </summary>
-    private readonly IPacketBuilder_EPQ? _packetsBuilder;
+    private readonly IEncoder_EPQ? _packetsBuilder;
 
     /// <summary>
     /// 定义解码器对象
     /// </summary>
-    private readonly IDecoder _decoder;
+    private readonly IDecoders _decoder;
 
     /// <summary>
     /// 模块功能是否激活

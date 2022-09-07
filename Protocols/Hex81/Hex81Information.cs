@@ -9,6 +9,10 @@ internal class Hex81Information
     /// 报文头
     /// </summary>
     internal const byte FrameID = 0x81;
+
+    /// <summary>
+    /// 数据区起始索引值
+    /// </summary>
     internal const int DataStartIndex = 6;
 
     /// <summary>

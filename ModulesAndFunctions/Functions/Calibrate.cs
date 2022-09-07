@@ -22,7 +22,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         /// <summary>
         /// 定义交流源模块对象
         /// </summary>
-        private readonly IPacketBuilder_Calibrate? _packetsBuilder;
+        private readonly IEncoder_Calibrate? _packetsBuilder;
 
         /// <summary>
         /// 协议是否支持校准功能

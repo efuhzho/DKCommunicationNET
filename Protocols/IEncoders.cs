@@ -9,7 +9,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 报文创建助手接口
 /// </summary>
-internal interface IPacketBuilderHelper
+internal interface IEncodeHelper
 {
     /// <summary>
     /// 有参数
@@ -18,35 +18,35 @@ internal interface IPacketBuilderHelper
     /// <param name="commandLength">完成命令长度</param>
     /// <param name="data">数据</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode , ushort commandLength , byte[ ] data );
+    OperateResult<byte[ ]> EncodeHelper ( byte commandCode , ushort commandLength , byte[ ] data );
 
     /// <summary>
     /// 无参数简化
     /// </summary>
-    /// <param name="commandCode"><inheritdoc cref="PacketShellBuilder(byte, ushort, byte[])"/></param>
+    /// <param name="commandCode"><inheritdoc cref="EncodeHelper(byte, ushort, byte[])"/></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> PacketShellBuilder ( byte commandCode );
+    OperateResult<byte[ ]> EncodeHelper ( byte commandCode );
 }
 
 /// <summary>
 /// 系统设置报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_Settings
+internal interface IEncoder_Settings
 {
     /// <summary>
-    /// 设置系统模式
+    /// 创建报文：设置系统模式
     /// </summary>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_SetSystemMode ( byte systemMode );
 
     /// <summary>
-    /// 设置显示页面
+    /// 创建报文：设置显示页面
     /// </summary>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_SetDisplayPage ( byte displayPage );
 
     /// <summary>
-    /// 【高级别权限】设备信息设置
+    /// 创建报文：【高级别权限】设备信息设置
     /// </summary>
     /// <param name="password">密码</param>
     /// <param name="id"></param>
@@ -55,17 +55,23 @@ internal interface IPacketBuilder_Settings
     OperateResult<byte[ ]> Packet_SetDeviceInfo ( char[ ] password , byte id , string sn );
 
     /// <summary>
-    /// 设置波特率；设备不保存 固件V5.26 以后版本支持，该命令设置后不应答，可在设置界面查询当前波特率
+    /// 创建报文：设置波特率；设备不保存 固件V5.26 以后版本支持，该命令设置后不应答，可在设置界面查询当前波特率
     /// </summary>
     /// <param name="baudRate">要设置的波特率</param>
     /// <returns></returns>
     OperateResult<byte[ ]> Packet_SetBaudRate ( ushort baudRate );
+
+    /// <summary>
+    /// 创建报文：联机命令，在实例化本通讯类库后，必须先执行该方法方可解锁设备功能，否则无法发送命令
+    /// </summary>
+    /// <returns></returns>
+    OperateResult<byte[ ]>Packet_HandShake ( );
 }
 
 /// <summary>
 /// 交流源报文创建类接口
 /// </summary>
-internal interface IPacketsBuilder_ACS
+internal interface IEncoder_ACS
 {
     /// <summary>
     /// 创建【获取交流源档位信息】的报文
@@ -211,7 +217,7 @@ internal interface IPacketsBuilder_ACS
 /// <summary>
 /// 交流表报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_ACM
+internal interface IEncoder_ACM
 {
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
@@ -229,7 +235,7 @@ internal interface IPacketBuilder_ACM
 /// <summary>
 /// 直流源报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCS : ISetProperties_DCS
+internal interface IEncoder_DCS : ISetProperties_DCS
 {
     /// <summary>
     /// 创建报文：停止直流电压输出
@@ -329,7 +335,7 @@ internal interface IPacketBuilder_DCS : ISetProperties_DCS
 /// <summary>
 /// 直流表模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_DCM : ISetProperties_DCM
+internal interface IEncoder : ISetProperties_DCM
 {
     /// <summary>
     /// 设置直流表量程和测量类型
@@ -357,14 +363,14 @@ internal interface IPacketBuilder_DCM : ISetProperties_DCM
 /// <summary>
 /// 开关量模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_IO
+internal interface IEncoder_IO
 {
 }
 
 /// <summary>
 /// 电能模块报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_EPQ : ISetProperties_EPQ
+internal interface IEncoder_EPQ : ISetProperties_EPQ
 {
 
     /// <summary>
@@ -409,7 +415,7 @@ internal interface IPacketBuilder_EPQ : ISetProperties_EPQ
 /// <summary>
 /// 校准功能报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_Calibrate
+internal interface IEncoder_Calibrate
 {
     /// <summary>
     /// 清空校准参数，恢复出厂默认设置
@@ -559,7 +565,7 @@ internal interface IPacketBuilder_Calibrate
 /// <summary>
 /// 对时功能报文创建类接口
 /// </summary>
-internal interface IPacketBuilder_PPS
+internal interface IEncoder_PPS
 {
     /// <summary>
     /// 自动对时方式

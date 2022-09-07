@@ -11,35 +11,35 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 [Model ( Models. Hex5A )]
 internal class Hex5AFactory : IProtocolFactory
 {
-    public OperateResult<IPacketBuilder_ACM> GetPacketBuilderOfACM ( ushort id )
+    public OperateResult<IEncoder_ACM> GetPacketBuilderOfACM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_ACM> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketsBuilder_ACS> GetPacketBuilderOfACS ( ushort id,IByteTransform byteTransform )
+    public OperateResult<IEncoder_ACS> GetPacketBuilderOfACS ( ushort id,IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex5APacketBuilder_ACS ( id, byteTransform ) as IPacketsBuilder_ACS );
+        return OperateResult. CreateSuccessResult ( new Hex5AEncoder_ACS ( id, byteTransform ) as IEncoder_ACS );
     }
 
-    public OperateResult<IPacketBuilder_DCM> GetPacketBuilderOfDCM ( ushort id )
+    public OperateResult<IEncoder> GetPacketBuilderOfDCM ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_DCM> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id )
+    public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_DCS> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_DCS> ( StringResources. Language. NotSupportedModule );
 
     }
 
-    public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id )
+    public OperateResult<IEncoder_IO> GetPacketBuilderOfIO ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfPQ ( ushort id )
+    public OperateResult<IEncoder_EPQ> GetPacketBuilderOfPQ ( ushort id )
     {
-        return new OperateResult<IPacketBuilder_EPQ> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_EPQ> ( StringResources. Language. NotSupportedModule );
     }
 
     public ICRCChecker GetCRCChecker ( )
@@ -53,32 +53,37 @@ internal class Hex5AFactory : IProtocolFactory
         return new Hex5AFunctions ( );
     }
 
-    public IDecoder GetDecoder ( IByteTransform byteTransform )
+    public IDecoders GetDecoder ( IByteTransform byteTransform )
     {
 
         return new Hex5ADecoder ( byteTransform );
     }
 
-    public OperateResult<IPacketBuilder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_DCS> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_DCS> ( StringResources. Language. NotSupportedModule );
 
     }
 
-    public OperateResult<IPacketBuilder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_IO> GetPacketBuilderOfIO ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_IO> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
 
     }
 
-    public OperateResult<IPacketBuilder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_EPQ> GetPacketBuilderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_EPQ> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_EPQ> ( StringResources. Language. NotSupportedModule );
 
     }
 
-    public OperateResult<IPacketBuilder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_Calibrate> GetPacketBuilderOfCalibrate ( ushort id , IByteTransform byteTransform )
     {
-        return new OperateResult<IPacketBuilder_Calibrate> ( StringResources. Language. NotSupportedModule );
+        return new OperateResult<IEncoder_Calibrate> ( StringResources. Language. NotSupportedModule );
+    }
+
+    public IDecoder_ACS GetDecoder_ACS ( IByteTransform byteTransform )
+    {
+        throw new NotImplementedException ( );
     }
 }

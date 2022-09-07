@@ -12,7 +12,7 @@ public class DCM : IModuleDCM
     /// <summary>
     /// 定义交流表模块对象
     /// </summary>
-    private IPacketBuilder_DCM? _packetsBuilder;
+    private IEncoder? _packetsBuilder;
 
     /// <summary>
     /// 设备ID
@@ -27,7 +27,7 @@ public class DCM : IModuleDCM
     /// <summary>
     /// 定义解码器对象
     /// </summary>
-    private readonly IDecoder _decoder;
+    private readonly IDecoders _decoder;
 
     /// <summary>
     /// 模块功能是否激活

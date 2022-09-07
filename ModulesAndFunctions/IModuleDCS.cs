@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流源功能模块接口
 /// </summary>
-public interface IModuleDCS : IReadProperties_DCS,ISetProperties_DCS
+public interface IModuleDCS 
 {
     /// <summary>
     /// 获取直流源档位信息

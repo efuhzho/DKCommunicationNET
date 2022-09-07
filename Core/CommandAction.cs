@@ -29,6 +29,5 @@ internal class CommandAction
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule + ex );
         }
-
     }
 }

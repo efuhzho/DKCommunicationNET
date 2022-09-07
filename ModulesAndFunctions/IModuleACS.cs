@@ -8,7 +8,7 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// <summary>
 /// 【接口】交流源模块接口
 /// </summary>
-public interface IModuleACS : IProperties_ACS
+public interface IModuleACS //: IProperties_ACS
 {
 
     //TODO 添加输出精度信息
