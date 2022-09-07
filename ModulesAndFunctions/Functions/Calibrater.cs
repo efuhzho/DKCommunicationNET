@@ -12,7 +12,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
     /// <summary>
     /// 校准
     /// </summary>
-    public class Calibrate : ICalibrate
+    public class Calibrater : IFuncCalibrater
     {      
         /// <summary>
         /// 发送报文，获取并校验下位机的回复报文的委托方法
@@ -22,22 +22,16 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         /// <summary>
         /// 定义交流源模块对象
         /// </summary>
-        private readonly IEncoder_Calibrate? _packetsBuilder;
+        private readonly IEncoder_Calibrate? _encoder;
+        
 
-        /// <summary>
-        /// 协议是否支持校准功能
-        /// </summary>
-        private readonly bool _isSupported ;
-
-        internal Calibrate ( ushort id , IProtocolFactory protocolFactory , Func<byte[] , bool , OperateResult<byte[]>> methodOfCheckResponse , IByteTransform byteTransform ,bool isSupported )
+        internal Calibrater (IEncoder_Calibrate  encoder , Func<byte[] , bool , OperateResult<byte[]>> methodOfCheckResponse  )
         {
             //接收执行报文发送接收的委托方法        
             _methodOfCheckResponse = methodOfCheckResponse;
 
             //初始化报文创建器
-            _packetsBuilder = protocolFactory. GetPacketBuilderOfCalibrate ( id , byteTransform ). Content;  
-
-            _isSupported = isSupported;
+            _encoder = encoder;              
         }
 
         /// <summary>
@@ -64,14 +58,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
                 return new OperateResult<byte[]> ( 8113 , "请使用直流源（表）数据清空方法:Calibrate_ClearDCU_Data或者Calibrate_ClearDCI_Data" );
             }
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> result =CommandAction.Action( _packetsBuilder.Packet_ClearData ( calibrateType , uRangeIndex , iRangeIndex ),_methodOfCheckResponse);
+            OperateResult<byte[]> result =CommandAction.Action( _encoder.Packet_ClearData ( calibrateType , uRangeIndex , iRangeIndex ),_methodOfCheckResponse);
             if ( result. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -88,14 +81,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         public OperateResult<byte[]> Calibrate_ClearDCU_Data ( CalibrateType calibrateType , byte uRangeIndex )
         {
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> result =CommandAction.Action( _packetsBuilder.Packet_ClearData ( calibrateType , uRangeIndex , 100 ),_methodOfCheckResponse);    //100：保护无需清空的电压档位数据
+            OperateResult<byte[]> result =CommandAction.Action( _encoder.Packet_ClearData ( calibrateType , uRangeIndex , 100 ),_methodOfCheckResponse);    //100：保护无需清空的电压档位数据
             if ( result. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -112,14 +104,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         public OperateResult<byte[]> Calibrate_ClearDCI_Data ( CalibrateType calibrateType , byte iRangeIndex )
         {
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> response =CommandAction.Action( _packetsBuilder.Packet_ClearData ( calibrateType , 100 , iRangeIndex ),_methodOfCheckResponse);    //100：保护无需清空的电流档位数据
+            OperateResult<byte[]> response =CommandAction.Action( _encoder.Packet_ClearData ( calibrateType , 100 , iRangeIndex ),_methodOfCheckResponse);    //100：保护无需清空的电流档位数据
             if ( response. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -136,14 +127,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         public OperateResult<byte[]> Calibrate_SwitchACRange ( byte uRangeIndex , byte iRangeIndex )
         {
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> response =CommandAction.Action( _packetsBuilder.Packet_SwitchACRange  ( uRangeIndex , iRangeIndex ),_methodOfCheckResponse);
+            OperateResult<byte[]> response =CommandAction.Action( _encoder.Packet_SwitchACRange  ( uRangeIndex , iRangeIndex ),_methodOfCheckResponse);
 
             return response;
         }
@@ -164,14 +154,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         public OperateResult<byte[]> Calibrate_SwitchACPoint ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float sUA , float sUB , float sUC , float sIA , float sIB , float sIC )
         {
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> response =CommandAction.Action( _packetsBuilder.Packet_SwitchACPoint ( uRangeIndex , iRangeIndex , calibrateLevel , sUA , sUB , sUC , sIA , sIB , sIC ),_methodOfCheckResponse);
+            OperateResult<byte[]> response =CommandAction.Action( _encoder.Packet_SwitchACPoint ( uRangeIndex , iRangeIndex , calibrateLevel , sUA , sUB , sUC , sIA , sIB , sIC ),_methodOfCheckResponse);
             if ( response. IsSuccess )
             {
                 CalibrateLevel = calibrateLevel;
@@ -206,14 +195,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         public OperateResult<byte[]> Calibrate_DoAC ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float mUA , float mUB , float mUC , float mIA , float mIB , float mIC )
         {
             //执行命令前的功能状态检查
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[]> response =CommandAction.Action( _packetsBuilder.Packet_DoAC ( uRangeIndex , iRangeIndex , calibrateLevel , mUA , mUB , mUC , mIA , mIB , mIC ),_methodOfCheckResponse);
+            OperateResult<byte[]> response =CommandAction.Action( _encoder.Packet_DoAC ( uRangeIndex , iRangeIndex , calibrateLevel , mUA , mUB , mUC , mIA , mIB , mIC ),_methodOfCheckResponse);
 
             return response;
         }
@@ -227,12 +215,11 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         /// <returns></returns>
         public OperateResult<byte[]> Calibrate_Save ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel )
         {
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[]> result = CommandAction. Action ( _packetsBuilder. Packet_Save ( uRangeIndex , iRangeIndex , calibrateLevel ) , _methodOfCheckResponse );
+            OperateResult<byte[]> result = CommandAction. Action ( _encoder. Packet_Save ( uRangeIndex , iRangeIndex , calibrateLevel ) , _methodOfCheckResponse );
 
             return result;
         }
@@ -252,12 +239,11 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         /// <returns></returns>
         public OperateResult<byte[]> Calibrate_DoACMeter ( byte uRangeIndex , byte iRangeIndex , CalibrateLevel calibrateLevel , float UA , float UB , float UC , float IA , float IB , float IC )
         {
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[]> response = CommandAction. Action ( _packetsBuilder. Packet_DoACMeter ( uRangeIndex , iRangeIndex , calibrateLevel , UA , UB , UC , IA , IB , IC ) , _methodOfCheckResponse );
+            OperateResult<byte[]> response = CommandAction. Action ( _encoder. Packet_DoACMeter ( uRangeIndex , iRangeIndex , calibrateLevel , UA , UB , UC , IA , IB , IC ) , _methodOfCheckResponse );
 
             return response;
         }
@@ -276,12 +262,11 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             CalibrateLevel calibrateLevel ,
             float sDCAmplitude )
         {
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[]> result = CommandAction. Action ( _packetsBuilder. Packet_SwitchDCPoint ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );
+            OperateResult<byte[]> result = CommandAction. Action ( _encoder. Packet_SwitchDCPoint ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );
             if ( result.IsSuccess )
             {
                 CalibrateLevel = calibrateLevel;
@@ -304,12 +289,11 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
           CalibrateLevel calibrateLevel ,
           float sDCAmplitude )
         {
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[]> result = CommandAction. Action ( _packetsBuilder. Packet_DoDC ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );          
+            OperateResult<byte[]> result = CommandAction. Action ( _encoder. Packet_DoDC ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );          
 
             return result;
         }
@@ -328,12 +312,11 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             CalibrateLevel calibrateLevel ,
             float sDCAmplitude )
         {
-            var checkResult = CheckFunctionsStatus. CheckFunctionsState ( _packetsBuilder , _isSupported );
-            if ( !checkResult. IsSuccess || _packetsBuilder == null )
+            if ( _encoder == null )
             {
-                return checkResult;
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[]> result = CommandAction. Action ( _packetsBuilder. Packet_DoDCMeter ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );
+            OperateResult<byte[]> result = CommandAction. Action ( _encoder. Packet_DoDCMeter ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) , _methodOfCheckResponse );
 
             return result;
         }

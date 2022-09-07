@@ -5,7 +5,7 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// <summary>
 /// 校准类接口
 /// </summary>
-public interface ICalibrate
+public interface IFuncCalibrater
 {
     /// <summary>
     /// 当前校准类型

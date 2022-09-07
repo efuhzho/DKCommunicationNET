@@ -69,7 +69,7 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// [警告:错误使用此功能将可能导致严重的后果]
     /// </summary>
-    public Calibrate? Calibrate => new Calibrate ( ID , _protocolFactory , CheckResponse , ByteTransform , true );
+    public Calibrater? Calibrate => new Calibrater ( ID , _protocolFactory , CheckResponse , ByteTransform , true );
 
     /// <summary>
     /// 系统设置（包含HandShake）
