@@ -4,7 +4,7 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 
 internal class Hex5AInformation
 {
-    #region CommandCodes>>> 系统
+    #region 《系统设置
     /// <summary>
     /// 报文头
     /// </summary>
@@ -21,7 +21,6 @@ internal class Hex5AInformation
     /// 【命令码】联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x11;
-    //public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x1D , 0x00 , 0x96 };
 
     /// <summary>
     /// 【命令码】设置系统模式
@@ -36,20 +35,19 @@ internal class Hex5AInformation
     internal const ushort SetDisplayPageCommandLength = 8;
 
     /// <summary>
-    /// 设置设备信息
+    /// 【命令码】设置设备信息
     /// </summary>
     public const byte SetDeviceInfo = 0x17;
     public const byte SetDeviceInfo_L = 42;
 
     /// <summary>
-    /// 设置波特率
+    /// 【命令码】设置波特率
     /// </summary>
     public const byte SetBaudRate = 0x18;
     public const byte SetBaudRate_L = 13;
+    #endregion 系统设置》
 
-    #endregion CommandCodes>>>系统
-
-    #region CommandCodes>>>ACS
+    #region 《交流源 ACS
     /// <summary>
     /// 【命令码】获取交流源档位
     /// </summary>
@@ -57,120 +55,41 @@ internal class Hex5AInformation
     internal const byte GetRanges_ACS_Len = 12;
 
     /// <summary>
-    /// 设置模式及档位
+    /// 【命令码】设置模式及档位
     /// </summary>
     public const byte SetSystemModeAndRanges = 0x31;
     public const byte SetSystemModeAndRanges_L = 25;
 
     /// <summary>
-    /// 设置标准源参数
+    /// 【命令码】设置标准源参数
     /// </summary>
     public const byte SetStandardSource = 0x32;
 
     /// <summary>
-    /// 设置谐波参数
+    /// 【命令码】设置谐波参数
     /// </summary>
     public const byte SetHarmonics = 0x33;
     public const byte SetHarmonics_Clear_L = 13;
 
     /// <summary>
-    /// 查询交流源数据
+    /// 【命令码】查询交流源数据
     /// </summary>
     public const byte ReadData_ACS = 0x40;
+    #endregion 交流源 ACS》
 
-
-    #endregion CommandCodes>>>ACS
-
-    #region CommandCodes>>>PPS
+    #region 《对时模块
     /// <summary>
-    /// 对时
+    /// 【命令码】对时命令码
     /// </summary>
     public const byte CompareTime = 0x13;
     public const byte CompareTime_L = 17;
 
+    /// <summary>
+    /// 【命令码】读对时模块数据命令码
+    /// </summary>
     public const byte ReadData_PPS = 0x14;
     public const byte ReadData_PPS_L = 28;
-    #endregion
-
-    #region 【Internal Methods】
-
-    #region Internal Methods ==> [创建报文格式]
-
-    /// <summary>
-    /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
-    /// </summary>
-    /// <param name="commandCode">命令码</param>
-    /// <param name="commandLength">指令长度</param>
-    ///  /// <param name="id">可选参数：设备ID</param>
-    /// <returns>带指令信息的结果：完整指令长度</returns>
-    internal static OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
-    {
-        //尝试预创建报文
-        try
-        {
-            InitDic ( );
-            byte ID = AnalysisID ( id );
-            byte[ ] buffer = new byte[commandLength];
-            buffer[0] = Sync0;
-            buffer[1] = Sync1;
-            buffer[2] = BitConverter. GetBytes ( commandLength )[0];
-            buffer[3] = BitConverter. GetBytes ( commandLength )[1];
-            buffer[4] = ID;
-            buffer[5] = 0x00;
-            buffer[6] = DicFrameType[commandCode];
-            buffer[7] = commandCode;
-            buffer[commandLength - 1] = End;
-
-            if ( commandLength == 11 )
-            {
-                buffer[8] = CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
-                buffer[9] = CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
-            }
-            return OperateResult. CreateSuccessResult ( buffer );
-        }
-
-        //发生异常回报当前代码位置和异常信息
-        catch ( Exception ex )
-        {
-            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "【From】" + StringResources. GetCurSourceFileName ( ) );
-        }
-    }
-
-    /// <summary>
-    /// 带参数的完整报文可直接发送给串口
-    /// </summary>
-    /// <param name="commandCode">命令码</param>
-    /// <param name="commandLength">指令长度</param>
-    /// <param name="data">参数</param>
-    /// <param name="id">可选参数：设备ID</param>
-    /// <returns></returns>
-    internal static OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , byte[ ] data , ushort id = 0 )
-    {
-        try
-        {
-            OperateResult<byte[ ]> dataBytesWithoutData = CreateCommandHelper ( commandCode , commandLength , id );
-            if ( dataBytesWithoutData. IsSuccess )
-            {
-                Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
-                dataBytesWithoutData. Content[commandLength - 3] = CRCcalculator ( dataBytesWithoutData. Content )[0];
-                dataBytesWithoutData. Content[commandLength - 2] = CRCcalculator ( dataBytesWithoutData. Content )[1];
-                return dataBytesWithoutData;
-            }
-            else
-            {
-                return dataBytesWithoutData;
-            }
-        }
-        catch ( Exception ex )
-        {
-            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , ex. Message + "From:" + StringResources. GetCurSourceFileName ( ) );
-        }
-    }
-    #endregion Internal Methods ==> [创建报文格式]
-
-    #endregion 【Internal Methods】
-
-    #region 【Private Methods】 
+    #endregion 对时模块》
 
     #region Private Methods ==> [校验码计算器]
 
@@ -191,62 +110,6 @@ internal class Hex5AInformation
         return BitConverter. GetBytes ( crc );
     }
     #endregion Private Methods ==> [校验码计算器]
-
-    #region Private Methods ==> [解析ID]
-    /// <summary>
-    /// 解析ID，转换为1个字节
-    /// </summary>
-    /// <param name="id">设备ID</param>
-    /// <returns>返回带有信息的结果</returns>
-    private static byte AnalysisID ( ushort id )
-    {
-        byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
-        return oneByteID[0];
-    }
-    #endregion Private Methods ==> [解析ID]
-
-    #region Private Methods ==> [帧类型和报文类型的字典]
-
-    private static Dictionary<byte , byte> DicFrameType = new Dictionary<byte , byte> ( );
-
-    /// <summary>
-    /// 字典初始化
-    /// </summary>
-    private static void InitDic ( )
-    {
-        for ( byte i = 0x11 ; i < 0x19 ; i++ )
-        {
-            DicFrameType[i] = 0x01;
-        }
-
-        for ( byte i = 0x31 ; i < 0x39 ; i++ )
-        {
-            DicFrameType[i] = 0x02;
-        }
-        for ( byte i = 0x40 ; i < 0x44 ; i++ )
-        {
-            DicFrameType[i] = 0x02;
-        }
-
-        for ( byte i = 0x51 ; i < 0x54 ; i++ )
-        {
-            DicFrameType[i] = 0x03;
-        }
-        for ( byte i = 0x61 ; i < 0x65 ; i++ )
-        {
-            DicFrameType[i] = 0x04;
-        }
-        for ( byte i = 0xB1 ; i < 0xBA ; i++ )
-        {
-            DicFrameType[i] = 0x09;
-        }
-    }
-
-    #endregion Private Methods ==> [帧类型和报文类型的字典]
-
-    #endregion 【Private Methods】
-
-
 }
 #region 【枚举类型】
 
