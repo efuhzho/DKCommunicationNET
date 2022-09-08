@@ -6,12 +6,12 @@ namespace DKCommunicationNET.Protocols.Hex5A.Encoders;
 /// <summary>
 /// 对时功能报文创建
 /// </summary>
-internal class Hex5APacketBuilder_PPS : IEncoder_PPS
+internal class Hex5AEncoder_PPS : IEncoder_PPS
 {
-    private readonly Hex5APacketBuilderHelper _PBHelper;
-    public Hex5APacketBuilder_PPS(ushort id)
+    private readonly Hex5AEncodeHelper _encodeHelper;
+    public Hex5AEncoder_PPS(ushort id)
     {
-        _PBHelper = new Hex5APacketBuilderHelper(id);
+        _encodeHelper = new Hex5AEncodeHelper ( id);
     }
 
     public OperateResult<byte[ ]> CompareTime_Auto(Enum Type_CompareTime, short timeZones = 8)
@@ -27,7 +27,7 @@ internal class Hex5APacketBuilder_PPS : IEncoder_PPS
 
     public OperateResult<byte[ ]> ReadData_PPS()
     {
-        return _PBHelper.PacketShellBuilder(Hex5AInformation.ReadData_PPS);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.ReadData_PPS);
     }
 
     #region 私有方法
@@ -38,7 +38,7 @@ internal class Hex5APacketBuilder_PPS : IEncoder_PPS
         data[0] = (byte)type;
         BitConverter.GetBytes(dateTime.Ticks).CopyTo(data, 1);
         data[5] = (byte)timeZones;
-        return _PBHelper.PacketShellBuilder(Hex5AInformation.CompareTime, Hex5AInformation.CompareTime_L, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.CompareTime, Hex5AInformation.CompareTime_L, data);
     }
     #endregion
 

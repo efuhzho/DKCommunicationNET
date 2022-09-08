@@ -4,8 +4,6 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 
 internal class Hex5AInformation
 {
-
-
     #region CommandCodes>>> 系统
     /// <summary>
     /// 报文头
@@ -23,8 +21,7 @@ internal class Hex5AInformation
     /// 【命令码】联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x11;
-    internal const ushort HandShakeCommandLength = 11;
-    public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x1D , 0x00 , 0x96 };
+    //public static readonly byte[ ] HandShakePacket = new byte[11] { 0x5A , 0xA5 , 0x0B , 0x00 , 0x00 , 0x00 , 0x01 , 0x11 , 0x1D , 0x00 , 0x96 };
 
     /// <summary>
     /// 【命令码】设置系统模式
@@ -268,48 +265,6 @@ internal class Hex5AInformation
 
 }
 #region 【枚举类型】
-public enum SystemModes : byte
-{
-    /// <summary>
-    /// 标准源模式
-    /// </summary>
-    ModeDefault = 0,
-
-    /// <summary>
-    /// 标准表模式
-    /// </summary>
-    ModeStandardMeter = 1,
-
-    /// <summary>
-    /// 标准表（钳表）模式
-    /// </summary>
-    ModeStandardMeterClamp = 2,
-
-    /// <summary>
-    /// 标准源校准模式
-    /// </summary>
-    ModeStandardSourceCalibrate = 10,
-
-    /// <summary>
-    /// 标准表校准模式
-    /// </summary>
-    ModeStandardMeterCalibrate = 11,
-
-    /// <summary>
-    /// 钳表校准模式
-    /// </summary>
-    ModeStandardClampCalibrate = 12,
-
-    /// <summary>
-    /// 直流源校准模式
-    /// </summary>
-    ModeDCSourceCalibrate = 13,
-
-    /// <summary>
-    /// 直流表校准模式
-    /// </summary>
-    ModeDCMeterCalibrate = 14
-}
 
 /// <summary>
 /// 获取档位类型

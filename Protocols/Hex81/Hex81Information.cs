@@ -19,8 +19,7 @@ internal class Hex81Information
     /// 联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x4C;
-    internal const ushort HandShake_Length = 7;
-    internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
+    //internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
 
     #region 【CommandCodes】>>>[系统设置]
     /// <summary>

@@ -4,20 +4,20 @@ namespace DKCommunicationNET.Protocols.Hex5A.Encoders;
 
 internal class Hex5AEncoder_ACS : IEncoder_ACS
 {
-    private readonly Hex5AEncodeHelper _PBHelper;
+    private readonly Hex5AEncodeHelper _encodeHelper;
     private readonly IByteTransform _transform;
 
 
     public Hex5AEncoder_ACS(ushort id, IByteTransform byteTransform)
     {
-        _PBHelper = new Hex5AEncodeHelper(id);
+        _encodeHelper = new Hex5AEncodeHelper(id);
         _transform = byteTransform;
     }
 
     public OperateResult<byte[ ]> Packet_GetRanges()
     {
         byte[ ] data = new byte[1] { (byte)Type_Module.ACS };
-        return _PBHelper.EncodeHelper(Hex5AInformation.GetRanges_ACS, Hex5AInformation.GetRanges_ACS_Len, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.GetRanges_ACS, Hex5AInformation.GetRanges_ACS_Len, data);
     }
 
     public OperateResult<byte[ ]> Packet_Open()
@@ -29,7 +29,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
 
     public OperateResult<byte[ ]> Packet_ReadData()
     {
-        return _PBHelper.EncodeHelper(Hex5AInformation.ReadData_ACS);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.ReadData_ACS);
     }
 
     public OperateResult<byte[ ]> Packet_ReadData_Status()
@@ -88,7 +88,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
             HarmonicArgs.HarmonicToBytes(harmonics[i], _transform).CopyTo(data, 2 + i * 9);
 
         }
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetHarmonics, (ushort)(11 + data.Length), data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetHarmonics, (ushort)(11 + data.Length), data);
     }
 
     public OperateResult<byte[ ]> Packet_SetPhase(float PhaseUa, float PhaseUb, float PhaseUc, float PhaseIa, float PhaseIb, float PhaseIc)
@@ -158,7 +158,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         byte[ ] data = new byte[2];
         data[0] = Convert.ToByte(Channels);
         data[1] = 0;
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetHarmonics, Hex5AInformation.SetHarmonics_Clear_L, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetHarmonics, Hex5AInformation.SetHarmonics_Clear_L, data);
     }
 
 
@@ -195,7 +195,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         {
             rangs.CopyTo(data, 6);
         }
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetSystemModeAndRanges, Hex5AInformation.SetSystemModeAndRanges_L, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetSystemModeAndRanges, Hex5AInformation.SetSystemModeAndRanges_L, data);
     }
 
     /// <summary>
@@ -228,7 +228,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         }
 
         //返回结果
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetStandardSource, (ushort)(11 + data.Length), data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetStandardSource, (ushort)(11 + data.Length), data);
     }
 
 

@@ -5,7 +5,7 @@
 /// </summary>
 internal class Hex81Encoder_Settings : IEncoder_Settings
 {
-    private readonly Hex81EncodeHelper _PBHelper;
+    private readonly Hex81EncodeHelper _encodeHelper;
 
     /// <summary>
     /// 构造函数
@@ -13,25 +13,12 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
     /// <param name="id">设备ID</param>
     public Hex81Encoder_Settings(ushort id)
     {
-        _PBHelper = new Hex81EncodeHelper(id);
-
+        _encodeHelper = new Hex81EncodeHelper(id);
     }
 
     public OperateResult<byte[ ]> Packet_HandShake ( )
     {
-        return OperateResult.CreateSuccessResult ( Hex81Information. HandShakePacket );
-    }
-
-    public OperateResult<byte[ ]> Packet_SetBaudRate(ushort baudRate)
-    {
-        //不具备此功能
-        return new OperateResult<byte[ ]>(StringResources.Language.NotSupportedFunction);
-    }
-
-    public OperateResult<byte[ ]> Packet_SetDeviceInfo(char[ ] password, byte id, string sn)
-    {
-        //不具备此功能
-        return new OperateResult<byte[ ]>(StringResources.Language.NotSupportedFunction);
+        return _encodeHelper. EncodeHelper ( Hex81Information. HandShake );
     }
 
     /// <summary>
@@ -42,7 +29,7 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
     public OperateResult<byte[ ]> Packet_SetDisplayPage(byte displayPage)
     {
         byte[ ] data = new byte[displayPage];
-        return _PBHelper.EncodeHelper(Hex81Information.SetDisplayPage, Hex81Information.SetDisplayPage_Length, data);
+        return _encodeHelper.EncodeHelper(Hex81Information.SetDisplayPage, Hex81Information.SetDisplayPage_Length, data);
     }
 
     /// <summary>
@@ -53,6 +40,29 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
     public OperateResult<byte[ ]> Packet_SetSystemMode(byte systemMdoe)
     {
         byte[ ] data = new byte[systemMdoe];
-        return _PBHelper.EncodeHelper(Hex81Information.SetSystemMode, Hex81Information.SetSystemMode_Length, data);
+        return _encodeHelper.EncodeHelper(Hex81Information.SetSystemMode, Hex81Information.SetSystemMode_Length, data);
     }
+
+    /****************************************************************************************************************************************
+     *  2022年9月8日   17点04分  
+     *
+     *  以下方法均为Hex81协议不支持的功能。
+     *
+     *  不可删除的接口虚拟实现。
+     ***************************************************************************************************************************************/
+
+    #region 《不支持的功能
+
+    public OperateResult<byte[ ]> Packet_SetBaudRate ( ushort baudRate )
+    {
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
+    }
+
+    public OperateResult<byte[ ]> Packet_SetDeviceInfo ( char[ ] password , byte id , string sn )
+    {
+        //不具备此功能
+        return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );
+    }
+    #endregion 不支持的功能》
 }

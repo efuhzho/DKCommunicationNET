@@ -6,11 +6,11 @@ namespace DKCommunicationNET.Protocols.Hex5A.Encoders;
 internal class Hex5AEncoder_Settings : IEncoder_Settings
 {
     private readonly IByteTransform _byteTransform;
-    private readonly Hex5AEncodeHelper _PBHelper;
+    private readonly Hex5AEncodeHelper _encodeHelper;
     public Hex5AEncoder_Settings(ushort id, IByteTransform byteTransform)
     {
         _byteTransform = byteTransform;
-        _PBHelper = new Hex5AEncodeHelper(id);
+        _encodeHelper = new Hex5AEncodeHelper(id);
     }
 
     public OperateResult<byte[ ]> Packet_SetDeviceInfo(char[ ] password, byte id, string sn)
@@ -35,7 +35,7 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
         else return new OperateResult<byte[ ]>("设备编号长度超限");
 
         //返回结果
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetDeviceInfo, Hex5AInformation.SetDeviceInfo_L, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetDeviceInfo, Hex5AInformation.SetDeviceInfo_L, data);
     }
 
 
@@ -43,7 +43,7 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
     {
         byte[ ] data = new byte[2];
         BitConverter.GetBytes(baudRate).CopyTo(data, 0);
-        return _PBHelper.EncodeHelper(Hex5AInformation.SetBaudRate, Hex5AInformation.SetBaudRate_L, data);
+        return _encodeHelper.EncodeHelper(Hex5AInformation.SetBaudRate, Hex5AInformation.SetBaudRate_L, data);
     }
 
     public OperateResult<byte[ ]> Packet_SetSystemMode(byte systemMode)
@@ -58,5 +58,8 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
         return new OperateResult<byte[ ]>(StringResources.Language.NotSupportedFunction);
     }
 
-
+    public OperateResult<byte[ ]> Packet_HandShake ( )
+    {
+        return _encodeHelper. EncodeHelper ( Hex5AInformation. HandShake );
+    }
 }
