@@ -1,16 +1,13 @@
-﻿using System;
-using System.Threading.Channels;
-using DKCommunicationNET.Core;
-using DKCommunicationNET.Protocols.Hex5A;
+﻿using DKCommunicationNET. Core;
 
-namespace DKCommunicationNET.Protocols.Hex81.Encoders;
+namespace DKCommunicationNET. Protocols. Hex81. Encoders;
 
-internal class Hex81PacketBuilder_ACS : IEncoder_ACS
+internal class Hex81Encoder_ACS : IEncoder_ACS
 {
     private readonly Hex81EncodeHelper _PBHelper;
     private readonly IByteTransform _byteTransform;
 
-    public Hex81PacketBuilder_ACS(ushort id, IByteTransform byteTransform)
+    public Hex81Encoder_ACS(ushort id, IByteTransform byteTransform)
     {
         _PBHelper = new(id);
         _byteTransform = byteTransform;

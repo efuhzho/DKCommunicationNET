@@ -624,4 +624,4 @@ namespace DKCommunicationNET.Protocols.Hex81.Decoders;
 
 //    #endregion Decoders
 
-}
+//}

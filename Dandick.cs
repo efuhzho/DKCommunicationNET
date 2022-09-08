@@ -98,9 +98,9 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
 
         //【编码器】实例化
         {
-            _packetsBuilder_ACS = _protocolFactory. GetPacketBuilderOfACS ( ID , ByteTransform ). Content;
-            _packetsBuilder_DCS = _protocolFactory. GetPacketBuilderOfDCS ( ID , ByteTransform ). Content;
-            _packetBuilder_Settings = _protocolFactory. GetPacketBuilder_Settings ( ID ). Content;
+            _packetsBuilder_ACS = _protocolFactory. GetEncoderOfACS ( ID , ByteTransform ). Content;
+            _packetsBuilder_DCS = _protocolFactory. GetEncoderOfDCS ( ID , ByteTransform ). Content;
+            _packetBuilder_Settings = _protocolFactory. GetEncoder_Settings ( ID ). Content;
         }
 
         //【解码器】实例化

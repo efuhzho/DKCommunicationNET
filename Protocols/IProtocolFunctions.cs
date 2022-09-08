@@ -92,12 +92,5 @@ internal interface IProtocolFunctions
 
     #endregion FuncS
 
-
-    /// <summary>
-    /// 获取联机协议报文
-    /// </summary>
-    /// <returns>含协议报文的操作结果对象</returns>
-    OperateResult<byte[ ]> GetPacketOfHandShake ( );
-
     //TODO 协议功能增加1
 }
