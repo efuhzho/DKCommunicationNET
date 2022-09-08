@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DKCommunicationNET.ModulesAndFunctions;
 
+/// <summary>
+/// 
+/// </summary>
 public interface IModulePPS
 {
     //TODO 未实现

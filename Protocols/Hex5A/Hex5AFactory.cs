@@ -36,6 +36,17 @@ internal class Hex5AFactory : IProtocolFactory
        return OperateResult.CreateSuccessResult(new Hex5ADecoder_Settings(byteTransform) as IDecoder_Settings );
     }
     #endregion 解码器》
+
+
+    #region 《校验器
+    public ICRCChecker GetCRCChecker ( )
+    {
+        return new Hex5ACRCChecker ( );
+    }
+    #endregion 校验器》
+
+
+
     public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
     {
         //不具备此功能模块
@@ -47,25 +58,9 @@ internal class Hex5AFactory : IProtocolFactory
         return new OperateResult<IEncoder_DCM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id )
-    {
-        return new OperateResult<IEncoder_DCS> ( StringResources. Language. NotSupportedModule );
-    }
+   
 
-    public OperateResult<IEncoder_IO> GetPacketBuilderOfIO ( ushort id )
-    {
-        return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
-    }
-
-    public OperateResult<IEncoder_EPQ> GetPacketBuilderOfPQ ( ushort id )
-    {
-        return new OperateResult<IEncoder_EPQ> ( StringResources. Language. NotSupportedModule );
-    }
-
-    public ICRCChecker GetCRCChecker ( )
-    {
-        return new Hex5ACRCChecker ( );
-    }
+  
 
     public OperateResult<IEncoder_DCS> GetEncoderOfDCS ( ushort id , IByteTransform byteTransform )
     {
@@ -122,6 +117,11 @@ internal class Hex5AFactory : IProtocolFactory
     }
 
     public OperateResult<IDecoder_IO> GetDecoder_IO ( IByteTransform byteTransform )
+    {
+        throw new NotImplementedException ( );
+    }
+
+    public OperateResult<IDecoder_DCS> GetDecoder_DCS ( IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );
     }

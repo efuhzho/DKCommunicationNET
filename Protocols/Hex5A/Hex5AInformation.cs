@@ -105,19 +105,11 @@ internal class Hex5AInformation
     /// <returns>带指令信息的结果：完整指令长度</returns>
     internal static OperateResult<byte[ ]> CreateCommandHelper ( byte commandCode , ushort commandLength , ushort id = 0 )
     {
-        InitDic ( );
-        byte ID;
-        if ( AnalysisID ( id ). IsSuccess )
-        {
-            ID = AnalysisID ( id ). Content[0];
-        }
-        else
-        {
-            return AnalysisID ( id );
-        }
         //尝试预创建报文
         try
         {
+            InitDic ( );
+            byte ID = AnalysisID ( id );
             byte[ ] buffer = new byte[commandLength];
             buffer[0] = Sync0;
             buffer[1] = Sync1;
@@ -206,17 +198,10 @@ internal class Hex5AInformation
     /// </summary>
     /// <param name="id">设备ID</param>
     /// <returns>返回带有信息的结果</returns>
-    private static OperateResult<byte[ ]> AnalysisID ( ushort id )
+    private static byte AnalysisID ( ushort id )
     {
-        try
-        {
-            byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
-            return OperateResult. CreateSuccessResult ( oneByteID );
-        }
-        catch ( Exception )
-        {
-            return new OperateResult<byte[ ]> ( 1001 , "请输入正确的ID!" );
-        }
+        byte[ ] oneByteID = BitConverter. GetBytes ( id ); ;  //低位在前
+        return oneByteID[0];
     }
     #endregion Private Methods ==> [解析ID]
 
@@ -486,17 +471,17 @@ public enum Channels : byte
     /// <summary>
     /// 所有相电压[不含X相]
     /// </summary>
-    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,   
+    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,
 
     /// <summary>
     /// 所有相电流[不含X相]
     /// </summary>
-    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,   
+    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,
 
     /// <summary>
     /// 所有电压电流通道
     /// </summary>
-    Channel_All=0xFF
+    Channel_All = 0xFF
 }
 
 /// <summary>
@@ -520,7 +505,7 @@ public enum SetStandardSource_Channels_Freq : byte
 /// 设置有功功率通道枚举
 /// </summary>
 [Flags]
-public enum Channel_WattPower  : byte    //TODO 功率通道选择需核实
+public enum Channel_WattPower : byte    //TODO 功率通道选择需核实
 {
     /// <summary>
     /// 总有功功率
