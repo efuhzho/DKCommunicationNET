@@ -1,4 +1,13 @@
-﻿namespace DKCommunicationNET. Protocols. Hex81;
+﻿
+/**************************************************************************************************
+ * 
+ *  【Hex81协议的信息类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月8日 22点43分  
+ *  
+ *  支持的协议为：【DK系列通用通信协议】 修订时间：2016年07月 作者：苏老师
+ *
+ *************************************************************************************************/
+
+namespace DKCommunicationNET. Protocols. Hex81;
 
 /// <summary>
 /// Hex81协议信息类
@@ -19,7 +28,6 @@ internal class Hex81Information
     /// 联机命令，读取终端型号和版本号
     /// </summary>
     internal const byte HandShake = 0x4C;
-    //internal static readonly byte[ ] HandShakePacket = new byte[7] { 0x81 , 0x00 , 0x00 , 0x07 , 0x00 , 0x4C , 0x4B };
 
     #region 【CommandCodes】>>>[系统设置]
     /// <summary>

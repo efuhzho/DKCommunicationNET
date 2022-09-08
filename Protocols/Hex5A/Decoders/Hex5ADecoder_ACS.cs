@@ -1,10 +1,12 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Core;
-using DKCommunicationNET. ModulesAndFunctions;
+﻿using DKCommunicationNET. Core;
+
+/**************************************************************************************************
+ * 
+ *  【交流源解码类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月8日 22点43分  
+ *  
+ *  支持的协议为DK-PTS系列通讯协议V2018 修订时间：2021年06月 作者：苏老师
+ *
+ *************************************************************************************************/
 
 namespace DKCommunicationNET. Protocols. Hex5A. Decoders;
 
@@ -19,7 +21,6 @@ internal class Hex5ADecoder_ACS:IDecoder_ACS
     }
 
     #region 《方法
-
     OperateResult IDecoder_ACS.DecodeGetRanges_ACS ( byte[ ] responsResult )
     {
         try

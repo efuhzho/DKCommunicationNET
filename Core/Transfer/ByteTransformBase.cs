@@ -355,7 +355,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( bool[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array.Empty<byte>();
 
             return SoftBasic.BoolArrayToByte( values );
         }
@@ -390,7 +390,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( short[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
             byte[] buffer = new byte[values.Length * 2];
             for (int i = 0; i < values.Length; i++)
             {
@@ -418,7 +418,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( ushort[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 2];
             for (int i = 0; i < values.Length; i++)
@@ -448,7 +448,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( int[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)
@@ -477,7 +477,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( uint[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)
@@ -506,7 +506,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( long[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)
@@ -534,7 +534,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( ulong[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)
@@ -562,7 +562,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public virtual byte[] TransByte( float[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)

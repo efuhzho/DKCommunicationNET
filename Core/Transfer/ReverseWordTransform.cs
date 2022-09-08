@@ -42,7 +42,7 @@ namespace DKCommunicationNET.Core
         /// <returns>处理过的数据信息</returns>
         private byte[] ReverseBytesByWord( byte[] buffer, int index, int length )
         {
-            if (buffer == null) return null;
+            if (buffer == null) return Array. Empty<byte> ( );
 
             // copy data
             byte[] tmp = new byte[length];
@@ -169,7 +169,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( string value, Encoding encoding )
         {
-            if (value == null) return null;
+            if (value == null) return Array. Empty<byte> ( );
             byte[] buffer = encoding.GetBytes( value );
             buffer = BasicFramework.SoftBasic.ArrayExpandToLengthEven( buffer );
             if (IsStringReverse)

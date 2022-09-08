@@ -378,9 +378,9 @@ namespace DKCommunicationNET. BasicFramework
         /// <example>
         /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetValueFromJsonObjectExample" title="GetValueFromJsonObject示例" />
         /// </example>
-        public static T GetValueFromJsonObject<T> ( JObject json , string value_name , T default_value )
+        public static T? GetValueFromJsonObject<T> ( JObject json , string value_name , T default_value )
         {
-            if ( json. Property ( value_name ) != null )
+            if ( json. Property ( value_name ) != null)
             {
                 return json. Property ( value_name ). Value. Value<T> ( );
             }
@@ -419,36 +419,6 @@ namespace DKCommunicationNET. BasicFramework
         #endregion
 
         #region Exception Message Format
-
-        //#if !NETSTANDARD2_0
-
-        //        /// <summary>
-        //        /// 显示一个完整的错误信息 ->
-        //        /// Displays a complete error message
-        //        /// </summary>
-        //        /// <param name="ex">异常对象</param>
-        //        /// <remarks>调用本方法可以显示一个异常的详细信息</remarks>
-        //        /// <exception cref="NullReferenceException"></exception>
-        //        public static void ShowExceptionMessage( Exception ex )
-        //        {
-        //            MessageBox.Show( GetExceptionMessage( ex ) );
-        //        }
-
-
-        //        /// <summary>
-        //        /// 显示一个完整的错误信息，和额外的字符串描述信息 ->
-        //        /// Displays a complete error message, and additional string description information
-        //        /// </summary>
-        //        /// <param name="extraMsg">额外的描述信息</param>
-        //        /// <remarks>调用本方法可以显示一个异常的详细信息</remarks>
-        //        /// <param name="ex">异常对象</param>
-        //        /// <exception cref="NullReferenceException"></exception>
-        //        public static void ShowExceptionMessage( string extraMsg, Exception ex )
-        //        {
-        //            MessageBox.Show( GetExceptionMessage( extraMsg, ex ) );
-        //        }
-
-        //#endif
 
         /// <summary>
         /// 获取一个异常的完整错误信息 ->
@@ -607,7 +577,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example>
         public static byte[] BytesReverseByWord ( byte[] inBytes )
         {
-            if ( inBytes == null ) return null;
+            if ( inBytes == null ) return Array. Empty<byte> ( );
             byte[] buffer = ArrayExpandToLengthEven ( inBytes );
 
             for ( int i = 0 ; i < buffer. Length / 2 ; i++ )
@@ -663,7 +633,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example>
         public static byte[] BoolArrayToByte ( bool[] array )
         {
-            if ( array == null ) return null;
+            if ( array == null ) return Array. Empty<byte> ( );
 
             int length = array. Length % 8 == 0 ? array. Length / 8 : array. Length / 8 + 1;
             byte[] buffer = new byte[length];
@@ -705,7 +675,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example> 
         public static bool[] ByteToBoolArray ( byte[] InBytes , int length )
         {
-            if ( InBytes == null ) return null;
+            if ( InBytes == null ) return Array. Empty<bool> ( );
 
             if ( length > InBytes. Length * 8 ) length = InBytes. Length * 8;
             bool[] buffer = new bool[length];
@@ -742,7 +712,6 @@ namespace DKCommunicationNET. BasicFramework
         /// 将1个字节转换为bool数组
         /// </summary>
         /// <param name="InByte">原先的字节</param>
-        /// <param name="length">bool数组长度</param>
         /// <returns>转换后的bool数组</returns>
         public static bool[] ByteToBoolArray ( byte InByte )
         {
@@ -772,7 +741,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example> 
         public static bool[] ByteToBoolArray ( byte[] InBytes )
         {
-            if ( InBytes == null ) return null;
+            if ( InBytes == null ) return Array. Empty<bool> ( );
 
             return ByteToBoolArray ( InBytes , InBytes. Length * 8 );
         }
@@ -793,7 +762,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example> 
         public static byte[] SpliceTwoByteArray ( byte[] bytes1 , byte[] bytes2 )
         {
-            if ( bytes1 == null && bytes2 == null ) return null;
+            if ( bytes1 == null && bytes2 == null ) return Array. Empty<byte> ( );
             if ( bytes1 == null ) return bytes2;
             if ( bytes2 == null ) return bytes1;
 
@@ -846,7 +815,7 @@ namespace DKCommunicationNET. BasicFramework
         /// </example> 
         public static byte[] BytesArrayRemoveDouble ( byte[] value , int leftLength , int rightLength )
         {
-            if ( value == null ) return null;
+            if ( value == null ) return Array. Empty<byte> ( );
             if ( value. Length <= ( leftLength + rightLength ) ) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[value. Length - leftLength - rightLength];

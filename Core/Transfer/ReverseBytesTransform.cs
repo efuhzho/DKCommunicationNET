@@ -192,7 +192,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( short[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 2];
             for (int i = 0; i < values.Length; i++)
@@ -212,7 +212,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( ushort[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 2];
             for (int i = 0; i < values.Length; i++)
@@ -232,7 +232,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( int[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)
@@ -252,7 +252,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( uint[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)
@@ -272,7 +272,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( long[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)
@@ -292,7 +292,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( ulong[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)
@@ -312,7 +312,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( float[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 4];
             for (int i = 0; i < values.Length; i++)
@@ -333,7 +333,7 @@ namespace DKCommunicationNET.Core
         /// <returns>buffer数据</returns>
         public override byte[] TransByte( double[] values )
         {
-            if (values == null) return null;
+            if (values == null) return Array. Empty<byte> ( );
 
             byte[] buffer = new byte[values.Length * 8];
             for (int i = 0; i < values.Length; i++)

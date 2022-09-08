@@ -1,4 +1,13 @@
-﻿using DKCommunicationNET. Core;
+﻿
+/**************************************************************************************************
+ * 
+ *  【交流源报文创建类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月8日 22点43分  
+ *  
+ *  用于生成Hex81协议的命令报文。
+ *
+ *************************************************************************************************/
+
+using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex81. Encoders;
 
@@ -17,8 +26,6 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     {
         return _PBHelper.EncodeHelper(Hex81Information.GetRanges_ACS);
     }
-
-
 
     public OperateResult<byte[ ]> Packet_SetAmplitude(float UA, float UB, float UC, float IA, float IB, float IC, float IPA, float IPB, float IPC)
     {
@@ -90,7 +97,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         //当协议报文长度超过256个时，禁止发送报文以避免下位机出错。【来源于Hex81协议要求】
         if (count > 27)
         {
-            return new OperateResult<byte[ ]>(StringResources.GetLineNum(), "您设置的谐波个数超过了27个，建议您分批发送" + StringResources.GetCurSourceFileName());
+            return new OperateResult<byte[ ]>( "您设置的谐波个数超过了27个，建议您分批发送" );
         }
         //数据字节数组
         byte[ ] data = new byte[2 + count * 9];
@@ -210,7 +217,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         }
         catch (Exception ex)
         {
-            return new OperateResult<byte[ ]>(StringResources.GetLineNum(), StringResources.GetCurSourceFileName() + ex.Message);
+            return new OperateResult<byte[ ]>( ex.Message);
         }
     }
 

@@ -39,7 +39,7 @@ internal sealed class AsyncCoordinator
     private int m_opCount = 1;
     private int m_statusReported = 0;
     private Action<CoordinationStatus> m_callback;
-    private System.Threading.Timer m_timer;
+    private Timer m_timer;
 
     /// <summary>
     /// 每次的操作任务开始前必须调用该方法
@@ -154,7 +154,7 @@ public sealed class HslAsyncCoordinator
         }
     }
 
-    private Action action = null;
+    private Action? action = null;
 
     private void ThreadPoolOperater(object obj)
     {
@@ -191,30 +191,7 @@ public sealed class HslAsyncCoordinator
 public sealed class HslReadWriteLock : IDisposable
 {
     #region Lock State Management
-#if false
-          private struct BitField {
-             private int m_mask, m_1, m_startBit;
-             public BitField(int startBit, int numBits) {
-                m_startBit = startBit;
-                m_mask = unchecked((int)((1 << numBits) - 1) << startBit);
-                m_1 = unchecked((int)1 << startBit);
-             }
-             public void Increment(ref int value) { value += m_1; }
-             public void Decrement(ref int value) { value -= m_1; }
-             public void Decrement(ref int value, int amount) { value -= m_1 * amount; }
-             public int Get(int value) { return (value & m_mask) >> m_startBit; }
-             public int Set(int value, int fieldValue) { return (value & ~m_mask) | (fieldValue << m_startBit); }
-          }
 
-          private static BitField s_state = new BitField(0, 3);
-          private static BitField s_readersReading = new BitField(3, 9);
-          private static BitField s_readersWaiting = new BitField(12, 9);
-          private static BitField s_writersWaiting = new BitField(21, 9);
-          private static OneManyLockStates State(int value) { return (OneManyLockStates)s_state.Get(value); }
-          private static void State(ref int ls, OneManyLockStates newState) {
-             ls = s_state.Set(ls, (int)newState);
-          }
-#endif
     private enum OneManyLockStates
     {
         Free = 0x00000000,

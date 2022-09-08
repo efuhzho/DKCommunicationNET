@@ -3,10 +3,9 @@ using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. Module;
 using DKCommunicationNET. ModulesAndFunctions;
-using DKCommunicationNET. Protocols;
 using DKCommunicationNET. ModulesAndFunctions. Functions;
-using System. Security. Cryptography;
 using DKCommunicationNET. ModulesAndFunctions. Modules;
+using DKCommunicationNET. Protocols;
 
 namespace DKCommunicationNET;
 
@@ -182,19 +181,19 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
                 DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse );
             }
 
-            if ( encoder_DCM!=null &&decoder_DCM!=null)
+            if ( encoder_DCM != null && decoder_DCM != null )
             {
                 DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse );
             }
-            if ( encoder_IO!=null&&decoder_IO!=null )
+            if ( encoder_IO != null && decoder_IO != null )
             {
-                IO=new IO() ;   //TODO 未实现
+                IO = new IO ( );   //TODO 未实现
             }
             if ( encoder_EPQ != null && decoder_EPQ != null )
             {
-                EPQ=new EPQ(encoder_EPQ , decoder_EPQ , CheckResponse );
+                EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse );
             }
-            if ( encoder_PPS!=null&&decoder_PPS!=null )
+            if ( encoder_PPS != null && decoder_PPS != null )
             {
                 PPS = new PPS ( );  //TODO 未实现
             }
@@ -232,7 +231,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
         // 长度校验
         if ( response. Content. Length < 7 )
         {
-            return new OperateResult<byte[ ]> ( StringResources. GetLineNum ( ) , StringResources. Language. ReceiveDataLengthTooShort );
+            return new OperateResult<byte[ ]> ( StringResources. Language. ReceiveDataLengthTooShort );
         }
 
         // 检查CRC:CheckCRC包含报文头验证

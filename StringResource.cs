@@ -47,26 +47,5 @@ internal class StringResources
     {
         Language = new English ( );
     }
-
-    /// <summary>
-    /// 获取当前源码行数
-    /// </summary>
-    /// <returns></returns>
-    public static int GetLineNum ( )
-    {
-        System. Diagnostics. StackTrace st = new System. Diagnostics. StackTrace ( 1 , true );
-        return st. GetFrame ( 0 ). GetFileLineNumber ( );
-    }
-
-    /// <summary>
-    /// 获取当前源码的源文件名
-    /// </summary>
-    /// <returns></returns>
-    public static string? GetCurSourceFileName ( )
-    {
-        System. Diagnostics. StackTrace st = new ( 1 , true );
-
-        return st. GetFrame ( 0 ). GetFileName ( )+":";
-    }
 }
 

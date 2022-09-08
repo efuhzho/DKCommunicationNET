@@ -26,7 +26,7 @@ namespace DKCommunicationNET.LogNet
         /// <summary>
         /// 存储之前引发的事件，允许额外的操作
         /// </summary>
-        event EventHandler<HslEventArgs> BeforeSaveToFile;
+        event EventHandler<ZfhEventArgs> BeforeSaveToFile;
 
         /// <summary>
         /// 自定义的消息记录

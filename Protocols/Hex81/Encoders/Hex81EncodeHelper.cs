@@ -26,7 +26,6 @@ internal class Hex81EncodeHelper : IEncodeHelper
     /// </summary>
     /// <param name="commandCode">命令码</param>
     /// <param name="commandLength">指令长度</param>
-    ///  /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
     private OperateResult<byte[ ]> PacketShellBuilderHelper(byte commandCode, ushort commandLength)
     {
@@ -55,7 +54,7 @@ internal class Hex81EncodeHelper : IEncodeHelper
         //发生异常回报当前代码位置和异常信息
         catch (Exception ex)
         {
-            return new OperateResult<byte[ ]>(StringResources.GetLineNum(), ex.Message + "【From】" + StringResources.GetCurSourceFileName());
+            return new OperateResult<byte[ ]>( ex.Message );
         }
     }
 
@@ -65,7 +64,6 @@ internal class Hex81EncodeHelper : IEncodeHelper
     /// <param name="commandCode">命令码</param>
     /// <param name="commandLength">指令长度</param>
     /// <param name="data">参数</param>
-    /// <param name="id">可选参数：设备ID</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
     public OperateResult<byte[ ]> EncodeHelper(byte commandCode, ushort commandLength, byte[ ] data)
     {
@@ -84,7 +82,7 @@ internal class Hex81EncodeHelper : IEncodeHelper
         }
         catch (Exception ex)
         {
-            return new OperateResult<byte[ ]>(StringResources.GetLineNum(), "From:" + StringResources.GetCurSourceFileName() + ex.Message);
+            return new OperateResult<byte[ ]>( ex.Message);
         }
     }
 
@@ -92,7 +90,6 @@ internal class Hex81EncodeHelper : IEncodeHelper
     /// 无参命令报文创建
     /// </summary>
     /// <param name="commandCode"></param>
-    /// <param name="id"></param>
     /// <returns></returns>
     public OperateResult<byte[ ]> EncodeHelper(byte commandCode)
     {

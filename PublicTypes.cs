@@ -210,8 +210,17 @@ public enum Channels_EPQ
 /// </summary>
 public enum QP_Mode : byte
 {
+    /// <summary>
+    /// 滤波法
+    /// </summary>
     滤波法 = 0,
+    /// <summary>
+    /// 三角法
+    /// </summary>
     三角法 = 1,
+    /// <summary>
+    /// 时延法
+    /// </summary>
     时延法 = 2
 }
 

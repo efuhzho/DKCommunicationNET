@@ -40,7 +40,7 @@ internal class Hex81Decoder_DCS : IDecoder_DCS
                 IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
                 break;
             default:
-                return new OperateResult ( StringResources. GetLineNum ( ) , StringResources. Language. DecodeError + StringResources. GetCurSourceFileName ( ) );
+                return new OperateResult (  StringResources. Language. DecodeError  );
         }
 
         return OperateResult. CreateSuccessResult ( );

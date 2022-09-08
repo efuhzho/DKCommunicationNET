@@ -1,7 +1,18 @@
 ﻿using DKCommunicationNET. Core;
 
+/**************************************************************************************************
+ * 
+ *  【Hex5AA5协议的信息类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月8日 22点43分  
+ *  
+ *  支持的协议为DK-PTS系列通讯协议V2018 修订时间：2021年06月 作者：苏老师
+ *
+ *************************************************************************************************/
+
 namespace DKCommunicationNET. Protocols. Hex5A;
 
+/// <summary>
+/// Hex5A协议的固态信息
+/// </summary>
 internal class Hex5AInformation
 {
     #region 《系统设置

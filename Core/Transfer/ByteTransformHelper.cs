@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DKCommunicationNET.Core
+namespace DKCommunicationNET. Core
 {
     /// <summary>
     /// 所有数据转换类的静态辅助方法
@@ -16,22 +16,22 @@ namespace DKCommunicationNET.Core
         /// <param name="result">源</param>
         /// <param name="translator">实际转换的委托</param>
         /// <returns>转换结果</returns>
-        public static OperateResult<TResult> GetResultFromBytes<TResult>( OperateResult<byte[]> result, Func<byte[], TResult> translator )
+        public static OperateResult<TResult> GetResultFromBytes<TResult> ( OperateResult<byte[ ]> result , Func<byte[ ] , TResult> translator )
         {
             try
             {
-                if (result.IsSuccess)
+                if ( result. IsSuccess )
                 {
-                    return OperateResult.CreateSuccessResult(translator( result.Content ));
+                    return OperateResult. CreateSuccessResult ( translator ( result. Content ) );
                 }
                 else
                 {
-                    return OperateResult.CreateFailedResult<TResult>( result );
+                    return OperateResult. CreateFailedResult<TResult> ( result );
                 }
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                return new OperateResult<TResult>( ) { Message = StringResources.Language.DataTransformError + BasicFramework.SoftBasic.ByteToHexString( result.Content ) + $" : Length({result.Content.Length}) " + ex.Message };
+                return new OperateResult<TResult> ( ) { Message = StringResources. Language. DataTransformError + BasicFramework. SoftBasic. ByteToHexString ( result. Content ) + $" : Length({result. Content. Length}) " + ex. Message };
             }
         }
 
@@ -41,12 +41,10 @@ namespace DKCommunicationNET.Core
         /// <typeparam name="TResult">结果类型</typeparam>
         /// <param name="result">源结果</param>
         /// <returns>转换结果</returns>
-        public static OperateResult<TResult> GetResultFromArray<TResult>( OperateResult<TResult[]> result )
+        public static OperateResult<TResult> GetResultFromArray<TResult> ( OperateResult<TResult[ ]> result )
         {
-            if (!result.IsSuccess) return OperateResult.CreateFailedResult<TResult>( result );
-
-            return OperateResult.CreateSuccessResult( result.Content[0] );
+            if ( !result. IsSuccess || result. Content == null ) return OperateResult. CreateFailedResult<TResult> ( result );
+            return OperateResult. CreateSuccessResult ( result. Content[0] );
         }
-        
     }
 }

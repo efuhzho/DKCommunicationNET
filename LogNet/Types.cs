@@ -14,12 +14,12 @@ namespace DKCommunicationNET.LogNet
     /// <summary>
     /// 带有日志消息的事件
     /// </summary>
-    public class HslEventArgs : EventArgs
+    public class ZfhEventArgs : EventArgs
     {
         /// <summary>
         /// 消息信息
         /// </summary>
-        public HslMessageItem HslMessage { get; set; }
+        public ZfhMessageItem? HslMessage { get; set; }
 
     }
 
@@ -116,14 +116,14 @@ namespace DKCommunicationNET.LogNet
     /// <summary>
     /// 单个日志的记录信息
     /// </summary>
-    public class HslMessageItem
+    public class ZfhMessageItem
     {
         private static long IdNumber = 0;
 
         /// <summary>
         /// 默认的无参构造器
         /// </summary>
-        public HslMessageItem( )
+        public ZfhMessageItem( )
         {
             Id    = Interlocked.Increment( ref IdNumber );
             Time  = DateTime.Now;
