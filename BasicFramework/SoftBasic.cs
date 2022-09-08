@@ -209,8 +209,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="data">原先数据的数据</param>
         /// <param name="length">新数组的长度</param>
         /// <returns>新数组长度信息</returns>
-        /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="ArrayExpandToLengthExample" title="ArrayExpandToLength示例" />
+        /// <example>        
         /// </example>
         public static T[] ArrayExpandToLength<T> ( T[] data , int length )
         {
@@ -233,8 +232,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <typeparam name="T">数组的类型</typeparam>
         /// <param name="data">原先数据的数据</param>
         /// <returns>新数组长度信息</returns>
-        /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="ArrayExpandToLengthEvenExample" title="ArrayExpandToLengthEven示例" />
+        /// <example>        
         /// </example>
         public static T[] ArrayExpandToLengthEven<T> ( T[] data )
         {
@@ -265,8 +263,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="length">校验的长度</param>
         /// <returns>返回是否相等</returns>
         /// <exception cref="IndexOutOfRangeException"></exception>
-        /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="IsTwoBytesEquelExample1" title="IsTwoBytesEquel示例" />
+        /// <example>        
         /// </example>
         public static bool IsTwoBytesEquel ( byte[] b1 , int start1 , byte[] b2 , int start2 , int length )
         {
@@ -289,7 +286,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="b2">第二个字节</param>
         /// <returns>返回是否相等</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="IsTwoBytesEquelExample2" title="IsTwoBytesEquel示例" />
         /// </example>
         public static bool IsTwoBytesEquel ( byte[] b1 , byte[] b2 )
         {
@@ -307,7 +303,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="token">GUID数据</param>
         /// <returns>返回是否相等</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="IsTwoTokenEquelExample" title="IsByteTokenEquel示例" />
         /// </example>
         public static bool IsByteTokenEquel ( byte[] head , Guid token )
         {
@@ -340,7 +335,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <typeparam name="TEnum">枚举的类型值</typeparam>
         /// <returns>枚举值数组</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetEnumValuesExample" title="GetEnumValues示例" />
         /// </example>
         public static TEnum[] GetEnumValues<TEnum> ( ) where TEnum : struct
         {
@@ -355,7 +349,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="value">枚举的字符串的数据值</param>
         /// <returns>真实的枚举值</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetEnumFromStringExample" title="GetEnumFromString示例" />
         /// </example>
         public static TEnum GetEnumFromString<TEnum> ( string value ) where TEnum : struct
         {
@@ -375,8 +368,7 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="value_name">值名称</param>
         /// <param name="default_value">默认值</param>
         /// <returns>值对象</returns>
-        /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetValueFromJsonObjectExample" title="GetValueFromJsonObject示例" />
+        /// <example>        
         /// </example>
         public static T? GetValueFromJsonObject<T> ( JObject json , string value_name , T default_value )
         {
@@ -401,7 +393,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="property">值名称</param>
         /// <param name="value">值数据</param>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="JsonSetValueExample" title="JsonSetValue示例" />
         /// </example>
         public static void JsonSetValue<T> ( JObject json , string property , T value )
         {
@@ -429,7 +420,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <remarks>获取异常的完整信息</remarks>
         /// <exception cref="NullReferenceException">ex不能为空</exception>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetExceptionMessageExample1" title="GetExceptionMessage示例" />
         /// </example>
         public static string GetExceptionMessage ( Exception ex )
         {
@@ -447,7 +437,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <returns>完整的字符串数据</returns>
         /// <exception cref="NullReferenceException"></exception>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="GetExceptionMessageExample2" title="GetExceptionMessage示例" />
         /// </example>
         public static string GetExceptionMessage ( string extraMsg , Exception ex )
         {
@@ -573,7 +562,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="inBytes">输入的字节信息</param>
         /// <returns>反转后的数据</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="BytesReverseByWord" title="BytesReverseByWord示例" />
         /// </example>
         public static byte[] BytesReverseByWord ( byte[] inBytes )
         {
@@ -629,7 +617,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="array">bool数组</param>
         /// <returns>转换后的字节数组</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="BoolArrayToByte" title="BoolArrayToByte示例" />
         /// </example>
         public static byte[] BoolArrayToByte ( bool[] array )
         {
@@ -671,7 +658,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="length">想要转换的长度，如果超出自动会缩小到数组最大长度</param>
         /// <returns>转换后的bool数组</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="ByteToBoolArray" title="ByteToBoolArray示例" />
         /// </example> 
         public static bool[] ByteToBoolArray ( byte[] InBytes , int length )
         {
@@ -737,7 +723,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="InBytes">原先的字节数组</param>
         /// <returns>转换后的bool数组</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="ByteToBoolArray" title="ByteToBoolArray示例" />
         /// </example> 
         public static bool[] ByteToBoolArray ( byte[] InBytes )
         {
@@ -758,7 +743,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="bytes2">数组二</param>
         /// <returns>拼接后的数组</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="SpliceTwoByteArray" title="SpliceTwoByteArray示例" />
         /// </example> 
         public static byte[] SpliceTwoByteArray ( byte[] bytes1 , byte[] bytes2 )
         {
@@ -780,7 +764,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="length">等待移除的长度</param>
         /// <returns>新的数据</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="BytesArrayRemoveBegin" title="BytesArrayRemoveBegin示例" />
         /// </example> 
         public static byte[] BytesArrayRemoveBegin ( byte[] value , int length )
         {
@@ -795,7 +778,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="length">等待移除的长度</param>
         /// <returns>新的数据</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="BytesArrayRemoveLast" title="BytesArrayRemoveLast示例" />
         /// </example> 
         public static byte[] BytesArrayRemoveLast ( byte[] value , int length )
         {
@@ -811,7 +793,6 @@ namespace DKCommunicationNET. BasicFramework
         /// <param name="rightLength">后面的位数</param>
         /// <returns>新的数据</returns>
         /// <example>
-        /// <code lang="cs" source="HslCommunication_Net45.Test\Documentation\Samples\BasicFramework\SoftBasicExample.cs" region="BytesArrayRemoveDouble" title="BytesArrayRemoveDouble示例" />
         /// </example> 
         public static byte[] BytesArrayRemoveDouble ( byte[] value , int leftLength , int rightLength )
         {
