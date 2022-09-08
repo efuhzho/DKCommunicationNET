@@ -114,12 +114,7 @@ internal class Hex81Factory : IProtocolFactory
     {
         return new Hex81CRCChecker ( );
     }
-
-    public IProtocolFunctions GetProtocolFunctions ( )
-    {
-        return new Hex81Functions ( );
-    }
-
+   
     #endregion 校验器》
 
 }

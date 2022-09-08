@@ -12,18 +12,14 @@ namespace DKCommunicationNET;
 /// <summary>
 /// 丹迪克设备类:版本Ver2分组架构 2022年8月25日01点56分。第二次修改
 /// </summary>
-public class Dandick : DandickSerialBase<RegularByteTransform>
+public class DKStandardSource : DandickSerialBase<RegularByteTransform>
 {
     /// <summary>
     /// 【全局】协议工厂
     /// </summary>
-    readonly IProtocolFactory _protocolFactory;
+    readonly IProtocolFactory protocolFactory;
 
     #region 《校验器
-    /// <summary>
-    /// 定义协议所支持的功能对象
-    /// </summary>
-    readonly IProtocolFunctions _prodocolFunctions;
 
     /// <summary>
     /// CRC校验器
@@ -31,28 +27,52 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     readonly ICRCChecker _CRCChecker;
     #endregion 校验器》   
 
-    #region 《编码器    
-    private readonly IEncoder_ACS? _packetsBuilder_ACS;
-    private readonly IEncoder_DCS? _packetsBuilder_DCS;
-    private readonly IEncoder_Settings? _packetBuilder_Settings;
+    #region 《编码器
+    /// <summary>
+    /// 交流源编码器
+    /// </summary>
+    private readonly IEncoder_ACS? encoder_ACS;
 
+    private readonly IEncoder_ACM? encoder_ACM;
+
+    /// <summary>
+    /// 直流源编码器
+    /// </summary>
+    private readonly IEncoder_DCS? encoder_DCS;
+
+    private readonly IEncoder_DCM? encoder_DCM;
+
+    private readonly IEncoder_EPQ? encoder_EPQ;
+
+    private readonly IEncoder_IO? encoder_IO;
+
+    private readonly IEncoder_PPS? encoder_PPS;
+    /// <summary>
+    /// 系统设置编码器
+    /// </summary>
+    private readonly IEncoder_Settings? encoder_Settings;
+
+    /// <summary>
+    /// 校准功能编码器
+    /// </summary>
+    private readonly IEncoder_Calibrate? encoder_Calibrate;
     #endregion 编码器》
 
     #region 《解码器
     /// <summary>
     /// 交流源解码器
     /// </summary>
-    private readonly IDecoder_ACS? _decoder_ACS;
+    private readonly IDecoder_ACS? decoder_ACS;
 
     /// <summary>
     /// 直流源解码器
     /// </summary>
-    private readonly IDecoder_DCS? _decoder_DCS;
+    private readonly IDecoder_DCS? decoder_DCS;
 
     /// <summary>
     /// 系统设置解码器
     /// </summary>
-    private readonly IDecoder_Settings _decoder_Settings;
+    private readonly IDecoder_Settings? decoder_Settings;
     #endregion 解码器》    
 
     #region 《功能模块
@@ -69,12 +89,12 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// [警告:错误使用此功能将可能导致严重的后果]
     /// </summary>
-    public Calibrater? Calibrate => new Calibrater ( ID , _protocolFactory , CheckResponse , ByteTransform , true );
+    public Calibrater? Calibrate;
 
     /// <summary>
     /// 系统设置（包含HandShake）
     /// </summary>
-    public Settings Settings { get; }
+    public Settings? Settings { get; }
     #endregion 功能模块》
 
     /// <summary>
@@ -82,46 +102,53 @@ public class Dandick : DandickSerialBase<RegularByteTransform>
     /// </summary>
     /// <param name="model">枚举的设备型号（或协议类型），[找不到对应的设备型号？]：可按枚举中的协议类型实例化对象</param>
     /// <param name="id">设备ID,默认值为0，[可选参数]</param>
-    public Dandick ( Models model , ushort id = 0 )
+    public DKStandardSource ( Models model , ushort id = 0 )
     {
         //【全局变量】实例化
         {
             ID = id;
-            _protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
+            protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
         }
 
         //【校验器】实例化
         {
-            _CRCChecker = _protocolFactory. GetCRCChecker ( );
-            _prodocolFunctions = _protocolFactory. GetProtocolFunctions ( );
+            _CRCChecker = protocolFactory. GetCRCChecker ( );
         }
 
         //【编码器】实例化
         {
-            _packetsBuilder_ACS = _protocolFactory. GetEncoderOfACS ( ID , ByteTransform ). Content;
-            _packetsBuilder_DCS = _protocolFactory. GetEncoderOfDCS ( ID , ByteTransform ). Content;
-            _packetBuilder_Settings = _protocolFactory. GetEncoder_Settings ( ID ). Content;
+            encoder_ACS = protocolFactory. GetEncoderOfACS ( ID , ByteTransform ). Content;
+            encoder_DCS = protocolFactory. GetEncoderOfDCS ( ID , ByteTransform ). Content;
+            encoder_Settings = protocolFactory. GetEncoder_Settings ( ID ). Content;
         }
 
         //【解码器】实例化
         {            
-            _decoder_ACS = _protocolFactory. GetDecoder_ACS ( ByteTransform );
-            _decoder_DCS = _protocolFactory. GetDecoder_DCS ( ByteTransform );
+            decoder_ACS = protocolFactory. GetDecoder_ACS ( ByteTransform ).Content;
+            decoder_DCS = protocolFactory. GetDecoder_DCS ( ByteTransform ).Content;
         }
 
         //【功能模块】实例化
         {
-            if ( _packetsBuilder_ACS != null )
+            if ( encoder_ACS != null && decoder_ACS !=null)
             {
-                ACS = new ACS ( _packetsBuilder_ACS , _decoder_ACS , CheckResponse );
+                ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse );
             }
 
-            if ( _packetsBuilder_DCS != null )
+            if ( encoder_DCS != null && decoder_DCS !=null)
             {
-                DCS = new DCS ( _packetsBuilder_DCS , _decoder_DCS , CheckResponse );
+                DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse );
             }
 
-            Settings = new Settings ( _packetBuilder_Settings , _decoder_Settings , CheckResponse );
+            if ( encoder_Calibrate!=null )
+            {
+                Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
+            }
+
+            if ( encoder_Settings!=null&& decoder_Settings !=null)
+            {
+                Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
+            }           
         }
     }
 

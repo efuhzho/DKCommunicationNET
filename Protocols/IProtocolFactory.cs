@@ -132,12 +132,7 @@ internal interface IProtocolFactory
     /// </summary>
     /// <returns></returns>
     ICRCChecker GetCRCChecker ( );
-
-    /// <summary>
-    /// 获取协议功能状态对象
-    /// </summary>
-    /// <returns></returns>
-    IProtocolFunctions GetProtocolFunctions ( );
+   
     #endregion 校验器》
 
     //TODO 添加其他模块功能的报文创建器

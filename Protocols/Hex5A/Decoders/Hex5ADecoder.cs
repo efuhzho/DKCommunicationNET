@@ -207,9 +207,7 @@ internal class Hex5ADecoder
 
     public float EValue_Q => throw new NotImplementedException();
 
-    WireMode IProperties_ACS.WireMode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    CloseLoopMode IProperties_ACS.CloseLoopMode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    HarmonicMode IProperties_ACS.HarmonicMode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+   
 
     public OperateResult DecodeGetRanges_ACS(OperateResult<byte[ ]> responsResult)
     {
