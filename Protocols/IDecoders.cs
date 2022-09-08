@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Protocols;
 /// <summary>
 /// 交流源解码器接口
 /// </summary>
-public interface IDecoder_ACS:IProperties_ACS
+internal interface IDecoder_ACS:IProperties_ACS
 {
     /// <summary>
     /// 【解码】解析读取交流源档位信息命令的回复报文
@@ -85,7 +85,7 @@ public interface IDecoder_EPQ:IReadProperies_EPQ
 /// <summary>
 /// 设置解码器[HandShake]
 /// </summary>
-public interface IDecoder_Settings:IDeviceFunctions
+public interface IDecoder_Settings:IProperties_Settings
 {
     /// <summary>
     /// 【解码】联机命令，初始化设备信息和功能状态

@@ -1,10 +1,5 @@
 ﻿using DKCommunicationNET. Core;
-using DKCommunicationNET. Module;
-using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
+using DKCommunicationNET. Protocols. Hex5A. Decoders;
 using DKCommunicationNET. Protocols. Hex5A. Encoders;
 
 
@@ -19,8 +14,28 @@ internal class Hex5AFactory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex5AEncoder_ACS ( id , byteTransform ) as IEncoder_ACS );
     }
 
+    public OperateResult<IEncoder_PPS> GetEncoder_PPS ( ushort id )
+    {
+        return OperateResult. CreateSuccessResult ( new Hex5AEncoder_PPS ( id ) as IEncoder_PPS );
+    }
 
+    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
+    {
+        return OperateResult. CreateSuccessResult ( new Hex5AEncoder_Settings ( id , byteTransform ) as IEncoder_Settings );
+    }
     #endregion 编码器》
+
+    #region 《解码器
+   public OperateResult<IDecoder_ACS> GetDecoder_ACS ( IByteTransform byteTransform )
+    {
+        return OperateResult. CreateSuccessResult ( new Hex5ADecoder_ACS ( byteTransform ) as IDecoder_ACS );
+    }
+
+    public OperateResult<IDecoder_Settings> GetDecoder_Settings ( IByteTransform byteTransform )
+    {
+       return OperateResult.CreateSuccessResult(new Hex5ADecoder_Settings(byteTransform) as IDecoder_Settings );
+    }
+    #endregion 解码器》
     public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
     {
         //不具备此功能模块
@@ -35,7 +50,6 @@ internal class Hex5AFactory : IProtocolFactory
     public OperateResult<IEncoder_DCS> GetPacketBuilderOfDCS ( ushort id )
     {
         return new OperateResult<IEncoder_DCS> ( StringResources. Language. NotSupportedModule );
-
     }
 
     public OperateResult<IEncoder_IO> GetPacketBuilderOfIO ( ushort id )
@@ -56,7 +70,6 @@ internal class Hex5AFactory : IProtocolFactory
     public OperateResult<IEncoder_DCS> GetEncoderOfDCS ( ushort id , IByteTransform byteTransform )
     {
         return new OperateResult<IEncoder_DCS> ( StringResources. Language. NotSupportedModule );
-
     }
 
     public OperateResult<IEncoder_IO> GetEncoderOfIO ( ushort id , IByteTransform byteTransform )
@@ -68,7 +81,6 @@ internal class Hex5AFactory : IProtocolFactory
     public OperateResult<IEncoder_EPQ> GetEncoderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
         return new OperateResult<IEncoder_EPQ> ( StringResources. Language. NotSupportedModule );
-
     }
 
     public OperateResult<IEncoder_Calibrate> GetEncoderOfCalibrate ( ushort id , IByteTransform byteTransform )
@@ -76,35 +88,16 @@ internal class Hex5AFactory : IProtocolFactory
         return new OperateResult<IEncoder_Calibrate> ( StringResources. Language. NotSupportedModule );
     }
 
-    public IDecoder_ACS GetDecoder_ACS ( IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
+   
 
-    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id )
-    {
-        throw new NotImplementedException ( );
-    }
 
-    public IDecoder_DCS GetDecoder_DCS ( IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
 
-    public OperateResult<IEncoder_PPS> GetEncoder_PPS ( ushort id , IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
+   
 
-    OperateResult<IDecoder_ACS> IProtocolFactory.GetDecoder_ACS ( IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
 
-    OperateResult<IDecoder_DCS> IProtocolFactory.GetDecoder_DCS ( IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
+   
+
+   
 
     public OperateResult<IDecoder_DCM> GetDecoder_DCM ( IByteTransform byteTransform )
     {
@@ -116,10 +109,7 @@ internal class Hex5AFactory : IProtocolFactory
         throw new NotImplementedException ( );
     }
 
-    public OperateResult<IDecoder_Settings> GetDecoder_Settings ( IByteTransform byteTransform )
-    {
-        throw new NotImplementedException ( );
-    }
+ 
 
     public OperateResult<IDecoder_ACM> GetDecoder_ACM ( IByteTransform byteTransform )
     {

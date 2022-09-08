@@ -11,7 +11,7 @@ namespace DKCommunicationNET. Protocols. Hex81. Decoders;
 /// <summary>
 /// 交流源解码器
 /// </summary>
-public class Hex81Decoder_ACS : IDecoder_ACS
+internal class Hex81Decoder_ACS : IDecoder_ACS
 {
     private readonly IByteTransform _byteTransform;
 

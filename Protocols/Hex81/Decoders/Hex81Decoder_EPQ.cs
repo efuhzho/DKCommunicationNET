@@ -5,7 +5,7 @@ namespace DKCommunicationNET. Protocols. Hex81. Decoders;
 /// <summary>
 /// 电能模块解码器
 /// </summary>
-public class Hex81Decoder_EPQ : IDecoder_EPQ
+internal class Hex81Decoder_EPQ : IDecoder_EPQ
 {
     IByteTransform _byteTransform;
     internal Hex81Decoder_EPQ ( IByteTransform byteTransform )

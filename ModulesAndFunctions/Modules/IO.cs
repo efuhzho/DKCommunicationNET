@@ -8,5 +8,5 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// </summary>
 public class IO : IModuleIO
 {
-
+    //TODO 未实现
 }

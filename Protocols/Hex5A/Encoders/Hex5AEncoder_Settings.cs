@@ -46,13 +46,13 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
         return _encodeHelper.EncodeHelper(Hex5AInformation.SetBaudRate, Hex5AInformation.SetBaudRate_L, data);
     }
 
-    public OperateResult<byte[ ]> Packet_SetSystemMode(byte systemMode)
+    public OperateResult<byte[ ]> Packet_SetSystemMode(Enum systemMode)
     {
         //不具备此功能
         return new OperateResult<byte[ ]>(StringResources.Language.NotSupportedFunction);
     }
 
-    public OperateResult<byte[ ]> Packet_SetDisplayPage(byte displayPage)
+    public OperateResult<byte[ ]> Packet_SetDisplayPage(Enum displayPage)
     {
         //不具备此功能
         return new OperateResult<byte[ ]>(StringResources.Language.NotSupportedFunction);

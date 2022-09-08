@@ -44,7 +44,7 @@ internal class Hex81Factory : IProtocolFactory
         return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id )
+    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id ,IByteTransform byteTransform )
     {
         return OperateResult. CreateSuccessResult ( new Hex81Encoder_Settings ( id ) as IEncoder_Settings );
     }
@@ -54,7 +54,7 @@ internal class Hex81Factory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex81Encoder_Calibrate ( id , byteTransform ) as IEncoder_Calibrate );
     }
 
-    public OperateResult<IEncoder_PPS> GetEncoder_PPS ( ushort id , IByteTransform byteTransform )
+    public OperateResult<IEncoder_PPS> GetEncoder_PPS ( ushort id )
     {
         //不具备此功能模块
         return new OperateResult<IEncoder_PPS> ( StringResources. Language. NotSupportedModule );

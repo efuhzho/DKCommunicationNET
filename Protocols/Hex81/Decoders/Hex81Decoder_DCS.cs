@@ -10,7 +10,7 @@ namespace DKCommunicationNET. Protocols. Hex81. Decoders;
 /// <summary>
 /// 直流源解码器
 /// </summary>
-public class Hex81Decoder_DCS : IDecoder_DCS
+internal class Hex81Decoder_DCS : IDecoder_DCS
 {
     private readonly IByteTransform _byteTransform;
     internal Hex81Decoder_DCS ( IByteTransform byteTransform )

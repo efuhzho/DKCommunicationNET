@@ -47,7 +47,6 @@ internal class Hex5AInformation
     public const byte SetBaudRate = 0x18;
     public const byte SetBaudRate_L = 13;
 
-
     #endregion CommandCodes>>>系统
 
     #region CommandCodes>>>ACS

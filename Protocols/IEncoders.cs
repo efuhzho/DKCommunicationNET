@@ -34,13 +34,13 @@ internal interface IEncoder_Settings
     /// 创建报文：设置系统模式
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetSystemMode ( byte systemMode );
+    OperateResult<byte[ ]> Packet_SetSystemMode ( Enum systemMode );
 
     /// <summary>
     /// 创建报文：设置显示页面
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_SetDisplayPage ( byte displayPage );
+    OperateResult<byte[ ]> Packet_SetDisplayPage ( Enum displayPage );
 
     /// <summary>
     /// 创建报文：【高级别权限】设备信息设置

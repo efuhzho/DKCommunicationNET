@@ -94,7 +94,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         }
         //数据字节数组
         byte[ ] data = new byte[2 + count * 9];
-        data[0] = Convert.ToByte(channels);
+        data[0] = ( byte ) ( Channels ) channels;
         data[1] = count;
 
         //将谐波组分别转换成字节数组并复制到数据字节数组中

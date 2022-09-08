@@ -49,9 +49,8 @@ internal interface IProtocolFactory
     /// 获取：对时报文创建类
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="byteTransform"></param>
     /// <returns></returns>
-    OperateResult<IEncoder_PPS> GetEncoder_PPS(ushort id, IByteTransform byteTransform);
+    OperateResult<IEncoder_PPS> GetEncoder_PPS(ushort id);
 
     /// <summary>
     /// 获取：校准报文创建类
@@ -63,8 +62,9 @@ internal interface IProtocolFactory
     /// 获取：系统设置编码器
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="byteTransform"></param>
     /// <returns></returns>
-    OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id );
+    OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id , IByteTransform byteTransform );
     #endregion 编码器》
 
     #region 《解码器

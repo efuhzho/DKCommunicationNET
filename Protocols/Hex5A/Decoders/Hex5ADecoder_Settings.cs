@@ -1,76 +1,92 @@
-﻿using System. Text;
+﻿using System;
+using System. Collections. Generic;
+using System. Linq;
+using System. Text;
+using System. Threading. Tasks;
 using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
 
-namespace DKCommunicationNET. Protocols. Hex81. Decoders;
+namespace DKCommunicationNET. Protocols. Hex5A. Decoders;
 
-/// <summary>
-/// 联机设置解码器
-/// </summary>
-internal class Hex81Decoder_Settings:IDecoder_Settings
+internal class Hex5ADecoder_Settings:IDecoder_Settings
 {
     private readonly IByteTransform _byteTransform;
-    internal Hex81Decoder_Settings ( IByteTransform byteTransform )
-    {
-        _byteTransform = byteTransform;
-    }
-    
-     OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
+
+    public Hex5ADecoder_Settings (IByteTransform byteTransform )
+	{
+        _byteTransform=byteTransform;
+	}
+
+    #region 《方法
+    OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
     {
         try
         {
             //将缓存数据转换成List方便查找字符串的结束标志:0x00
-            List<byte> bufferList = buffer. ToList ( );
+            List<byte> bufferList = buffer. ToList ( );    //可忽略null异常
 
             //获取设备型号结束符的索引值
-            int endIndex = bufferList. IndexOf ( 0x00 , Hex81Information. DataStartIndex );
+            int endIndex = bufferList. IndexOf ( 0x00 , Hex5AInformation. DataStartIndex );
 
-            //计算model字节长度，包含0x00结束符，5=报文头的字节数6再减去1
-            int modelLength = endIndex - Hex81Information. DataStartIndex + 1;
+            //计算model字节长度，包含0x00结束符,7=报文头的字节数8再减去1
+            int modelLength = endIndex - Hex5AInformation. DataStartIndex + 1;
             //解析的设备型号
-            Model = _byteTransform. TransString ( buffer , Hex81Information. DataStartIndex , modelLength , Encoding. ASCII );
+            Model = _byteTransform. TransString ( buffer , Hex5AInformation. DataStartIndex , modelLength , Encoding. ASCII );
 
             //解析下位机版本号
-            byte verA = buffer[modelLength + Hex81Information. DataStartIndex];
-            byte verB = buffer[modelLength + Hex81Information. DataStartIndex + 1];
+            byte verA = buffer[modelLength + Hex5AInformation. DataStartIndex];
+            byte verB = buffer[modelLength + Hex5AInformation. DataStartIndex + 1];
+            byte verC = buffer[modelLength + Hex5AInformation. DataStartIndex + 2];
             //下位机版本号
-            Firmware = $"V{verA}.{verB}";
+            Firmware = $"V{verA}.{verB}.{verC}";
 
             //解析设备编号
-            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex81Information. DataStartIndex + modelLength + 2 );
+            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex5AInformation. DataStartIndex + modelLength + 3 );
             int serialLength = serialEndIndex - 7 - modelLength;
             //设备编号字节长度，包含0x00结束符            
-            SN = _byteTransform. TransString ( buffer , Hex81Information. DataStartIndex + modelLength + 2 , serialLength , Encoding. ASCII );
+            SN = _byteTransform. TransString ( buffer , Hex5AInformation. DataStartIndex + modelLength + 3 , serialLength , Encoding. ASCII );
 
-            //基本功能激活状态
-            byte FuncB = buffer[^3];
+            //交流功能激活状态
+            byte FuncB = buffer[^8];
             bool[ ] funcB = SoftBasic. ByteToBoolArray ( FuncB );
             IsEnabled_ACS = funcB[0];
             IsEnabled_ACM = funcB[1];
-            IsEnabled_DCS = funcB[2];
-            IsEnabled_DCM = funcB[3];
-            IsEnabled_EPQ = funcB[4];
+            IsEnabled_ACM_Cap = funcB[2];
 
-            //特殊功能激活状态
-            byte FuncS = buffer[^2];
+            //特殊交流功能激活状态
+            byte FuncS = buffer[^7];
             bool[ ] funcS = SoftBasic. ByteToBoolArray ( FuncS );
             IsEnabled_DualFreqs = funcS[0];
-            IsEnabled_IProtect = funcS[1];
-            IsEnabled_PST = funcS[2];
-            IsEnabled_YX = funcS[3];
-            IsEnabled_HF = funcS[4];
-            IsEnabled_PWM = funcS[5];
+            IsEnabled_IO = funcS[3];
+            IsEnabled_PPS = funcS[6];
 
-            return OperateResult. CreateSuccessResult ( );
+            //直流功能
+            byte FuncD = buffer[^6];
+            bool[ ] funcD = SoftBasic. ByteToBoolArray ( FuncD );
+            IsEnabled_DCS = funcD[0];
+            IsEnabled_DCM = funcD[1];
+            IsEnabled_DCM_RIP = funcD[2];
+            IsEnabled_DCS_AUX = funcD[3];
+
+            //协议版本号A
+            byte PT_VerA = buffer[^5];
+
+            //协议版本号B
+            byte PT_VerB = buffer[^4];
+
+            //通讯协议版本号
+            ProtocolVer = $"V{PT_VerA}.{PT_VerB}";
+            return OperateResult.CreateSuccessResult ();
         }
         catch ( Exception ex)
         {
-
             return new OperateResult ( ex. Message );
         }
-        
-    }  
+       
+    }
+    #endregion 方法》
 
+    #region 《属性
     #region 《设备基本信息
     /// <summary>
     /// 设备型号
@@ -91,6 +107,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// 协议版本号
     /// </summary>
     public string? ProtocolVer { get; set; }
+
     #endregion 设备基本信息》
 
     #region 《基本功能 FuncB
@@ -145,7 +162,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// <summary>
     /// 指示双频输出功能是否激活
     /// </summary>
-    public bool IsEnabled_DualFreqs { get; private set;   }
+    public bool IsEnabled_DualFreqs { get; private set; }
 
     /// <summary>
     /// 指示保护电流功能是否激活
@@ -155,7 +172,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// <summary>
     /// 指示闪变输出功能是否激活
     /// </summary>
-    public bool IsEnabled_PST { get; private set;     }
+    public bool IsEnabled_PST { get; private set; }
 
     /// <summary>
     /// 指示遥信功能是否激活
@@ -176,5 +193,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// 指示对时功能是否激活
     /// </summary>
     public bool IsEnabled_PPS { get; private set; }
+
     #endregion 特殊功能 FuncS》
+    #endregion 属性》
 }
