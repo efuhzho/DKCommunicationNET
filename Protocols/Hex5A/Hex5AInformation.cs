@@ -123,6 +123,44 @@ internal class Hex5AInformation
     #endregion Private Methods ==> [校验码计算器]
 }
 #region 【枚举类型】
+/// <summary>
+/// 交流源工作模式
+/// </summary>
+public enum ACSMode : byte
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    标准源 = 0,
+    /// <summary>
+    /// 
+    /// </summary>
+    功耗测试 = 3
+}
+
+/// <summary>
+/// 交流源输出状态
+/// </summary>
+public enum ACSStatus:byte
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    源停止=0b_0000_0000,
+    /// <summary>
+    /// 
+    /// </summary>
+    源输出=0b_0000_0001,
+    /// <summary>
+    /// 
+    /// </summary>
+    源稳定=0b_0000_0010,
+    /// <summary>
+    /// 
+    /// </summary>
+    故障停止=0b_0001_0000,
+    //TODO D7的作用是什么？表状态是ACM的情况？
+}
 
 /// <summary>
 /// 获取档位类型

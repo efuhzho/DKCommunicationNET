@@ -224,6 +224,20 @@ public enum QP_Mode : byte
     时延法 = 2
 }
 
+/// <summary>
+/// 频率标志
+/// </summary>
+internal enum FrequencySync:byte
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    同频=0,
+    /// <summary>
+    /// 
+    /// </summary>
+    异频=1
+}
 #endregion
 
 

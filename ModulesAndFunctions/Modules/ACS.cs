@@ -56,11 +56,11 @@ public class ACS : IModuleACS
 
     #region 《当前档位索引值
     /// <inheritdoc/>
-    public byte RangeIndex_ACU => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_ACU );
+    public byte RangeIndex_Ua => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_Ua );
     /// <inheritdoc/>
-    public byte RangeIndex_ACI => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_ACI );
+    public byte RangeIndex_Ia => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_Ia );
     /// <inheritdoc/>
-    public byte RangeIndex_IPr => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_IPr );
+    public byte RangeIndex_IPa => ( byte ) ( _decoder == null ? 0 : _decoder. RangeIndex_IPa );
 
     #endregion 当前档位索引值》
 
@@ -249,11 +249,11 @@ public class ACS : IModuleACS
     #region 《输出稳定状态
 
     /// <inheritdoc/>
-    public byte Flag_A => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_A );
+    public byte Status_Ua => ( byte ) ( _decoder == null ? 1 : _decoder. Status_Ua );
     /// <inheritdoc/>
-    public byte Flag_B => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_B );
+    public byte Status_Ub => ( byte ) ( _decoder == null ? 1 : _decoder. Status_Ub );
     /// <inheritdoc/>
-    public byte Flag_C => ( byte ) ( _decoder == null ? 1 : _decoder. Flag_C );
+    public byte Status_Uc => ( byte ) ( _decoder == null ? 1 : _decoder. Status_Uc );
 
     #endregion 输出稳定状态》
 

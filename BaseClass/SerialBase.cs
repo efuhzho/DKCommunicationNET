@@ -95,22 +95,19 @@ namespace DKCommunicationNET. BaseClass
         /// </summary>
         public OperateResult<string> Open ( )
         {
-            if ( !_SerialPort. IsOpen )
+            try
             {
-                try
+                if ( _SerialPort. IsOpen )
                 {
-                    _SerialPort. Open ( );
-                    InitializationOnOpen ( );
-                    return OperateResult. CreateSuccessResult ( $"成功地打开了{_SerialPort. PortName}。");
+                    _SerialPort. Close ( );
                 }
-                catch ( Exception ex)
-                {
-                    return new OperateResult<string> ( ex.Message );
-                }
+                _SerialPort. Open ( );
+                // InitializationOnOpen ( );
+                return OperateResult. CreateSuccessResult ( $"成功地打开了{_SerialPort. PortName}。" );
             }
-            else
+            catch ( Exception ex )
             {
-                return OperateResult. CreateSuccessResult ( $"串行端口{_SerialPort.PortName}已经处于打开状态。" );
+                return new OperateResult<string> ( ex. Message );
             }
         }
 
@@ -128,22 +125,18 @@ namespace DKCommunicationNET. BaseClass
         /// </summary>
         public OperateResult<string> Close ( )
         {
-            if ( _SerialPort. IsOpen )
+            try
             {
-                try
+                if ( _SerialPort. IsOpen )
                 {
-                    ExtraOnClose ( );
                     _SerialPort. Close ( );
-                    return OperateResult. CreateSuccessResult ( $"成功地关闭了{_SerialPort. PortName}。" );
                 }
-                catch ( Exception ex )
-                {
-                    return new OperateResult<string> ( ex. Message );
-                }
+                // ExtraOnClose ( );
+                return OperateResult. CreateSuccessResult ( $"成功地关闭了{_SerialPort. PortName}。" );
             }
-            else
+            catch ( Exception ex )
             {
-                return OperateResult. CreateSuccessResult ( $"串行端口{_SerialPort. PortName}已经处于关闭状态。" );
+                return new OperateResult<string> ( ex. Message );
             }
         }
 

@@ -178,17 +178,17 @@ public interface IProperties_ACS
     /// <summary>
     /// 电压档位集合
     /// </summary>
-    public float[ ]? Ranges_ACU { get; set; }
+    public float[ ]? Ranges_ACU { get; }
 
     /// <summary>
     /// 电流档位集合
     /// </summary>
-    public float[ ]? Ranges_ACI { get; set; }
+    public float[ ]? Ranges_ACI { get; }
 
     /// <summary>
     /// 保护电流档位集合
     /// </summary>
-    public float[ ]? Ranges_IPr { get; set; }
+    public float[ ]? Ranges_IPr { get; }
     #endregion 档位列表》
 
     #region 《档位数量
@@ -213,17 +213,49 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
-    public byte RangeIndex_ACU { get; }
+    public byte RangeIndex_Ua { get; }
+    /// <summary>
+    /// 当前电压档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ub { get; }
+    /// <summary>
+    /// 当前电压档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Uc { get; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ux { get; }
 
     /// <summary>
     /// 当前电流档位的索引值，0为最大档位
     /// </summary>
-    public byte RangeIndex_ACI { get; }
+    public byte RangeIndex_Ia { get; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ib { get; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ic { get; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ix { get; }
 
     /// <summary>
     /// 当前保护电流档位的索引值，0为最大档位
     /// </summary>
-    public byte RangeIndex_IPr { get; }
+    public byte RangeIndex_IPa { get; }
+    /// <summary>
+    /// 当前保护电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_IPb { get; }
+    /// <summary>
+    /// 当前保护电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_IPc { get; }
 
     #endregion 当前档位索引》
 
@@ -279,16 +311,18 @@ public interface IProperties_ACS
     /// A相电压数据
     /// </summary>
     public float UA { get; }
-
     /// <summary>
     /// B相电压数据
     /// </summary>
     public float UB { get; }
-
     /// <summary>
     /// C相电压数据
     /// </summary>
     public float UC { get; }
+    /// <summary>
+    /// X相电压数据
+    /// </summary>
+    public float UX { get; }
     #endregion 电压幅值》
 
     #region 《电流幅值
@@ -305,6 +339,10 @@ public interface IProperties_ACS
     /// C相电流数据
     /// </summary>
     public float IC { get; }
+    /// <summary>
+    /// C相电流数据
+    /// </summary>
+    public float IX { get; }
     #endregion 电流幅值》
 
     #region 《保护电流幅值
@@ -339,6 +377,10 @@ public interface IProperties_ACS
     /// C相电压相位数据
     /// </summary>
     public float FAI_UC { get; }
+    /// <summary>
+    /// C相电压相位数据
+    /// </summary>
+    public float FAI_UX { get; }
 
     /// <summary>
     /// A相电流相位数据
@@ -354,6 +396,10 @@ public interface IProperties_ACS
     /// C相电流相位数据
     /// </summary>
     public float FAI_IC { get; }
+    /// <summary>
+    /// C相电流相位数据
+    /// </summary>
+    public float FAI_IX { get; }
     #endregion 相位幅值》
 
     #region 《功率幅值
@@ -371,6 +417,10 @@ public interface IProperties_ACS
     /// C相有功功率数据
     /// </summary>
     public float PC { get; }
+    /// <summary>
+    /// C相有功功率数据
+    /// </summary>
+    public float PX { get; }
 
     /// <summary>
     /// 总有功功率数据
@@ -393,6 +443,11 @@ public interface IProperties_ACS
     public float QC { get; }
 
     /// <summary>
+    /// C相无功功率数据
+    /// </summary>
+    public float QX { get; }
+
+    /// <summary>
     /// 总无功功率数据
     /// </summary>    
     public float Q { get; }
@@ -411,6 +466,10 @@ public interface IProperties_ACS
     /// C相视在功率，单位：VA
     /// </summary>
     public float SC { get; }
+    /// <summary>
+    /// C相视在功率，单位：VA
+    /// </summary>
+    public float SX { get; }
 
     /// <summary>
     /// 总实在功率
@@ -433,6 +492,10 @@ public interface IProperties_ACS
     /// C相功率因数
     /// </summary>
     public float PFC { get; }
+    /// <summary>
+    /// 总功率因数
+    /// </summary>
+    public float PFX { get; }
 
     /// <summary>
     /// 总功率因数
@@ -472,24 +535,63 @@ public interface IProperties_ACS
     /// 当前谐波模式
     /// </summary>
     public HarmonicMode HarmonicMode { get; set; }
+    /// <summary>
+    /// 无功计算方法
+    /// </summary>
+    public QP_Mode QP_Mode { get; set; }
     #endregion 枚举属性》
 
     #region 《输出状态
     /// <summary>
-    /// A相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Flag_A { get; }
+    public string? Status_Ua { get; }
 
     /// <summary>
-    /// B相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Flag_B { get; }
+    public string? Status_Ub { get; }
 
     /// <summary>
-    /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Flag_C { get; }
+    public string? Status_Uc { get; }
+    /// <summary>
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ux { get; }
+    /// <summary>
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ia { get; }
+
+    /// <summary>
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ib { get; }
+
+    /// <summary>
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ic { get; }
+    /// <summary>
+    /// 输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ix { get; }
     #endregion 输出状态》
 
+    /// <summary>
+    /// 当前输出的通道个数：1，3，4
+    /// </summary>
+    public byte OutputtingChannelsNum { get; }
+    /// <summary>
+    /// 当前交流源工作模式
+    /// </summary>
+    public string? ACSMode { get; }
+    
+    /// <summary>
+    /// 频率标志
+    /// </summary>
+    public string? FrequencySync { get; }
 }
 

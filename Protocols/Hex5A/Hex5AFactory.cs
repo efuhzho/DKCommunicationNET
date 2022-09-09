@@ -2,6 +2,13 @@
 using DKCommunicationNET. Protocols. Hex5A. Decoders;
 using DKCommunicationNET. Protocols. Hex5A. Encoders;
 
+/**************************************************************************************************
+ * 
+ *  【Hex5A协议工厂类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月9日 13点39分  
+ *  
+ *  生产本协议的组件
+ *
+ *************************************************************************************************/
 
 namespace DKCommunicationNET. Protocols. Hex5A;
 
@@ -46,7 +53,9 @@ internal class Hex5AFactory : IProtocolFactory
     #endregion 校验器》
 
 
+    #region 《不具备的功能
 
+    #endregion 不具备的功能》
     public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
     {
         //不具备此功能模块
