@@ -355,14 +355,14 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 )
+    public OperateResult<byte[ ]> SetAmplitude ( float Uabc , float Iabc , float IPabc = 0 )
     {
         if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( SetAmplitude ( U , U , U , I , I , I , IP , IP , IP ) , _methodOfCheckResponse );
+        return CommandAction. Action ( SetAmplitude ( Uabc , Uabc , Uabc , Iabc , Iabc , Iabc , IPabc , IPabc , IPabc ) , _methodOfCheckResponse );
     }
 
     /// <inheritdoc/>
