@@ -112,8 +112,7 @@ internal interface IProtocolFactory
 
     /// <summary>
     /// 对时功能解码器
-    /// </summary>
-    /// <param name="byteTransform"></param>
+    /// </summary>   
     /// <returns></returns>
     OperateResult<IDecoder_PPS> GetDecoder_PPS (  );
 
