@@ -261,21 +261,6 @@ public class ACS : IModuleACS
     public string? Status_Ix => _decoder?.Status_Ix;
 
 
-
-
-
-
-
-   
-
-   
-
-   
-
-
-
-
-
     public byte OutputtingChannelsNum => throw new NotImplementedException ( );
 
     public string? ACSMode => throw new NotImplementedException ( );
