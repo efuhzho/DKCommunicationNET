@@ -146,6 +146,8 @@ public class ACS : IModuleACS
     public float Freq => _decoder == null ? 0 : _decoder. Freq;
     /// <inheritdoc/>
     public float Freq_C => _decoder == null ? 0 : _decoder. Freq_C;
+    /// <inheritdoc/>
+    public string? FrequencySync => _decoder?.FrequencySync;
     #endregion 频率值》
 
     #region 《电压幅值
@@ -200,7 +202,7 @@ public class ACS : IModuleACS
     public float FAI_IX => _decoder == null ? 0 : _decoder. FAI_IX;
     #endregion 相位》
 
-    #region 《其他幅值
+    #region 《有功功率
     /// <inheritdoc/>
     public float PA => _decoder == null ? 0 : _decoder. PA;
     /// <inheritdoc/>
@@ -211,6 +213,9 @@ public class ACS : IModuleACS
     public float PX => _decoder == null ? 0 : _decoder. PX;
     /// <inheritdoc/>
     public float P => _decoder == null ? 0 : _decoder. P;
+    #endregion 有功功率》
+
+    #region 《无功功率
     /// <inheritdoc/>
     public float QA => _decoder == null ? 0 : _decoder. QA;
     /// <inheritdoc/>
@@ -221,6 +226,9 @@ public class ACS : IModuleACS
     public float QX => _decoder == null ? 0 : _decoder. QX;
     /// <inheritdoc/>
     public float Q => _decoder == null ? 0 : _decoder. Q;
+    #endregion 无功功率》
+
+    #region 《视在功率
     /// <inheritdoc/>
     public float SA => _decoder == null ? 0 : _decoder. SA;
     /// <inheritdoc/>
@@ -231,6 +239,9 @@ public class ACS : IModuleACS
     public float SX => _decoder == null ? 0 : _decoder. SX;
     /// <inheritdoc/>
     public float S => _decoder == null ? 0 : _decoder. S;
+    #endregion 视在功率》
+
+    #region 《功率因数
     /// <inheritdoc/>
     public float PFA => _decoder == null ? 0 : _decoder. PFA;
     /// <inheritdoc/>
@@ -241,10 +252,9 @@ public class ACS : IModuleACS
     public float PFX => _decoder == null ? 0 : _decoder. PFX;
     /// <inheritdoc/>
     public float PF => _decoder == null ? 0 : _decoder. PF;
-    #endregion 其他幅值》
+    #endregion 功率因数》
 
     #region 《输出稳定状态
-
     /// <inheritdoc/>
     public string? Status_Ua => _decoder?.Status_Ua;
     /// <inheritdoc/>
@@ -261,15 +271,16 @@ public class ACS : IModuleACS
     public string? Status_Ic => _decoder?.Status_Ic;
     /// <inheritdoc/>
     public string? Status_Ix => _decoder?.Status_Ix;
+    #endregion 输出稳定状态》
+
+    #region 《其他属性
     /// <inheritdoc/>
     public byte? OutputtingChannelsNum => _decoder?.OutputtingChannelsNum;
     /// <inheritdoc/>
-    public string? ACSMode => _decoder?. ACSMode;
+    public string? ACSWorkingMode => _decoder?. ACSWorkingMode;   
     /// <inheritdoc/>
-    public string? FrequencySync => _decoder?. FrequencySync;
-
-    #endregion 输出稳定状态》
-
+    public byte? OutputChannelsNum =>_decoder?.OutputChannelsNum;
+    #endregion 其他属性》
     #endregion 属性》
 
     #region 《方法
@@ -333,14 +344,14 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _encoder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI ) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 )
+    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float UX_IPA = 0 , float IX_IPB = 0 , float IPC = 0 )
     {
         if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , IPA , IPB , IPC ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , UX_IPA , IX_IPB , IPC ) , _methodOfCheckResponse );  
     }
 
     /// <inheritdoc/>
@@ -355,14 +366,14 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc )
+    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc ,float PhaseIx=0)
     {
         if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ,PhaseIx) , _methodOfCheckResponse );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )

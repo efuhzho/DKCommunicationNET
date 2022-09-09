@@ -433,7 +433,7 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// <inheritdoc/>
     public byte? OutputChannelsNum { get; private set; }
     /// <inheritdoc/>
-    public string? ACSMode { get; private set; }
+    public string? ACSWorkingMode { get; private set; }
 
     #endregion 属性》
 

@@ -86,20 +86,20 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="IA">要设定的电流幅值</param>
     /// <param name="IB">要设定的电流幅值</param>
     /// <param name="IC">要设定的电流幅值</param>
-    /// <param name="IPA">要设定的保护电流幅值</param>
-    /// <param name="IPB">要设定的保护电流幅值</param>
-    /// <param name="IPC">要设定的保护电流幅值</param>
+    /// <param name="UX_IPA">要设定的【X相电压】或者【A相保护电流幅值】</param>
+    /// <param name="IX_IPB">要设定的【X相电流】或者【B相保护电流幅值】</param>
+    /// <param name="IPC">要设定的【C相保护电流幅值】</param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA = 0 , float IPB = 0 , float IPC = 0 );
+    public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float UX_IPA = 0 , float IX_IPB = 0 , float IPC = 0 );
 
     /// <summary>
     /// <inheritdoc cref="SetAmplitude(float, float, float, float, float, float, float, float, float)"/>
     /// </summary>
-    /// <param name="U">【所有相幅值相同】要设定的电压幅值</param>
-    /// <param name="I">【所有相幅值相同】要设定的电流幅值</param>
-    /// <param name="IP">【所有相幅值相同】要设定的保护电流幅值</param>
+    /// <param name="Uabc">【ABC三相电压幅值相同】要设定的电压幅值</param>
+    /// <param name="Iabc">【ABC三相电流幅值相同】要设定的电流幅值</param>
+    /// <param name="IPabc">【ABC三相保护电流幅值相同】要设定的保护电流幅值</param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetAmplitude ( float U , float I , float IP = 0 );
+    public OperateResult<byte[ ]> SetAmplitude ( float Uabc , float Iabc , float IPabc = 0 );
 
     /// <summary>
     /// 设置相位：【A相电压相位作为基准参考相位点，始终为0°】
@@ -109,8 +109,9 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="PhaseIa">A相电流相位</param>
     /// <param name="PhaseIb">B相电流相位</param>
     /// <param name="PhaseIc">C相电流相位</param>
+    /// <param name="PhaseIx">X相电流相位</param>
     /// <returns><inheritdoc cref="Open"/></returns>
-    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
+    public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc ,float PhaseIx=0);
 
     /// <summary>
     /// 设置频率
@@ -593,9 +594,8 @@ public interface IProperties_ACS
     /// </summary>
     public byte? OutputChannelsNum { get; }
     /// <summary>
-    /// 当前交流源工作模式：标准源/功耗模式
+    /// 交流源当前工作模式：标准源/功耗模式
     /// </summary>
-    public string? ACSMode { get; }    
-  
+    public string? ACSWorkingMode { get; }      
 }
 

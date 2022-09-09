@@ -48,7 +48,7 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     {
         try
         {
-            ACSMode = Enum. GetName ( ( ACSMode ) responsResult[8] );
+            ACSWorkingMode = Enum. GetName ( ( ACSWorkingMode ) responsResult[8] );
             WireMode = ( WireMode ) responsResult[9];
             CloseLoopMode = ( CloseLoopMode ) responsResult[10];
             HarmonicMode = ( HarmonicMode ) responsResult[11];
@@ -549,7 +549,7 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     /// <inheritdoc/>
     public byte? OutputChannelsNum { get; private set; }
     /// <inheritdoc/>
-    public string? ACSMode { get; private set; }
+    public string? ACSWorkingMode { get; private set; }
 
     #endregion 属性》
 }

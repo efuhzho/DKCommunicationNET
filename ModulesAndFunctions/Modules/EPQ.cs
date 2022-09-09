@@ -214,7 +214,7 @@ public class EPQ : IModuleEPQ
     #endregion 解码器属性：读取属性，只读》
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( Channels_EPQ Channels = Channels_EPQ. Channel1 )
+    public OperateResult<byte[ ]> ReadData ( Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 )
     {
         //执行命令前的功能状态检查
         if ( _encoder == null || _decoder == null )

@@ -7,15 +7,15 @@ namespace DKCommunicationNET. Protocols. Hex81. Decoders;
 /// <summary>
 /// 联机设置解码器
 /// </summary>
-internal class Hex81Decoder_Settings:IDecoder_Settings
+internal class Hex81Decoder_Settings : IDecoder_Settings
 {
     private readonly IByteTransform _byteTransform;
     internal Hex81Decoder_Settings ( IByteTransform byteTransform )
     {
         _byteTransform = byteTransform;
     }
-    
-     OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
+
+    OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
     {
         try
         {
@@ -63,13 +63,12 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
 
             return OperateResult. CreateSuccessResult ( );
         }
-        catch ( Exception ex)
+        catch ( Exception ex )
         {
-
-            return new OperateResult ( ex. Message );
+            return new OperateResult ( "HandShake数据解析失败。" + ex. Message );
         }
-        
-    }  
+
+    }
 
     #region 《设备基本信息
     /// <summary>
@@ -145,7 +144,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// <summary>
     /// 指示双频输出功能是否激活
     /// </summary>
-    public bool IsEnabled_DualFreqs { get; private set;   }
+    public bool IsEnabled_DualFreqs { get; private set; }
 
     /// <summary>
     /// 指示保护电流功能是否激活
@@ -155,7 +154,7 @@ internal class Hex81Decoder_Settings:IDecoder_Settings
     /// <summary>
     /// 指示闪变输出功能是否激活
     /// </summary>
-    public bool IsEnabled_PST { get; private set;     }
+    public bool IsEnabled_PST { get; private set; }
 
     /// <summary>
     /// 指示遥信功能是否激活

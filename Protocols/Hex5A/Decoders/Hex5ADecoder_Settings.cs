@@ -8,14 +8,14 @@ using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex5A. Decoders;
 
-internal class Hex5ADecoder_Settings:IDecoder_Settings
+internal class Hex5ADecoder_Settings : IDecoder_Settings
 {
     private readonly IByteTransform _byteTransform;
 
-    public Hex5ADecoder_Settings (IByteTransform byteTransform )
-	{
-        _byteTransform=byteTransform;
-	}
+    public Hex5ADecoder_Settings ( IByteTransform byteTransform )
+    {
+        _byteTransform = byteTransform;
+    }
 
     #region 《方法
     OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
@@ -76,13 +76,13 @@ internal class Hex5ADecoder_Settings:IDecoder_Settings
 
             //通讯协议版本号
             ProtocolVer = $"V{PT_VerA}.{PT_VerB}";
-            return OperateResult.CreateSuccessResult ();
+            return OperateResult. CreateSuccessResult ( );
         }
-        catch ( Exception ex)
+        catch ( Exception ex )
         {
-            return new OperateResult ( ex. Message );
+            return new OperateResult ( "HandShake数据解析失败。" + ex. Message );
         }
-       
+
     }
     #endregion 方法》
 

@@ -135,8 +135,9 @@ internal interface IEncoder_ACS
     /// <param name="PhaseIa"></param>
     /// <param name="PhaseIb"></param>
     /// <param name="PhaseIc"></param>
+    /// <param name="PhaseIx"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc );
+    public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc, float PhaseIx = 0 );
 
     /// <summary>
     /// 创建报文：设置频率
@@ -374,7 +375,7 @@ internal interface IEncoder_EPQ : ISetProperties_EPQ
     /// 创建报文：读取电能校验误差
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> Packet_ReadData ( Channels_EPQ Channels = Channels_EPQ. Channel1 );
+    OperateResult<byte[ ]> Packet_ReadData ( Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 );
 
     /// <summary>
     /// 创建报文：设置电能校验参数并启动有功电能校验

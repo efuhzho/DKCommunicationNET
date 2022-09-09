@@ -126,7 +126,7 @@ internal class Hex5AInformation
 /// <summary>
 /// 交流源工作模式
 /// </summary>
-public enum ACSMode : byte
+public enum ACSWorkingMode : byte
 {
     /// <summary>
     /// 
@@ -141,24 +141,24 @@ public enum ACSMode : byte
 /// <summary>
 /// 交流源输出状态
 /// </summary>
-internal enum ACSStatus:byte
+internal enum ACSStatus : byte
 {
     /// <summary>
     /// 
     /// </summary>
-    源停止=0b_0000_0000,
+    源停止 = 0b_0000_0000,
     /// <summary>
     /// 
     /// </summary>
-    源输出=0b_0000_0001,
+    源输出 = 0b_0000_0001,
     /// <summary>
     /// 
     /// </summary>
-    源稳定=0b_0000_0010,
+    源稳定 = 0b_0000_0010,
     /// <summary>
     /// 
     /// </summary>
-    故障停止=0b_0001_0000,
+    故障停止 = 0b_0001_0000,
     //TODO D7的作用是什么？表状态是ACM的情况？
 }
 
@@ -194,7 +194,7 @@ internal enum Type_Model : byte
     /// <summary>
     /// 辅助直流源
     /// </summary>
-    DCS_AUX=8,
+    DCS_AUX = 8,
 }
 
 /// <summary>
@@ -296,22 +296,6 @@ public enum Flag_SetType : byte
 }
 
 /// <summary>
-/// 设置模式及档位的【参数】：SetWorkMode
-/// </summary>
-public enum WorkMode : byte
-{
-    /// <summary>
-    /// 标准源
-    /// </summary>
-    StandardSource = 0b_0000_0001,
-
-    /// <summary>
-    /// 
-    /// </summary>
-    Consumption = 0b_0000_0100
-}
-
-/// <summary>
 /// 设置标准源的参数:类型
 /// </summary>
 public enum Type_SetStandardSource : byte
@@ -339,65 +323,59 @@ public enum Type_SetStandardSource : byte
 }
 
 /// <summary>
-/// 通道号
+/// 输出通道：Ua;Ub;Uc:Ux;Ia;Ib;Ic;Ix;IPa;IPb;IPc
 /// </summary>
 [Flags]
 public enum Channels : byte
-{
+{    
     /// <summary>
-    /// A相电压
+    /// A相电压通道
     /// </summary>
-    Channel_Ua = 0b_0000_0001,
-
+    Ua = 0b_0000_0001,
     /// <summary>
-    /// B相电压
+    /// A相电流通道
     /// </summary>
-    Channel_Ub = 0b_0000_0100,
-
+    Ia = 0b_0000_0010,
     /// <summary>
-    /// C相电压
+    /// B相电压通道
     /// </summary>
-    Channel_Uc = 0b_0001_0000,
-
+    Ub = 0b_0000_0100,
     /// <summary>
-    /// A相电流
+    /// B相电流通道
     /// </summary>
-    Channel_Ia = 0b_0000_0010,
-
+    Ib = 0b_0000_1000,
     /// <summary>
-    /// B相电流
+    /// C相电压通道
     /// </summary>
-    Channel_Ib = 0b_0000_1000,
-
+    Uc = 0b_0001_0000,
     /// <summary>
-    /// C相电流
+    /// C相电流通道
     /// </summary>
-    Channel_Ic = 0b_0010_0000,
-
+    Ic = 0b_0010_0000,
     /// <summary>
-    /// X相电压
+    /// X相电压通道
     /// </summary>
-    Channel_Ux = 0b_0100_0000,
-
+    Ux = 0b_0100_0000,
     /// <summary>
-    /// X相电流
+    /// X相电流通道
     /// </summary>
-    Channel_Ix = 0b_1000_0000,
-
+    Ix = 0b_1000_0000,
     /// <summary>
-    /// 所有相电压[不含X相]
+    /// 所有相电压:[不含X相]
     /// </summary>
-    Channel_U = Channel_Ua | Channel_Ub | Channel_Uc,
-
+    Uabc = Ua | Ub | Uc,
     /// <summary>
-    /// 所有相电流[不含X相]
+    /// 所有相电流:[不含X相]
     /// </summary>
-    Channel_I = Channel_Ia | Channel_Ib | Channel_Ic,
-
+    Iabc = Ia | Ib | Ic,
     /// <summary>
-    /// 所有电压电流通道
+    /// 所有电压电流通道:[不含X相]
     /// </summary>
-    Channel_All = 0xFF
+    UIabc = Uabc | Iabc,
+    /// <summary>
+    /// 所有电压电流通道:[含X相]
+    /// </summary>
+    UIabcx = UIabc | Ux | Ix
 }
 
 /// <summary>

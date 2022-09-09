@@ -66,7 +66,7 @@ internal class Hex81Encoder_EPQ : IEncoder_EPQ
     public uint Rounds { get; set; } = 10;
     #endregion
 
-    public OperateResult<byte[ ]> Packet_ReadData(Channels_EPQ Channels = Channels_EPQ.Channel1)
+    public OperateResult<byte[ ]> Packet_ReadData(Channels_ReadEPQ Channels = Channels_ReadEPQ.Channel1)
     {
         return _PBHelper.EncodeHelper(Hex81Information.ReadData_EPQ);
     }

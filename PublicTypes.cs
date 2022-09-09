@@ -59,27 +59,12 @@ public enum WireMode : byte
     /// <summary>
     /// 三相四线制
     /// </summary>
-    WireMode_3P4L = 00,
+    三相四线制 = 00,
 
     /// <summary>
     /// 三相三线制
     /// </summary>
-    WireMode_3P3L = 01,
-
-    ///// <summary>
-    ///// 单相
-    ///// </summary>
-    //WireMode_1P1L = 02,
-
-    ///// <summary>
-    ///// 二线两元件（两个互感器）
-    ///// </summary>
-    //WireMode_2Component = 03,
-
-    ///// <summary>
-    ///// 二线三元件（三个互感器）
-    ///// </summary>
-    //WireMode_3Component = 04,
+    三相三线制 = 01,
 }
 
 /// <summary>
@@ -90,37 +75,90 @@ public enum CloseLoopMode : byte
     /// <summary>
     /// 闭环
     /// </summary>
-    CloseLoop = 0,
-
+    闭环 = 0,
     /// <summary>
     /// 开环
     /// </summary>
-    OpenLoop = 1
+    开环 = 1
 }
 
 /// <summary>
-/// SetHarmonicMode
+/// 谐波模式
 /// </summary>
 public enum HarmonicMode : byte
 {
     /// <summary>
     /// 以真有效值的百分比输入谐波
     /// </summary>
-    ValidValuesConstant = 0,
+    真有效值 = 0,
 
     /// <summary>
     /// 以基波值的百分比输入谐波
     /// </summary>
-    FundamentalConstant = 1
+    基波值 = 1
 }
 
-
+/// <summary>
+/// 输出通道：Ua;Ub;Uc:Ux;Ia;Ib;Ic;Ix;IPa;IPb;IPc
+/// </summary>
+[Flags]
+public enum Channels:byte
+{
+    /// <summary>
+    /// A相电压通道
+    /// </summary>
+    Ua = 0b_0000_0001,
+    /// <summary>
+    /// A相电流通道
+    /// </summary>
+    Ia = 0b_0000_0010,
+    /// <summary>
+    /// B相电压通道
+    /// </summary>
+    Ub = 0b_0000_0100,
+    /// <summary>
+    /// B相电流通道
+    /// </summary>
+    Ib = 0b_0000_1000,
+    /// <summary>
+    /// C相电压通道
+    /// </summary>
+    Uc = 0b_0001_0000,
+    /// <summary>
+    /// C相电流通道
+    /// </summary>
+    Ic = 0b_0010_0000,
+    /// <summary>
+    /// X相电压通道
+    /// </summary>
+    Ux = 0b_0100_0000,
+    /// <summary>
+    /// X相电流通道
+    /// </summary>
+    Ix = 0b_1000_0000,
+    /// <summary>
+    /// 所有相电压:[不含X相]
+    /// </summary>
+    Uabc = Ua | Ub | Uc,
+    /// <summary>
+    /// 所有相电流:[不含X相]
+    /// </summary>
+    Iabc = Ia | Ib | Ic,
+    /// <summary>
+    /// 所有电压电流通道:[不含X相]
+    /// </summary>
+    UIabc = Uabc | Iabc,
+    /// <summary>
+    /// 所有电压电流通道:[含X相]
+    /// </summary>
+    UIabcx = UIabc | Ux | Ix
+}
 
 /// <summary>
 /// 电能误差查询通道
 /// </summary>
 [Flags]
-public enum Channels_EPQ
+public enum Channels_ReadEPQ
 {
     /// <summary>
     /// 通道1
@@ -227,16 +265,16 @@ public enum QP_Mode : byte
 /// <summary>
 /// 频率标志
 /// </summary>
-internal enum FrequencySync:byte
+internal enum FrequencySync : byte
 {
     /// <summary>
     /// 
     /// </summary>
-    同频=0,
+    同频 = 0,
     /// <summary>
     /// 
     /// </summary>
-    异频=1
+    异频 = 1
 }
 #endregion
 
@@ -267,7 +305,7 @@ public struct HarmonicArgs
 
     private byte _harmonicTimes = 0;
     /// <summary>
-    /// 谐波次数:2--32次
+    /// 谐波次数:大于1小于100
     /// </summary>
     public byte HarmonicTimes
     {
@@ -287,7 +325,7 @@ public struct HarmonicArgs
 
     private float _amplitude = 0;
     /// <summary>
-    /// 谐波幅度：0--0.4（0%--40%）
+    /// 谐波幅度：0--0.4（0% 到 40%）
     /// </summary>
     public float Amplitude
     {

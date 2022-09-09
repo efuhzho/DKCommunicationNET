@@ -23,7 +23,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_Open()
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
-        args[0] = new SetStandardSourceArgs(Channels.Channel_All, 0);
+        args[0] = new SetStandardSourceArgs(Channels.UIabc, 0);
         return SetArgs_ACS(Type_SetStandardSource.Amplitude, args);
     }
 
@@ -41,14 +41,14 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_SetAmplitude(float UA, float UB, float UC, float IA, float IB, float IC, float IPAOrUx, float IPBOrIX, float IPC)
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[8];
-        args[0] = new SetStandardSourceArgs(Channels.Channel_Ua, UA);
-        args[1] = new SetStandardSourceArgs(Channels.Channel_Ub, UB);
-        args[2] = new SetStandardSourceArgs(Channels.Channel_Uc, UC);
-        args[3] = new SetStandardSourceArgs(Channels.Channel_Ia, IA);
-        args[4] = new SetStandardSourceArgs(Channels.Channel_Ib, IB);
-        args[5] = new SetStandardSourceArgs(Channels.Channel_Ic, IC);
-        args[6] = new SetStandardSourceArgs(Channels.Channel_Ux, IPAOrUx);
-        args[7] = new SetStandardSourceArgs(Channels.Channel_Ix, IPBOrIX);
+        args[0] = new SetStandardSourceArgs(Channels.Ua, UA);
+        args[1] = new SetStandardSourceArgs(Channels.Ub, UB);
+        args[2] = new SetStandardSourceArgs(Channels.Uc, UC);
+        args[3] = new SetStandardSourceArgs(Channels.Ia, IA);
+        args[4] = new SetStandardSourceArgs(Channels.Ib, IB);
+        args[5] = new SetStandardSourceArgs(Channels.Ic, IC);
+        args[6] = new SetStandardSourceArgs(Channels.Ux, IPAOrUx);
+        args[7] = new SetStandardSourceArgs(Channels.Ix, IPBOrIX);
         return SetArgs_ACS(Type_SetStandardSource.Amplitude, args);
     }
 
@@ -91,15 +91,15 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         return _encodeHelper.EncodeHelper(Hex5AInformation.SetHarmonics, (ushort)(11 + data.Length), data);
     }
 
-    public OperateResult<byte[ ]> Packet_SetPhase(float PhaseUa, float PhaseUb, float PhaseUc, float PhaseIa, float PhaseIb, float PhaseIc)
+    public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[6];
-        args[0] = new SetStandardSourceArgs(Channels.Channel_Ua, PhaseUa);
-        args[1] = new SetStandardSourceArgs(Channels.Channel_Ub, PhaseUb);
-        args[2] = new SetStandardSourceArgs(Channels.Channel_Uc, PhaseUc);
-        args[3] = new SetStandardSourceArgs(Channels.Channel_Ia, PhaseIa);
-        args[4] = new SetStandardSourceArgs(Channels.Channel_Ib, PhaseIb);
-        args[5] = new SetStandardSourceArgs(Channels.Channel_Ic, PhaseIc);
+        args[0] = new SetStandardSourceArgs(Channels.Ua, PhaseUa);
+        args[1] = new SetStandardSourceArgs(Channels.Ub, PhaseUb);
+        args[2] = new SetStandardSourceArgs(Channels.Uc, PhaseUc);
+        args[3] = new SetStandardSourceArgs(Channels.Ia, PhaseIa);
+        args[4] = new SetStandardSourceArgs(Channels.Ib, PhaseIb);
+        args[5] = new SetStandardSourceArgs(Channels.Ic, PhaseIc);
         return SetArgs_ACS(Type_SetStandardSource.Phase, args);
     }
 
@@ -149,7 +149,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_Stop()
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[1];
-        args[0] = new SetStandardSourceArgs(Channels.Channel_All, -1);
+        args[0] = new SetStandardSourceArgs(Channels.UIabc, -1);
         return SetArgs_ACS(Type_SetStandardSource.Amplitude, args);
     }
 
@@ -181,7 +181,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     /// <param name="qP_Mode"></param>
     /// <param name="rangs"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetModeAndRanges_ACS(Flag_SetType flag_Type, WorkMode workMode, WireMode wireMode, CloseLoopMode closeLoopMode, HarmonicMode harmonicMode, QP_Mode qP_Mode, byte[ ] rangs)
+    private OperateResult<byte[ ]> SetModeAndRanges_ACS(Flag_SetType flag_Type, ACSWorkingMode workMode, WireMode wireMode, CloseLoopMode closeLoopMode, HarmonicMode harmonicMode, QP_Mode qP_Mode, byte[ ] rangs)
     {
         byte[ ] data = new byte[14];
         data[0] = (byte)flag_Type;
@@ -230,8 +230,5 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         //返回结果
         return _encodeHelper.EncodeHelper(Hex5AInformation.SetStandardSource, (ushort)(11 + data.Length), data);
     }
-
-
-
     #endregion
 }
