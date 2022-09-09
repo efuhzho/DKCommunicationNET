@@ -96,7 +96,7 @@ internal class Hex81Factory : IProtocolFactory
         return new OperateResult<IDecoder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IDecoder_PPS> GetDecoder_PPS ( IByteTransform byteTransform )
+    public OperateResult<IDecoder_PPS> GetDecoder_PPS ( )
     {
         //不具备此功能模块
         return new OperateResult<IDecoder_PPS> ( StringResources. Language. NotSupportedModule );
