@@ -472,60 +472,75 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
 
     public OperateResult DecodeReadData_ACS ( byte[ ] responseBytes )
     {
-        Freq = _byteTransform. TransSingle ( responseBytes , Hex81Information. DataStartIndex );
-        RangeIndex_Ua = responseBytes[Hex81Information. DataStartIndex + 4];  //取UA的档位索引
-        RangeIndex_Ia = responseBytes[Hex81Information. DataStartIndex + 7];  //取IA的档位索引
-        UA = _byteTransform. TransSingle ( responseBytes , 16 );
-        UB = _byteTransform. TransSingle ( responseBytes , 20 );
-        UC = _byteTransform. TransSingle ( responseBytes , 24 );
-        IA = _byteTransform. TransSingle ( responseBytes , 28 );
-        IB = _byteTransform. TransSingle ( responseBytes , 32 );
-        IC = _byteTransform. TransSingle ( responseBytes , 36 );
-        FAI_UA = _byteTransform. TransSingle ( responseBytes , 40 );
-        FAI_UB = _byteTransform. TransSingle ( responseBytes , 44 );
-        FAI_UC = _byteTransform. TransSingle ( responseBytes , 48 );
-        FAI_IA = _byteTransform. TransSingle ( responseBytes , 52 );
-        FAI_IB = _byteTransform. TransSingle ( responseBytes , 56 );
-        FAI_IC = _byteTransform. TransSingle ( responseBytes , 60 );
-        PA = _byteTransform. TransSingle ( responseBytes , 64 );
-        PB = _byteTransform. TransSingle ( responseBytes , 68 );
-        PC = _byteTransform. TransSingle ( responseBytes , 72 );
-        P = _byteTransform. TransSingle ( responseBytes , 76 );
-        QA = _byteTransform. TransSingle ( responseBytes , 80 );
-        QB = _byteTransform. TransSingle ( responseBytes , 84 );
-        QC = _byteTransform. TransSingle ( responseBytes , 88 );
-        Q = _byteTransform. TransSingle ( responseBytes , 92 );
-        SA = _byteTransform. TransSingle ( responseBytes , 96 );
-        SB = _byteTransform. TransSingle ( responseBytes , 100 );
-        SC = _byteTransform. TransSingle ( responseBytes , 104 );
-        S = _byteTransform. TransSingle ( responseBytes , 108 );
-        PFA = _byteTransform. TransSingle ( responseBytes , 112 );
-        PFB = _byteTransform. TransSingle ( responseBytes , 116 );
-        PFC = _byteTransform. TransSingle ( responseBytes , 120 );
-        PF = _byteTransform. TransSingle ( responseBytes , 124 );
-        WireMode = ( WireMode ) responseBytes[128];
-        CloseLoopMode = ( CloseLoopMode ) responseBytes[129];
-        HarmonicMode = ( HarmonicMode ) responseBytes[130];
-        return OperateResult. CreateSuccessResult ( );
+        try
+        {
+            Freq = _byteTransform. TransSingle ( responseBytes , Hex81Information. DataStartIndex );
+            RangeIndex_Ua = responseBytes[Hex81Information. DataStartIndex + 4];  //取UA的档位索引
+            RangeIndex_Ia = responseBytes[Hex81Information. DataStartIndex + 7];  //取IA的档位索引
+            UA = _byteTransform. TransSingle ( responseBytes , 16 );
+            UB = _byteTransform. TransSingle ( responseBytes , 20 );
+            UC = _byteTransform. TransSingle ( responseBytes , 24 );
+            IA = _byteTransform. TransSingle ( responseBytes , 28 );
+            IB = _byteTransform. TransSingle ( responseBytes , 32 );
+            IC = _byteTransform. TransSingle ( responseBytes , 36 );
+            FAI_UA = _byteTransform. TransSingle ( responseBytes , 40 );
+            FAI_UB = _byteTransform. TransSingle ( responseBytes , 44 );
+            FAI_UC = _byteTransform. TransSingle ( responseBytes , 48 );
+            FAI_IA = _byteTransform. TransSingle ( responseBytes , 52 );
+            FAI_IB = _byteTransform. TransSingle ( responseBytes , 56 );
+            FAI_IC = _byteTransform. TransSingle ( responseBytes , 60 );
+            PA = _byteTransform. TransSingle ( responseBytes , 64 );
+            PB = _byteTransform. TransSingle ( responseBytes , 68 );
+            PC = _byteTransform. TransSingle ( responseBytes , 72 );
+            P = _byteTransform. TransSingle ( responseBytes , 76 );
+            QA = _byteTransform. TransSingle ( responseBytes , 80 );
+            QB = _byteTransform. TransSingle ( responseBytes , 84 );
+            QC = _byteTransform. TransSingle ( responseBytes , 88 );
+            Q = _byteTransform. TransSingle ( responseBytes , 92 );
+            SA = _byteTransform. TransSingle ( responseBytes , 96 );
+            SB = _byteTransform. TransSingle ( responseBytes , 100 );
+            SC = _byteTransform. TransSingle ( responseBytes , 104 );
+            S = _byteTransform. TransSingle ( responseBytes , 108 );
+            PFA = _byteTransform. TransSingle ( responseBytes , 112 );
+            PFB = _byteTransform. TransSingle ( responseBytes , 116 );
+            PFC = _byteTransform. TransSingle ( responseBytes , 120 );
+            PF = _byteTransform. TransSingle ( responseBytes , 124 );
+            WireMode = ( WireMode ) responseBytes[128];
+            CloseLoopMode = ( CloseLoopMode ) responseBytes[129];
+            HarmonicMode = ( HarmonicMode ) responseBytes[130];
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex)
+        {
+            return new OperateResult ( ex. Message );
+        }
+   
     }
 
-    public OperateResult DecodeReadData_Status_ACS ( byte[ ]? response )
+    public OperateResult DecodeReadData_Status_ACS ( byte[ ] response )
     {
-        Status_Ua = Enum. GetName ( ( ACSStatus ) response[6] );
-        Status_Ia = Enum. GetName ( ( ACSStatus ) response[6] );
-        Status_Ub = Enum. GetName ( ( ACSStatus ) response[7] );
-        Status_Ib = Enum. GetName ( ( ACSStatus ) response[7] );
-        Status_Uc = Enum. GetName ( ( ACSStatus ) response[8] );
-        Status_Ic = Enum. GetName ( ( ACSStatus ) response[8] );
-        Freq = _byteTransform. TransSingle ( response , 9 );
-        Freq_C = _byteTransform. TransSingle ( response , 17 );
-        IPA = _byteTransform. TransSingle ( response , 21 );
-        IPB = _byteTransform. TransSingle ( response , 25 );
-        IPC = _byteTransform. TransSingle ( response , 29 );
-        RangeValue_ACU = _byteTransform. TransSingle ( response , 33 );
-        RangeValue_ACI = _byteTransform. TransSingle ( response , 37 );
-        RangeValue_IPr = _byteTransform. TransSingle ( response , 41 );
-        return OperateResult. CreateSuccessResult ( );
+        try
+        {
+            Status_Ua = Enum. GetName ( ( ACSStatus ) response[6] );
+            Status_Ia = Enum. GetName ( ( ACSStatus ) response[6] );
+            Status_Ub = Enum. GetName ( ( ACSStatus ) response[7] );
+            Status_Ib = Enum. GetName ( ( ACSStatus ) response[7] );
+            Status_Uc = Enum. GetName ( ( ACSStatus ) response[8] );
+            Status_Ic = Enum. GetName ( ( ACSStatus ) response[8] );
+            Freq = _byteTransform. TransSingle ( response , 9 );
+            Freq_C = _byteTransform. TransSingle ( response , 17 );
+            IPA = _byteTransform. TransSingle ( response , 21 );
+            IPB = _byteTransform. TransSingle ( response , 25 );
+            IPC = _byteTransform. TransSingle ( response , 29 );
+            RangeValue_ACU = _byteTransform. TransSingle ( response , 33 );
+            RangeValue_ACI = _byteTransform. TransSingle ( response , 37 );
+            RangeValue_IPr = _byteTransform. TransSingle ( response , 41 );
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex)
+        {
+            return new OperateResult ( ex.Message);
+        }       
     }
 }
 
