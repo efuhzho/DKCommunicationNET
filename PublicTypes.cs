@@ -57,14 +57,14 @@ public enum Models
 public enum WireMode : byte
 {
     /// <summary>
-    /// 三相四线制
+    /// W3L4
     /// </summary>
-    三相四线制 = 00,
+    WireMode_3P4L = 00,
 
     /// <summary>
     /// 三相三线制
     /// </summary>
-    三相三线制 = 01,
+    WireMode_3P3L = 01,
 }
 
 /// <summary>
@@ -75,11 +75,11 @@ public enum CloseLoopMode : byte
     /// <summary>
     /// 闭环
     /// </summary>
-    闭环 = 0,
+    CloseLoop = 0,
     /// <summary>
-    /// 开环
+    /// OpenLoop
     /// </summary>
-    开环 = 1
+    OpenLoop = 1
 }
 
 /// <summary>
@@ -90,12 +90,12 @@ public enum HarmonicMode : byte
     /// <summary>
     /// 以真有效值的百分比输入谐波
     /// </summary>
-    真有效值 = 0,
+    ValidValuesConstant = 0,
 
     /// <summary>
     /// 以基波值的百分比输入谐波
     /// </summary>
-    基波值 = 1
+    FundamentalConstant = 1
 }
 
 /// <summary>

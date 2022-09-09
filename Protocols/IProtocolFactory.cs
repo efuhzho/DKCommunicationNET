@@ -115,7 +115,7 @@ internal interface IProtocolFactory
     /// </summary>
     /// <param name="byteTransform"></param>
     /// <returns></returns>
-    OperateResult<IDecoder_PPS> GetDecoder_PPS ( IByteTransform byteTransform );
+    OperateResult<IDecoder_PPS> GetDecoder_PPS (  );
 
     /// <summary>
     /// 获取：开关量解码器

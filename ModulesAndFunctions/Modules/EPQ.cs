@@ -224,13 +224,13 @@ public class EPQ : IModuleEPQ
         //执行命令并获取回复报文
         var result = CommandAction. Action ( _encoder. Packet_ReadData ( Channels ) , _methodOfCheckResponse );
 
-        if ( result. IsSuccess == false )
+        if ( !result. IsSuccess || result. Content == null  )
         {
             return result;
         }
 
         var decodeResult = _decoder. DecodeReadData_EPQ ( result. Content );
-        if ( decodeResult. IsSuccess == false )
+        if (! decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
             result. Message = StringResources. Language. DecodeError;

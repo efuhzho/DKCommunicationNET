@@ -45,7 +45,7 @@ public class Settings : IFuncSettings
         var actionResult = CommandAction. Action ( _encoder. Packet_HandShake ( ) , _methodOfCheckResponse );
 
         //执行命令失败则返回执行结果
-        if ( !actionResult. IsSuccess )
+        if ( !actionResult. IsSuccess|| actionResult. Content == null)
         {
             return actionResult;
         }

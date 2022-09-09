@@ -48,7 +48,7 @@ public class DCS : IModuleDCS
         //执行命令并获取回复报文
         var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
-        if ( !result. IsSuccess )
+        if ( !result. IsSuccess||result.Content==null )
         {
             return result;
         }
@@ -239,7 +239,7 @@ public class DCS : IModuleDCS
         //执行命令并获取回复报文
         var result = CommandAction. Action ( _encoder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
 
-        if ( !result. IsSuccess )
+        if ( !result. IsSuccess||result.Content==null )
         {
             return result;
         }

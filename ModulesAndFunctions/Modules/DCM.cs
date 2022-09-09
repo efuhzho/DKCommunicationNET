@@ -68,7 +68,7 @@ public class DCM : IModuleDCM
         var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) , _methodOfCheckResponse );
 
         //如果命令执行失败
-        if ( !result. IsSuccess )
+        if ( !result. IsSuccess||result.Content==null )
         {
             return result;
         }
@@ -100,7 +100,7 @@ public class DCM : IModuleDCM
         var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) , _methodOfCheckResponse );
 
         //如果命令执行失败
-        if ( !result. IsSuccess )
+        if ( !result. IsSuccess|| result. Content==null )
         {
             return result;
         }

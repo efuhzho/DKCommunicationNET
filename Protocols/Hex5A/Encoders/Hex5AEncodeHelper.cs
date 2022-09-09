@@ -42,7 +42,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         try
         {
 
-            if ( dataBytesWithoutData. IsSuccess )
+            if ( dataBytesWithoutData. IsSuccess && dataBytesWithoutData. Content != null )
             {
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
 
@@ -58,7 +58,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         }
         catch ( Exception ex )
         {
-            return new OperateResult<byte[ ]> (  ex. Message );
+            return new OperateResult<byte[ ]> ( ex. Message );
         }
     }
 
@@ -97,7 +97,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         //发生异常回报当前代码位置和异常信息
         catch ( Exception ex )
         {
-            return new OperateResult<byte[ ]> (  ex. Message );
+            return new OperateResult<byte[ ]> ( ex. Message );
         }
     }
     #endregion

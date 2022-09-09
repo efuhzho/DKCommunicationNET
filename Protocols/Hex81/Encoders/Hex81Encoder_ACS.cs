@@ -52,7 +52,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _PBHelper.EncodeHelper(Hex81Information.SetFrequency, Hex81Information.SetFrequencyLength, buffer);
     }
 
-    public OperateResult<byte[ ]> Packet_SetPhase(float PhaseUa, float PhaseUb, float PhaseUc, float PhaseIa, float PhaseIb, float PhaseIc)
+    public OperateResult<byte[ ]> Packet_SetPhase(float PhaseUa, float PhaseUb, float PhaseUc, float PhaseIa, float PhaseIb, float PhaseIc,float PhaseIx=0)
     {
         float[ ] data = new float[6];
         data[0] = PhaseUa;
@@ -74,7 +74,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_SetClosedLoop(CloseLoopMode closeLoopMode)
     {
         _CloseLoopMode = closeLoopMode;
-        return Packet_SetClosedLoopAndHarmonicMode(CloseLoopMode.CloseLoop, _HarmonicMode);
+        return Packet_SetClosedLoopAndHarmonicMode( closeLoopMode , _HarmonicMode);
     }
 
     public OperateResult<byte[ ]> Packet_SetHarmonicMode(HarmonicMode harmonicMode)

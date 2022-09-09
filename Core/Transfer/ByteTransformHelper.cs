@@ -20,7 +20,7 @@ namespace DKCommunicationNET. Core
         {
             try
             {
-                if ( result. IsSuccess )
+                if ( result. IsSuccess && result. Content !=null)
                 {
                     return OperateResult. CreateSuccessResult ( translator ( result. Content ) );
                 }
@@ -31,7 +31,7 @@ namespace DKCommunicationNET. Core
             }
             catch ( Exception ex )
             {
-                return new OperateResult<TResult> ( ) { Message = StringResources. Language. DataTransformError + BasicFramework. SoftBasic. ByteToHexString ( result. Content ) + $" : Length({result. Content. Length}) " + ex. Message };
+                return new OperateResult<TResult> ( ) { Message = StringResources. Language. DataTransformError + BasicFramework. SoftBasic. ByteToHexString ( result. Content+ $" : Length({result. Content?. Length}) " + ex. Message) };
             }
         }
 
