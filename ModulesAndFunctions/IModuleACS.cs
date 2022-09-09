@@ -279,17 +279,17 @@ public interface IProperties_ACS
 
     #region 《只支持A相的档位起始索引
     /// <summary>
-    /// 只支持A相电压输出的起始档位号
+    /// 只支持A相输出的起始档位号:0-表示单相电压；如果值等于档位个数则说明：没有仅A相输出的档位
     /// </summary>
     public byte OnlyAStartIndex_ACU { get; }
 
     /// <summary>
-    /// 只支持A相电流输出的起始档位号
+    /// 只支持A相输出的起始档位号:0-表示单相电压；如果值等于档位个数则说明：没有仅A相输出的档位
     /// </summary>
     public byte OnlyAStartIndex_ACI { get; }
 
     /// <summary>
-    /// 只支持A相保护电流输出的起始档位号
+    ///只支持A相输出的起始档位号:0-表示单相电压；如果值等于档位个数则说明：没有仅A相输出的档位
     /// </summary>
     public byte OnlyAStartIndex_IPr { get; }
     #endregion 只支持A相的档位起始索引》
@@ -304,6 +304,10 @@ public interface IProperties_ACS
     /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
     public float Freq_C { get; }
+    /// <summary>
+    /// 频率标志：四相同频/四相异频
+    /// </summary>
+    public string? FrequencySync { get; }
     #endregion 频率幅值》
 
     #region 《电压幅值
@@ -581,17 +585,17 @@ public interface IProperties_ACS
     #endregion 输出状态》
 
     /// <summary>
-    /// 当前输出的通道个数：1，3，4
+    /// 当前输出的通道相数：1=单相，3=三相，4=四相
     /// </summary>
-    public byte OutputtingChannelsNum { get; }
+    public byte? OutputtingChannelsNum { get; }
     /// <summary>
-    /// 当前交流源工作模式
+    /// 本装置交流源的相数：1=单相，3=三相，4=四相
     /// </summary>
-    public string? ACSMode { get; }
-    
+    public byte? OutputChannelsNum { get; }
     /// <summary>
-    /// 频率标志
+    /// 当前交流源工作模式：标准源/功耗模式
     /// </summary>
-    public string? FrequencySync { get; }
+    public string? ACSMode { get; }    
+  
 }
 

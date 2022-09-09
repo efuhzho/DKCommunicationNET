@@ -21,22 +21,31 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     }
 
     #region 《方法
-    OperateResult IDecoder_ACS.DecodeGetRanges_ACS ( byte[ ] responsResult )
+    public OperateResult DecodeGetRanges_ACS ( byte[ ] responsResult )
     {
         try
         {
-
+            if ( ( Type_Model ) responsResult[8] != Type_Model. ACS )
+            {
+                return new OperateResult ( StringResources. Language. DecodeError +"下位机回复的档位类型不是【交流源】。");
+            }
+            OutputChannelsNum = responsResult[9];
+            OnlyAStartIndex_ACU = responsResult[10];
+            OnlyAStartIndex_ACI = responsResult[11];
+            RangesCount_ACU = responsResult[12];
+            RangesCount_ACI = responsResult[13];
+            Ranges_ACU = _byteTransform. TransSingle ( responsResult , 14 , RangesCount_ACU );
+            Ranges_ACI = _byteTransform. TransSingle ( responsResult , 14 + 4 * RangesCount_ACU , RangesCount_ACI );
+            return OperateResult.CreateSuccessResult ();
         }
-        catch ( Exception )
+        catch ( Exception ex )
         {
-
-            throw;
+            return new OperateResult ( StringResources. Language. DecodeError + ex. Message );
         }
-        throw new NotImplementedException ( );
     }
 
-    OperateResult IDecoder_ACS.DecodeReadData_ACS ( byte[ ] responsResult )
-    {       
+    public OperateResult DecodeReadData_ACS ( byte[ ] responsResult )
+    {
         try
         {
             ACSMode = Enum. GetName ( ( ACSMode ) responsResult[8] );
@@ -96,7 +105,7 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
                 //以下为X相数据
                 RangeIndex_Ux = responsResult[126];
                 Status_Ux = Enum. GetName ( ( ACSStatus ) ( responsResult[127] & 0b_0111_1111 ) );
-                RangeIndex_Ix= responsResult[128];
+                RangeIndex_Ix = responsResult[128];
                 Status_Ix = Enum. GetName ( ( ACSStatus ) ( responsResult[129] & 0b_0111_1111 ) );
                 // Freq = _byteTransform. TransSingle ( responsResult , 130 );       //TODO 异频数据是C相还是X相？
                 UX = _byteTransform. TransSingle ( responsResult , 134 );
@@ -534,16 +543,13 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
     public string? Status_Ix { get; private set; }
-    #endregion 输出状态》
-
-    /// <summary>
-    /// 当前输出的通道个数：1，3，4
-    /// </summary>
-    public byte OutputtingChannelsNum { get; private set; }
-    /// <summary>
-    /// 当前交流源工作模式：标准源/功耗测试
-    /// </summary>
+    #endregion 输出状态》    
+    /// <inheritdoc/>
+    public byte? OutputtingChannelsNum { get; private set; }
+    /// <inheritdoc/>
+    public byte? OutputChannelsNum { get; private set; }
+    /// <inheritdoc/>
     public string? ACSMode { get; private set; }
-   
+
     #endregion 属性》
 }

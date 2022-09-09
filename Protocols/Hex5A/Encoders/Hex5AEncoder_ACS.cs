@@ -16,7 +16,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
 
     public OperateResult<byte[ ]> Packet_GetRanges()
     {
-        byte[ ] data = new byte[1] { (byte)Type_Module.ACS };
+        byte[ ] data = new byte[1] { (byte)Type_Model.ACS };
         return _encodeHelper.EncodeHelper(Hex5AInformation.GetRanges_ACS, Hex5AInformation.GetRanges_ACS_Len, data);
     }
 

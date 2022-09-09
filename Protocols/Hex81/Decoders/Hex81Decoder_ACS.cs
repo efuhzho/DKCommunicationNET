@@ -428,46 +428,52 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     public string? Status_Ix { get; private set; }
     #endregion 输出状态》
 
-    /// <summary>
-    /// 当前输出的通道个数：1，3，4
-    /// </summary>
-    public byte OutputtingChannelsNum { get; private set; }
-    /// <summary>
-    /// 当前交流源工作模式：标准源/功耗测试
-    /// </summary>
+    /// <inheritdoc/>
+    public byte? OutputtingChannelsNum { get; private set; }
+    /// <inheritdoc/>
+    public byte? OutputChannelsNum { get; private set; }
+    /// <inheritdoc/>
     public string? ACSMode { get; private set; }
 
     #endregion 属性》
 
-    OperateResult IDecoder_ACS.DecodeGetRanges_ACS ( byte[ ] responseBytes )
+    public OperateResult DecodeGetRanges_ACS ( byte[ ] responseBytes )
     {
-        //电压档位数量
-        RangesCount_ACU = responseBytes[Hex81Information. DataStartIndex];
+        try
+        {
+            //电压档位数量
+            RangesCount_ACU = responseBytes[Hex81Information. DataStartIndex];
 
-        //单相电压档位起始档位索引值
-        OnlyAStartIndex_ACU = responseBytes[7];
+            //单相电压档位起始档位索引值
+            OnlyAStartIndex_ACU = responseBytes[7];
 
-        //电流档位数量
-        RangesCount_ACI = responseBytes[8];
+            //电流档位数量
+            RangesCount_ACI = responseBytes[8];
 
-        //单相电流档位起始档位索引值
-        OnlyAStartIndex_ACI = responseBytes[9];
+            //单相电流档位起始档位索引值
+            OnlyAStartIndex_ACI = responseBytes[9];
 
-        //保护电流档位数量
-        RangesCount_IPr = responseBytes[10];
+            //保护电流档位数量
+            RangesCount_IPr = responseBytes[10];
 
-        //单相保护电流档位起始档位索引值
-        RangeIndex_IPa = responseBytes[11];
+            //单相保护电流档位起始档位索引值
+            RangeIndex_IPa = responseBytes[11];
 
-        //电压档位集合
-        Ranges_ACU = _byteTransform. TransSingle ( responseBytes , 12 , RangesCount_ACU );
+            //电压档位集合
+            Ranges_ACU = _byteTransform. TransSingle ( responseBytes , 12 , RangesCount_ACU );
 
-        //电流档位集合
-        Ranges_ACI = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU , RangesCount_ACI );
+            //电流档位集合
+            Ranges_ACI = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU , RangesCount_ACI );
 
-        //保护电流档位集合
-        Ranges_IPr = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU + 4 * RangesCount_ACI , RangesCount_IPr );
-        return OperateResult. CreateSuccessResult ( );
+            //保护电流档位集合
+            Ranges_IPr = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU + 4 * RangesCount_ACI , RangesCount_IPr );
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex )
+        {
+            return new OperateResult ( StringResources. Language. DecodeError + ex. Message );
+        }
+
     }
 
     public OperateResult DecodeReadData_ACS ( byte[ ] responseBytes )
@@ -510,11 +516,11 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
             HarmonicMode = ( HarmonicMode ) responseBytes[130];
             return OperateResult. CreateSuccessResult ( );
         }
-        catch ( Exception ex)
+        catch ( Exception ex )
         {
             return new OperateResult ( ex. Message );
         }
-   
+
     }
 
     public OperateResult DecodeReadData_Status_ACS ( byte[ ] response )
@@ -537,10 +543,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
             RangeValue_IPr = _byteTransform. TransSingle ( response , 41 );
             return OperateResult. CreateSuccessResult ( );
         }
-        catch ( Exception ex)
+        catch ( Exception ex )
         {
-            return new OperateResult ( ex.Message);
-        }       
+            return new OperateResult ( ex. Message );
+        }
     }
 }
 

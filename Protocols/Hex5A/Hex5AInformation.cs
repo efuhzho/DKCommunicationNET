@@ -163,9 +163,9 @@ internal enum ACSStatus:byte
 }
 
 /// <summary>
-/// 获取档位类型
+/// 获取档位类型时的类型选择
 /// </summary>
-public enum Type_Module : byte
+internal enum Type_Model : byte
 {
     /// <summary>
     /// 交流源
@@ -190,7 +190,11 @@ public enum Type_Module : byte
     /// <summary>
     /// 交流表
     /// </summary>
-    ACM = 7
+    ACM = 7,
+    /// <summary>
+    /// 辅助直流源
+    /// </summary>
+    DCS_AUX=8,
 }
 
 /// <summary>

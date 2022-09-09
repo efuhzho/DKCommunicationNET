@@ -124,6 +124,7 @@ public class ACS : IModuleACS
     public CloseLoopMode CloseLoopMode { get => _decoder == null ? 0 : _decoder. CloseLoopMode; set => SetClosedLoop ( value ); }
     /// <inheritdoc/>
     public HarmonicMode HarmonicMode { get => _decoder == null ? 0 : _decoder. HarmonicMode; set => SetHarmonicMode ( value ); }
+    /// <inheritdoc/>
     public QP_Mode QP_Mode { get => throw new NotImplementedException ( ); set => throw new NotImplementedException ( ); }
     #endregion 枚举直设》
 
@@ -226,6 +227,7 @@ public class ACS : IModuleACS
     public float SB => _decoder == null ? 0 : _decoder. SB;
     /// <inheritdoc/>
     public float SC => _decoder == null ? 0 : _decoder. SC;
+    /// <inheritdoc/>
     public float SX => _decoder == null ? 0 : _decoder. SX;
     /// <inheritdoc/>
     public float S => _decoder == null ? 0 : _decoder. S;
@@ -259,13 +261,12 @@ public class ACS : IModuleACS
     public string? Status_Ic => _decoder?.Status_Ic;
     /// <inheritdoc/>
     public string? Status_Ix => _decoder?.Status_Ix;
-
-
-    public byte OutputtingChannelsNum => throw new NotImplementedException ( );
-
-    public string? ACSMode => throw new NotImplementedException ( );
-
-    public string? FrequencySync => throw new NotImplementedException ( );
+    /// <inheritdoc/>
+    public byte? OutputtingChannelsNum => _decoder?.OutputtingChannelsNum;
+    /// <inheritdoc/>
+    public string? ACSMode => _decoder?. ACSMode;
+    /// <inheritdoc/>
+    public string? FrequencySync => _decoder?. FrequencySync;
 
     #endregion 输出稳定状态》
 
@@ -441,6 +442,7 @@ public class ACS : IModuleACS
             result. Message = StringResources. Language. DecodeError;
         }
         return result;
+        //TODO encoder添加设备型号属性，判断属性是否执行ReadData_Status方法
     }
 
     /// <inheritdoc/>
