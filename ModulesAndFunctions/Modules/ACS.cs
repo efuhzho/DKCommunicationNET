@@ -43,6 +43,7 @@ public class ACS : IModuleACS
         //接收解码器
         _decoder = decoder;
     }
+    #region 《属性
 
     #region 《档位数量
     /// <inheritdoc/>
@@ -256,6 +257,8 @@ public class ACS : IModuleACS
     public byte Status_Uc => ( byte ) ( _decoder == null ? 1 : _decoder. Status_Uc );
 
     #endregion 输出稳定状态》
+
+    #endregion 属性》
 
     #region 《方法
     /// <inheritdoc/>

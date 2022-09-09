@@ -12,21 +12,21 @@ internal interface IDecoder_ACS:IProperties_ACS
     /// </summary>
     /// <param name="responsResult">【操作结果】下位机回复的报文</param>
     /// <returns></returns>
-    internal OperateResult DecodeGetRanges_ACS ( byte[ ] responsResult );
+     OperateResult DecodeGetRanges_ACS ( byte[ ] responsResult );
 
     /// <summary>
     /// 【解码】解析读取交流源/表的命令的回复报文
     /// </summary>
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
-    internal OperateResult DecodeReadData_ACS ( byte[ ] responsResult );
+     OperateResult DecodeReadData_ACS ( byte[ ] responsResult );
 
     /// <summary>
-    /// 【解码】解析读取交流源/表输出状态的命令的回复报文
+    /// 【解码】交流源输出状态读取
     /// </summary>
-    /// <param name="responsResult">指令操作结果</param>
+    /// <param name="response"></param>
     /// <returns></returns>
-    internal OperateResult DecodeReadData_Status_ACS ( byte[ ] responsResult );    
+    OperateResult DecodeReadData_Status_ACS ( byte[ ] response );
 }
 
 /// <summary>

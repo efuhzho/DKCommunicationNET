@@ -116,18 +116,9 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
         }
     }
 
-    OperateResult IDecoder_ACS.DecodeReadData_Status_ACS ( byte[ ] responsResult )
+    public OperateResult DecodeReadData_Status_ACS ( byte[ ] response )
     {
-        try
-        {
-
-        }
-        catch ( Exception )
-        {
-
-            throw;
-        }
-        throw new NotImplementedException ( );
+        return OperateResult. CreateSuccessResult ( );
     }
     #endregion 方法》
 
@@ -262,6 +253,11 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
     public float Freq_C { get; private set; }
+
+    /// <summary>
+    /// 频率标志:同频/异频
+    /// </summary>
+    public string? FrequencySync { get; private set; }
     #endregion 频率幅值》
 
     #region 《电压幅值
@@ -545,12 +541,9 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     /// </summary>
     public byte OutputtingChannelsNum { get; private set; }
     /// <summary>
-    /// 当前交流源工作模式
+    /// 当前交流源工作模式：标准源/功耗测试
     /// </summary>
     public string? ACSMode { get; private set; }
-    /// <summary>
-    /// 频率标志
-    /// </summary>
-    public string? FrequencySync { get; private set; }
+   
     #endregion 属性》
 }

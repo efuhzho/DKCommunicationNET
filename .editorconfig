@@ -133,7 +133,7 @@ csharp_space_between_empty_square_brackets = true
 dotnet_diagnostic.CS8601.severity = suggestion
 
 # CS8604: 引用类型参数可能为 null。
-dotnet_diagnostic.CS8604.severity = suggestion
+dotnet_diagnostic.CS8604.severity = warning
 
 [*.vb]
 #### 命名样式 ####

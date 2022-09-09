@@ -1,10 +1,4 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Core;
-using DKCommunicationNET. ModulesAndFunctions;
+﻿using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex81. Decoders;
 
@@ -61,16 +55,48 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// 当前电压档位的索引值，0为最大档位
     /// </summary>
     public byte RangeIndex_Ua { get; private set; }
+    /// <summary>
+    /// 当前电压档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ub { get; private set; }
+    /// <summary>
+    /// 当前电压档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Uc { get; private set; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ux { get; private set; }
 
     /// <summary>
     /// 当前电流档位的索引值，0为最大档位
     /// </summary>
     public byte RangeIndex_Ia { get; private set; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ib { get; private set; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ic { get; private set; }
+    /// <summary>
+    /// 当前电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_Ix { get; private set; }
 
     /// <summary>
     /// 当前保护电流档位的索引值，0为最大档位
     /// </summary>
     public byte RangeIndex_IPa { get; private set; }
+    /// <summary>
+    /// 当前保护电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_IPb { get; private set; }
+    /// <summary>
+    /// 当前保护电流档位的索引值，0为最大档位
+    /// </summary>
+    public byte RangeIndex_IPc { get; private set; }
 
     #endregion 当前档位索引》
 
@@ -119,6 +145,11 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
     public float Freq_C { get; private set; }
+
+    /// <summary>
+    /// 频率标志:同频/异频
+    /// </summary>
+    public string? FrequencySync { get; private set; }
     #endregion 频率幅值》
 
     #region 《电压幅值
@@ -136,6 +167,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相电压数据
     /// </summary>
     public float UC { get; private set; }
+    /// <summary>
+    /// X相电压数据
+    /// </summary>
+    public float UX { get; private set; }
     #endregion 电压幅值》
 
     #region 《电流幅值
@@ -152,6 +187,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相电流数据
     /// </summary>
     public float IC { get; private set; }
+    /// <summary>
+    /// C相电流数据
+    /// </summary>
+    public float IX { get; private set; }
     #endregion 电流幅值》
 
     #region 《保护电流幅值
@@ -186,6 +225,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相电压相位数据
     /// </summary>
     public float FAI_UC { get; private set; }
+    /// <summary>
+    /// C相电压相位数据
+    /// </summary>
+    public float FAI_UX { get; private set; }
 
     /// <summary>
     /// A相电流相位数据
@@ -201,6 +244,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相电流相位数据
     /// </summary>
     public float FAI_IC { get; private set; }
+    /// <summary>
+    /// C相电流相位数据
+    /// </summary>
+    public float FAI_IX { get; private set; }
     #endregion 相位幅值》
 
     #region 《功率幅值
@@ -218,6 +265,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相有功功率数据
     /// </summary>
     public float PC { get; private set; }
+    /// <summary>
+    /// C相有功功率数据
+    /// </summary>
+    public float PX { get; private set; }
 
     /// <summary>
     /// 总有功功率数据
@@ -240,6 +291,11 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     public float QC { get; private set; }
 
     /// <summary>
+    /// C相无功功率数据
+    /// </summary>
+    public float QX { get; private set; }
+
+    /// <summary>
     /// 总无功功率数据
     /// </summary>    
     public float Q { get; private set; }
@@ -258,6 +314,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相视在功率，单位：VA
     /// </summary>
     public float SC { get; private set; }
+    /// <summary>
+    /// C相视在功率，单位：VA
+    /// </summary>
+    public float SX { get; private set; }
 
     /// <summary>
     /// 总实在功率
@@ -280,6 +340,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// C相功率因数
     /// </summary>
     public float PFC { get; private set; }
+    /// <summary>
+    /// C相功率因数
+    /// </summary>
+    public float PFX { get; private set; }
 
     /// <summary>
     /// 总功率因数
@@ -319,28 +383,59 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// 当前谐波模式
     /// </summary>
     public HarmonicMode HarmonicMode { get; set; }
+    /// <summary>
+    /// 无功计算方法
+    /// </summary>
+    public QP_Mode QP_Mode { get; set; }
     #endregion 枚举属性》
 
     #region 《输出状态
     /// <summary>
     /// A相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Status_Ua { get; private set; }
+    public string? Status_Ua { get; private set; }
 
     /// <summary>
     /// B相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Status_Ub { get; private set; }
+    public string? Status_Ub { get; private set; }
 
     /// <summary>
     /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
     /// </summary>
-    public byte Status_Uc { get; private set; }
+    public string? Status_Uc { get; private set; }
+    /// <summary>
+    /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ux { get; private set; }
+    /// <summary>
+    /// A相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ia { get; private set; }
+
+    /// <summary>
+    /// B相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ib { get; private set; }
+
+    /// <summary>
+    /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ic { get; private set; }
+    /// <summary>
+    /// C相输出状态标志：FLAG=1表示输出不稳定，FLAG=0表示输出已稳定
+    /// </summary>
+    public string? Status_Ix { get; private set; }
     #endregion 输出状态》
 
-    #region 《不具备的属性
-    byte IProperties_ACS.OutputtingChannelsNum { get; }
-    #endregion 不具备的属性》
+    /// <summary>
+    /// 当前输出的通道个数：1，3，4
+    /// </summary>
+    public byte OutputtingChannelsNum { get; private set; }
+    /// <summary>
+    /// 当前交流源工作模式：标准源/功耗测试
+    /// </summary>
+    public string? ACSMode { get; private set; }
 
     #endregion 属性》
 
@@ -373,11 +468,10 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
         //保护电流档位集合
         Ranges_IPr = _byteTransform. TransSingle ( responseBytes , 12 + 4 * RangesCount_ACU + 4 * RangesCount_ACI , RangesCount_IPr );
         return OperateResult. CreateSuccessResult ( );
-
     }
 
-    OperateResult IDecoder_ACS.DecodeReadData_ACS ( byte[ ] responseBytes )
-    {       
+    public OperateResult DecodeReadData_ACS ( byte[ ] responseBytes )
+    {
         Freq = _byteTransform. TransSingle ( responseBytes , Hex81Information. DataStartIndex );
         RangeIndex_Ua = responseBytes[Hex81Information. DataStartIndex + 4];  //取UA的档位索引
         RangeIndex_Ia = responseBytes[Hex81Information. DataStartIndex + 7];  //取IA的档位索引
@@ -415,11 +509,14 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
         return OperateResult. CreateSuccessResult ( );
     }
 
-    OperateResult IDecoder_ACS.DecodeReadData_Status_ACS ( byte[ ] response )
+    public OperateResult DecodeReadData_Status_ACS ( byte[ ]? response )
     {
-        Status_Ua = response[6];
-        Status_Ub = response[7];
-        Status_Uc = response[8];
+        Status_Ua = Enum. GetName ( ( ACSStatus ) response[6] );
+        Status_Ia = Enum. GetName ( ( ACSStatus ) response[6] );
+        Status_Ub = Enum. GetName ( ( ACSStatus ) response[7] );
+        Status_Ib = Enum. GetName ( ( ACSStatus ) response[7] );
+        Status_Uc = Enum. GetName ( ( ACSStatus ) response[8] );
+        Status_Ic = Enum. GetName ( ( ACSStatus ) response[8] );
         Freq = _byteTransform. TransSingle ( response , 9 );
         Freq_C = _byteTransform. TransSingle ( response , 17 );
         IPA = _byteTransform. TransSingle ( response , 21 );

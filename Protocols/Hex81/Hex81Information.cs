@@ -505,6 +505,21 @@ internal enum FuncS
 }
 
 /// <summary>
+/// 交流源输出状态
+/// </summary>
+internal enum ACSStatus : byte
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    未稳定 = 1,
+    /// <summary>
+    /// 
+    /// </summary>
+    已稳定 = 0,
+}
+
+/// <summary>
 /// 获取或设置输出通道
 /// </summary>
 [Flags]

@@ -141,7 +141,7 @@ public enum ACSMode : byte
 /// <summary>
 /// 交流源输出状态
 /// </summary>
-public enum ACSStatus:byte
+internal enum ACSStatus:byte
 {
     /// <summary>
     /// 
