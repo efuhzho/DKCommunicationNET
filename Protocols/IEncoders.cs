@@ -31,7 +31,6 @@ internal interface IEncodeHelper
     /// <param name="commandLength"></param>
     /// <returns></returns>
     public OperateResult<byte[ ]> EncodeShell ( byte commandCode , ushort commandLength );
-
 }
 
 /// <summary>

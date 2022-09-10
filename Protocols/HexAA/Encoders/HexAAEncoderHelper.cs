@@ -17,5 +17,31 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         {
             throw new NotImplementedException ( );
         }
+
+        public OperateResult<byte[ ]> EncodeShell ( byte commandCode , ushort commandLength )
+        {
+            try
+            {
+                byte[ ] buffer = new byte[commandLength * 2];
+                buffer[0] = BitConverter. GetBytes ( HexAA. FrameID )[1];
+                buffer[1] = BitConverter. GetBytes ( HexAA. FrameID )[0];
+                buffer[2] = BitConverter. GetBytes ( commandLength )[1];
+                buffer[3] = BitConverter. GetBytes ( commandLength )[0];
+                buffer[4] = BitConverter. GetBytes ( commandCode )[1];
+                buffer[5] = BitConverter. GetBytes ( commandCode )[0];
+                if ( commandLength == HexAA. MinLength )
+                {
+                    buffer[6] = BitConverter. GetBytes ( HexAA. CRCcalculator ( buffer ) )[1];
+                    buffer[7] = BitConverter. GetBytes ( HexAA. CRCcalculator ( buffer ) )[0];
+                }
+                return OperateResult. CreateSuccessResult ( buffer );
+            }
+            catch ( Exception ex)
+            {
+
+                return new OperateResult<byte[ ]> ("HexAA EncodeShell Failed"+ ex. Message );
+            }
+           
+        }
     }
 }

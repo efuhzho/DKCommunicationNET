@@ -26,7 +26,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
     /// <returns>带指令信息的结果：完整指令长度</returns>
     public OperateResult<byte[ ]> EncodeHelper ( byte commandCode )
     {
-        return PacketShellBuilderHelper ( commandCode , 11 );
+        return EncodeShell ( commandCode , 11 );
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
     /// <returns></returns>
     public OperateResult<byte[ ]> EncodeHelper ( byte commandCode , ushort commandLength , byte[ ] data )
     {
-        OperateResult<byte[ ]> dataBytesWithoutData = PacketShellBuilderHelper ( commandCode , commandLength );
+        OperateResult<byte[ ]> dataBytesWithoutData = EncodeShell ( commandCode , commandLength );
         try
         {
 
@@ -61,15 +61,14 @@ internal class Hex5AEncodeHelper : IEncodeHelper
             return new OperateResult<byte[ ]> ( ex. Message );
         }
     }
-
-    #region  私有方法>>>PacketShellBuilderHelper
+  
     /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
     /// <param name="commandCode">命令码</param>
     /// <param name="commandLength">指令长度</param>
     /// <returns>带指令信息的结果：完整指令长度</returns>
-    private OperateResult<byte[ ]> PacketShellBuilderHelper ( byte commandCode , ushort commandLength )
+    public OperateResult<byte[ ]> EncodeShell ( byte commandCode , ushort commandLength )
     {
         //尝试预创建报文
         try
@@ -99,8 +98,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         {
             return new OperateResult<byte[ ]> ( ex. Message );
         }
-    }
-    #endregion
+    }   
 
     #region Private Methods ==> [解析ID]
     /// <summary>

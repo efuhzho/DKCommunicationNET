@@ -23,13 +23,13 @@ namespace DKCommunicationNET. Protocols. HexAA;
 /// </summary>
 internal class HexAA
 {
-    public static readonly HexAA Instance = new( );
+    public static readonly HexAA Instance = new ( );
 
     #region 《命令码定义
     /// <summary>
     /// 本协议的公共类型定义
     /// </summary>
-    public const Models Model = Models.HexAA;
+    public const Models Model = Models. HexAA;
     /// <summary>
     /// 协议帧起始标志
     /// </summary>
@@ -78,7 +78,17 @@ internal class HexAA
     /// </summary>
     public const ushort ReadDataOfEPQ = 0x0094;
     #endregion 命令码定义》
-    
+
+    public static ushort CRCcalculator ( byte[ ] shell )
+    {
+        ushort crc = 0;
+        //从第三个字节开始计算和校验，忽略报文头
+        for ( int i = 2 ; i < shell. Length * 2 - 2 ; i++ )
+        {
+            crc += shell[i];
+        }
+        return crc;
+    }
     /// <summary>
     /// 重写的ToString方法，返回协议文件版本
     /// </summary>
