@@ -13,7 +13,7 @@ namespace DKCommunicationNET. Protocols. Hex5A;
 /// <summary>
 /// Hex5A协议的固态信息
 /// </summary>
-internal class Hex5AInformation
+internal class Hex5A
 {
     #region 《系统设置
     /// <summary>

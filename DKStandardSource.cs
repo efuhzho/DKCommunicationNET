@@ -165,7 +165,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
             decoder_Settings = protocolFactory. GetDecoder_Settings ( ByteTransform ). Content;
             decoder_DCM = protocolFactory. GetDecoder_DCM ( ByteTransform ). Content;
             decoder_EPQ = protocolFactory. GetDecoder_EPQ ( ByteTransform ). Content;
-            decoder_PPS = protocolFactory. GetDecoder_PPS ( ByteTransform ). Content;
+            decoder_PPS = protocolFactory. GetDecoder_PPS (  ). Content;
             decoder_IO = protocolFactory. GetDecoder_IO ( ByteTransform ). Content;
         }
 

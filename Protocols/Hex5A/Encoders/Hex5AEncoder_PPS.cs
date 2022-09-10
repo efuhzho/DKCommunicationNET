@@ -27,7 +27,7 @@ internal class Hex5AEncoder_PPS : IEncoder_PPS
 
     public OperateResult<byte[ ]> ReadData_PPS()
     {
-        return _encodeHelper.EncodeHelper(Hex5AInformation.ReadData_PPS);
+        return _encodeHelper.EncodeHelper(Hex5A.ReadData_PPS);
     }
 
     #region 私有方法
@@ -38,7 +38,7 @@ internal class Hex5AEncoder_PPS : IEncoder_PPS
         data[0] = (byte)type;
         BitConverter.GetBytes(dateTime.Ticks).CopyTo(data, 1);
         data[5] = (byte)timeZones;
-        return _encodeHelper.EncodeHelper(Hex5AInformation.CompareTime, Hex5AInformation.CompareTime_L, data);
+        return _encodeHelper.EncodeHelper(Hex5A.CompareTime, Hex5A.CompareTime_L, data);
     }
     #endregion
 

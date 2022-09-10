@@ -24,7 +24,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
 
     public OperateResult<byte[ ]> Packet_GetRanges()
     {
-        return _PBHelper.EncodeHelper(Hex81Information.GetRanges_ACS);
+        return _PBHelper.EncodeHelper(Hex81.GetRanges_ACS);
     }
 
     public OperateResult<byte[ ]> Packet_SetAmplitude(float UA, float UB, float UC, float IA, float IB, float IC, float IPA, float IPB, float IPC)
@@ -40,7 +40,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         data[7] = IPB;
         data[8] = IPC;
         byte[ ] buffer = _byteTransform.TransByte(data);
-        return _PBHelper.EncodeHelper(Hex81Information.SetAmplitude_ACS, Hex81Information.SetAmplitude_ACS_Length, buffer);
+        return _PBHelper.EncodeHelper(Hex81.SetAmplitude_ACS, Hex81.SetAmplitude_ACS_Length, buffer);
     }
 
     public OperateResult<byte[ ]> Packet_SetFrequency(float FreqOfAll, float FreqOfC = 0)
@@ -49,7 +49,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         data[0] = FreqOfAll;
         data[1] = FreqOfC;
         byte[ ] buffer = _byteTransform.TransByte(data);
-        return _PBHelper.EncodeHelper(Hex81Information.SetFrequency, Hex81Information.SetFrequencyLength, buffer);
+        return _PBHelper.EncodeHelper(Hex81.SetFrequency, Hex81.SetFrequencyLength, buffer);
     }
 
     public OperateResult<byte[ ]> Packet_SetPhase(float PhaseUa, float PhaseUb, float PhaseUc, float PhaseIa, float PhaseIb, float PhaseIc,float PhaseIx=0)
@@ -62,13 +62,13 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         data[4] = PhaseIb;
         data[5] = PhaseIc;
         byte[ ] buffer = _byteTransform.TransByte(data);
-        return _PBHelper.EncodeHelper(Hex81Information.SetPhase, Hex81Information.SetPhaseLength, buffer);
+        return _PBHelper.EncodeHelper(Hex81.SetPhase, Hex81.SetPhaseLength, buffer);
     }
 
     public OperateResult<byte[ ]> Packet_SetWireMode(WireMode wireMode)
     {
         byte[ ] data = new byte[1] { (byte)wireMode };
-        return _PBHelper.EncodeHelper(Hex81Information.SetWireMode, Hex81Information.SetWireModeLength, data);
+        return _PBHelper.EncodeHelper(Hex81.SetWireMode, Hex81.SetWireModeLength, data);
     }
 
     public OperateResult<byte[ ]> Packet_SetClosedLoop(CloseLoopMode closeLoopMode)
@@ -110,7 +110,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
             HarmonicArgs.HarmonicToBytes(harmonics[i], _byteTransform).CopyTo(data, i * 9 + 2);
         }
 
-        return _PBHelper.EncodeHelper(Hex81Information.SetHarmonics, (ushort)(data.Length + 7), data);
+        return _PBHelper.EncodeHelper(Hex81.SetHarmonics, (ushort)(data.Length + 7), data);
     }
 
     public OperateResult<byte[ ]> Packet_SetWattPower(Enum channel, float p)
@@ -119,7 +119,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         data[0] = Convert.ToByte(channel);
         _byteTransform.TransByte(p).CopyTo(data, 1);
 
-        return _PBHelper.EncodeHelper(Hex81Information.SetWattPower, Hex81Information.SetWattPowerLength, data);
+        return _PBHelper.EncodeHelper(Hex81.SetWattPower, Hex81.SetWattPowerLength, data);
     }
 
     public OperateResult<byte[ ]> Packet_SetWattLessPower(Enum channel, float q)
@@ -128,27 +128,27 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         data[0] = Convert.ToByte(channel);
         _byteTransform.TransByte(q).CopyTo(data, 1);
 
-        return _PBHelper.EncodeHelper(Hex81Information.SetWattlessPower, Hex81Information.SetWattlessPowerLength, data);
+        return _PBHelper.EncodeHelper(Hex81.SetWattlessPower, Hex81.SetWattlessPowerLength, data);
     }
 
     public OperateResult<byte[ ]> Packet_ReadData()
     {
-        return _PBHelper.EncodeHelper(Hex81Information.ReadData_ACS);
+        return _PBHelper.EncodeHelper(Hex81.ReadData_ACS);
     }
 
     public OperateResult<byte[ ]> Packet_ReadData_Status()
     {
-        return _PBHelper.EncodeHelper(Hex81Information.GetStatus_ACS);
+        return _PBHelper.EncodeHelper(Hex81.GetStatus_ACS);
     }
 
     public OperateResult<byte[ ]> Packet_Stop()
     {
-        return _PBHelper.EncodeHelper(Hex81Information.CloseACS);
+        return _PBHelper.EncodeHelper(Hex81.CloseACS);
     }
 
     public OperateResult<byte[ ]> Packet_Open()
     {
-        return _PBHelper.EncodeHelper(Hex81Information.OpenACS);
+        return _PBHelper.EncodeHelper(Hex81.OpenACS);
     }
 
     public OperateResult<byte[ ]> Packet_SetRanges(byte rangeIndexOfACU, byte rangeIndexOfACI)
@@ -173,7 +173,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_ClearHarmonics(Enum Channels)
     {
         byte[ ] dataClear = new byte[2] { Convert.ToByte(Channels), 0 };
-        return _PBHelper.EncodeHelper(Hex81Information.SetHarmonics, (ushort)(dataClear.Length + 7), dataClear);
+        return _PBHelper.EncodeHelper(Hex81.SetHarmonics, (ushort)(dataClear.Length + 7), dataClear);
     }
 
     #region 私有方法和字段
@@ -189,7 +189,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     private OperateResult<byte[ ]> Packet_SetClosedLoopAndHarmonicMode(CloseLoopMode closeLoopMode, HarmonicMode harmonicMode)
     {
         byte[ ] data = new byte[2] { (byte)closeLoopMode, (byte)harmonicMode };
-        return _PBHelper.EncodeHelper(Hex81Information.SetClosedLoop, Hex81Information.SetClosedLoopLength, data);
+        return _PBHelper.EncodeHelper(Hex81.SetClosedLoop, Hex81.SetClosedLoopLength, data);
     }
 
     private byte _rangeIndex_IP;
@@ -213,7 +213,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
                 data[i + 3] = rangeIndexOfACI;
                 data[i + 6] = rangeIndexOfIP;
             }
-            return _PBHelper.EncodeHelper(Hex81Information.SetRanges_ACS, Hex81Information.SetRanges_ACS_Length, data);
+            return _PBHelper.EncodeHelper(Hex81.SetRanges_ACS, Hex81.SetRanges_ACS_Length, data);
         }
         catch (Exception ex)
         {

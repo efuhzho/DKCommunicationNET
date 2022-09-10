@@ -35,7 +35,7 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
         else return new OperateResult<byte[ ]>("设备编号长度超限");
 
         //返回结果
-        return _encodeHelper.EncodeHelper(Hex5AInformation.SetDeviceInfo, Hex5AInformation.SetDeviceInfo_L, data);
+        return _encodeHelper.EncodeHelper(Hex5A.SetDeviceInfo, Hex5A.SetDeviceInfo_L, data);
     }
 
 
@@ -43,7 +43,7 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
     {
         byte[ ] data = new byte[2];
         BitConverter.GetBytes(baudRate).CopyTo(data, 0);
-        return _encodeHelper.EncodeHelper(Hex5AInformation.SetBaudRate, Hex5AInformation.SetBaudRate_L, data);
+        return _encodeHelper.EncodeHelper(Hex5A.SetBaudRate, Hex5A.SetBaudRate_L, data);
     }
 
     public OperateResult<byte[ ]> Packet_SetSystemMode(Enum systemMode)
@@ -60,6 +60,6 @@ internal class Hex5AEncoder_Settings : IEncoder_Settings
 
     public OperateResult<byte[ ]> Packet_HandShake ( )
     {
-        return _encodeHelper. EncodeHelper ( Hex5AInformation. HandShake );
+        return _encodeHelper. EncodeHelper ( Hex5A. HandShake );
     }
 }

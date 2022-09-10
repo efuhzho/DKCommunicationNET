@@ -442,7 +442,7 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
         try
         {
             //电压档位数量
-            RangesCount_ACU = responseBytes[Hex81Information. DataStartIndex];
+            RangesCount_ACU = responseBytes[Hex81. DataStartIndex];
 
             //单相电压档位起始档位索引值
             OnlyAStartIndex_ACU = responseBytes[7];
@@ -480,9 +480,9 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     {
         try
         {
-            Freq = _byteTransform. TransSingle ( responseBytes , Hex81Information. DataStartIndex );
-            RangeIndex_Ua = responseBytes[Hex81Information. DataStartIndex + 4];  //取UA的档位索引
-            RangeIndex_Ia = responseBytes[Hex81Information. DataStartIndex + 7];  //取IA的档位索引
+            Freq = _byteTransform. TransSingle ( responseBytes , Hex81. DataStartIndex );
+            RangeIndex_Ua = responseBytes[Hex81. DataStartIndex + 4];  //取UA的档位索引
+            RangeIndex_Ia = responseBytes[Hex81. DataStartIndex + 7];  //取IA的档位索引
             UA = _byteTransform. TransSingle ( responseBytes , 16 );
             UB = _byteTransform. TransSingle ( responseBytes , 20 );
             UC = _byteTransform. TransSingle ( responseBytes , 24 );

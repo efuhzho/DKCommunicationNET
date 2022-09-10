@@ -29,12 +29,12 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
         {
             if (Resistor == null)
             {
-                return _encoderHelper.EncodeHelper(Hex81Information.ReadData_DCS);
+                return _encoderHelper.EncodeHelper(Hex81.ReadData_DCS);
             }
 
             //如果Type不为空，则创建兼容报文
             byte[ ] data = new byte[1] { (byte)Resistor };
-            return _encoderHelper.EncodeHelper(Hex81Information.ReadData_DCS, Hex81Information.ReadData_DCS_Length, data);
+            return _encoderHelper.EncodeHelper(Hex81.ReadData_DCS, Hex81.ReadData_DCS_Length, data);
         }
 
         public OperateResult<byte[ ]> Packet_Stop_DCU()
@@ -69,7 +69,7 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
 
         public OperateResult<byte[ ]> Packet_GetRanges()
         {
-            return _encoderHelper.EncodeHelper(Hex81Information.GetRanges_DCS);
+            return _encoderHelper.EncodeHelper(Hex81.GetRanges_DCS);
         }
 
         public OperateResult<byte[ ]> Packet_SetAmplitude_DCI(float amplitude, byte indexOfRange)
@@ -131,7 +131,7 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
             data[0] = indexOfRange;
             _transform.TransByte(amplitude).CopyTo(data, 1);
             data[5] = (byte)type;
-            return _encoderHelper.EncodeHelper(Hex81Information.SetAmplitude_DCS, Hex81Information.SetAmplitude_DCS_Length, data);
+            return _encoderHelper.EncodeHelper(Hex81.SetAmplitude_DCS, Hex81.SetAmplitude_DCS_Length, data);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
         private OperateResult<byte[ ]> Packet_Stop(OutputType_DCS type)
         {
             byte[ ] data = new byte[1] { (byte)type };
-            return _encoderHelper.EncodeHelper(Hex81Information.Stop_DCS, Hex81Information.Stop_DCS_Length, data);
+            return _encoderHelper.EncodeHelper(Hex81.Stop_DCS, Hex81.Stop_DCS_Length, data);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
         {
 
             byte[ ] data = new byte[1] { (byte)type };
-            return _encoderHelper.EncodeHelper(Hex81Information.Open_DCS, Hex81Information.Open_DCS_Length, data);
+            return _encoderHelper.EncodeHelper(Hex81.Open_DCS, Hex81.Open_DCS_Length, data);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace DKCommunicationNET.Protocols.Hex81.Encoders
         private OperateResult<byte[ ]> Packet_SetRange(byte indexOfRange, OutputType_DCS type)
         {
             byte[ ] data = new byte[2] { indexOfRange, (byte)type };
-            return _encoderHelper.EncodeHelper(Hex81Information.SetRange_DCS, Hex81Information.SetRange_DCS_Length, data);
+            return _encoderHelper.EncodeHelper(Hex81.SetRange_DCS, Hex81.SetRange_DCS_Length, data);
         }
 
         #endregion

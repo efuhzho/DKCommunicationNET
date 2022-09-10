@@ -18,7 +18,7 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
 
     public OperateResult<byte[ ]> Packet_HandShake ( )
     {
-        return _encodeHelper. EncodeHelper ( Hex81Information. HandShake );
+        return _encodeHelper. EncodeHelper ( Hex81. HandShake );
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
     public OperateResult<byte[ ]> Packet_SetDisplayPage ( Enum displayPage )
     {
         byte[ ] data = new byte[( byte ) ( DisplayPage ) displayPage];
-        return _encodeHelper. EncodeHelper ( Hex81Information. SetDisplayPage , Hex81Information. SetDisplayPage_Length , data );
+        return _encodeHelper. EncodeHelper ( Hex81. SetDisplayPage , Hex81. SetDisplayPage_Length , data );
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ internal class Hex81Encoder_Settings : IEncoder_Settings
     public OperateResult<byte[ ]> Packet_SetSystemMode ( Enum systemMdoe )
     {
         byte[ ] data = new byte[( byte ) ( SystemModes ) systemMdoe];
-        return _encodeHelper. EncodeHelper ( Hex81Information. SetSystemMode , Hex81Information. SetSystemMode_Length , data );
+        return _encodeHelper. EncodeHelper ( Hex81. SetSystemMode , Hex81. SetSystemMode_Length , data );
     }
 
     /****************************************************************************************************************************************

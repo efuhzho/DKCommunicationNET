@@ -18,7 +18,7 @@ internal class Hex81Encoder_DCM : IEncoder_DCM
 
     public OperateResult<byte[ ]> Packet_GetRanges()
     {
-        return _encoderHelper.EncodeHelper(Hex81Information.GetRanges_DCS);
+        return _encoderHelper.EncodeHelper(Hex81.GetRanges_DCS);
     }
 
     #endregion 读档位列表》
@@ -27,7 +27,7 @@ internal class Hex81Encoder_DCM : IEncoder_DCM
 
     public OperateResult<byte[ ]> Packet_ReadData()
     {
-        return _encoderHelper.EncodeHelper(Hex81Information.ReadData_DCM);
+        return _encoderHelper.EncodeHelper(Hex81.ReadData_DCM);
     }
 
     #endregion 读数据》
@@ -67,7 +67,7 @@ internal class Hex81Encoder_DCM : IEncoder_DCM
     private OperateResult<byte[ ]> Packet_SetRange(byte rangeIndex, MeasureType_DCM type)
     {
         byte[ ] data = new byte[ ] { rangeIndex, (byte)type };
-        return _encoderHelper.EncodeHelper(Hex81Information.SetRange_DCM, Hex81Information.SetRange_DCM_Length, data);
+        return _encoderHelper.EncodeHelper(Hex81.SetRange_DCM, Hex81.SetRange_DCM_Length, data);
     }
 
     #endregion 私有原始方法》

@@ -8,45 +8,45 @@ namespace DKCommunicationNET;
 public enum Models
 {
     /// <summary>
+    /// 【DK-45B2】<inheritdoc cref="Hex81"
+    /// </summary>
+    DK_45B2 = HexAA,
+    /// <summary>
+    /// 【DK-34B1】<inheritdoc cref="Hex81" />
+    /// </summary>
+    DK_34B1 = Hex81,
+    /// <summary>
+    /// 【DK-34B2】<inheritdoc cref="Hex81" />
+    /// </summary>
+    DK_34B2 = Hex81,
+    /// <summary>
+    /// 【DK-34F1】<inheritdoc cref = "Hex81" />
+    /// </summary>
+    DK_34F1 = Hex81,
+    /// <summary>
+    /// 【DK-34B3】<inheritdoc cref = "Hex5A" />
+    /// </summary>
+    DK_34B3 = Hex5A,
+    /// <summary>
+    /// 【DK-PTS1】<inheritdoc cref = "Hex5A" />
+    /// </summary>
+    DK_PTS1 = Hex5A,
+    /// <summary>
+    /// 【DK-PTS】<inheritdoc cref = "Hex5A" />
+    /// </summary>
+    DK_PTS = Hex5A,
+    /// <summary>
     /// 协议类型为<see cref="Hex81"/>,需引用命名空间：DKCommunicationNET. Protocols. Hex81;
     /// </summary>
     Hex81 = 0x81,
-
     /// <summary>
     /// 协议类型为<see cref="Hex5A"/>,需引用命名空间：DKCommunicationNET. Protocols. Hex5A;
     /// </summary>
     Hex5A = 0x5A,
-
     /// <summary>
-    /// 【设备型号】<inheritdoc cref="Hex81" />
+    /// 协议类型为<see cref="HexAA"/>,需引用命名空间：DKCommunicationNET. Protocols. HexAA;
     /// </summary>
-    DK_34B1 = Hex81,
-
-    /// <summary>
-    /// 【设备型号】<inheritdoc cref="Hex81" />
-    /// </summary>
-    DK_34B2 = Hex81,
-
-    /// <summary>
-    /// 【设备型号】<inheritdoc cref = "Hex81" />
-    /// </summary>
-    DK_34F1 = Hex81,
-
-    /// <summary>
-    /// 【设备型号】<inheritdoc cref = "Hex5A" />
-    /// </summary>
-    DK_34B3 = Hex5A,
-
-    /// <summary>
-    /// 【设备型号】<inheritdoc cref = "Hex5A" />
-    /// </summary>
-    DK_PTS1 = Hex5A,
-
-    /// <summary>
-    /// 【设备型号】<inheritdoc cref = "Hex5A" />
-    /// </summary>
-    DK_PTS = Hex5A,
-
+    HexAA = 0xAA,
     //TODO 完善设备型号
 }
 

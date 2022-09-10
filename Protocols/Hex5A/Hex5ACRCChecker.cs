@@ -25,7 +25,7 @@ namespace DKCommunicationNET. Protocols. Hex5A
             Array. Copy ( responseBytes , 2, buf , 0 , buf. Length );
 
             //断言
-            byte[] CRC_Code = Hex5AInformation.CRCcalculator ( buf );
+            byte[] CRC_Code = Hex5A.CRCcalculator ( buf );
             if ( CRC_Code[0] == responseBytes[length - 3] && CRC_Code[1] == responseBytes[length - 2] )
             {
                 return true;

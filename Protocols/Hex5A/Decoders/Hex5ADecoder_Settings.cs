@@ -26,25 +26,25 @@ internal class Hex5ADecoder_Settings : IDecoder_Settings
             List<byte> bufferList = buffer. ToList ( );    //可忽略null异常
 
             //获取设备型号结束符的索引值
-            int endIndex = bufferList. IndexOf ( 0x00 , Hex5AInformation. DataStartIndex );
+            int endIndex = bufferList. IndexOf ( 0x00 , Hex5A. DataStartIndex );
 
             //计算model字节长度，包含0x00结束符,7=报文头的字节数8再减去1
-            int modelLength = endIndex - Hex5AInformation. DataStartIndex + 1;
+            int modelLength = endIndex - Hex5A. DataStartIndex + 1;
             //解析的设备型号
-            Model = _byteTransform. TransString ( buffer , Hex5AInformation. DataStartIndex , modelLength , Encoding. ASCII );
+            Model = _byteTransform. TransString ( buffer , Hex5A. DataStartIndex , modelLength , Encoding. ASCII );
 
             //解析下位机版本号
-            byte verA = buffer[modelLength + Hex5AInformation. DataStartIndex];
-            byte verB = buffer[modelLength + Hex5AInformation. DataStartIndex + 1];
-            byte verC = buffer[modelLength + Hex5AInformation. DataStartIndex + 2];
+            byte verA = buffer[modelLength + Hex5A. DataStartIndex];
+            byte verB = buffer[modelLength + Hex5A. DataStartIndex + 1];
+            byte verC = buffer[modelLength + Hex5A. DataStartIndex + 2];
             //下位机版本号
             Firmware = $"V{verA}.{verB}.{verC}";
 
             //解析设备编号
-            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex5AInformation. DataStartIndex + modelLength + 3 );
+            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex5A. DataStartIndex + modelLength + 3 );
             int serialLength = serialEndIndex - 7 - modelLength;
             //设备编号字节长度，包含0x00结束符            
-            SN = _byteTransform. TransString ( buffer , Hex5AInformation. DataStartIndex + modelLength + 3 , serialLength , Encoding. ASCII );
+            SN = _byteTransform. TransString ( buffer , Hex5A. DataStartIndex + modelLength + 3 , serialLength , Encoding. ASCII );
 
             //交流功能激活状态
             byte FuncB = buffer[^8];

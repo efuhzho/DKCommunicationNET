@@ -47,8 +47,8 @@ internal class Hex5AEncodeHelper : IEncodeHelper
                 Array. Copy ( data , 0 , dataBytesWithoutData. Content , 8 , data. Length );
 
 
-                dataBytesWithoutData. Content[commandLength - 3] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[0];
-                dataBytesWithoutData. Content[commandLength - 2] = Hex5AInformation. CRCcalculator ( dataBytesWithoutData. Content )[1];
+                dataBytesWithoutData. Content[commandLength - 3] = Hex5A. CRCcalculator ( dataBytesWithoutData. Content )[0];
+                dataBytesWithoutData. Content[commandLength - 2] = Hex5A. CRCcalculator ( dataBytesWithoutData. Content )[1];
                 return dataBytesWithoutData;
             }
             else
@@ -76,20 +76,20 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         {
             byte ID = AnalysisID ( _id );
             byte[ ] buffer = new byte[commandLength];
-            buffer[0] = Hex5AInformation. Sync0;
-            buffer[1] = Hex5AInformation. Sync1;
+            buffer[0] = Hex5A. Sync0;
+            buffer[1] = Hex5A. Sync1;
             buffer[2] = BitConverter. GetBytes ( commandLength )[0];
             buffer[3] = BitConverter. GetBytes ( commandLength )[1];
             buffer[4] = ID;
             buffer[5] = 0x00;
             buffer[6] = DicFrameType[commandCode];
             buffer[7] = commandCode;
-            buffer[commandLength - 1] = Hex5AInformation. End;
+            buffer[commandLength - 1] = Hex5A. End;
 
             if ( commandLength == 11 )
             {
-                buffer[8] = Hex5AInformation. CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
-                buffer[9] = Hex5AInformation. CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
+                buffer[8] = Hex5A. CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
+                buffer[9] = Hex5A. CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
             }
             return OperateResult. CreateSuccessResult ( buffer );
         }

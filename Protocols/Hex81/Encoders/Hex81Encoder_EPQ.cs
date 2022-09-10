@@ -68,7 +68,7 @@ internal class Hex81Encoder_EPQ : IEncoder_EPQ
 
     public OperateResult<byte[ ]> Packet_ReadData(Channels_ReadEPQ Channels = Channels_ReadEPQ.Channel1)
     {
-        return _PBHelper.EncodeHelper(Hex81Information.ReadData_EPQ);
+        return _PBHelper.EncodeHelper(Hex81.ReadData_EPQ);
     }
 
     public OperateResult<byte[ ]> Packet_SetConst_PS(float Const_PS)
@@ -102,6 +102,6 @@ internal class Hex81Encoder_EPQ : IEncoder_EPQ
         BitConverter.GetBytes(DIV).CopyTo(data, 17);
         BitConverter.GetBytes(Rounds).CopyTo(data, 21);
 
-        return _PBHelper.EncodeHelper(Hex81Information.SetElectricity, Hex81Information.SetElectricity_Length, data);
+        return _PBHelper.EncodeHelper(Hex81.SetElectricity, Hex81.SetElectricity_Length, data);
     }
 }

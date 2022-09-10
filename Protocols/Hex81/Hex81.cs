@@ -12,7 +12,7 @@ namespace DKCommunicationNET. Protocols. Hex81;
 /// <summary>
 /// Hex81协议信息类
 /// </summary>
-internal class Hex81Information
+internal class Hex81
 {
     /// <summary>
     /// 报文头

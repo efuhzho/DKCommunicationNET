@@ -23,6 +23,15 @@ internal interface IEncodeHelper
     /// <param name="commandCode"><inheritdoc cref="EncodeHelper(byte, ushort, byte[])"/></param>
     /// <returns></returns>
     OperateResult<byte[ ]> EncodeHelper ( byte commandCode );
+
+    /// <summary>
+    /// 协议帧格式创建
+    /// </summary>
+    /// <param name="commandCode"></param>
+    /// <param name="commandLength"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> EncodeShell ( byte commandCode , ushort commandLength );
+
 }
 
 /// <summary>
@@ -137,7 +146,7 @@ internal interface IEncoder_ACS
     /// <param name="PhaseIc"></param>
     /// <param name="PhaseIx"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc, float PhaseIx = 0 );
+    public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 );
 
     /// <summary>
     /// 创建报文：设置频率

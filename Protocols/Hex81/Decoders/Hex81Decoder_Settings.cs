@@ -23,24 +23,24 @@ internal class Hex81Decoder_Settings : IDecoder_Settings
             List<byte> bufferList = buffer. ToList ( );
 
             //获取设备型号结束符的索引值
-            int endIndex = bufferList. IndexOf ( 0x00 , Hex81Information. DataStartIndex );
+            int endIndex = bufferList. IndexOf ( 0x00 , Hex81. DataStartIndex );
 
             //计算model字节长度，包含0x00结束符，5=报文头的字节数6再减去1
-            int modelLength = endIndex - Hex81Information. DataStartIndex + 1;
+            int modelLength = endIndex - Hex81. DataStartIndex + 1;
             //解析的设备型号
-            Model = _byteTransform. TransString ( buffer , Hex81Information. DataStartIndex , modelLength , Encoding. ASCII );
+            Model = _byteTransform. TransString ( buffer , Hex81. DataStartIndex , modelLength , Encoding. ASCII );
 
             //解析下位机版本号
-            byte verA = buffer[modelLength + Hex81Information. DataStartIndex];
-            byte verB = buffer[modelLength + Hex81Information. DataStartIndex + 1];
+            byte verA = buffer[modelLength + Hex81. DataStartIndex];
+            byte verB = buffer[modelLength + Hex81. DataStartIndex + 1];
             //下位机版本号
             Firmware = $"V{verA}.{verB}";
 
             //解析设备编号
-            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex81Information. DataStartIndex + modelLength + 2 );
+            int serialEndIndex = bufferList. IndexOf ( 0x00 , Hex81. DataStartIndex + modelLength + 2 );
             int serialLength = serialEndIndex - 7 - modelLength;
             //设备编号字节长度，包含0x00结束符            
-            SN = _byteTransform. TransString ( buffer , Hex81Information. DataStartIndex + modelLength + 2 , serialLength , Encoding. ASCII );
+            SN = _byteTransform. TransString ( buffer , Hex81. DataStartIndex + modelLength + 2 , serialLength , Encoding. ASCII );
 
             //基本功能激活状态
             byte FuncB = buffer[^3];

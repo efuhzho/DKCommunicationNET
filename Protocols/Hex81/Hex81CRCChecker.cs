@@ -24,7 +24,7 @@ namespace DKCommunicationNET. Protocols. Hex81
             Array. Copy ( responseBytes , 0 , buf , 0 , buf. Length );
 
             //断言
-            byte CRC_Code = Hex81Information. CRCcalculator ( buf );
+            byte CRC_Code = Hex81. CRCcalculator ( buf );
             if ( CRC_Code == responseBytes[length - 1] )
             {
                 return true;
