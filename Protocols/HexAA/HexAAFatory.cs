@@ -1,12 +1,11 @@
-﻿using System;
-using System. Collections. Generic;
-using System. Linq;
-using System. Text;
-using System. Threading. Tasks;
-using DKCommunicationNET. Core;
+﻿using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. HexAA;
 
+/// <summary>
+/// HexAA协议工厂类
+/// </summary>
+[Model(Models.HexAA)]
 internal class HexAAFatory : IProtocolFactory
 {
     #region 《编码器

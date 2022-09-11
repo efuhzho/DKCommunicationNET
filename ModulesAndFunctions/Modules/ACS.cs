@@ -43,7 +43,6 @@ public class ACS : IModuleACS
         commandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
     }
     #region 《属性
-
     #region 《档位数量
     /// <inheritdoc/>
     public byte RangesCount_ACU => ( byte ) ( _decoder == null ? 0 : _decoder. RangesCount_ACU );
