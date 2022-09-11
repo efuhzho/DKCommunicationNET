@@ -33,7 +33,7 @@ internal class CommandAction
                 return new OperateResult<byte[ ]>(StringResources.Language.NotEnabledModule);
             }
             //如果报文获取失败，则直接上抛失败的结果
-            if (methodOfGetPacket. IsSuccess || methodOfGetPacket. Content == null )
+            if (!methodOfGetPacket. IsSuccess || methodOfGetPacket. Content == null )
             {
                 return methodOfGetPacket;
             }

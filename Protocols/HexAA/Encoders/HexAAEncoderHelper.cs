@@ -1,5 +1,6 @@
 ﻿using System;
 using System. Collections. Generic;
+using System. Dynamic;
 using System. Linq;
 using System. Text;
 using System. Threading. Tasks;
@@ -38,23 +39,25 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         {
             try
             {
+                byte[ ] length = BitConverter. GetBytes ( commandLength );
+                byte[ ] codes = BitConverter. GetBytes ( commandCode );
                 byte[ ] buffer = new byte[commandLength * 2];
-                buffer[0] = BitConverter. GetBytes ( HexAA. FrameID )[1];
-                buffer[1] = BitConverter. GetBytes ( HexAA. FrameID )[0];
-                buffer[2] = BitConverter. GetBytes ( commandLength )[1];
-                buffer[3] = BitConverter. GetBytes ( commandLength )[0];
-                buffer[4] = BitConverter. GetBytes ( commandCode )[1];
-                buffer[5] = BitConverter. GetBytes ( commandCode )[0];
+                buffer[0] = 0xAA;
+                buffer[1] = 0x55;
+                buffer[2] = length[1];
+                buffer[3] = length[0];
+                buffer[4] = codes[1];
+                buffer[5] = codes[0];
                 if ( commandLength == HexAA. MinLength )
                 {
-                    buffer[6] = BitConverter. GetBytes ( HexAA. CRCcalculator ( buffer ) )[1];
-                    buffer[7] = BitConverter. GetBytes ( HexAA. CRCcalculator ( buffer ) )[0];
+                    byte[ ] crc = BitConverter. GetBytes ( HexAA. CRCcalculator ( buffer ) );
+                    buffer[6] = crc[1];
+                    buffer[7] = crc[0];
                 }
                 return OperateResult. CreateSuccessResult ( buffer );
             }
             catch ( Exception ex)
             {
-
                 return new OperateResult<byte[ ]> ("HexAA EncodeShell Failed"+ ex. Message );
             }
            

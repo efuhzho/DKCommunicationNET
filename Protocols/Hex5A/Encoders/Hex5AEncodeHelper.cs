@@ -61,7 +61,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
             return new OperateResult<byte[ ]> ( ex. Message );
         }
     }
-  
+
     /// <summary>
     /// 创建完整指令长度的【指令头】，长度大于7的报文不带CRC校验码，不可直接发送给串口，长度为7的无参命令则带校验码可直接发送给串口
     /// </summary>
@@ -72,14 +72,15 @@ internal class Hex5AEncodeHelper : IEncodeHelper
     {
         //尝试预创建报文
         try
-        {
-            byte ID = AnalysisID ( _id );
+        {            
+            byte[ ] length = BitConverter. GetBytes ( commandLength );
+
             byte[ ] buffer = new byte[commandLength];
             buffer[0] = Hex5A. Sync0;
             buffer[1] = Hex5A. Sync1;
-            buffer[2] = BitConverter. GetBytes ( commandLength )[0];
-            buffer[3] = BitConverter. GetBytes ( commandLength )[1];
-            buffer[4] = ID;
+            buffer[2] = length[0];
+            buffer[3] = length[1];
+            buffer[4] = AnalysisID ( _id );
             buffer[5] = 0x00;
             buffer[6] = DicFrameType[commandCode];
             buffer[7] = commandCode;
@@ -87,8 +88,9 @@ internal class Hex5AEncodeHelper : IEncodeHelper
 
             if ( commandLength == 11 )
             {
-                buffer[8] = Hex5A. CRCcalculator ( buffer )[0];    //如果是不带数据的命令则加上校验码
-                buffer[9] = Hex5A. CRCcalculator ( buffer )[1];    //如果是不带数据的命令则加上校验码
+                byte[ ] crc = Hex5A. CRCcalculator ( buffer );
+                buffer[8] = crc[0];    //如果是不带数据的命令则加上校验码
+                buffer[9] = crc[1];    //如果是不带数据的命令则加上校验码
             }
             return OperateResult. CreateSuccessResult ( buffer );
         }
@@ -98,7 +100,7 @@ internal class Hex5AEncodeHelper : IEncodeHelper
         {
             return new OperateResult<byte[ ]> ( ex. Message );
         }
-    }   
+    }
 
     #region Private Methods ==> [解析ID]
     /// <summary>
