@@ -146,6 +146,7 @@ public class ACS : IModuleACS
     /// <inheritdoc/>
     public float Freq_C => _decoder == null ? 0 : _decoder. Freq_C;
     /// <inheritdoc/>
+    public float Freq_X => _decoder == null ? 0 : _decoder. Freq_X;
     public string? FrequencySync => _decoder?.FrequencySync;
     #endregion 频率值》
 

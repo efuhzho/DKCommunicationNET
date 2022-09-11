@@ -186,38 +186,40 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <returns></returns>
     public override OperateResult<byte[ ]> HandShake ( )
     {
-        try
+        //使用接口显式调用HandShake方法；
+        IFuncSettings settings = Settings;
+        var result = settings. HandShake ( );
+
+        //如果发送联机命令成功则实例化对象
+        if ( result. IsSuccess && result. Content != null )
         {
-            //使用接口显式调用HandShake方法；
-            IFuncSettings settings = Settings;
-            var result = settings. HandShake ( );
+            ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse , Settings. IsEnabled_ACS );
 
-            //如果发送联机命令成功则实例化对象
-            if ( result. IsSuccess && result. Content != null )
-            {
-                ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse , Settings. IsEnabled_ACS );
+            DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse , Settings. IsEnabled_DCS );
 
-                DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse , Settings. IsEnabled_DCS );
+            DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse , Settings. IsEnabled_DCM );
 
-                DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse , Settings. IsEnabled_DCM );
+            IO = new IO ( );   //TODO 未实现
 
-                IO = new IO ( );   //TODO 未实现
+            EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
 
-                EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
+            PPS = new PPS ( );  //TODO 未实现
 
-                PPS = new PPS ( );  //TODO 未实现
-
-                Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
-            }
-            //无论是否成功都返回联机命令执行结果
-            return result;
+            Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
         }
-        catch ( Exception ex )
-        {
-            return new OperateResult<byte[ ]> ( ex. Message );
-        }
-        //TODO 可取消try catch;
+        //无论是否成功都返回联机命令执行结果
+        return result;
     }
+
+    /// <summary>
+    /// 在打开端口时的初始化方法
+    /// </summary>
+    /// <returns>是否初始化成功</returns>
+    protected override OperateResult<byte[ ]> InitializationOnOpen ( )
+    {
+        return HandShake ( );
+    }
+
     #region 《Core Interative 核心交互
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文。

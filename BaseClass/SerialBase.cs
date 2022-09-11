@@ -81,7 +81,7 @@ namespace DKCommunicationNET. BaseClass
             {
                 return;
             }
-            _SerialPort. PortName = "COM5";
+            _SerialPort. PortName = "COM3";
             _SerialPort. BaudRate = 115200;
             _SerialPort. DataBits = 8;
             _SerialPort. StopBits = StopBits. One;
@@ -93,7 +93,7 @@ namespace DKCommunicationNET. BaseClass
         /// <summary>
         /// 打开一个新的串行端口连接
         /// </summary>
-        public OperateResult<string> Open ( )
+        public OperateResult<byte[ ]> Open ( )
         {
             try
             {
@@ -102,12 +102,11 @@ namespace DKCommunicationNET. BaseClass
                     _SerialPort. Close ( );
                 }
                 _SerialPort. Open ( );
-                // InitializationOnOpen ( );
-                return OperateResult. CreateSuccessResult ( $"成功地打开了{_SerialPort. PortName}。" );
+              return  InitializationOnOpen ( );
             }
             catch ( Exception ex )
             {
-                return new OperateResult<string> ( ex. Message );
+                return new OperateResult<byte[ ]> ( ex. Message );
             }
         }
 
@@ -131,7 +130,7 @@ namespace DKCommunicationNET. BaseClass
                 {
                     _SerialPort. Close ( );
                 }
-                // ExtraOnClose ( );
+                ExtraOnClose ( );
                 return OperateResult. CreateSuccessResult ( $"成功地关闭了{_SerialPort. PortName}。" );
             }
             catch ( Exception ex )
@@ -196,9 +195,9 @@ namespace DKCommunicationNET. BaseClass
         /// 在打开端口时的初始化方法，按照协议的需求进行必要的重写
         /// </summary>
         /// <returns>是否初始化成功</returns>
-        protected virtual OperateResult InitializationOnOpen ( )
+        protected virtual OperateResult<byte[ ]> InitializationOnOpen ( )
         {
-            return OperateResult. CreateSuccessResult ( );
+            return OperateResult. CreateSuccessResult ( Array. Empty<byte>());
         }
 
         /// <summary>
