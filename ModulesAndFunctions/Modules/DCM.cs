@@ -19,9 +19,9 @@ public class DCM : IModuleDCM
     /// </summary>
     private readonly IDecoder_DCM? _decoder;
 
-    readonly CommandAction CommandAction;
+    internal CommandAction CommandAction;
 
-    internal DCM ( IEncoder_DCM? encoder , IDecoder_DCM? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , bool isEnabled )
+    internal DCM ( IEncoder_DCM? encoder , IDecoder_DCM? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse  )
     {
         //初始化报文创建器
         _encoder = encoder;
@@ -29,7 +29,7 @@ public class DCM : IModuleDCM
         //接收解码器
         _decoder = decoder;
 
-        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
+        CommandAction = new CommandAction ( methodOfCheckResponse );
     }
 
     #region 《属性

@@ -20,10 +20,10 @@ public class EPQ : IModuleEPQ
     /// </summary>
     private readonly IDecoder_EPQ? _decoder;
 
-    readonly CommandAction CommandAction;
+    internal CommandAction CommandAction;
     #endregion
 
-    internal EPQ ( IEncoder_EPQ? encoder , IDecoder_EPQ? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse ,bool isEnabled)
+    internal EPQ ( IEncoder_EPQ? encoder , IDecoder_EPQ? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
         //编码器
         _encoder = encoder;
@@ -31,7 +31,7 @@ public class EPQ : IModuleEPQ
         //解码器
         _decoder = decoder;
 
-        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
+        CommandAction = new CommandAction ( methodOfCheckResponse );
     }
 
     #region 《编码器属性：设置属性，可读写
@@ -210,7 +210,7 @@ public class EPQ : IModuleEPQ
     /// <inheritdoc/>
     public OperateResult<byte[ ]> ReadData ( Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 )
     {
-        //执行命令前的功能状态检查
+        //检查协议是否支持
         if ( _encoder == null || _decoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );

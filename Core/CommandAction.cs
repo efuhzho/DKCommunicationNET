@@ -5,30 +5,30 @@ namespace DKCommunicationNET. Core;
 internal class CommandAction
 {   
     /// <summary>
-    /// 使能标志
+    /// 功能模块的使能标志；令牌。只有当值为true时，才会执行命令，否则返回功能不支持的失败结果
     /// </summary>
-    private bool _isEnabled;
+    public bool CanExecute { get; set; }
     /// <summary>
     /// 执行报文发送和接收的委托方法
     /// </summary>
     private Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
-    public CommandAction (bool isEnabled, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
-    {      
-        _isEnabled = isEnabled;
+
+    public  CommandAction ( Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
+    {              
         _methodOfCheckResponse = methodOfCheckResponse;
     }
     /// <summary>
-    /// 模板方法：将传入的报文发送给串口，并使用传入的校验器校验下位机 的回复报文，并返回下位机回复的报文
+    /// 模板方法：将传入的报文发送给串口，并使用传入的校验器校验下位机 的回复报文，并返回下位机回复的报文,必须先设置属性【CanExecute】
     /// </summary>
     /// <param name="methodOfGetPacket">获取报文的方法</param>
     /// <param name="awaitData">是否需要等待下位机回复该指令，当下位机不回复指令的时候需要设为false</param>
     /// <returns></returns>
-    public  OperateResult<byte[ ]> Action ( OperateResult<byte[ ]> methodOfGetPacket , bool awaitData=true)
+    public OperateResult<byte[ ]> Action ( OperateResult<byte[ ]> methodOfGetPacket , bool awaitData=true)
     {
         try
         {           
             //协议支持但是本设备未安装/激活该功能，则返回失败的结果
-            if ( _isEnabled==false )
+            if ( CanExecute==false )
             {
                 return new OperateResult<byte[ ]>(StringResources.Language.NotEnabledModule);
             }

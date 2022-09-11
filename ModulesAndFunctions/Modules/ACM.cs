@@ -13,5 +13,5 @@ namespace DKCommunicationNET. ModulesAndFunctions. Modules;
 /// </summary>
 public class ACM : IModuleACM
 {
-    
+    internal CommandAction? CommandAction;	
 }

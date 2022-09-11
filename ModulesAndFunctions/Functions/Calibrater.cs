@@ -20,7 +20,8 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             //初始化报文创建器
             _encoder = encoder;
 
-            CommandAction=new(true, methodOfCheckResponse);
+            CommandAction=new(methodOfCheckResponse);
+            CommandAction. CanExecute = true;
         }
 
         /// <summary>

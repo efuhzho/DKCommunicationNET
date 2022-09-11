@@ -9,7 +9,7 @@ namespace DKCommunicationNET. Module;
 /// </summary>
 public class DCS : IModuleDCS
 {
-    private CommandAction CommandAction;
+    internal CommandAction CommandAction;
 
     /// <summary>
     /// 定义交流源模块对象
@@ -21,7 +21,7 @@ public class DCS : IModuleDCS
     /// </summary>
     private readonly IDecoder_DCS? _decoder;   
 
-    internal DCS ( IEncoder_DCS? encoder , IDecoder_DCS? decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse ,bool isEnabled )
+    internal DCS ( IEncoder_DCS? encoder , IDecoder_DCS? decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
         //编码器
         _encoder = encoder;
@@ -29,7 +29,7 @@ public class DCS : IModuleDCS
         //解码器
         _decoder = decoder;
 
-        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );      
+        CommandAction = new CommandAction (  methodOfCheckResponse );      
     }
 
     #region 《读档位

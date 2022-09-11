@@ -8,7 +8,7 @@ namespace DKCommunicationNET;
 public enum Models
 {
     /// <summary>
-    /// 【DK-45B2】<inheritdoc cref="Hex81"
+    /// 【DK-45B2】<inheritdoc cref="Hex81"/>
     /// </summary>
     DK_45B2 = HexAA,
     /// <summary>

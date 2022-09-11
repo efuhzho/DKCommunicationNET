@@ -206,7 +206,8 @@ namespace DKCommunicationNET. BaseClass
         /// <returns>当断开连接时额外的操作结果</returns>
         protected virtual OperateResult ExtraOnClose ( )
         {
-            return OperateResult. CreateSuccessResult ( );
+           // return OperateResult. CreateSuccessResult ( );
+           hybirdLock.Dispose ( );
         }
 
         #endregion

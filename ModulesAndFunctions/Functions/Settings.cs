@@ -28,14 +28,15 @@ public class Settings : IFuncSettings
         //解码器
         _decoder = decoder;
 
-        CommandAction = new CommandAction ( true , methodOfCheckResponse );
+        CommandAction = new CommandAction (  methodOfCheckResponse );
+        CommandAction. CanExecute = true;
     }
 
     /// <summary>
     /// 联机命令，在实例化本通讯类库后，必须先执行该方法
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> HandShake ( )
+    OperateResult<byte[ ]> IFuncSettings.HandShake ( )
     {
         //执行命令
         var actionResult = CommandAction. Action ( _encoder. Packet_HandShake ( ) );
@@ -107,85 +108,85 @@ public class Settings : IFuncSettings
     /// <summary>
     /// 指示交流源功能是否激活
     /// </summary>
-    public bool IsEnabled_ACS { get; }
+    public bool IsEnabled_ACS => _decoder. IsEnabled_ACS;
 
     /// <summary>
     /// 指示交流表功能是否激活
     /// </summary>
-    public bool IsEnabled_ACM { get; }
+    public bool IsEnabled_ACM => _decoder. IsEnabled_ACM;
 
     /// <summary>
     /// 指示标准表钳表功能是否激活
     /// </summary>
-    public bool IsEnabled_ACM_Cap { get; }
+    public bool IsEnabled_ACM_Cap => _decoder. IsEnabled_ACM_Cap;
 
     /// <summary>
     /// 指示直流源功能是否激活
     /// </summary>
-    public bool IsEnabled_DCS { get; }
+    public bool IsEnabled_DCS => _decoder. IsEnabled_DCS;
 
     /// <summary>
     /// 辅助直流源是否激活
     /// </summary>
-    public bool IsEnabled_DCS_AUX { get; }
+    public bool IsEnabled_DCS_AUX => _decoder. IsEnabled_DCS_AUX;
 
     /// <summary>
     /// 指示直流表功能是否激活
     /// </summary>
-    public bool IsEnabled_DCM { get; }
+    public bool IsEnabled_DCM => _decoder. IsEnabled_DCM;
 
     /// <summary>
     /// 指示直流纹波表是否激活
     /// </summary>
-    public bool IsEnabled_DCM_RIP { get; }
+    public bool IsEnabled_DCM_RIP => _decoder. IsEnabled_DCM_RIP;
 
 
     /// <summary>
     /// 指示开关量功能是否激活
     /// </summary>
-    public bool IsEnabled_IO { get; }
+    public bool IsEnabled_IO => _decoder. IsEnabled_IO;
 
     /// <summary>
     /// 指示电能校验功能是否激活
     /// </summary>
-    public bool IsEnabled_EPQ { get; }
+    public bool IsEnabled_EPQ => _decoder. IsEnabled_EPQ;
     #endregion 基本功能 FuncB》
 
     #region 《特殊功能 FuncS 
     /// <summary>
     /// 指示双频输出功能是否激活
     /// </summary>
-    public bool IsEnabled_DualFreqs { get; }
+    public bool IsEnabled_DualFreqs => _decoder. IsEnabled_DualFreqs;
 
     /// <summary>
     /// 指示保护电流功能是否激活
     /// </summary>
-    public bool IsEnabled_IProtect { get; }
+    public bool IsEnabled_IProtect => _decoder. IsEnabled_IProtect;
 
     /// <summary>
     /// 指示闪变输出功能是否激活
     /// </summary>
-    public bool IsEnabled_PST { get; }
+    public bool IsEnabled_PST => _decoder. IsEnabled_PST;
 
     /// <summary>
     /// 指示遥信功能是否激活
     /// </summary>
-    public bool IsEnabled_YX { get; }
+    public bool IsEnabled_YX => _decoder. IsEnabled_YX;
 
     /// <summary>
     /// 指示高频输出功能是否激活
     /// </summary>
-    public bool IsEnabled_HF { get; }
+    public bool IsEnabled_HF => _decoder. IsEnabled_HF;
 
     /// <summary>
     /// 指示电机控制功能是否激活
     /// </summary>
-    public bool IsEnabled_PWM { get; }
+    public bool IsEnabled_PWM => _decoder. IsEnabled_PWM;
 
     /// <summary>
     /// 指示对时功能是否激活
     /// </summary>
-    public bool IsEnabled_PPS { get; }
+    public bool IsEnabled_PPS => _decoder. IsEnabled_PPS;
 
     #endregion 特殊功能 FuncS》
 }

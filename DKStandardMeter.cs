@@ -68,18 +68,18 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 交流标准表模块
     /// </summary>
-    public IModuleACM?  ACM { get;private set; }
+    public ACM  ACM { get;private set; }
     /// <summary>
     /// 直流标准表模块
     /// </summary>
-    public IModuleDCM? DCM { get;private set; }
+    public DCM DCM { get;private set; }
     /// <summary>
     /// 系统设置属功能
     /// </summary>
     ///   /// <summary>
     /// 电能模块
     /// </summary>
-    public EPQ? EPQ { get; private set; }
+    public EPQ EPQ { get; private set; }
 
     /// <summary>
     /// 系统设置功能
@@ -127,6 +127,11 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
         //【功能模块】实例化
         {
             Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
+            ACM = new ACM ( );
+
+            DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse );
+
+            EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse );
         }
     }
 
@@ -152,11 +157,11 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
         //如果发送联机命令成功则实例化对象
         if ( result. IsSuccess && result. Content != null )
         {
-            ACM = new ACM ( );          
+           // ACM. CommandAction. CanExecute = Settings. IsEnabled_ACM;
 
-            DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse , Settings. IsEnabled_DCM );         
+           // DCM. CommandAction. CanExecute = Settings.IsEnabled_DCM;  
 
-            EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
+           // EPQ .CommandAction. CanExecute = Settings.IsEnabled_EPQ;
         }
         //无论是否成功都返回联机命令执行结果
         return result;

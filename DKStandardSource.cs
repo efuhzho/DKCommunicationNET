@@ -1,4 +1,5 @@
-﻿using DKCommunicationNET. BaseClass;
+﻿using System. Net. Mime;
+using DKCommunicationNET. BaseClass;
 using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
 using DKCommunicationNET. Module;
@@ -96,31 +97,31 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 交流源模块
     /// </summary>
-    public ACS? ACS { get; private set; }
+    public ACS ACS { get; private set; }
     /// <summary>
     /// 直流源模块
     /// </summary>
-    public DCS? DCS { get; private set; }
+    public DCS DCS { get; private set; }
     /// <summary>
     /// 直流表模块
     /// </summary>
-    public DCM? DCM { get; private set; }
+    public DCM DCM { get; private set; }
     /// <summary>
     /// 开关量模块
     /// </summary>
-    public IO? IO { get; private set; }
+    public IO IO { get; private set; }
     /// <summary>
     /// 电能模块
     /// </summary>
-    public EPQ? EPQ { get; private set; }
+    public EPQ EPQ { get; private set; }
     /// <summary>
     /// 对时模块
     /// </summary>
-    public PPS? PPS { get; private set; }
+    public PPS PPS { get; private set; }
     /// <summary>
     /// 【高级权限功能】[警告！错误使用此功能将可能导致严重的后果！]
     /// </summary>
-    public Calibrater? Calibrate;
+    public Calibrater Calibrate;
     /// <summary>
     /// 系统设置功能（包含HandShake）
     /// </summary>
@@ -176,6 +177,19 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
         //【功能模块】实例化
         {
             Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
+            ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse );
+
+            DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse );
+
+            DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse );
+
+            IO = new IO ( );   //TODO 未实现
+
+            EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse );
+
+            PPS = new PPS ( );  //TODO 未实现
+
+            Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
         }
     }
 
@@ -183,32 +197,29 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// 联机命令；执行该命令实例化功能模块对象
     /// </summary>
     /// <returns></returns>
-    public  override OperateResult<byte[ ]> HandShake ( )
+    public override OperateResult<byte[ ]> HandShake ( )
     {
         //使用接口显式调用HandShake方法；
-       
-        var result = Settings. HandShake ( );
+        IFuncSettings funcSettings = Settings;
+        var result = funcSettings. HandShake ( );
 
         //如果发送联机命令成功则实例化对象
         if ( result. IsSuccess && result. Content != null )
         {
-            ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse , Settings. IsEnabled_ACS );
+            ACS. CommandAction. CanExecute = Settings. IsEnabled_ACS;
 
-            DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse , Settings. IsEnabled_DCS );
+            DCS. CommandAction. CanExecute = Settings. IsEnabled_DCS;
 
-            DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse , Settings. IsEnabled_DCM );
+            DCM.CommandAction. CanExecute = Settings. IsEnabled_DCM;
 
-            IO = new IO ( );   //TODO 未实现
+            EPQ.CommandAction. CanExecute = Settings. IsEnabled_EPQ;
 
-            EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
-
-            PPS = new PPS ( );  //TODO 未实现
-
-            Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
+            //EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
         }
         //无论是否成功都返回联机命令执行结果
         return result;
     }
+      
 
     ///// <summary>
     ///// 在打开端口时的初始化方法
@@ -226,7 +237,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <param name="send">发送的报文</param>
     /// <param name="awaitData"></param>
     /// <returns></returns>
-    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
+    private  OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
     {
         // 发送报文并获取回复报文
         OperateResult<byte[ ]> response = ReadBase ( send , awaitData );

@@ -123,13 +123,13 @@ internal sealed class AsyncCoordinator
 /// <summary>
 /// 一个用于高性能，乐观并发模型控制操作的类，允许一个方法(隔离方法)的安全单次执行
 /// </summary>
-public sealed class HslAsyncCoordinator
+public sealed class DKAsyncCoordinator
 {
     /// <summary>
     /// 实例化一个对象，需要传入隔离执行的方法
     /// </summary>
     /// <param name="operater">隔离执行的方法</param>
-    public HslAsyncCoordinator(Action operater)
+    public DKAsyncCoordinator(Action operater)
     {
         action = operater;
     }
@@ -188,7 +188,7 @@ public sealed class HslAsyncCoordinator
 /// <summary>
 /// 一个高性能的读写锁，支持写锁定，读灵活，读时写锁定，写时读锁定
 /// </summary>
-public sealed class HslReadWriteLock : IDisposable
+public sealed class DKReadWriteLock : IDisposable
 {
     #region Lock State Management
 
@@ -263,7 +263,7 @@ public sealed class HslReadWriteLock : IDisposable
     /// <summary>
     /// 实例化一个读写锁的对象
     /// </summary>
-    public HslReadWriteLock() : base() { }
+    public DKReadWriteLock() : base() { }
 
     #endregion
 
@@ -288,7 +288,7 @@ public sealed class HslReadWriteLock : IDisposable
     }
 
     // TODO: 仅当以上 Dispose(bool disposing) 拥有用于释放未托管资源的代码时才替代终结器。
-    // ~HslReadWriteLock() {
+    // ~DKReadWriteLock() {
     //   // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
     //   Dispose(false);
     // }
@@ -527,6 +527,7 @@ public sealed class SimpleHybirdLock : IDisposable
             if (disposing)
             {
                 // TODO: 释放托管状态(托管对象)。
+                
             }
 
             // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
