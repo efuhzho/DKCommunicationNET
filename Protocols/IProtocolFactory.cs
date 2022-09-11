@@ -131,8 +131,9 @@ internal interface IProtocolFactory
     /// </summary>
     /// <returns></returns>
     ICRCChecker GetCRCChecker ( );
-   
+
     #endregion 校验器》
 
+    //TODO 准备去掉返回值类型OperateResult,因为会在调用方法时进行null检查。
     //TODO 添加其他模块功能的报文创建器
 }
