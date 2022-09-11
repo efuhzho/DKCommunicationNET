@@ -183,11 +183,11 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// 联机命令；执行该命令实例化功能模块对象
     /// </summary>
     /// <returns></returns>
-    public override OperateResult<byte[ ]> HandShake ( )
+    public  override OperateResult<byte[ ]> HandShake ( )
     {
         //使用接口显式调用HandShake方法；
-        IFuncSettings settings = Settings;
-        var result = settings. HandShake ( );
+       
+        var result = Settings. HandShake ( );
 
         //如果发送联机命令成功则实例化对象
         if ( result. IsSuccess && result. Content != null )
@@ -210,14 +210,14 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
         return result;
     }
 
-    /// <summary>
-    /// 在打开端口时的初始化方法
-    /// </summary>
-    /// <returns>是否初始化成功</returns>
-    protected override OperateResult<byte[ ]> InitializationOnOpen ( )
-    {
-        return HandShake ( );
-    }
+    ///// <summary>
+    ///// 在打开端口时的初始化方法
+    ///// </summary>
+    ///// <returns>是否初始化成功</returns>
+    //protected  override OperateResult<byte[ ]> InitializationOnOpen ( )
+    //{
+    //   return HandShake ( );
+    //}
 
     #region 《Core Interative 核心交互
     /// <summary>

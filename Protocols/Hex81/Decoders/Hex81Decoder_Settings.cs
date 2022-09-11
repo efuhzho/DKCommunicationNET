@@ -15,7 +15,7 @@ internal class Hex81Decoder_Settings : IDecoder_Settings
         _byteTransform = byteTransform;
     }
 
-    OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
+    public OperateResult DecodeHandShake ( byte[ ] buffer )
     {
         try
         {

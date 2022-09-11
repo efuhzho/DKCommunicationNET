@@ -35,7 +35,7 @@ public class Settings : IFuncSettings
     /// 联机命令，在实例化本通讯类库后，必须先执行该方法
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> IFuncSettings.HandShake ( )
+    public OperateResult<byte[ ]> HandShake ( )
     {
         //执行命令
         var actionResult = CommandAction. Action ( _encoder. Packet_HandShake ( ) );

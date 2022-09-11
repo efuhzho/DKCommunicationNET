@@ -18,7 +18,7 @@ internal class Hex5ADecoder_Settings : IDecoder_Settings
     }
 
     #region 《方法
-    OperateResult IDecoder_Settings.DecodeHandShake ( byte[ ] buffer )
+   public OperateResult DecodeHandShake ( byte[ ] buffer )
     {
         try
         {
