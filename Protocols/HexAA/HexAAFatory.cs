@@ -22,7 +22,7 @@ internal class HexAAFatory : IProtocolFactory
     {
         throw new NotImplementedException ( );
     }
-    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
+    public IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );
     }
@@ -41,7 +41,7 @@ internal class HexAAFatory : IProtocolFactory
     {
         throw new NotImplementedException ( );
     }
-    public OperateResult<IDecoder_Settings> GetDecoder_Settings ( IByteTransform byteTransform )
+    public IDecoder_Settings GetDecoder_Settings ( IByteTransform byteTransform )
     {
         throw new NotImplementedException ( );
     }

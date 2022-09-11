@@ -9,10 +9,7 @@ namespace DKCommunicationNET. Module;
 /// </summary>
 public class DCS : IModuleDCS
 {
-    /// <summary>
-    /// 发送报文，获取并校验下位机的回复报文的委托方法
-    /// </summary>
-    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
+    private CommandAction CommandAction;
 
     /// <summary>
     /// 定义交流源模块对象
@@ -24,16 +21,15 @@ public class DCS : IModuleDCS
     /// </summary>
     private readonly IDecoder_DCS? _decoder;   
 
-    internal DCS ( IEncoder_DCS encoder , IDecoder_DCS decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse  )
+    internal DCS ( IEncoder_DCS? encoder , IDecoder_DCS? decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse ,bool isEnabled )
     {
         //编码器
         _encoder = encoder;
 
         //解码器
         _decoder = decoder;
-       
-        //接收执行报文发送接收的委托方法        
-        _methodOfCheckResponse = methodOfCheckResponse;          
+
+        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );      
     }
 
     #region 《读档位
@@ -46,7 +42,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _encoder. Packet_GetRanges ( )  );
 
         if ( !result. IsSuccess||result.Content==null )
         {
@@ -77,7 +73,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Open_DCI ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Open_DCI ( )  );
     }
 
     /// <inheritdoc/>
@@ -88,7 +84,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Open_DCR ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Open_DCR ( )  );
     }
 
     /// <inheritdoc/>
@@ -99,7 +95,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Open_DCU ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Open_DCU ( )  );
     }
     #endregion 源打开》
 
@@ -112,7 +108,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Stop_DCI ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Stop_DCI ( )  );
     }
 
     /// <inheritdoc/>
@@ -123,7 +119,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Stop_DCR ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Stop_DCR ( )  );
     }
 
     /// <inheritdoc/>
@@ -134,7 +130,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_Stop_DCU ( ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_Stop_DCU ( )  );
     }
     #endregion 停止输出命令》    
 
@@ -150,11 +146,11 @@ public class DCS : IModuleDCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCI == null )
         {
-            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCI ( SData , _decoder. RangeIndex_DCI ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCI ( SData , _decoder. RangeIndex_DCI )  );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCI ( SData , ( byte ) rangeIndex_DCI )  );
     }
 
     /// <inheritdoc/>
@@ -167,11 +163,11 @@ public class DCS : IModuleDCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCR == null )
         {
-            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCR ( SData , _decoder.RangeIndex_DCR ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCR ( SData , _decoder.RangeIndex_DCR )  );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCR ( SData , ( byte ) rangeIndex_DCR )  );
     }
 
     /// <inheritdoc/>
@@ -184,11 +180,11 @@ public class DCS : IModuleDCS
         //如果没有设置档位，则保持当前档位
         if ( rangeIndex_DCU == null )
         {
-            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCU ( SData , _decoder.RangeIndex_DCU ) , _methodOfCheckResponse );
+            return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCU ( SData , _decoder.RangeIndex_DCU )  );
         }
 
         //执行用户设置的档位
-        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetAmplitude_DCU ( SData , ( byte ) rangeIndex_DCU )  );
     }
     #endregion 设置幅值》
 
@@ -201,7 +197,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCI ( rangeIndex_DCI ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCI ( rangeIndex_DCI )  );
     }
 
     /// <inheritdoc/>
@@ -212,7 +208,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCR ( rangeIndex_DCR ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCR ( rangeIndex_DCR )  );
     }
 
     /// <inheritdoc/>
@@ -223,7 +219,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCU ( rangeIndex_DCU ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCU ( rangeIndex_DCU )  );
     }
     #endregion 设置档位》
 
@@ -237,7 +233,7 @@ public class DCS : IModuleDCS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( Resistor ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _encoder. Packet_ReadData ( Resistor )  );
 
         if ( !result. IsSuccess||result.Content==null )
         {

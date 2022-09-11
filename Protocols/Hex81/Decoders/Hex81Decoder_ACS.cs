@@ -147,6 +147,11 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     public float Freq_C { get; private set; }
 
     /// <summary>
+    /// 【34B2适用】C相频率(支持双频输出时有效)
+    /// </summary>
+    public float Freq_X { get; private set; }
+
+    /// <summary>
     /// 频率标志:同频/异频
     /// </summary>
     public string? FrequencySync { get; private set; }

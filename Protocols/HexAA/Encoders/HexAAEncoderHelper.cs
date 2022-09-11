@@ -10,12 +10,28 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
     {
         public OperateResult<byte[ ]> EncodeHelper ( byte commandCode , ushort commandLength , byte[ ] data )
         {
-            throw new NotImplementedException ( );
+            try
+            {
+                var shellResult = EncodeShell ( commandCode , commandLength );
+                if ( !shellResult. IsSuccess || shellResult. Content == null )
+                {
+                    return shellResult;
+                }
+                var shell = shellResult. Content;
+                data. CopyTo ( shell , 6 );
+                shell[shell. Length ^ 2] = BitConverter. GetBytes ( HexAA. CRCcalculator ( shell ) )[1];
+                shell[shell. Length ^ 1] = BitConverter. GetBytes ( HexAA. CRCcalculator ( shell ) )[0];
+                return OperateResult. CreateSuccessResult ( shell );
+            }
+            catch ( Exception ex)
+            {
+                return new OperateResult<byte[ ]>(ex.Message);
+            }            
         }
 
         public OperateResult<byte[ ]> EncodeHelper ( byte commandCode )
         {
-            throw new NotImplementedException ( );
+            return EncodeShell ( commandCode , HexAA. MinLength );
         }
 
         public OperateResult<byte[ ]> EncodeShell ( byte commandCode , ushort commandLength )

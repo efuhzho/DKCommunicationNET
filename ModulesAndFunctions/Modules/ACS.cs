@@ -11,11 +11,6 @@ namespace DKCommunicationNET. Module;
 public class ACS : IModuleACS
 {
     /// <summary>
-    /// 发送报文，获取并校验下位机的回复报文的委托方法
-    /// </summary>
-    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
-
-    /// <summary>
     /// 定义交流源模块对象
     /// </summary>
     private readonly IEncoder_ACS? _encoder;
@@ -23,7 +18,12 @@ public class ACS : IModuleACS
     /// <summary>
     /// 定义解码器对象
     /// </summary>
-    private readonly IDecoder_ACS? _decoder;
+    private readonly IDecoder_ACS? _decoder;   
+
+    /// <summary>
+    /// 执行命令的模板方法
+    /// </summary>
+    private CommandAction commandAction;
 
     /// <summary>
     /// 构造函数
@@ -31,17 +31,16 @@ public class ACS : IModuleACS
     /// <param name="encoder"></param>
     /// <param name="decoder"></param>
     /// <param name="methodOfCheckResponse"></param>
-    internal ACS ( IEncoder_ACS encoder , IDecoder_ACS decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
+    /// <param name="isEnabled">使能</param>
+    internal ACS ( IEncoder_ACS? encoder , IDecoder_ACS? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse ,bool isEnabled)
     {
-
-        //接收执行报文发送接收的委托方法        
-        _methodOfCheckResponse = methodOfCheckResponse;
-
         //初始化报文创建器
         _encoder = encoder;
 
         //接收解码器
-        _decoder = decoder;
+        _decoder = decoder;       
+
+        commandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
     }
     #region 《属性
 
@@ -292,7 +291,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_Open ( ) , _methodOfCheckResponse );
+        return commandAction.Action( _encoder. Packet_Open ( )  );
     }
 
     /// <inheritdoc/>
@@ -303,7 +302,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_Stop ( ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_Stop ( )  );
     }
 
     /// <inheritdoc/>
@@ -314,7 +313,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = commandAction. Action ( _encoder. Packet_GetRanges ( )  );
 
         //如果命令执行失败
         if ( !result. IsSuccess || result. Content == null )
@@ -341,7 +340,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetRanges ( rangeIndexOfACU , rangeIndexOfACI )  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float UX_IPA = 0 , float IX_IPB = 0 , float IPC = 0 )
@@ -351,7 +350,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , UX_IPA , IX_IPB , IPC ) , _methodOfCheckResponse );  
+        return commandAction. Action ( _encoder. Packet_SetAmplitude ( UA , UB , UC , IA , IB , IC , UX_IPA , IX_IPB , IPC )  );  
     }
 
     /// <inheritdoc/>
@@ -362,7 +361,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( SetAmplitude ( Uabc , Uabc , Uabc , Iabc , Iabc , Iabc , IPabc , IPabc , IPabc ) , _methodOfCheckResponse );
+        return commandAction. Action ( SetAmplitude ( Uabc , Uabc , Uabc , Iabc , Iabc , Iabc , IPabc , IPabc , IPabc )  );
     }
 
     /// <inheritdoc/>
@@ -373,7 +372,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ,PhaseIx) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc ,PhaseIx)  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
@@ -383,7 +382,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetFrequency ( FreqOfAll , FreqOfC ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetFrequency ( FreqOfAll , FreqOfC )  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetWireMode ( WireMode WireMode )
@@ -393,7 +392,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetWireMode ( WireMode ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetWireMode ( WireMode )  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode )
@@ -403,7 +402,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetClosedLoop ( ClosedLoopMode ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetClosedLoop ( ClosedLoopMode )  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
@@ -413,7 +412,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode )  );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
@@ -430,7 +429,7 @@ public class ACS : IModuleACS
         }
 
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetHarmonics ( harmonicChannels , harmonicArgs ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetHarmonics ( harmonicChannels , harmonicArgs )  );
     }
 
     /// <inheritdoc/>
@@ -441,7 +440,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) , _methodOfCheckResponse );
+        var result = commandAction. Action ( _encoder. Packet_ReadData ( )  );
         if ( !result. IsSuccess || result. Content == null )
         {
             return result;
@@ -464,7 +463,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData_Status ( ) , _methodOfCheckResponse );
+        var result = commandAction. Action ( _encoder. Packet_ReadData_Status ( )  );
 
         //如果执行失败
         if ( !result. IsSuccess || result. Content == null )
@@ -492,7 +491,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_ClearHarmonics ( harmonicChannels ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_ClearHarmonics ( harmonicChannels )  );
     }
 
     /// <inheritdoc/>
@@ -503,7 +502,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRanges_IP ( rangeIndex_IP ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetRanges_IP ( rangeIndex_IP )  );
     }
 
     /// <summary>
@@ -519,7 +518,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRanges_X ( rangeIndex_Ux , rangeIndex_Ix ) , _methodOfCheckResponse );
+        return commandAction. Action ( _encoder. Packet_SetRanges_X ( rangeIndex_Ux , rangeIndex_Ix )  );
     }
     #endregion 方法》
 }

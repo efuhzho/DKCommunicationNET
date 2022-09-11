@@ -107,7 +107,7 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
                 Status_Ux = Enum. GetName ( ( ACSStatus ) ( responsResult[127] & 0b_0111_1111 ) );
                 RangeIndex_Ix = responsResult[128];
                 Status_Ix = Enum. GetName ( ( ACSStatus ) ( responsResult[129] & 0b_0111_1111 ) );
-                // Freq = _byteTransform. TransSingle ( responsResult , 130 );       //TODO 异频数据是C相还是X相？
+                Freq_X = _byteTransform. TransSingle ( responsResult , 130 );       //TODO 异频数据是C相还是X相？
                 UX = _byteTransform. TransSingle ( responsResult , 134 );
                 IX = _byteTransform. TransSingle ( responsResult , 138 );
                 FAI_UX = _byteTransform. TransSingle ( responsResult , 142 );
@@ -262,6 +262,11 @@ internal class Hex5ADecoder_ACS : IDecoder_ACS
     /// 【34B2适用】C相频率(支持双频输出时有效)
     /// </summary>
     public float Freq_C { get; private set; }
+
+    /// <summary>
+    /// 【34B2适用】C相频率(支持双频输出时有效)
+    /// </summary>
+    public float Freq_X { get; private set; }
 
     /// <summary>
     /// 频率标志:同频/异频

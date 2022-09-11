@@ -9,11 +9,6 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions;
 public class Settings : IFuncSettings
 {
     /// <summary>
-    /// 发送报文，获取并校验下位机的回复报文的委托方法
-    /// </summary>
-    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
-
-    /// <summary>
     /// 定义交流源模块对象
     /// </summary>
     private readonly IEncoder_Settings _encoder;
@@ -23,6 +18,8 @@ public class Settings : IFuncSettings
     /// </summary>
     private readonly IDecoder_Settings _decoder;
 
+    private readonly CommandAction CommandAction;
+
     internal Settings ( IEncoder_Settings encoder , IDecoder_Settings decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
         //编码器
@@ -31,21 +28,20 @@ public class Settings : IFuncSettings
         //解码器
         _decoder = decoder;
 
-        //接收执行报文发送接收的委托方法        
-        _methodOfCheckResponse = methodOfCheckResponse;
+        CommandAction = new CommandAction ( true , methodOfCheckResponse );
     }
 
     /// <summary>
     /// 联机命令，在实例化本通讯类库后，必须先执行该方法
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> HandShake ( )
+    OperateResult<byte[ ]> IFuncSettings.HandShake ( )
     {
         //执行命令
-        var actionResult = CommandAction. Action ( _encoder. Packet_HandShake ( ) , _methodOfCheckResponse );
+        var actionResult = CommandAction. Action ( _encoder. Packet_HandShake ( ) );
 
         //执行命令失败则返回执行结果
-        if ( !actionResult. IsSuccess|| actionResult. Content == null)
+        if ( !actionResult. IsSuccess || actionResult. Content == null )
         {
             return actionResult;
         }
@@ -63,25 +59,25 @@ public class Settings : IFuncSettings
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetDeviceInfo ( char[ ] password , byte id , string sn )
     {
-        return CommandAction.Action(_encoder.Packet_SetDeviceInfo ( password , id , sn ), _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetDeviceInfo ( password , id , sn ) );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetBaudRate ( ushort baudRate )
     {
-        return CommandAction.Action(_encoder.Packet_SetBaudRate ( baudRate ), _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetBaudRate ( baudRate ) );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetSystemMode ( Enum SystemMode )
     {
-       return CommandAction.Action(_encoder.Packet_SetSystemMode ( SystemMode ), _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetSystemMode ( SystemMode ) );
     }
 
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetDisplayPage ( Enum DisplayPage )
     {
-        return CommandAction. Action ( _encoder. Packet_SetDisplayPage(DisplayPage) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetDisplayPage ( DisplayPage ) );
     }
 
     #region 《设备基本信息

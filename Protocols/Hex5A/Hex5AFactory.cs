@@ -26,26 +26,26 @@ internal class Hex5AFactory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex5AEncoder_PPS ( id ) as IEncoder_PPS );
     }
 
-    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
+    public IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex5AEncoder_Settings ( id , byteTransform ) as IEncoder_Settings );
+        return new Hex5AEncoder_Settings ( id , byteTransform );
     }
     #endregion 编码器》
 
     #region 《解码器
-   public OperateResult<IDecoder_ACS> GetDecoder_ACS ( IByteTransform byteTransform )
+    public OperateResult<IDecoder_ACS> GetDecoder_ACS ( IByteTransform byteTransform )
     {
         return OperateResult. CreateSuccessResult ( new Hex5ADecoder_ACS ( byteTransform ) as IDecoder_ACS );
     }
 
-    public OperateResult<IDecoder_Settings> GetDecoder_Settings ( IByteTransform byteTransform )
+    public IDecoder_Settings GetDecoder_Settings ( IByteTransform byteTransform )
     {
-       return OperateResult.CreateSuccessResult(new Hex5ADecoder_Settings(byteTransform) as IDecoder_Settings );
+        return new Hex5ADecoder_Settings ( byteTransform );
     }
 
-    public OperateResult<IDecoder_PPS> GetDecoder_PPS (  )
+    public OperateResult<IDecoder_PPS> GetDecoder_PPS ( )
     {
-        return OperateResult. CreateSuccessResult ( new Hex5ADecoder_PPS (  ) as IDecoder_PPS );
+        return OperateResult. CreateSuccessResult ( new Hex5ADecoder_PPS ( ) as IDecoder_PPS );
     }
     #endregion 解码器》
 
@@ -65,7 +65,7 @@ internal class Hex5AFactory : IProtocolFactory
     #endregion 不具备的功能》
 
 
-    /****************************************************以下待实现******************************************************************************************************/
+    /****************************************************以下待实现****************************************************************************************************/
 
 
 
@@ -105,14 +105,14 @@ internal class Hex5AFactory : IProtocolFactory
         return new OperateResult<IDecoder_EPQ> ( StringResources. Language. NotSupportedModule );
     }
 
- 
+
 
     public OperateResult<IDecoder_ACM> GetDecoder_ACM ( IByteTransform byteTransform )
     {
         return new OperateResult<IDecoder_ACM> ( StringResources. Language. NotSupportedModule );
     }
 
-  
+
 
     public OperateResult<IDecoder_IO> GetDecoder_IO ( IByteTransform byteTransform )
     {

@@ -10,12 +10,6 @@ namespace DKCommunicationNET. Module;
 public class EPQ : IModuleEPQ
 {
     #region 私有字段
-
-    /// <summary>
-    /// 发送报文，获取并校验下位机的回复报文的委托方法
-    /// </summary>
-    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
-
     /// <summary>
     /// 定义编码器
     /// </summary>
@@ -26,9 +20,10 @@ public class EPQ : IModuleEPQ
     /// </summary>
     private readonly IDecoder_EPQ? _decoder;
 
+    readonly CommandAction CommandAction;
     #endregion
 
-    internal EPQ ( IEncoder_EPQ encoder , IDecoder_EPQ decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
+    internal EPQ ( IEncoder_EPQ? encoder , IDecoder_EPQ? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse ,bool isEnabled)
     {
         //编码器
         _encoder = encoder;
@@ -36,8 +31,7 @@ public class EPQ : IModuleEPQ
         //解码器
         _decoder = decoder;
 
-        //接收执行报文发送接收的委托方法        
-        _methodOfCheckResponse = methodOfCheckResponse;
+        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
     }
 
     #region 《编码器属性：设置属性，可读写
@@ -222,7 +216,7 @@ public class EPQ : IModuleEPQ
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( Channels ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _encoder. Packet_ReadData ( Channels )  );
 
         if ( !result. IsSuccess || result. Content == null  )
         {
@@ -249,7 +243,7 @@ public class EPQ : IModuleEPQ
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetConst_PS ( Const_PS ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetConst_PS ( Const_PS )  );
     }
 
     /// <inheritdoc/>
@@ -262,7 +256,7 @@ public class EPQ : IModuleEPQ
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetConst_QS ( Const_QS ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetConst_QS ( Const_QS )  );
     }
 
     /// <inheritdoc/>
@@ -275,7 +269,7 @@ public class EPQ : IModuleEPQ
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_StartTest_P ( Const_PM , Rounds , DIV ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_StartTest_P ( Const_PM , Rounds , DIV )  );
     }
 
     /// <inheritdoc/>
@@ -288,6 +282,6 @@ public class EPQ : IModuleEPQ
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_StartTest_Q ( Const_QM , Rounds , DIV ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_StartTest_Q ( Const_QM , Rounds , DIV )  );
     }
 }

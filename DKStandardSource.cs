@@ -55,7 +55,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 系统设置编码器
     /// </summary>
-    private readonly IEncoder_Settings? encoder_Settings;
+    private readonly IEncoder_Settings encoder_Settings;
     /// <summary>
     /// 校准功能编码器
     /// </summary>
@@ -90,34 +90,34 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 系统设置解码器
     /// </summary>
-    private readonly IDecoder_Settings? decoder_Settings;
+    private readonly IDecoder_Settings decoder_Settings;
     #endregion 解码器》    
 
     #region 《功能模块
     /// <summary>
     /// 交流源模块
     /// </summary>
-    public ACS? ACS { get; }
+    public ACS? ACS { get; private set; }
     /// <summary>
     /// 直流源模块
     /// </summary>
-    public DCS? DCS { get; }
+    public DCS? DCS { get; private set; }
     /// <summary>
     /// 直流表模块
     /// </summary>
-    public DCM? DCM { get; }
+    public DCM? DCM { get; private set; }
     /// <summary>
     /// 开关量模块
     /// </summary>
-    public IO? IO { get; }
+    public IO? IO { get; private set; }
     /// <summary>
     /// 电能模块
     /// </summary>
-    public EPQ? EPQ { get; }
+    public EPQ? EPQ { get; private set; }
     /// <summary>
     /// 对时模块
     /// </summary>
-    public PPS? PPS { get; }
+    public PPS? PPS { get; private set; }
     /// <summary>
     /// 【高级权限功能】[警告！错误使用此功能将可能导致严重的后果！]
     /// </summary>
@@ -125,20 +125,23 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 系统设置功能（包含HandShake）
     /// </summary>
-    public Settings? Settings { get; }
+    public Settings Settings { get; }
     #endregion 功能模块》
 
     /// <summary>
     /// 构造函数
     /// </summary>
     /// <param name="model">枚举的设备型号（或协议类型），[找不到对应的设备型号？]：可按枚举中的协议类型实例化对象</param>
+    /// <param name="protName"></param>
+    /// <param name="baudRate"></param>
     /// <param name="id">设备ID,默认值为0，[可选参数]</param>
-    public DKStandardSource ( Models model , ushort id = 0 )
+    public DKStandardSource ( Models model , string protName , int baudRate = 115200 , ushort id = 0 )
     {
         //【全局变量】实例化
         {
             ID = id;
             protocolFactory = new DictionaryOfFactorys ( ). GetFactory ( model );
+            SerialPortInni ( protName , baudRate );
         }
 
         //【校验器】实例化
@@ -148,9 +151,10 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
 
         //【编码器】实例化
         {
+            encoder_Settings = protocolFactory. GetEncoder_Settings ( ID , ByteTransform );
+
             encoder_ACS = protocolFactory. GetEncoderOfACS ( ID , ByteTransform ). Content;
             encoder_DCS = protocolFactory. GetEncoderOfDCS ( ID , ByteTransform ). Content;
-            encoder_Settings = protocolFactory. GetEncoder_Settings ( ID , ByteTransform ). Content;
             encoder_DCM = protocolFactory. GetEncoderOfDCM ( ID ). Content;
             encoder_EPQ = protocolFactory. GetEncoderOfEPQ ( ID , ByteTransform ). Content;
             encoder_IO = protocolFactory. GetEncoderOfIO ( ID , ByteTransform ). Content;
@@ -160,56 +164,60 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
 
         //【解码器】实例化
         {
+            decoder_Settings = protocolFactory. GetDecoder_Settings ( ByteTransform );
+
             decoder_ACS = protocolFactory. GetDecoder_ACS ( ByteTransform ). Content;
             decoder_DCS = protocolFactory. GetDecoder_DCS ( ByteTransform ). Content;
-            decoder_Settings = protocolFactory. GetDecoder_Settings ( ByteTransform ). Content;
             decoder_DCM = protocolFactory. GetDecoder_DCM ( ByteTransform ). Content;
             decoder_EPQ = protocolFactory. GetDecoder_EPQ ( ByteTransform ). Content;
-            decoder_PPS = protocolFactory. GetDecoder_PPS (  ). Content;
+            decoder_PPS = protocolFactory. GetDecoder_PPS ( ). Content;
             decoder_IO = protocolFactory. GetDecoder_IO ( ByteTransform ). Content;
         }
 
         //【功能模块】实例化
         {
-            if ( encoder_ACS != null && decoder_ACS != null )
-            {
-                ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse );
-            }
-
-            if ( encoder_DCS != null && decoder_DCS != null )
-            {
-                DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse );
-            }
-
-            if ( encoder_DCM != null && decoder_DCM != null )
-            {
-                DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse );
-            }
-            if ( encoder_IO != null && decoder_IO != null )
-            {
-                IO = new IO ( );   //TODO 未实现
-            }
-            if ( encoder_EPQ != null && decoder_EPQ != null )
-            {
-                EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse );
-            }
-            if ( encoder_PPS != null && decoder_PPS != null )
-            {
-                PPS = new PPS ( );  //TODO 未实现
-            }
-
-            if ( encoder_Calibrate != null )
-            {
-                Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
-            }
-
-            if ( encoder_Settings != null && decoder_Settings != null )
-            {
-                Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
-            }
+            Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
         }
     }
 
+    /// <summary>
+    /// 联机命令；执行该命令实例化功能模块对象
+    /// </summary>
+    /// <returns></returns>
+    public override OperateResult<byte[ ]> HandShake ( )
+    {
+        try
+        {
+            //使用接口显式调用HandShake方法；
+            IFuncSettings settings = Settings;
+            var result = settings. HandShake ( );
+
+            //如果发送联机命令成功则实例化对象
+            if ( result. IsSuccess && result. Content != null )
+            {
+                ACS = new ACS ( encoder_ACS , decoder_ACS , CheckResponse , Settings. IsEnabled_ACS );
+
+                DCS = new DCS ( encoder_DCS , decoder_DCS , CheckResponse , Settings. IsEnabled_DCS );
+
+                DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse , Settings. IsEnabled_DCM );
+
+                IO = new IO ( );   //TODO 未实现
+
+                EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
+
+                PPS = new PPS ( );  //TODO 未实现
+
+                Calibrate = new Calibrater ( encoder_Calibrate , CheckResponse );
+            }
+            //无论是否成功都返回联机命令执行结果
+            return result;
+        }
+        catch ( Exception ex )
+        {
+            return new OperateResult<byte[ ]> ( ex. Message );
+        }
+        //TODO 可取消try catch;
+    }
     #region 《Core Interative 核心交互
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文。

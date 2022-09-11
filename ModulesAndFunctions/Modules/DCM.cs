@@ -10,11 +10,6 @@ namespace DKCommunicationNET. Module;
 public class DCM : IModuleDCM
 {
     /// <summary>
-    /// 发送报文，获取并校验下位机的回复报文的委托方法
-    /// </summary>
-    private readonly Func<byte[ ] , bool , OperateResult<byte[ ]>> _methodOfCheckResponse;
-
-    /// <summary>
     /// 定义交流表模块对象
     /// </summary>
     private readonly IEncoder_DCM? _encoder;
@@ -24,17 +19,17 @@ public class DCM : IModuleDCM
     /// </summary>
     private readonly IDecoder_DCM? _decoder;
 
+    readonly CommandAction CommandAction;
 
-    internal DCM ( IEncoder_DCM encoder, IDecoder_DCM  decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse  )
+    internal DCM ( IEncoder_DCM? encoder , IDecoder_DCM? decoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse , bool isEnabled )
     {
-        //接收执行报文发送接收的委托方法        
-        _methodOfCheckResponse = methodOfCheckResponse;
-
         //初始化报文创建器
         _encoder = encoder;
 
         //接收解码器
         _decoder = decoder;
+
+        CommandAction = new CommandAction ( isEnabled , methodOfCheckResponse );
     }
 
     #region 《属性
@@ -59,28 +54,28 @@ public class DCM : IModuleDCM
     /// <inheritdoc/>
     public OperateResult<byte[ ]> GetRanges ( )
     {
-        if ( _encoder == null ||_decoder==null)
+        if ( _encoder == null || _decoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
 
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _encoder. Packet_GetRanges ( ) );
 
         //如果命令执行失败
-        if ( !result. IsSuccess||result.Content==null )
+        if ( !result. IsSuccess || result. Content == null )
         {
             return result;
         }
 
         //解码
-        var decodeResult = _decoder. DecodeGetRanges_DCM ( result .Content);
+        var decodeResult = _decoder. DecodeGetRanges_DCM ( result. Content );
 
         //如果解码失败
         if ( !decodeResult. IsSuccess )
         {
-            result.IsSuccess = false;
-            result.Message= StringResources. Language. DecodeError;
+            result. IsSuccess = false;
+            result. Message = StringResources. Language. DecodeError;
         }
 
         //返回执行结果       
@@ -97,16 +92,16 @@ public class DCM : IModuleDCM
         }
 
         //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) , _methodOfCheckResponse );
+        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
 
         //如果命令执行失败
-        if ( !result. IsSuccess|| result. Content==null )
+        if ( !result. IsSuccess || result. Content == null )
         {
             return result;
         }
 
         //解码
-        var decodeResult = _decoder. DecodeReadData_DCM ( result .Content);
+        var decodeResult = _decoder. DecodeReadData_DCM ( result. Content );
 
         //解码失败
         if ( !decodeResult. IsSuccess )
@@ -127,7 +122,7 @@ public class DCM : IModuleDCM
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMI ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMI ) );
     }
 
     /// <inheritdoc/>
@@ -140,7 +135,7 @@ public class DCM : IModuleDCM
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMU ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMU ) );
     }
 
     /// <inheritdoc/>
@@ -153,7 +148,7 @@ public class DCM : IModuleDCM
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMU_Ripple ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMU_Ripple ) );
     }
 
     /// <inheritdoc/>
@@ -166,6 +161,6 @@ public class DCM : IModuleDCM
         }
 
         //执行命令并获取回复报文
-        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMI_Ripple ) , _methodOfCheckResponse );
+        return CommandAction. Action ( _encoder. Packet_SetRange_DCMI ( rangeIndex_DCMI_Ripple ) );
     }
 }

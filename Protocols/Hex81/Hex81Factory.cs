@@ -44,9 +44,9 @@ internal class Hex81Factory : IProtocolFactory
         return new OperateResult<IEncoder_IO> ( StringResources. Language. NotSupportedModule );
     }
 
-    public OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id ,IByteTransform byteTransform )
+    public IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81Encoder_Settings ( id ) as IEncoder_Settings );
+        return new Hex81Encoder_Settings ( id );
     }
 
     public OperateResult<IEncoder_Calibrate> GetEncoderOfCalibrate ( ushort id , IByteTransform byteTransform )
@@ -85,9 +85,9 @@ internal class Hex81Factory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex81Decoder_EPQ ( byteTransform ) as IDecoder_EPQ );
     }
 
-    public OperateResult<IDecoder_Settings> GetDecoder_Settings ( IByteTransform byteTransform )
+    public IDecoder_Settings GetDecoder_Settings ( IByteTransform byteTransform )
     {
-        return OperateResult. CreateSuccessResult ( new Hex81Decoder_Settings ( byteTransform ) as IDecoder_Settings );
+        return new Hex81Decoder_Settings ( byteTransform );
     }
 
     public OperateResult<IDecoder_ACM> GetDecoder_ACM ( IByteTransform byteTransform )
@@ -114,7 +114,7 @@ internal class Hex81Factory : IProtocolFactory
     {
         return new Hex81CRCChecker ( );
     }
-   
+
     #endregion 校验器》
 
 }

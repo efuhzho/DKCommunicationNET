@@ -306,6 +306,10 @@ public interface IProperties_ACS
     /// </summary>
     public float Freq_C { get; }
     /// <summary>
+    /// 【34B2适用】C相频率(支持双频输出时有效)
+    /// </summary>
+    public float Freq_X { get; }
+    /// <summary>
     /// 频率标志：四相同频/四相异频
     /// </summary>
     public string? FrequencySync { get; }

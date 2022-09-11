@@ -64,7 +64,7 @@ internal interface IProtocolFactory
     /// <param name="id"></param>
     /// <param name="byteTransform"></param>
     /// <returns></returns>
-    OperateResult<IEncoder_Settings> GetEncoder_Settings ( ushort id , IByteTransform byteTransform );
+    IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform );
     #endregion 编码器》
 
     #region 《解码器
@@ -101,7 +101,7 @@ internal interface IProtocolFactory
     /// </summary>
     /// <param name="byteTransform"></param>
     /// <returns></returns>
-    OperateResult<IDecoder_Settings> GetDecoder_Settings( IByteTransform byteTransform );
+    IDecoder_Settings GetDecoder_Settings( IByteTransform byteTransform );
 
     /// <summary>
     /// 交流标准表表解码器

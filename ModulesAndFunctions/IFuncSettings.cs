@@ -18,7 +18,7 @@ public interface IFuncSettings:IProperties_Settings
     /// 联机命令
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> HandShake ( );
+    internal OperateResult<byte[ ]> HandShake ( );
 
     /// <summary>
     /// 【高级权限需要密码】设置/修改设备信息
