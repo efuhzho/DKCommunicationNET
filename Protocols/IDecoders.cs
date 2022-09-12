@@ -99,7 +99,7 @@ internal interface IDecoder_Settings:IProperties_Settings
 /// <summary>
 /// 交流表解码器
 /// </summary>
-internal interface IDecoder_ACM
+internal interface IDecoder_ACM:IPropertiesACM
 {
     OperateResult DecodeReadData ( byte[ ] buffer );
     OperateResult DecodeGetRanges ( byte[ ] buffer );
