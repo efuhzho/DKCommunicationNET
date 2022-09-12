@@ -32,74 +32,74 @@ internal interface IDecoder_ACS:IProperties_ACS
 /// <summary>
 /// 直流源解码器
 /// </summary>
-public interface IDecoder_DCS:IReadProperties_DCS
+internal interface IDecoder_DCS:IReadProperties_DCS
 {
     /// <summary>
     /// 【解码】解析读取直流源数据命令的回复报文
     /// </summary>
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
-    internal OperateResult DecodeReadData_DCS ( byte[ ] responsResult );
+     OperateResult DecodeReadData_DCS ( byte[ ] responsResult );
 
     /// <summary>
     /// 【解码】解析获取直流源档位信息命令的回复报文
     /// </summary>
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
-    internal OperateResult DecodeGetRanges_DCS ( byte[ ] responsResult );    
+     OperateResult DecodeGetRanges_DCS ( byte[ ] responsResult );    
 }
 
 /// <summary>
 /// 【解码】直流表解码器
 /// </summary>
-public interface IDecoder_DCM:IReadProperties_DCM
+internal interface IDecoder_DCM:IReadProperties_DCM
 {
     /// <summary>
     /// 【解码】解析获取直流表档位信息命令的回复报文
     /// </summary>
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
-    internal OperateResult DecodeGetRanges_DCM ( byte[ ] responsResult );
+     OperateResult DecodeGetRanges_DCM ( byte[ ] responsResult );
 
     /// <summary>
     /// 【解码】解析读取直流表数据命令的回复报文
     /// </summary>
     /// <param name="responsResult">指令操作结果</param>
     /// <returns></returns>
-    internal OperateResult DecodeReadData_DCM ( byte[ ] responsResult );
+     OperateResult DecodeReadData_DCM ( byte[ ] responsResult );
 }
 
 /// <summary>
 /// 电能模块解码器
 /// </summary>
-public interface IDecoder_EPQ:IReadProperies_EPQ
+internal interface IDecoder_EPQ:IReadProperies_EPQ
 {
     /// <summary>
     /// 【解码】解析读取电能校验命令的回复报文
     /// </summary>
     /// <param name="responsResult"></param>
     /// <returns></returns>
-   internal OperateResult DecodeReadData_EPQ ( byte[ ] responsResult );
+    OperateResult DecodeReadData_EPQ ( byte[ ] responsResult );
 }
 
 /// <summary>
 /// 设置解码器[HandShake]
 /// </summary>
-public interface IDecoder_Settings:IProperties_Settings
+internal interface IDecoder_Settings:IProperties_Settings
 {
     /// <summary>
     /// 【解码】联机命令，初始化设备信息和功能状态
     /// </summary>
     /// <param name="buffer"></param>
     /// <returns></returns>
-    internal OperateResult DecodeHandShake ( byte[ ] buffer );
+     OperateResult DecodeHandShake ( byte[ ] buffer );
     
 }
 
 /// <summary>
 /// 交流表解码器
 /// </summary>
-public interface IDecoder_ACM
+internal interface IDecoder_ACM
 {
 
 }
@@ -107,7 +107,7 @@ public interface IDecoder_ACM
 /// <summary>
 /// 对时功能解码器
 /// </summary>
-public interface IDecoder_PPS
+internal interface IDecoder_PPS
 {
 
 }
@@ -115,7 +115,7 @@ public interface IDecoder_PPS
 /// <summary>
 /// 开关量解码器
 /// </summary>
-public interface IDecoder_IO
+internal interface IDecoder_IO
 {
 
 }

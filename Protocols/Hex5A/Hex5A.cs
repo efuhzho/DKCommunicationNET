@@ -114,7 +114,7 @@ internal class Hex5A
         ushort crc = 0;
 
         //从第三个字节开始执行代数和:忽略报文头
-        for ( int i = 2 ; i < sendBytes. Length - 2 ; i++ )
+        for ( int i = 2 ; i < sendBytes. Length - 3; i++ )
         {
             crc += sendBytes[i];
         }

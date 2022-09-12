@@ -1,11 +1,13 @@
 ﻿using DKCommunicationNET. Core;
+using DKCommunicationNET. Protocols. HexAA. Decoders;
+using DKCommunicationNET. Protocols. HexAA. Encoders;
 
 namespace DKCommunicationNET. Protocols. HexAA;
 
 /// <summary>
 /// HexAA协议工厂类
 /// </summary>
-[Model(Models.HexAA)]
+[Model ( Models. HexAA )]
 internal class HexAAFatory : IProtocolFactory
 {
     #region 《编码器
@@ -23,7 +25,7 @@ internal class HexAAFatory : IProtocolFactory
     }
     public IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new HexAAEncoder_Settings ( );
     }
     #endregion 编码器》
 
@@ -42,14 +44,14 @@ internal class HexAAFatory : IProtocolFactory
     }
     public IDecoder_Settings GetDecoder_Settings ( IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new HexAADecoder_Settings ( byteTransform );
     }
     #endregion 解码器》
 
     #region 《校验器
     public ICRCChecker GetCRCChecker ( )
     {
-        throw new NotImplementedException ( );
+        return new HexAACRCChecker ( );
     }
     #endregion 校验器》
 

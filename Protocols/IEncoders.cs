@@ -223,19 +223,46 @@ internal interface IEncoder_ACS
 /// <summary>
 /// 交流表报文创建类接口
 /// </summary>
-internal interface IEncoder_ACM
+internal interface IEncoder_ACM:ISetPropertiesACM
 {
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
     /// </summary>
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_ReadData ( );
-
     /// <summary>
-    /// 创建报文：读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// 读取谐波数据
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_ReadData_Status ( );
+    public OperateResult<byte[ ]> Packet_ReadHarmonics ( );
+
+
+    /// <summary>
+    /// 设置档位:如果原来的档位为自动模式，此时将强制设置为手动模式
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexUa , byte rangeIndexIa , byte rangeIndexUb , byte rangeIndexIb , byte rangeIndexUc , byte rangeIndexIc );
+    /// <summary>
+    /// 读取交流标准表档位
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_GetRanges ( );
+    /// <summary>
+    /// 设置档位为自动模式
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetRangeSwitchMode( RangeSwitchMode rangeSwitchMode);
+    /// <summary>
+    /// 设置接线方式
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetWireMode (WireMode wireMode );
+    /// <summary>
+    /// 设置电流输入通道：大电流/小电流；【设置完成后需要重新读取档位；】
+    /// </summary>
+    /// <param name="currentInputChannel"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetCurrentInputChannel (CurrentInputChannel currentInputChannel );
 }
 
 /// <summary>

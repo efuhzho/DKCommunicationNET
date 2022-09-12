@@ -14,6 +14,7 @@ namespace DKCommunicationNET. Protocols. HexAA;
  *  量纲均为国际标准单位：频率：Hz;时间：ms;角度：rad;电压：V;电流：A;有功功率：W;无功功率：Var
  *  
  *  Review Records:
+ *  *更改报文长度定义为字节长度，注意协议内报文长度为字节长度除以2；
  *  
  *************************************************************************************************/
 
@@ -33,60 +34,72 @@ internal class HexAA
     /// <summary>
     /// 协议帧起始标志
     /// </summary>
-    public const ushort FrameID = 0xAA55;
+    public const byte FrameID0 = 0xAA;
+    /// <summary>
+    /// 协议帧起始标志
+    /// </summary>
+    public const byte FrameID1 = 0x55;
     /// <summary>
     /// 无参指令的长度（最小长度指令）
     /// </summary>
-    public const ushort MinLength = 4;
+    public const byte MinLength = 8;
+    /// <summary>
+    /// 数据区起始索引值
+    /// </summary>
+    public const byte DataStartIndex = 6;
     /// <summary>
     /// 联机命令，读取终端型号和版本号
     /// </summary>
-    public const ushort HandShake = 0x004C;
+    public const byte HandShake = 0x4C;
     /// <summary>
     /// 设置系统参数
     /// </summary>
-    public const ushort SystemSettings = 0x0044;
-    public const ushort SystemSettingsLen = 12; //TODO 如果错误则改为18；
+    public const byte SetSystemArgs = 0x44;
+    public const byte SetSystemArgsLen = 24;
     /// <summary>
     /// 设置电能参数并启动电能校验
     /// </summary>
-    public const ushort SetStartEPQ = 0x0045;
+    public const byte SetStartEPQ = 0x45;
 
     /// <summary>
     /// 获取量程和系统功能状态
     /// </summary>
-    public const ushort GetRanges = 0x0089;
+    public const byte GetRanges = 0x89;
     /// <summary>
     /// 读基本参数
     /// </summary>
-    public const ushort ReadData = 0x0090;
+    public const byte ReadData = 0x90;
     /// <summary>
     /// 读谐波参数
     /// </summary>
-    public const ushort ReadHarmonics = 0x0091;
+    public const byte ReadHarmonics = 0x91;
     /// <summary>
     /// 读三相谐波含有率
     /// </summary>
-    public const ushort ReadHarmonicContains = 0x0092;
+    public const byte ReadHarmonicContains = 0x92;
     /// <summary>
     /// 读波形数据
     /// </summary>
-    public const ushort ReadWaveform = 0x0093;
-    public const ushort ReadWaveformLen = 7;
+    public const byte ReadWaveform = 0x93;
+    public const byte ReadWaveformLen = 7;
     /// <summary>
     /// 读电能误差
     /// </summary>
-    public const ushort ReadDataOfEPQ = 0x0094;
+    public const byte ReadDataOfEPQ = 0x94;
     #endregion 命令码定义》
 
-    public static ushort CRCcalculator ( byte[ ] shell )
+    public static byte[ ] CRCcalculator ( byte[ ] shell )
     {
-        ushort crc = 0;
+        byte[ ] crc = new byte[2];
+        ushort value = 0;
         //从第三个字节开始计算和校验，忽略报文头
         for ( int i = 2 ; i < shell. Length * 2 - 2 ; i++ )
         {
-            crc += shell[i];
+            value += shell[i];
         }
+        byte[ ] temp = BitConverter. GetBytes ( value );
+        crc[0] = temp[1];
+        crc[1] = temp[0];
         return crc;
     }
     /// <summary>
@@ -100,5 +113,8 @@ internal class HexAA
 }
 
 #region 《枚举类型
-
+internal enum HarmonicChannels
+{
+    A,B,C
+}
 #endregion 枚举类型》

@@ -276,6 +276,19 @@ internal enum FrequencySync : byte
     /// </summary>
     异频 = 1
 }
+
+/// <summary>
+/// 【交流标准表适用】档位切换模式
+/// </summary>
+public enum RangeSwitchMode : byte
+{
+    Auto,Manual
+}
+
+public enum CurrentInputChannel:byte
+{
+    SmallChannel,LargeChannel
+}
 #endregion
 
 
