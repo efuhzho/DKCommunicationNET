@@ -57,7 +57,7 @@ internal class Hex5AFactory : IProtocolFactory
     #endregion 校验器》
 
     #region 《不具备的功能
-    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
+    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id , IByteTransform byteTransform )
     {
         //不具备此功能模块
         return new OperateResult<IEncoder_ACM> ( StringResources. Language. NotSupportedModule );

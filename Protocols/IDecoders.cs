@@ -101,7 +101,8 @@ internal interface IDecoder_Settings:IProperties_Settings
 /// </summary>
 internal interface IDecoder_ACM
 {
-
+    OperateResult DecodeReadData ( byte[ ] buffer );
+    OperateResult DecodeGetRanges ( byte[ ] buffer );
 }
 
 /// <summary>

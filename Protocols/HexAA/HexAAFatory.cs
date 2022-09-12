@@ -11,17 +11,18 @@ namespace DKCommunicationNET. Protocols. HexAA;
 internal class HexAAFatory : IProtocolFactory
 {
     #region 《编码器
-    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
+    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return  OperateResult.CreateSuccessResult(new HexAAEncoder_ACM( byteTransform ) as IEncoder_ACM);
     }
     public OperateResult<IEncoder_DCM> GetEncoderOfDCM ( ushort id )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IEncoder_DCM> ( "暂未实现。");
     }
     public OperateResult<IEncoder_EPQ> GetEncoderOfEPQ ( ushort id , IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IEncoder_EPQ> ( "暂未实现。" );
+
     }
     public IEncoder_Settings GetEncoder_Settings ( ushort id , IByteTransform byteTransform )
     {
@@ -32,15 +33,16 @@ internal class HexAAFatory : IProtocolFactory
     #region 《解码器
     public OperateResult<IDecoder_ACM> GetDecoder_ACM ( IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return OperateResult. CreateSuccessResult ( new HexAADecoder_ACM ( byteTransform ) as IDecoder_ACM );
+
     }
     public OperateResult<IDecoder_DCM> GetDecoder_DCM ( IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IDecoder_DCM> ( "暂未实现。" );
     }
     public OperateResult<IDecoder_EPQ> GetDecoder_EPQ ( IByteTransform byteTransform )
     {
-        throw new NotImplementedException ( );
+        return new OperateResult<IDecoder_EPQ> ( "暂未实现。");
     }
     public IDecoder_Settings GetDecoder_Settings ( IByteTransform byteTransform )
     {

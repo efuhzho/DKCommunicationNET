@@ -111,7 +111,7 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
         //【编码器】实例化
         {
             encoder_Settings = protocolFactory. GetEncoder_Settings ( ID , ByteTransform );
-            encoder_ACM = protocolFactory. GetEncoderOfACM ( id ).Content;
+            encoder_ACM = protocolFactory. GetEncoderOfACM ( id,ByteTransform ).Content;
             encoder_DCM = protocolFactory. GetEncoderOfDCM ( id ).Content;
             encoder_EPQ = protocolFactory. GetEncoderOfEPQ ( ID , ByteTransform ). Content;
         }
@@ -127,21 +127,13 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
         //【功能模块】实例化
         {
             Settings = new Settings ( encoder_Settings , decoder_Settings , CheckResponse );
-            ACM = new ACM ( );
+
+            ACM = new ACM ( encoder_ACM , decoder_ACM , CheckResponse );
 
             DCM = new DCM ( encoder_DCM , decoder_DCM , CheckResponse );
 
             EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse );
         }
-    }
-
-    /// <summary>
-    /// 在打开端口时的初始化方法
-    /// </summary>
-    /// <returns>是否初始化成功</returns>
-    protected override OperateResult<byte[ ]> InitializationOnOpen ( )
-    {
-        return HandShake ( );
     }
 
     /// <summary>
@@ -157,11 +149,11 @@ public class DKStandardMeter : DandickSerialBase<RegularByteTransform>
         //如果发送联机命令成功则实例化对象
         if ( result. IsSuccess && result. Content != null )
         {
-           // ACM. CommandAction. CanExecute = Settings. IsEnabled_ACM;
+            ACM. CommandAction. CanExecute = Settings. IsEnabled_ACM;
 
-           // DCM. CommandAction. CanExecute = Settings.IsEnabled_DCM;  
+            DCM. CommandAction. CanExecute = Settings. IsEnabled_DCM;
 
-           // EPQ .CommandAction. CanExecute = Settings.IsEnabled_EPQ;
+            EPQ. CommandAction. CanExecute = Settings. IsEnabled_EPQ;
         }
         //无论是否成功都返回联机命令执行结果
         return result;

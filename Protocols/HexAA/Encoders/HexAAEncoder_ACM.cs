@@ -4,16 +4,14 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
 {
     internal class HexAAEncoder_ACM : IEncoder_ACM
     {
-        IByteTransform _byteTransform;
-        HexAAEncoderHelper encodeHelper;
+        private IByteTransform _byteTransform;
+        private readonly HexAAEncoderHelper encodeHelper;
 
         internal HexAAEncoder_ACM ( IByteTransform byteTransform )
         {
             _byteTransform = byteTransform;
             encodeHelper = new HexAAEncoderHelper ();
         }
-
-      
 
         public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
@@ -53,12 +51,12 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         }
 
         #region 《私有方法
-        byte _rangeIndexUa;
-        byte _rangeIndexIa;
-        byte _rangeIndexUb;
-        byte _rangeIndexIb;
-        byte _rangeIndexUc;
-        byte _rangeIndexIc;
+        private byte _rangeIndexUa;
+        private byte _rangeIndexIa;
+        private byte _rangeIndexUb;
+        private byte _rangeIndexIb;
+        private byte _rangeIndexUc;
+        private byte _rangeIndexIc;
         public WireMode WireMode { get; set; }
         public RangeSwitchMode RangeSwitchMode { get; set; }
         public CurrentInputChannel CurrentInputChannel { get; set; }

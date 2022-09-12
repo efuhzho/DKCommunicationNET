@@ -282,12 +282,28 @@ internal enum FrequencySync : byte
 /// </summary>
 public enum RangeSwitchMode : byte
 {
-    Auto,Manual
+    /// <summary>
+    /// 自动档模式
+    /// </summary>
+    Auto,
+    /// <summary>
+    /// 手动档模式
+    /// </summary>
+    Manual
 }
-
+/// <summary>
+/// 设置大小电流通道：25A/100A
+/// </summary>
 public enum CurrentInputChannel:byte
 {
-    SmallChannel,LargeChannel
+    /// <summary>
+    /// 25A小电流输入通道
+    /// </summary>
+    SmallChannel,
+    /// <summary>
+    /// 100A大电流输入通道
+    /// </summary>
+    LargeChannel
 }
 #endregion
 

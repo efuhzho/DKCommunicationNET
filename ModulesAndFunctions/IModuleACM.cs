@@ -10,43 +10,49 @@ namespace DKCommunicationNET. ModulesAndFunctions;
 /// <summary>
 /// 交流表模块功能
 /// </summary>
-public interface IModuleACM
+public interface IModuleACM: IPropertiesACM
 {
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
     /// </summary>
     /// <returns></returns>
     public OperateResult<byte[ ]> ReadData ( );
-
     /// <summary>
-    /// 创建报文：读取输出状态：Flag=0表示输出稳定，Flag=1表示输出未稳定。：读标准源输出状态
+    /// 设置标准表测量档位
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> ReadData_Status ( );
+    public OperateResult<byte[ ]> SetRanges ( byte rangeIndexU , byte rangeIndexI );
+    /// <summary>
+    /// 获取标准表档位集合
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> GetRanges ( );
+    /// <summary>
+    /// 读取测量的谐波值
+    /// </summary>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> ReadHarmonics ( );
+    /// <summary>
+    /// 设置档位切换模式：自动/手动
+    /// </summary>
+    /// <returns></returns>
+    internal OperateResult<byte[ ]> SetRangeSwitchMode  ( RangeSwitchMode rangeSwitchMode );
+    /// <summary>
+    /// 设置接线方式：三相四线/三相三线
+    /// </summary>
+    /// <returns></returns>
+    internal OperateResult<byte[ ]> SetWireMode ( WireMode wireMode );
+    /// <summary>
+    /// 设置电流输入通道：大电流/小电流
+    /// </summary>
+    /// <returns></returns>
+    internal OperateResult<byte[ ]> SetCurrentInputChannel ( CurrentInputChannel currentInputChannel );
 }
 
 /// <summary>
-/// ACM设置属性
+/// 交流标准表属性
 /// </summary>
-public interface ISetPropertiesACM
-{
-    /// <summary>
-    /// 接线模式
-    /// </summary>
-    public WireMode WireMode { get; set; }
-    /// <summary>
-    /// 档位切换模式
-    /// </summary>
-    public RangeSwitchMode RangeSwitchMode { get; set; }
-    /// <summary>
-    /// 大小电流输入通道切换
-    /// </summary>
-    public CurrentInputChannel CurrentInputChannel { get; set; }
-}
-/// <summary>
-/// 交流标准表读取属性
-/// </summary>
-public interface IReadPropertiesACM
+public interface IPropertiesACM
 {
     #region 《档位列表
     /// <summary>
@@ -291,12 +297,6 @@ public interface IReadPropertiesACM
     /// 当前接线模式
     /// </summary>
     public WireMode WireMode { get; set; }
-
-    /// <summary>
-    /// 当前闭环模式
-    /// </summary>
-    public CloseLoopMode CloseLoopMode { get; set; }
-
     /// <summary>
     /// 当前谐波模式
     /// </summary>
@@ -304,6 +304,14 @@ public interface IReadPropertiesACM
     /// <summary>
     /// 无功计算方法
     /// </summary>
-    public QP_Mode QP_Mode { get; set; }
+    public QP_Mode QP_Mode { get; set; } 
+    /// <summary>
+    /// 档位切换模式
+    /// </summary>
+    public RangeSwitchMode RangeSwitchMode { get; set; }
+    /// <summary>
+    /// 大小电流输入通道切换
+    /// </summary>
+    public CurrentInputChannel CurrentInputChannel { get; set; }
     #endregion 枚举属性》
 }

@@ -19,7 +19,7 @@ internal interface IProtocolFactory
     /// 获取交流表报文创建类对象
     /// </summary>
     /// <returns></returns>
-    OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id );
+    OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id , IByteTransform byteTransform );
 
     /// <summary>
     /// 获取直流源报文创建类对象

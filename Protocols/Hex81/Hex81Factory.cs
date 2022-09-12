@@ -32,7 +32,7 @@ internal class Hex81Factory : IProtocolFactory
         return OperateResult. CreateSuccessResult ( new Hex81Encoder_EPQ ( id , byteTransform ) as IEncoder_EPQ );
     }
 
-    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id )
+    public OperateResult<IEncoder_ACM> GetEncoderOfACM ( ushort id , IByteTransform byteTransform )
     {
         //不具备此功能模块
         return new OperateResult<IEncoder_ACM> ( StringResources. Language. NotSupportedModule );

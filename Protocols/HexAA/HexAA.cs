@@ -90,17 +90,13 @@ internal class HexAA
 
     public static byte[ ] CRCcalculator ( byte[ ] shell )
     {
-        byte[ ] crc = new byte[2];
-        ushort value = 0;
+        ushort crcValue = 0;
         //从第三个字节开始计算和校验，忽略报文头
         for ( int i = 2 ; i < shell. Length * 2 - 2 ; i++ )
         {
-            value += shell[i];
+            crcValue += shell[i];
         }
-        byte[ ] temp = BitConverter. GetBytes ( value );
-        crc[0] = temp[1];
-        crc[1] = temp[0];
-        return crc;
+       return BitConverter. GetBytes ( crcValue ). Reverse ( ). ToArray ( );        
     }
     /// <summary>
     /// 重写的ToString方法，返回协议文件版本
@@ -115,6 +111,6 @@ internal class HexAA
 #region 《枚举类型
 internal enum HarmonicChannels
 {
-    A,B,C
+    A, B, C
 }
 #endregion 枚举类型》

@@ -20,7 +20,7 @@ namespace DKCommunicationNET. Protocols. HexAA
             if ( responseBytes[0] != 0xAA || responseBytes[1] != 0x55 ) return false;
 
             //断言
-            byte[ ] CRC_Code =BitConverter.GetBytes( HexAA. CRCcalculator ( responseBytes ));
+            byte[ ] CRC_Code =HexAA. CRCcalculator ( responseBytes );
             if ( CRC_Code[0] == responseBytes[^1] && CRC_Code[1] == responseBytes[ ^2] )
             {
                 return true;

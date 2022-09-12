@@ -223,7 +223,7 @@ internal interface IEncoder_ACS
 /// <summary>
 /// 交流表报文创建类接口
 /// </summary>
-internal interface IEncoder_ACM:ISetPropertiesACM
+internal interface IEncoder_ACM
 {
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值
