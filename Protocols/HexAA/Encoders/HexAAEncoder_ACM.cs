@@ -10,11 +10,10 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         internal HexAAEncoder_ACM ( IByteTransform byteTransform )
         {
             _byteTransform = byteTransform;
+            encodeHelper = new HexAAEncoderHelper ();
         }
 
-        public WireMode WireMode { get; set; }
-        public RangeSwitchMode RangeSwitchMode { get; set; }
-        public CurrentInputChannel CurrentInputChannel { get; set; }
+      
 
         public OperateResult<byte[ ]> Packet_GetRanges ( )
         {
@@ -24,8 +23,9 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         public OperateResult<byte[ ]> Packet_ReadData ( )
         {
             return encodeHelper. EncodeHelper ( ( byte ) HexAA. ReadData );
-        }     
+        }
 
+        #region 《设置系统参数
         public OperateResult<byte[ ]> Packet_SetRanges ( byte rangeIndexUa , byte rangeIndexIa , byte rangeIndexUb , byte rangeIndexIb , byte rangeIndexUc , byte rangeIndexIc )
         {
             _rangeIndexUa = rangeIndexUa; _rangeIndexUb = rangeIndexUb; _rangeIndexUc = rangeIndexUc;
@@ -46,6 +46,11 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         {
             return Packet_SetSystemArgs ( WireMode , currentInputChannel , RangeSwitchMode , _rangeIndexUa , _rangeIndexIa , _rangeIndexUb , _rangeIndexIb , _rangeIndexUc , _rangeIndexIc );
         }
+        #endregion 设置系统参数》
+        public OperateResult<byte[ ]> Packet_ReadHarmonics ( )
+        {
+            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedFunction );//TODO 暂未实现
+        }
 
         #region 《私有方法
         byte _rangeIndexUa;
@@ -54,7 +59,9 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
         byte _rangeIndexIb;
         byte _rangeIndexUc;
         byte _rangeIndexIc;
-
+        public WireMode WireMode { get; set; }
+        public RangeSwitchMode RangeSwitchMode { get; set; }
+        public CurrentInputChannel CurrentInputChannel { get; set; }
         /// <summary>
         /// 设置系统参数的原始API
         /// </summary>
@@ -90,7 +97,7 @@ namespace DKCommunicationNET. Protocols. HexAA. Encoders
             {
                 return new OperateResult<byte[ ]> ( "创建报文异常。" + ex. Message );
             }
-        }      
+        }
     }
     #endregion 私有方法》
 }
