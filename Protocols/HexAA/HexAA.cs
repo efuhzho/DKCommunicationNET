@@ -92,11 +92,11 @@ internal class HexAA
     {
         ushort crcValue = 0;
         //从第三个字节开始计算和校验，忽略报文头
-        for ( int i = 2 ; i < shell. Length * 2 - 2 ; i++ )
+        for ( int i = 2 ; i < shell. Length - 2 ; i++ )
         {
             crcValue += shell[i];
         }
-       return BitConverter. GetBytes ( crcValue ). Reverse ( ). ToArray ( );        
+        return BitConverter. GetBytes ( crcValue ). Reverse ( ). ToArray ( );
     }
     /// <summary>
     /// 重写的ToString方法，返回协议文件版本

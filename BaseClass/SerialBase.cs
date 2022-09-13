@@ -262,7 +262,7 @@ namespace DKCommunicationNET. BaseClass
                         if ( ( DateTime. Now - start ). TotalMilliseconds > ReceiveTimeout )
                         {
                             ms. Dispose ( );
-                            return new OperateResult<byte[ ]> ( $"Time out: {ReceiveTimeout}" );
+                            return new OperateResult<byte[ ]> ( $"Receive timeout within {ReceiveTimeout} ms." );
                         }
                         else if ( ms. Length > 0 )
                         {
