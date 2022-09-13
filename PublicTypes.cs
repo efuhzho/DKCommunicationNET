@@ -265,7 +265,7 @@ public enum QP_Mode : byte
 /// <summary>
 /// 频率标志
 /// </summary>
-internal enum FrequencySync : byte
+public enum FrequencySync : byte
 {
     /// <summary>
     /// 
