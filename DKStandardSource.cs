@@ -210,16 +210,14 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
 
             DCS. CommandAction. CanExecute = Settings. IsEnabled_DCS;
 
-            DCM.CommandAction. CanExecute = Settings. IsEnabled_DCM;
+            DCM. CommandAction. CanExecute = Settings. IsEnabled_DCM;
 
-            EPQ.CommandAction. CanExecute = Settings. IsEnabled_EPQ;
-
-            //EPQ = new EPQ ( encoder_EPQ , decoder_EPQ , CheckResponse , Settings. IsEnabled_EPQ );
+            EPQ. CommandAction. CanExecute = Settings. IsEnabled_EPQ;
         }
         //无论是否成功都返回联机命令执行结果
         return result;
     }
-      
+
 
     ///// <summary>
     ///// 在打开端口时的初始化方法
@@ -237,7 +235,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <param name="send">发送的报文</param>
     /// <param name="awaitData"></param>
     /// <returns></returns>
-    private  OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
+    private OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
     {
         // 发送报文并获取回复报文
         OperateResult<byte[ ]> response = ReadBase ( send , awaitData );
