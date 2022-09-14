@@ -154,7 +154,7 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// <summary>
     /// 频率标志:同频/异频
     /// </summary>
-    public string? FrequencySync { get; private set; }
+    public FrequencySync FrequencySync { get; private set; }
     #endregion 频率幅值》
 
     #region 《电压幅值
@@ -377,21 +377,21 @@ internal class Hex81Decoder_ACS : IDecoder_ACS
     /// <summary>
     /// 当前接线模式
     /// </summary>
-    public WireMode WireMode { get; set; }
+    public WireMode WireMode { get; private set; }
 
     /// <summary>
     /// 当前闭环模式
     /// </summary>
-    public CloseLoopMode CloseLoopMode { get; set; }
+    public CloseLoopMode CloseLoopMode { get; private set; }
 
     /// <summary>
     /// 当前谐波模式
     /// </summary>
-    public HarmonicMode HarmonicMode { get; set; }
+    public HarmonicMode HarmonicMode { get; private set; }
     /// <summary>
     /// 无功计算方法
     /// </summary>
-    public QP_Mode QP_Mode { get; set; }
+    public QP_Mode QP_Mode { get;  private set; }
     #endregion 枚举属性》
 
     #region 《输出状态

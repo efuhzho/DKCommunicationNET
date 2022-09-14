@@ -116,13 +116,13 @@ public class ACS : IModuleACS
 
     #region 《枚举直设
     /// <inheritdoc/>
-    public WireMode WireMode { get => WireMode; set => SetWireMode ( value ); }
+    public WireMode WireMode => _decoder?.WireMode ?? WireMode.WireMode_3P4L;
     /// <inheritdoc/>
-    public CloseLoopMode CloseLoopMode { get => CloseLoopMode; set => SetClosedLoop ( value ); }
+    public CloseLoopMode CloseLoopMode => _decoder?.CloseLoopMode ?? CloseLoopMode.CloseLoop;
     /// <inheritdoc/>
-    public HarmonicMode HarmonicMode { get =>  HarmonicMode; set => SetHarmonicMode ( value ); }
+    public HarmonicMode HarmonicMode => _decoder?.HarmonicMode ?? HarmonicMode.ValidValuesConstant;
     /// <inheritdoc/>
-    public QP_Mode QP_Mode { get => _decoder?. QP_Mode??0; set => QP_Mode = value; }//TODO 完善 此处无法执行命令
+    public QP_Mode QP_Mode => _decoder?.QP_Mode ?? QP_Mode.滤波法;
     #endregion 枚举直设》
 
     #region 《谐波数据
@@ -140,35 +140,35 @@ public class ACS : IModuleACS
 
     #region 《频率值
     /// <inheritdoc/>
-    public float Freq => _decoder == null ? 0 : _decoder. Freq;
+    public float Freq => _decoder?.Freq ?? 50;
     /// <inheritdoc/>
-    public float Freq_C => _decoder == null ? 0 : _decoder. Freq_C;
+    public float Freq_C => _decoder?.Freq_C ?? 50;
     /// <inheritdoc/>
-    public float Freq_X => _decoder == null ? 0 : _decoder. Freq_X;
+    public float Freq_X => _decoder?.Freq_X ?? 50;
     /// <inheritdoc/>
-    public string? FrequencySync => _decoder?.FrequencySync;
+    public FrequencySync FrequencySync => _decoder?.FrequencySync ?? 0;
     #endregion 频率值》
 
     #region 《电压幅值
 
     /// <inheritdoc/>
-    public float UA => _decoder == null ? 0 : _decoder. UA;
+    public float UA => _decoder?.UA ?? 0;
     /// <inheritdoc/>
-    public float UB => _decoder == null ? 0 : _decoder. UB;
+    public float UB => _decoder?.UB ?? 0;
     /// <inheritdoc/>
-    public float UC => _decoder == null ? 0 : _decoder. UC;
+    public float UC => _decoder?.UC ?? 0;
     /// <inheritdoc/>
-    public float UX => _decoder == null ? 0 : _decoder. UX;
+    public float UX => _decoder?.UX ?? 0;
 
     #endregion 电压幅值》
 
     #region 《电流幅值
     /// <inheritdoc/>
-    public float IA => _decoder == null ? 0 : _decoder. IA;
+    public float IA => _decoder?.IA ?? 0;
     /// <inheritdoc/>
-    public float IB => _decoder == null ? 0 : _decoder. IB;
+    public float IB => _decoder?.IB ?? 0;
     /// <inheritdoc/>
-    public float IC => _decoder == null ? 0 : _decoder. IC;
+    public float IC => _decoder?.IC ?? 0;
     /// <inheritdoc/>
     public float IX => _decoder == null ? 0 : _decoder. IX;
     #endregion 电流幅值》

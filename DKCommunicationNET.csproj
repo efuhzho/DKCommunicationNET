@@ -9,7 +9,12 @@
     <FileVersion>1.0.0.1</FileVersion>
     <Version>$(VersionPrefix)</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

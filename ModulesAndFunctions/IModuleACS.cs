@@ -312,7 +312,7 @@ public interface IProperties_ACS
     /// <summary>
     /// 频率标志：四相同频/四相异频
     /// </summary>
-    public string? FrequencySync { get; }
+    public FrequencySync FrequencySync { get; }
     #endregion 频率幅值》
 
     #region 《电压幅值
@@ -533,21 +533,21 @@ public interface IProperties_ACS
     /// <summary>
     /// 当前接线模式
     /// </summary>
-    public WireMode WireMode { get; set; }
+    public WireMode WireMode { get; }
 
     /// <summary>
     /// 当前闭环模式
     /// </summary>
-    public CloseLoopMode CloseLoopMode { get; set; }
+    public CloseLoopMode CloseLoopMode { get; }
 
     /// <summary>
     /// 当前谐波模式
     /// </summary>
-    public HarmonicMode HarmonicMode { get; set; }
+    public HarmonicMode HarmonicMode { get; }
     /// <summary>
     /// 无功计算方法
     /// </summary>
-    public QP_Mode QP_Mode { get; set; }
+    public QP_Mode QP_Mode { get; }
     #endregion 枚举属性》
 
     #region 《输出状态
