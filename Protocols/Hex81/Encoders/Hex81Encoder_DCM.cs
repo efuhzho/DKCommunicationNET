@@ -18,7 +18,7 @@ internal class Hex81Encoder_DCM : IEncoder_DCM
 
     public OperateResult<byte[ ]> Packet_GetRanges()
     {
-        return _encoderHelper.EncodeHelper(Hex81.GetRanges_DCS);
+        return _encoderHelper.EncodeHelper(Hex81.GetRanges_DCM);
     }
 
     #endregion 读档位列表》

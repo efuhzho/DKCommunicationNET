@@ -46,7 +46,7 @@ internal class Hex81Decoder_Settings : IDecoder_Settings
             byte FuncB = buffer[^3];
             bool[ ] funcB = SoftBasic. ByteToBoolArray ( FuncB );
             IsEnabled_ACS = funcB[0];
-            IsEnabled_ACM = funcB[1];
+            //IsEnabled_ACM = funcB[1]; //暂时禁用ACM，功能使用ACS.
             IsEnabled_DCS = funcB[2];
             IsEnabled_DCM = funcB[3];
             IsEnabled_EPQ = funcB[4];
