@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DKCommunicationNET.Core;
-using DKCommunicationNET.Protocols.Hex5A;
-using DKCommunicationNET.Protocols.Hex5A.Encoders;
+﻿using DKCommunicationNET. Core;
 
-namespace DKCommunicationNET.Protocols.Hex81.Encoders;
+namespace DKCommunicationNET. Protocols. Hex81. Encoders;
 
 /// <summary>
 /// 电能模块报文创建类
@@ -17,7 +10,7 @@ internal class Hex81Encoder_EPQ : IEncoder_EPQ
     /// <summary>
     /// 设备ID
     /// </summary>
-    private readonly Hex5AEncodeHelper _PBHelper;
+    private readonly Hex81EncodeHelper _PBHelper;
 
 
     private readonly IByteTransform _transform;
@@ -29,7 +22,7 @@ internal class Hex81Encoder_EPQ : IEncoder_EPQ
     /// <param name="byteTransform"></param>
     public Hex81Encoder_EPQ(ushort id, IByteTransform byteTransform)
     {
-        _PBHelper = new Hex5AEncodeHelper(id);
+        _PBHelper = new Hex81EncodeHelper(id);
 
         _transform = byteTransform;
     }
