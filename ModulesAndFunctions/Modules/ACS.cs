@@ -116,13 +116,13 @@ public class ACS : IModuleACS
 
     #region 《枚举直设
     /// <inheritdoc/>
-    public WireMode WireMode => _decoder?.WireMode ?? WireMode.WireMode_3P4L;
+    public WireMode WireMode => _decoder?.WireMode ?? WireMode. WireMode_3P4L;
     /// <inheritdoc/>
-    public CloseLoopMode CloseLoopMode => _decoder?.CloseLoopMode ?? CloseLoopMode.CloseLoop;
+    public CloseLoopMode CloseLoopMode => _decoder?.CloseLoopMode ?? CloseLoopMode. CloseLoop;
     /// <inheritdoc/>
-    public HarmonicMode HarmonicMode => _decoder?.HarmonicMode ?? HarmonicMode.ValidValuesConstant;
+    public HarmonicMode HarmonicMode => _decoder?.HarmonicMode ?? HarmonicMode. ValidValuesConstant;
     /// <inheritdoc/>
-    public QP_Mode QP_Mode => _decoder?.QP_Mode ?? QP_Mode.滤波法;
+    public QP_Mode QP_Mode => _decoder?.QP_Mode ?? QP_Mode. 滤波法;
     #endregion 枚举直设》
 
     #region 《谐波数据
@@ -395,24 +395,24 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _encoder. Packet_SetWireMode ( WireMode ) );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode )
+    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
     {
         if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetClosedLoop ( ClosedLoopMode ) );
+        return CommandAction. Action ( _encoder. Packet_SetClosedLoop ( ClosedLoopMode , harmonicMode ) );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode )
+    public OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode , CloseLoopMode closeLoopMode = CloseLoopMode. CloseLoop )
     {
         if ( _encoder == null )
         {
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode ) );
+        return CommandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode ,closeLoopMode) );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )

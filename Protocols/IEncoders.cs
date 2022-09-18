@@ -166,15 +166,17 @@ internal interface IEncoder_ACS
     /// 【Hex81】创建报文：设置闭环模式
     /// </summary>
     /// <param name="closeLoopMode"></param>
+    /// <param name="harmonicMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode );
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode, HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant );
 
     /// <summary>
     /// 设置谐波模式
     /// </summary>
     /// <param name="harmonicMode"></param>
+    /// <param name="closeLoopMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode );
+    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode , CloseLoopMode closeLoopMode =CloseLoopMode.CloseLoop);
 
     /// <summary>
     /// 【报文长度不可超过256】创建报文：设置谐波输出参数；如果谐波组为null,则指令为清空谐波

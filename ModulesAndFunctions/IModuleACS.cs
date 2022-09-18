@@ -132,15 +132,17 @@ public interface IModuleACS : IProperties_ACS
     /// 设置闭环模式
     /// </summary>
     /// <param name="ClosedLoopMode">枚举类型参数：闭环模式；</param>
+    /// <param name="harmonicMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode );
+    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode,HarmonicMode harmonicMode =HarmonicMode.ValidValuesConstant);
 
     /// <summary>
     /// 设置谐波模式
     /// </summary>
     /// <param name="HarmonicMode">枚举类型参数：SetHarmonicMode；</param>
+    /// <param name="closeLoopMode"></param>
     /// <returns></returns>
-    OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode );
+    OperateResult<byte[ ]> SetHarmonicMode ( HarmonicMode HarmonicMode ,CloseLoopMode closeLoopMode=CloseLoopMode.CloseLoop);
 
     /// <summary>
     /// 设置谐波参数

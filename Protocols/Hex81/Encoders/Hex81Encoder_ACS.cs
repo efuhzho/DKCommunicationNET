@@ -71,16 +71,14 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _encodeHelper. EncodeHelper ( Hex81. SetWireMode , Hex81. SetWireModeLength , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode )
-    {
-        _CloseLoopMode = closeLoopMode;
-        return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , _HarmonicMode );
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode,HarmonicMode harmonicMode=HarmonicMode.ValidValuesConstant )
+    {       
+        return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , harmonicMode );
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode )
-    {
-        _HarmonicMode = harmonicMode;
-        return Packet_SetClosedLoopAndHarmonicMode ( _CloseLoopMode , harmonicMode );
+    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode ,CloseLoopMode closeLoopMode=CloseLoopMode.CloseLoop)
+    {       
+        return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , harmonicMode );
     }
 
     public OperateResult<byte[ ]> Packet_SetHarmonics ( Enum channels , HarmonicArgs[ ] harmonics )

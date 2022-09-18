@@ -52,7 +52,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         return SetArgs_ACS(Type_SetStandardSource.Amplitude, args);
     }
 
-    public OperateResult<byte[ ]> Packet_SetClosedLoop(CloseLoopMode closeLoopMode)
+    public OperateResult<byte[ ]> Packet_SetClosedLoop(CloseLoopMode closeLoopMode, HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
     {
         return SetModeAndRanges_ACS(Flag_SetType.SetCloseLoopMode, 0, 0, closeLoopMode, 0, 0, Array.Empty<byte>());
     }
@@ -65,7 +65,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
         return SetArgs_ACS(Type_SetStandardSource.Freqency, args);
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonicMode(HarmonicMode harmonicMode)
+    public OperateResult<byte[ ]> Packet_SetHarmonicMode(HarmonicMode harmonicMode, CloseLoopMode closeLoopMode = CloseLoopMode. CloseLoop )
     {
         return SetModeAndRanges_ACS(Flag_SetType.SetHarmonicMode, 0, 0, 0, harmonicMode, 0, Array.Empty<byte>());
     }
