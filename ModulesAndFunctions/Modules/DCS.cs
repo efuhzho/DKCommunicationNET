@@ -21,8 +21,17 @@ public class DCS : IModuleDCS
     /// </summary>
     private readonly IDecoder_DCS? _decoder;
 
+    /// <summary>
+    /// 直流电压是否支持自动档
+    /// </summary>
     public bool IsAutoRange_DCU { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsAutoRange_DCI { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsAutoRange_DCR { get; set; }
 
     internal DCS ( IEncoder_DCS? encoder , IDecoder_DCS? decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
