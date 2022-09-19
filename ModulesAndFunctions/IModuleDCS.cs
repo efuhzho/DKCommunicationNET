@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流源功能模块接口
 /// </summary>
-public interface IModuleDCS 
+public interface IModuleDCS :ISetProperties_DCS,IReadProperties_DCS
 {
     /// <summary>
     /// 获取直流源档位信息
@@ -71,7 +71,7 @@ public interface IModuleDCS
     /// <returns></returns>
     OperateResult<byte[ ]> ReadData ( char? Resistor = null );
 
-    #region 暂时屏蔽的方法，原因是没有必要提供这些方法，优化了使用体验    
+      
 
     /// <summary>
     /// 设置直流源电压档位
@@ -93,7 +93,7 @@ public interface IModuleDCS
     /// <param name="rangeIndex_DCR">要设置的直流电阻档位索引值</param>
     /// <returns></returns>
     OperateResult<byte[ ]> SetRange_DCR ( byte rangeIndex_DCR );
-    #endregion   
+ 
 }
 
 /// <summary>
@@ -183,17 +183,17 @@ public interface IReadProperties_DCS
     /// <summary>
     /// 直流源电压档位列表
     /// </summary>
-    float[ ]? Ranges_DCU { get; set; }
+    float[ ]? Ranges_DCU { get;  }
 
     /// <summary>
     /// 直流源电流档位列表
     /// </summary>
-    float[ ]? Ranges_DCI { get; set; }
+    float[ ]? Ranges_DCI { get;  }
 
     /// <summary>
     /// 直流源电阻档位列表
     /// </summary>
-    float[ ]? Ranges_DCR { get; set; }
+    float[ ]? Ranges_DCR { get; }
 
     #endregion 档位列表》
 

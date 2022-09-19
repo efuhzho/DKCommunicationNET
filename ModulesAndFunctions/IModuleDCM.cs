@@ -3,7 +3,7 @@
 /// <summary>
 /// 直流表模块接口
 /// </summary>
-public interface IModuleDCM:ISetProperties_DCM
+public interface IModuleDCM:ISetProperties_DCM,IReadProperties_DCM
 {
     /// <summary>
     /// 获取直流表档位信息
@@ -53,22 +53,22 @@ public interface IReadProperties_DCM
     /// <summary>
     /// 直流表电压档位集合
     /// </summary>
-    float[ ]? Ranges_DCMU { get; set; }
+    float[ ]? Ranges_DCMU { get;  }
 
     /// <summary>
     /// 直流表电流档位集合
     /// </summary>
-    float[ ]? Ranges_DCMI { get; set; }
+    float[ ]? Ranges_DCMI { get;  }
 
     /// <summary>
     /// 直流纹波电压表档位集合
     /// </summary>
-    float[ ]? Ranges_DCMU_Ripple { get; set; }
+    float[ ]? Ranges_DCMU_Ripple { get;  }
 
     /// <summary>
     /// 直流纹波电流表的档位集合
     /// </summary>
-    float[ ]? Ranges_DCMI_Ripple { get; set; }
+    float[ ]? Ranges_DCMI_Ripple { get; }
 
     /// <summary>
     /// 直流表电压测量值

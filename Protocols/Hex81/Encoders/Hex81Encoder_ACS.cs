@@ -91,7 +91,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         OldValue_FaiIB=PhaseIb;
         OldValue_FaiIC=PhaseIc;
         float[ ] data = new float[6];
-        data[0] = PhaseUa;
+        data[0] = 0;
         data[1] = PhaseUb;
         data[2] = PhaseUc;
         data[3] = PhaseIa;

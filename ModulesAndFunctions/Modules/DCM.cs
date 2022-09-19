@@ -48,7 +48,85 @@ public class DCM : IModuleDCM
             return _encoder. IsMultiChannel;
         }
     }
+    /// <summary>
+    /// 直流表电压档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMU => _decoder?. Ranges_DCMU;
 
+    /// <summary>
+    /// 直流表电流档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMI => _decoder?. Ranges_DCMI;
+
+    /// <summary>
+    /// 直流纹波电压表档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMU_Ripple => _decoder?. Ranges_DCMU_Ripple;
+
+    /// <summary>
+    /// 直流纹波电流表的档位集合
+    /// </summary>
+    public float[ ]? Ranges_DCMI_Ripple => _decoder?.Ranges_DCMI_Ripple;
+
+    /// <summary>
+    /// 直流表电压测量值
+    /// </summary>
+    public float DCMU => _decoder?. DCMU??0;
+
+    /// <summary>
+    /// 直流表电流测量值
+    /// </summary>
+    public float DCMI => _decoder?.DCMI ?? 0;
+
+    /// <summary>
+    /// 直流纹波电压测量值
+    /// </summary>
+    public float DCMU_Ripple => _decoder?. DCMU_Ripple ?? 0;
+
+    /// <summary>
+    /// 直流纹波电流测量值
+    /// </summary>
+    public float DCMI_Ripple => _decoder?. DCMI_Ripple ?? 0;
+
+    /// <summary>
+    /// 直流表电压量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMU => _decoder?.RangeIndex_DCMU ?? 0;
+
+    /// <summary>
+    /// 直流表电流量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMI =>_decoder?.RangeIndex_DCMI ?? 0;
+
+    /// <summary>
+    /// 直流纹波电压量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMU_Ripple => _decoder?. RangeIndex_DCMU_Ripple ?? 0;
+
+    /// <summary>
+    /// 直流纹波电流量程当前索引值
+    /// </summary>
+    public byte RangeIndex_DCMI_Ripple => _decoder?.RangeIndex_DCMI_Ripple ?? 0;
+
+    /// <summary>
+    /// 直流表电压量程数量
+    /// </summary>
+    public byte RangesCount_DCMU =>_decoder?.RangesCount_DCMU ?? 0;
+
+    /// <summary>
+    /// 直流表电流量程数量
+    /// </summary>
+    public byte RangesCount_DCMI =>_decoder?.RangesCount_DCMI ?? 0;
+
+    /// <summary>
+    /// 直流纹波电压量程数量
+    /// </summary>
+    public byte RangesCount_DCMU_Ripple => _decoder?.RangesCount_DCMI_Ripple ?? 0;
+
+    /// <summary>
+    /// 直流纹波电流量程数量
+    /// </summary>
+    public byte RangesCount_DCMI_Ripple => _decoder?.RangesCount_DCMI_Ripple ?? 0;
     #endregion 属性》
 
     /// <inheritdoc/>

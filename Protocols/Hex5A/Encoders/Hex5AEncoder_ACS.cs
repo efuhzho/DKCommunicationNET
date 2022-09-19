@@ -104,7 +104,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 )
     {
         SetStandardSourceArgs[ ] args = new SetStandardSourceArgs[6];
-        args[0] = new SetStandardSourceArgs ( Channels. Ua , PhaseUa );
+        args[0] = new SetStandardSourceArgs ( Channels. Ua , 0 );
         args[1] = new SetStandardSourceArgs ( Channels. Ub , PhaseUb );
         args[2] = new SetStandardSourceArgs ( Channels. Uc , PhaseUc );
         args[3] = new SetStandardSourceArgs ( Channels. Ia , PhaseIa );

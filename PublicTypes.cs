@@ -144,6 +144,10 @@ public enum Channels : byte
     /// 所有相电流:[不含X相]
     /// </summary>
     Iabc = Ia | Ib | Ic,
+    /// <summary>
+    /// 空选项
+    /// </summary>
+    None = 0
 }
 
 /// <summary>
@@ -192,6 +196,10 @@ public enum Channels_PQ : byte  //TODO 核实协议的通道定义
     /// 所有相电流:[不含X相]
     /// </summary>
     Psum = Pa | Pb | Pc,
+    /// <summary>
+    /// 空选项
+    /// </summary>
+    None=0
 }
 
 /// <summary>

@@ -19,7 +19,11 @@ public class DCS : IModuleDCS
     /// <summary>
     /// 定义解码器对象
     /// </summary>
-    private readonly IDecoder_DCS? _decoder;   
+    private readonly IDecoder_DCS? _decoder;
+
+    public bool IsAutoRange_DCU { get; set; }
+    public bool IsAutoRange_DCI { get; set; }
+    public bool IsAutoRange_DCR { get; set; }
 
     internal DCS ( IEncoder_DCS? encoder , IDecoder_DCS? decoder, Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
     {
@@ -250,5 +254,100 @@ public class DCS : IModuleDCS
 
         return result;
     }
+
     #endregion 读数据》
+
+    #region 《档位数量
+
+    /// <summary>
+    /// 直流源电压档位个数
+    /// </summary>
+    public byte RangesCount_DCU => _decoder?. RangesCount_DCU??0;
+
+    /// <summary>
+    /// 直流源电流档位个数
+    /// </summary>
+    public byte RangesCount_DCI => _decoder?. RangesCount_DCI ?? 0;
+
+    /// <summary>
+    /// 直流源电阻档位个数
+    /// </summary>
+    public byte RangesCount_DCR =>_decoder?.RangesCount_DCR ?? 0;
+
+    #endregion 档位数量》
+
+    #region 《幅值
+    /// <summary>
+    /// 当前直流源电压幅值
+    /// </summary>
+    public float DCU => _decoder?. DCU??0;
+
+    /// <summary>
+    /// 当前直流源电流幅值
+    /// </summary>
+    public float DCI => _decoder?.DCI ?? 0;
+
+    /// <summary>
+    /// 当前直流电阻幅值
+    /// </summary>
+    public float DCR =>_decoder?.DCR ?? 0;
+
+    #endregion 幅值》
+
+    #region 《档位索引
+
+    /// <summary>
+    /// 当前档位索引值
+    /// </summary>
+    public byte RangeIndex_DCU => _decoder?. RangeIndex_DCU??0;
+
+    /// <summary>
+    /// 当前档位索引值
+    /// </summary>
+    public byte RangeIndex_DCI => _decoder?.RangeIndex_DCI ?? 0;
+
+    /// <summary>
+    /// 当前档位索引值
+    /// </summary>
+    public byte RangeIndex_DCR =>_decoder?.RangeIndex_DCR ?? 0;
+
+    #endregion 档位索引》
+
+    #region 《档位列表
+
+    /// <summary>
+    /// 直流源电压档位列表
+    /// </summary>
+    public float[ ]? Ranges_DCU => _decoder?. Ranges_DCU ;
+
+    /// <summary>
+    /// 直流源电流档位列表
+    /// </summary>
+    public float[ ]? Ranges_DCI => _decoder?.Ranges_DCI;
+
+    /// <summary>
+    /// 直流源电阻档位列表
+    /// </summary>
+    public float[ ]? Ranges_DCR =>_decoder?.Ranges_DCR;
+
+    #endregion 档位列表》
+
+    #region 《输出状态
+
+    /// <summary>
+    /// 当前直流电压输出状态：true=源打开；false=源关闭
+    /// </summary>
+    public bool IsOpen_DCU => _decoder?. IsOpen_DCU??false;
+
+    /// <summary>
+    /// 当前直流电流输出状态：true=源打开；false=源关闭
+    /// </summary>
+    public bool IsOpen_DCI => _decoder?. IsOpen_DCI ?? false;
+
+    /// <summary>
+    /// 当前直流电阻输出状态：true=源打开；false=源关闭
+    /// </summary>
+    public bool IsOpen_DCR => _decoder?.IsOpen_DCR ?? false;
+
+    #endregion 输出状态》
 }
