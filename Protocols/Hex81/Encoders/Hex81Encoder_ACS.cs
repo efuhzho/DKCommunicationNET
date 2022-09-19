@@ -7,6 +7,8 @@
  *
  *************************************************************************************************/
 
+using System. Threading. Channels;
+using DKCommunicationNET. BasicFramework;
 using DKCommunicationNET. Core;
 
 namespace DKCommunicationNET. Protocols. Hex81. Encoders;
@@ -29,6 +31,13 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
 
     public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPA , float IPB , float IPC )
     {
+        OldValue_UA = UA;
+        OldValue_UB = UB;
+        OldValue_UC = UC;
+        OldValue_IA = IA;
+        OldValue_IB = IB;
+        OldValue_IC = IC;
+
         float[ ] data = new float[9];
         data[0] = UA;
         data[1] = UB;
@@ -43,6 +52,27 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _encodeHelper. EncodeHelper ( Hex81. SetAmplitude_ACS , Hex81. SetAmplitude_ACS_Length , buffer );
     }
 
+    float OldValue_UA;
+    float OldValue_UB;
+    float OldValue_UC;
+    float OldValue_IA;
+    float OldValue_IB;
+    float OldValue_IC;
+    public OperateResult<byte[ ]> Packet_SetAmplitude ( DKCommunicationNET. Channels channel , float value )
+    {
+        bool[ ] isSelectedChannel = new bool[8];
+        isSelectedChannel = SoftBasic. ByteToBoolArray ( ( byte ) channel );
+
+        float[ ] data = new float[6];
+        data[0] = isSelectedChannel[0]?value:OldValue_UA;
+        data[1] = isSelectedChannel[2]?value:OldValue_UB;
+        data[2] = isSelectedChannel[4]?value:OldValue_UC;
+        data[3] = isSelectedChannel[1]?value:OldValue_IA;
+        data[4] = isSelectedChannel[3]?value:OldValue_IB;
+        data[5] = isSelectedChannel[5]?value:OldValue_IC;
+      return  Packet_SetAmplitude ( data[0] , data[1] , data[2] , data[3] , data[4] , data[5] ,0,0,0);
+    }
+
     public OperateResult<byte[ ]> Packet_SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
     {
         float[ ] data = new float[2];
@@ -54,6 +84,12 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
 
     public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 )
     {
+        OldValue_FaiUA = PhaseUa;
+        OldValue_FaiUB=PhaseUb;
+        OldValue_FaiUC=PhaseUc;
+        OldValue_FaiIA=PhaseIa;
+        OldValue_FaiIB=PhaseIb;
+        OldValue_FaiIC=PhaseIc;
         float[ ] data = new float[6];
         data[0] = PhaseUa;
         data[1] = PhaseUb;
@@ -65,19 +101,40 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _encodeHelper. EncodeHelper ( Hex81. SetPhase , Hex81. SetPhaseLength , buffer );
     }
 
+    float OldValue_FaiUA;
+    float OldValue_FaiUB;
+    float OldValue_FaiUC;
+    float OldValue_FaiIA;
+    float OldValue_FaiIB;
+    float OldValue_FaiIC;
+    public OperateResult<byte[ ]> Packet_SetPhase ( DKCommunicationNET. Channels channels , float value )
+    {
+        bool[ ] isSelectedChannel = new bool[8];
+        isSelectedChannel = SoftBasic. ByteToBoolArray ( ( byte ) channels );
+
+        float[ ] data = new float[6];
+        data[0] = isSelectedChannel[0] ? value : OldValue_FaiUA;
+        data[1] = isSelectedChannel[2] ? value : OldValue_FaiUB;
+        data[2] = isSelectedChannel[4] ? value : OldValue_FaiUC;
+        data[3] = isSelectedChannel[1] ? value : OldValue_FaiIA;
+        data[4] = isSelectedChannel[3] ? value : OldValue_FaiIB;
+        data[5] = isSelectedChannel[5] ? value : OldValue_FaiIC;
+        return Packet_SetPhase ( data[0] , data[1] , data[2] , data[3] , data[4] , data[5]  );
+    }
+
     public OperateResult<byte[ ]> Packet_SetWireMode ( WireMode wireMode )
     {
         byte[ ] data = new byte[1] { ( byte ) wireMode };
         return _encodeHelper. EncodeHelper ( Hex81. SetWireMode , Hex81. SetWireModeLength , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode,HarmonicMode harmonicMode=HarmonicMode.ValidValuesConstant )
-    {       
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
+    {
         return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , harmonicMode );
     }
 
-    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode ,CloseLoopMode closeLoopMode=CloseLoopMode.CloseLoop)
-    {       
+    public OperateResult<byte[ ]> Packet_SetHarmonicMode ( HarmonicMode harmonicMode , CloseLoopMode closeLoopMode = CloseLoopMode. CloseLoop )
+    {
         return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , harmonicMode );
     }
 
@@ -111,19 +168,19 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _encodeHelper. EncodeHelper ( Hex81. SetHarmonics , ( ushort ) ( data. Length + 7 ) , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattPower ( Enum channel , float p )
+    public OperateResult<byte[ ]> Packet_SetWattPower ( Channel_WattPower channel , float p )
     {
         byte[ ] data = new byte[5];
-        data[0] = Convert. ToByte ( channel );
+        data[0] =  ( byte ) channel ;
         _byteTransform. TransByte ( p ). CopyTo ( data , 1 );
 
         return _encodeHelper. EncodeHelper ( Hex81. SetWattPower , Hex81. SetWattPowerLength , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum channel , float q )
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Channel_WattLessPower channel , float q )
     {
         byte[ ] data = new byte[5];
-        data[0] = Convert. ToByte ( channel );
+        data[0] =  ( byte ) channel ;
         _byteTransform. TransByte ( q ). CopyTo ( data , 1 );
 
         return _encodeHelper. EncodeHelper ( Hex81. SetWattlessPower , Hex81. SetWattlessPowerLength , data );

@@ -323,7 +323,7 @@ public enum Type_SetStandardSource : byte
 }
 
 /// <summary>
-/// 输出通道：Ua;Ub;Uc:Ux;Ia;Ib;Ic;Ix;IPa;IPb;IPc
+/// 输出通道：Ua;Ub;Uc:Ux;Ia;Ib;Ic;Ix;
 /// </summary>
 [Flags]
 public enum Channels : byte
@@ -367,15 +367,7 @@ public enum Channels : byte
     /// <summary>
     /// 所有相电流:[不含X相]
     /// </summary>
-    Iabc = Ia | Ib | Ic,
-    /// <summary>
-    /// 所有电压电流通道:[不含X相]
-    /// </summary>
-    UIabc = Uabc | Iabc,
-    /// <summary>
-    /// 所有电压电流通道:[含X相]
-    /// </summary>
-    UIabcx = UIabc | Ux | Ix
+    Iabc = Ia | Ib | Ic,   
 }
 
 /// <summary>
@@ -395,25 +387,7 @@ public enum SetStandardSource_Channels_Freq : byte
     Freq_X = 0b_0100_0000
 }
 
-/// <summary>
-/// 设置有功功率通道枚举
-/// </summary>
-[Flags]
-public enum Channel_WattPower : byte    //TODO 功率通道选择需核实
-{
-    /// <summary>
-    /// 总有功功率
-    /// </summary>
-    P_Sum = 0b_1000_0000
-}
 
-/// <summary>
-/// 设置无功功率通道枚举
-/// </summary>
-public enum Channel_WattLessPower : byte
-{
-
-}
 
 #endregion 枚举类型
 

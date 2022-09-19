@@ -365,6 +365,17 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetAmplitude ( Channels channels , float value )
+    {
+        if ( _encoder == null )
+        {
+            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+        }
+        //执行报文发送并接收下位机回复报文
+        return CommandAction.Action(_encoder.Packet_SetAmplitude( channels , value ));
+    }
+
+    /// <inheritdoc/>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 )
     {
         if ( _encoder == null )
@@ -373,6 +384,17 @@ public class ACS : IModuleACS
         }
         //执行报文发送并接收下位机回复报文
         return CommandAction. Action ( _encoder. Packet_SetPhase ( 0 , PhaseUb , PhaseUc , PhaseIa , PhaseIb , PhaseIc , PhaseIx ) );
+    }
+
+    /// <inheritdoc/>
+    public OperateResult<byte[ ]> SetPhase ( Channels channels , float value )
+    {
+        if ( _encoder == null )
+        {
+            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+        }
+        //执行报文发送并接收下位机回复报文
+        return CommandAction.Action(_encoder.Packet_SetPhase( channels , value ));
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )

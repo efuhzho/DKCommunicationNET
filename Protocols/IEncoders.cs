@@ -123,6 +123,14 @@ internal interface IEncoder_ACS
     public OperateResult<byte[ ]> Packet_SetAmplitude ( float UA , float UB , float UC , float IA , float IB , float IC , float IPAOrUx , float IPBOrIX , float IPC );
 
     /// <summary>
+    /// 创建【设置交流源幅度】的报文
+    /// </summary>
+    /// <param name="channel"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetAmplitude ( Channels channel , float value );
+
+    /// <summary>
     /// 创建【打开交流源】的报文
     /// </summary>
     /// <returns></returns>
@@ -147,6 +155,13 @@ internal interface IEncoder_ACS
     /// <returns></returns>
     public OperateResult<byte[ ]> Packet_SetPhase ( float PhaseUa , float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc , float PhaseIx = 0 );
 
+    /// <summary>
+    /// 创建报文：设置相位
+    /// </summary>
+    /// <param name="channels"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> Packet_SetPhase ( Channels channels , float value );
     /// <summary>
     /// 创建报文：设置频率
     /// </summary>
@@ -192,7 +207,7 @@ internal interface IEncoder_ACS
     /// <param name="Channel_WattPower"></param>
     /// <param name="p">要设置的有功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattPower ( Enum Channel_WattPower , float p );
+    public OperateResult<byte[ ]> Packet_SetWattPower ( Channel_WattPower Channel_WattPower , float p );
 
     /// <summary>
     ///  创建报文：设置无功功率
@@ -200,7 +215,7 @@ internal interface IEncoder_ACS
     /// <param name="Channel_WattLessPower"></param>
     /// <param name="q">要设置的无功功率值</param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Enum Channel_WattLessPower , float q );
+    public OperateResult<byte[ ]> Packet_SetWattLessPower ( Channel_WattLessPower Channel_WattLessPower , float q );
 
     /// <summary>
     /// 创建报文：读取交流标准表测量值/标准源输出值

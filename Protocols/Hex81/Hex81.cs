@@ -571,54 +571,7 @@ public enum Channels : byte
     Channel_All = Channel_U | Channel_I   // 0x3F // 63
 }
 
-/// <summary>
-/// 设置有功功率通道枚举
-/// </summary>
-public enum Channel_WattPower : byte
-{
-    /// <summary>
-    /// A相有功功率
-    /// </summary>
-    Channel_Pa = 0,
-    /// <summary>
-    /// B相有功功率
-    /// </summary>
-    Channel_Pb = 1,
-    /// <summary>
-    /// C相有功功率
-    /// </summary>
-    Channel_Pc = 2,
-    /// <summary>
-    /// 总有功功率
-    /// </summary>
-    Channel_Psum = 3
-}
 
-/// <summary>
-/// 设置有功功率通道枚举
-/// </summary>
-public enum Channel_WattLessPower : byte
-{
-    /// <summary>
-    /// A相无功功功率
-    /// </summary>
-    Channel_Qa = 0,
-
-    /// <summary>
-    /// B相无功功率
-    /// </summary>
-    Channel_Qb = 1,
-
-    /// <summary>
-    /// C相无功功率
-    /// </summary>
-    Channel_Qc = 2,
-
-    /// <summary>
-    /// 总无功功率
-    /// </summary>
-    Channel_Qsum = 3
-}
 
 /// <summary>
 /// 电能校验类型（ 电能测量）

@@ -102,6 +102,14 @@ public interface IModuleACS : IProperties_ACS
     public OperateResult<byte[ ]> SetAmplitude ( float Uabc , float Iabc , float IPabc = 0 );
 
     /// <summary>
+    /// 设置交流源幅度:按选择的通道设置
+    /// </summary>
+    /// <param name="channels"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> SetAmplitude ( Channels channels,float value);
+
+    /// <summary>
     /// 设置相位：【A相电压相位作为基准参考相位点，始终为0°】
     /// </summary>
     /// <param name="PhaseUb">B相电压相位</param>
@@ -112,6 +120,14 @@ public interface IModuleACS : IProperties_ACS
     /// <param name="PhaseIx">X相电流相位</param>
     /// <returns><inheritdoc cref="Open"/></returns>
     public OperateResult<byte[ ]> SetPhase ( float PhaseUb , float PhaseUc , float PhaseIa , float PhaseIb , float PhaseIc ,float PhaseIx=0);
+
+    /// <summary>
+    /// 设置相位：【A相电压相位作为基准参考相位点，始终为0°】
+    /// </summary>
+    /// <param name="channels"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public OperateResult<byte[ ]> SetPhase ( Channels channels , float value );
 
     /// <summary>
     /// 设置频率

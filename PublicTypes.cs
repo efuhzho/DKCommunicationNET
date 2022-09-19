@@ -102,7 +102,7 @@ public enum HarmonicMode : byte
 /// 输出通道：Ua;Ub;Uc:Ux;Ia;Ib;Ic;Ix;IPa;IPb;IPc
 /// </summary>
 [Flags]
-public enum Channels:byte
+public enum Channels : byte
 {
     /// <summary>
     /// A相电压通道
@@ -144,14 +144,103 @@ public enum Channels:byte
     /// 所有相电流:[不含X相]
     /// </summary>
     Iabc = Ia | Ib | Ic,
+}
+
+/// <summary>
+/// 功率设置通道
+/// </summary>
+[Flags]
+public enum Channels_PQ : byte  //TODO 核实协议的通道定义
+{
     /// <summary>
-    /// 所有电压电流通道:[不含X相]
+    /// A相电压通道
     /// </summary>
-    UIabc = Uabc | Iabc,
+    Pa = 0b_0000_0001,
     /// <summary>
-    /// 所有电压电流通道:[含X相]
+    /// A相电流通道
     /// </summary>
-    UIabcx = UIabc | Ux | Ix
+    Qa = 0b_0000_0010,
+    /// <summary>
+    /// B相电压通道
+    /// </summary>
+    Pb = 0b_0000_0100,
+    /// <summary>
+    /// B相电流通道
+    /// </summary>
+    Qb = 0b_0000_1000,
+    /// <summary>
+    /// C相电压通道
+    /// </summary>
+    Pc = 0b_0001_0000,
+    /// <summary>
+    /// C相电流通道
+    /// </summary>
+    Qc = 0b_0010_0000,
+    /// <summary>
+    /// X相电压通道
+    /// </summary>
+    Ux = 0b_0100_0000,
+    /// <summary>
+    /// X相电流通道
+    /// </summary>
+    Ix = 0b_1000_0000,
+    /// <summary>
+    /// 所有相电压:[不含X相]
+    /// </summary>
+    Qsum = Qa | Qb | Qc,
+    /// <summary>
+    /// 所有相电流:[不含X相]
+    /// </summary>
+    Psum = Pa | Pb | Pc,
+}
+
+/// <summary>
+/// 设置有功功率通道枚举
+/// </summary>
+public enum Channel_WattPower : byte
+{
+    /// <summary>
+    /// A相有功功率
+    /// </summary>
+    Pa = 0,
+    /// <summary>
+    /// B相有功功率
+    /// </summary>
+    Pb = 1,
+    /// <summary>
+    /// C相有功功率
+    /// </summary>
+    Pc = 2,
+    /// <summary>
+    /// 总有功功率
+    /// </summary>
+    Psum = 3
+}
+
+/// <summary>
+/// 设置有功功率通道枚举
+/// </summary>
+public enum Channel_WattLessPower : byte
+{
+    /// <summary>
+    /// A相无功功功率
+    /// </summary>
+    Qa = 0,
+
+    /// <summary>
+    /// B相无功功率
+    /// </summary>
+    Qb = 1,
+
+    /// <summary>
+    /// C相无功功率
+    /// </summary>
+    Qc = 2,
+
+    /// <summary>
+    /// 总无功功率
+    /// </summary>
+    Qsum = 3
 }
 
 /// <summary>
@@ -294,7 +383,7 @@ public enum RangeSwitchMode : byte
 /// <summary>
 /// 设置大小电流通道：25A/100A
 /// </summary>
-public enum CurrentInputChannel:byte
+public enum CurrentInputChannel : byte
 {
     /// <summary>
     /// 25A小电流输入通道
