@@ -1,7 +1,6 @@
 ﻿using DKCommunicationNET. Core;
 using DKCommunicationNET. ModulesAndFunctions;
 using DKCommunicationNET. Protocols;
-using DKCommunicationNET. Protocols. Hex81;
 
 namespace DKCommunicationNET. Module;
 
