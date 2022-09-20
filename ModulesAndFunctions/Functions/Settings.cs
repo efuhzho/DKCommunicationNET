@@ -29,6 +29,7 @@ public class Settings : IFuncSettings
         _decoder = decoder;
 
         CommandAction = new CommandAction (  methodOfCheckResponse );
+        CommandAction. CanExecute = true;
     }
 
     /// <summary>
