@@ -151,6 +151,11 @@ internal class HexAADecoder_Settings : IDecoder_Settings
     /// </summary>
     public bool IsEnabled_PPS { get; private set; }
 
+    /// <summary>
+    /// 指示校准功能是否激活
+    /// </summary>
+    public bool IsEnabled_Calibrate { get; }
+
     #endregion 特殊功能 FuncS》
 }
 

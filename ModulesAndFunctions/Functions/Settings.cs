@@ -29,7 +29,6 @@ public class Settings : IFuncSettings
         _decoder = decoder;
 
         CommandAction = new CommandAction (  methodOfCheckResponse );
-        CommandAction. CanExecute = true;
     }
 
     /// <summary>
@@ -187,6 +186,11 @@ public class Settings : IFuncSettings
     /// 指示对时功能是否激活
     /// </summary>
     public bool IsEnabled_PPS => _decoder. IsEnabled_PPS;
+
+    /// <summary>
+    /// 指示校准功能是否激活
+    /// </summary>
+    public bool IsEnabled_Calibrate => _decoder. IsEnabled_Calibrate;
 
     #endregion 特殊功能 FuncS》
 }

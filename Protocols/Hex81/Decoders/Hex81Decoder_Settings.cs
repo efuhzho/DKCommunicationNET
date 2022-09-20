@@ -175,5 +175,10 @@ internal class Hex81Decoder_Settings : IDecoder_Settings
     /// 指示对时功能是否激活
     /// </summary>
     public bool IsEnabled_PPS { get; private set; }
+
+    /// <summary>
+    /// 指示校准功能是否激活
+    /// </summary>
+    public bool IsEnabled_Calibrate => true;
     #endregion 特殊功能 FuncS》
 }

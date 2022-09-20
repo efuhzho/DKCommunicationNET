@@ -163,6 +163,11 @@ public interface IProperties_Settings
     /// </summary>
     public bool IsEnabled_PPS { get; }
 
+    /// <summary>
+    /// 指示校准功能是否激活
+    /// </summary>
+    public bool IsEnabled_Calibrate { get; }
+
     #endregion 特殊功能 FuncS》
 
     //TODO 协议功能增加

@@ -14,14 +14,13 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
         /// </summary>
         private readonly IEncoder_Calibrate? _encoder;
 
-        private readonly CommandAction CommandAction;
+        internal readonly CommandAction CommandAction;
         internal Calibrater ( IEncoder_Calibrate? encoder , Func<byte[ ] , bool , OperateResult<byte[ ]>> methodOfCheckResponse )
         {
             //初始化报文创建器
             _encoder = encoder;
 
-            CommandAction=new(methodOfCheckResponse);
-            CommandAction. CanExecute = true;
+            CommandAction = new ( methodOfCheckResponse );
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , uRangeIndex , iRangeIndex )  );
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , uRangeIndex , iRangeIndex ) );
             if ( result. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -77,7 +76,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , uRangeIndex , 100 )  );    //100：保护无需清空的电压档位数据
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , uRangeIndex , 100 ) );    //100：保护无需清空的电压档位数据
             if ( result. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -100,7 +99,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , 100 , iRangeIndex )  );    //100：保护无需清空的电流档位数据
+            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_ClearData ( calibrateType , 100 , iRangeIndex ) );    //100：保护无需清空的电流档位数据
             if ( response. IsSuccess )
             {
                 CalibrateType = calibrateType;
@@ -123,7 +122,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_SwitchACRange ( uRangeIndex , iRangeIndex )  );
+            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_SwitchACRange ( uRangeIndex , iRangeIndex ) );
 
             return response;
         }
@@ -150,7 +149,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_SwitchACPoint ( uRangeIndex , iRangeIndex , calibrateLevel , sUA , sUB , sUC , sIA , sIB , sIC )  );
+            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_SwitchACPoint ( uRangeIndex , iRangeIndex , calibrateLevel , sUA , sUB , sUC , sIA , sIB , sIC ) );
             if ( response. IsSuccess )
             {
                 CalibrateLevel = calibrateLevel;
@@ -191,7 +190,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             }
 
             //执行命令并获取回复报文
-            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_DoAC ( uRangeIndex , iRangeIndex , calibrateLevel , mUA , mUB , mUC , mIA , mIB , mIC )  );
+            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_DoAC ( uRangeIndex , iRangeIndex , calibrateLevel , mUA , mUB , mUC , mIA , mIB , mIC ) );
 
             return response;
         }
@@ -209,7 +208,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             {
                 return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_Save ( uRangeIndex , iRangeIndex , calibrateLevel )  );
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_Save ( uRangeIndex , iRangeIndex , calibrateLevel ) );
 
             return result;
         }
@@ -233,7 +232,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             {
                 return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_DoACMeter ( uRangeIndex , iRangeIndex , calibrateLevel , UA , UB , UC , IA , IB , IC )  );
+            OperateResult<byte[ ]> response = CommandAction. Action ( _encoder. Packet_DoACMeter ( uRangeIndex , iRangeIndex , calibrateLevel , UA , UB , UC , IA , IB , IC ) );
 
             return response;
         }
@@ -256,7 +255,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             {
                 return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_SwitchDCPoint ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude )  );
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_SwitchDCPoint ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) );
             if ( result. IsSuccess )
             {
                 CalibrateLevel = calibrateLevel;
@@ -283,7 +282,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             {
                 return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_DoDC ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude )  );
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_DoDC ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) );
 
             return result;
         }
@@ -306,7 +305,7 @@ namespace DKCommunicationNET. ModulesAndFunctions. Functions
             {
                 return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
             }
-            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_DoDCMeter ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude )  );
+            OperateResult<byte[ ]> result = CommandAction. Action ( _encoder. Packet_DoDCMeter ( dCSourceType , rangeIndex , calibrateLevel , sDCAmplitude ) );
 
             return result;
         }

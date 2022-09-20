@@ -121,7 +121,7 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     /// <summary>
     /// 【高级权限功能】[警告！错误使用此功能将可能导致严重的后果！]
     /// </summary>
-    public Calibrater Calibrate;
+    public Calibrater Calibrate { get; private set; }
     /// <summary>
     /// 系统设置功能（包含HandShake）
     /// </summary>
@@ -213,6 +213,8 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
             DCM. CommandAction. CanExecute = Settings. IsEnabled_DCM;
 
             EPQ. CommandAction. CanExecute = Settings. IsEnabled_EPQ;
+
+            Calibrate. CommandAction. CanExecute = Settings. IsEnabled_Calibrate;
         }
         //无论是否成功都返回联机命令执行结果
         return result;
@@ -253,10 +255,10 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
         }
 
         // 检查CRC:CheckCRC包含报文头验证
-        var crcCheckResult=_CRCChecker.CheckCRC ( response. Content );
-        if ( !crcCheckResult.IsSuccess )
+        var crcCheckResult = _CRCChecker. CheckCRC ( response. Content );
+        if ( !crcCheckResult. IsSuccess )
         {
-            return new OperateResult<byte[ ]> ( crcCheckResult.Message+ SoftBasic. ByteToHexString ( response. Content , ' ' ) );
+            return new OperateResult<byte[ ]> ( crcCheckResult. Message + SoftBasic. ByteToHexString ( response. Content , ' ' ) );
         }
         return response;
     }
