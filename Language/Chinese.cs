@@ -59,7 +59,7 @@ internal class Chinese
     public virtual string SuccessText => "成功";
     public virtual string TwoParametersLengthIsNotSame => "两个参数的个数不一致";
     public virtual string NotSupportedDataType => "输入的类型不支持，请重新输入";
-    public virtual string NotSupportedFunction => "当前的功能不支持";
+    public virtual string NotSupportedFunction => "您的设备不支持此功能，如有疑问请联系设备供应商。";
     public virtual string DataLengthIsNotEnough => "接收的数据长度不足，应该值:{0},实际值:{1}";
     public virtual string ReceiveDataTimeout => "接收数据超时：";
     public virtual string ReceiveDataLengthTooShort => "接收的数据长度太短：";
