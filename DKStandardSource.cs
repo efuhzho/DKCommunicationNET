@@ -253,9 +253,10 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
         }
 
         // 检查CRC:CheckCRC包含报文头验证
-        if ( !_CRCChecker. CheckCRC ( response. Content ) )
+        var crcCheckResult=_CRCChecker.CheckCRC ( response. Content );
+        if ( !crcCheckResult.IsSuccess )
         {
-            return new OperateResult<byte[ ]> ( StringResources. Language. CRCCheckFailed + SoftBasic. ByteToHexString ( response. Content , ' ' ) );
+            return new OperateResult<byte[ ]> ( crcCheckResult.Message+ SoftBasic. ByteToHexString ( response. Content , ' ' ) );
         }
         return response;
     }

@@ -13,6 +13,6 @@ namespace DKCommunicationNET. Protocols
         /// </summary>
         /// <param name="responseBytes">下位机回复的报文</param>
         /// <returns>核验结果</returns>
-        public bool CheckCRC ( byte[ ] responseBytes );
+        public OperateResult CheckCRC ( byte[ ] responseBytes );
     }
 }
