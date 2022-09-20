@@ -44,7 +44,7 @@ internal class Hex81Decoder_EPQ : IDecoder_EPQ
                     Rounds_Current = _byteTransform. TransUInt32 ( response , 11 );
                     break;
                 default:
-                    return new OperateResult ( "（Hex81）DecodeReadData_EPQ:直流源回复数据解码失败：没能找到匹配的DecodeEPQ_Flag枚举项" );
+                    return new OperateResult ( "（Hex81）DecodeReadData_EPQ:回复数据解码失败：没能找到匹配的DecodeEPQ_Flag枚举项" );
             }
             //返回解析成功结果
             return OperateResult. CreateSuccessResult ( );

@@ -227,7 +227,7 @@ public class EPQ : IModuleEPQ
         if (! decodeResult. IsSuccess )
         {
             result. IsSuccess = false;
-            result. Message = StringResources. Language. DecodeError;
+            result. Message = StringResources. Language. DecodeError+":"+decodeResult.Message;
         }
 
         return result;
