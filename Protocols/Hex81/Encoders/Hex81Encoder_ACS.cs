@@ -59,9 +59,8 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     float OldValue_IB;
     float OldValue_IC;
     public OperateResult<byte[ ]> Packet_SetAmplitude ( DKCommunicationNET. Channels channel , float value )
-    {
-        bool[ ] isSelectedChannel = new bool[8];
-        isSelectedChannel = SoftBasic. ByteToBoolArray ( ( byte ) channel );
+    {       
+        bool[ ] isSelectedChannel = SoftBasic.ByteToBoolArray((byte)channel);
 
         float[ ] data = new float[6];
         data[0] = isSelectedChannel[0]?value:OldValue_UA;
