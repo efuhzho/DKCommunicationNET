@@ -183,7 +183,7 @@ internal interface IEncoder_ACS
     /// <param name="closeLoopMode"></param>
     /// <param name="harmonicMode"></param>
     /// <returns></returns>
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode, HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant );
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode, HarmonicMode harmonicMode = HarmonicMode. ValidValues );
 
     /// <summary>
     /// 设置谐波模式

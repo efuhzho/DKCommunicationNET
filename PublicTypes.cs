@@ -59,12 +59,12 @@ public enum WireMode : byte
     /// <summary>
     /// W3L4
     /// </summary>
-    WireMode_3P4L = 00,
+    W_3P4L = 00,
 
     /// <summary>
     /// 三相三线制
     /// </summary>
-    WireMode_3P3L = 01,
+    W_3P3L = 01,
 }
 
 /// <summary>
@@ -90,12 +90,12 @@ public enum HarmonicMode : byte
     /// <summary>
     /// 以真有效值的百分比输入谐波
     /// </summary>
-    ValidValuesConstant = 0,
+    ValidValues= 0,
 
     /// <summary>
     /// 以基波值的百分比输入谐波
     /// </summary>
-    FundamentalConstant = 1
+    Fundamental= 1
 }
 
 /// <summary>

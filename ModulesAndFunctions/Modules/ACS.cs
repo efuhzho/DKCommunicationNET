@@ -115,11 +115,11 @@ public class ACS : IModuleACS
 
     #region 《枚举直设
     /// <inheritdoc/>
-    public WireMode WireMode => _decoder?.WireMode ?? WireMode. WireMode_3P4L;
+    public WireMode WireMode => _decoder?.WireMode ?? WireMode. W_3P4L;
     /// <inheritdoc/>
     public CloseLoopMode CloseLoopMode => _decoder?.CloseLoopMode ?? CloseLoopMode. CloseLoop;
     /// <inheritdoc/>
-    public HarmonicMode HarmonicMode => _decoder?.HarmonicMode ?? HarmonicMode. ValidValuesConstant;
+    public HarmonicMode HarmonicMode => _decoder?.HarmonicMode ?? HarmonicMode. ValidValues;
     /// <inheritdoc/>
     public QP_Mode QP_Mode => _decoder?.QP_Mode ?? QP_Mode. 滤波法;
     #endregion 枚举直设》
@@ -416,7 +416,7 @@ public class ACS : IModuleACS
         return CommandAction. Action ( _encoder. Packet_SetWireMode ( WireMode ) );
     }
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
+    public OperateResult<byte[ ]> SetClosedLoop ( CloseLoopMode ClosedLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValues )
     {
         if ( _encoder == null )
         {

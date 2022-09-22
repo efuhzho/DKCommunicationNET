@@ -354,7 +354,7 @@ public class ACM : IModuleACM
     /// <summary>
     /// 当前谐波模式
     /// </summary>
-    public HarmonicMode HarmonicMode => _decoder?. HarmonicMode??HarmonicMode.ValidValuesConstant;//TODO 完善方法
+    public HarmonicMode HarmonicMode => _decoder?. HarmonicMode??HarmonicMode.ValidValues;//TODO 完善方法
     /// <summary>
     /// 无功计算方法
     /// </summary>

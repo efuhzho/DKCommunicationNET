@@ -62,7 +62,7 @@ internal class Hex5AEncoder_ACS : IEncoder_ACS
     }
 
 
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValues )
     {
         return SetModeAndRanges_ACS ( Flag_SetType. SetCloseLoopMode , 0 , 0 , closeLoopMode , 0 , 0 , Array. Empty<byte> ( ) );
     }

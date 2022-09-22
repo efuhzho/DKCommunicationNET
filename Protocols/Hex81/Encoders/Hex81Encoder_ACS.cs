@@ -127,7 +127,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
         return _encodeHelper. EncodeHelper ( Hex81. SetWireMode , Hex81. SetWireModeLength , data );
     }
 
-    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValuesConstant )
+    public OperateResult<byte[ ]> Packet_SetClosedLoop ( CloseLoopMode closeLoopMode , HarmonicMode harmonicMode = HarmonicMode. ValidValues)
     {
         return Packet_SetClosedLoopAndHarmonicMode ( closeLoopMode , harmonicMode );
     }
@@ -233,7 +233,7 @@ internal class Hex81Encoder_ACS : IEncoder_ACS
     #region 私有方法和字段
 
     private CloseLoopMode _CloseLoopMode = CloseLoopMode. CloseLoop;
-    private HarmonicMode _HarmonicMode = HarmonicMode. ValidValuesConstant;
+    private HarmonicMode _HarmonicMode = HarmonicMode. ValidValues;
     /// <summary>
     /// 创建报文:设置谐波模式和闭环模式
     /// </summary>
