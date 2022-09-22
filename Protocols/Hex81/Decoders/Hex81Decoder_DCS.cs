@@ -20,41 +20,56 @@ internal class Hex81Decoder_DCS : IDecoder_DCS
 
     OperateResult IDecoder_DCS.DecodeReadData_DCS ( byte[ ] response )
     {
-        OutputType_DCS outputType_DCS = ( OutputType_DCS ) response[11];
-
-        switch ( outputType_DCS )
+        try
         {
-            case OutputType_DCS. DCS_Type_U:
-                RangeIndex_DCU = response[6];
-                DCU = _byteTransform. TransSingle ( response , 7 );
-                IsOpen_DCU = _byteTransform. TransBool ( response , 12 );
-                break;
-            case OutputType_DCS. DCS_Type_I:
-                RangeIndex_DCI = response[6];
-                DCI = _byteTransform. TransSingle ( response , 7 );
-                IsOpen_DCI = _byteTransform. TransBool ( response , 12 );
-                break;
-            case OutputType_DCS. DCS_Type_R:
-                RangeIndex_DCR = response[6];
-                DCR = _byteTransform. TransSingle ( response , 7 );
-                IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
-                break;
-            default:
-                return new OperateResult (  StringResources. Language. DecodeError  );
-        }
+            OutputType_DCS outputType_DCS = ( OutputType_DCS ) response[11];
 
-        return OperateResult. CreateSuccessResult ( );
+            switch ( outputType_DCS )
+            {
+                case OutputType_DCS. DCS_Type_U:
+                    RangeIndex_DCU = response[6];
+                    DCU = _byteTransform. TransSingle ( response , 7 );
+                    IsOpen_DCU = _byteTransform. TransBool ( response , 12 );
+                    break;
+                case OutputType_DCS. DCS_Type_I:
+                    RangeIndex_DCI = response[6];
+                    DCI = _byteTransform. TransSingle ( response , 7 );
+                    IsOpen_DCI = _byteTransform. TransBool ( response , 12 );
+                    break;
+                case OutputType_DCS. DCS_Type_R:
+                    RangeIndex_DCR = response[6];
+                    DCR = _byteTransform. TransSingle ( response , 7 );
+                    IsOpen_DCR = _byteTransform. TransBool ( response , 12 );
+                    break;
+                default:
+                    return new OperateResult ( StringResources. Language. DecodeError );
+            }
+
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex)
+        {
+            return new OperateResult ("直流源数据解码失败："+ex.Message );
+        }
+       
     }
 
     OperateResult IDecoder_DCS.DecodeGetRanges_DCS ( byte[ ] response )
     {
+        try
+        {
+            RangesCount_DCU = response[6];
+            RangesCount_DCI = response[7];
+            Ranges_DCU = _byteTransform. TransSingle ( response , 8 , RangesCount_DCU );
+            Ranges_DCI = _byteTransform. TransSingle ( response , 8 + RangesCount_DCU * 4 , RangesCount_DCI );
 
-        RangesCount_DCU = response[6];
-        RangesCount_DCI = response[7];
-        Ranges_DCU = _byteTransform. TransSingle ( response , 8 , RangesCount_DCU );
-        Ranges_DCI = _byteTransform. TransSingle ( response , 8 + RangesCount_DCU * 4 , RangesCount_DCI );
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex)
+        {
+            return new OperateResult("解析直流表档位失败："+ex.Message );
+        }
 
-        return OperateResult. CreateSuccessResult ( );
     }
 
     #region 《档位数量

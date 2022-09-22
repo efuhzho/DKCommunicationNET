@@ -92,43 +92,59 @@ internal class Hex81Decoder_DCM : IDecoder_DCM
 
     OperateResult IDecoder_DCM.DecodeGetRanges_DCM ( byte[ ] response )
     {
-        RangesCount_DCMU = response[8];
-        RangesCount_DCMI = response[9];
+        try
+        {
+            RangesCount_DCMU = response[8];
+            RangesCount_DCMI = response[9];
 
-        Ranges_DCMU = _byteTransform. TransSingle ( response , 10 , RangesCount_DCMU );
-        Ranges_DCMI = _byteTransform. TransSingle ( response , 10 + 4 * RangesCount_DCMU , RangesCount_DCMI );
-        //返回解析成功结果
-        return OperateResult. CreateSuccessResult ( );
+            Ranges_DCMU = _byteTransform. TransSingle ( response , 10 , RangesCount_DCMU );
+            Ranges_DCMI = _byteTransform. TransSingle ( response , 10 + 4 * RangesCount_DCMU , RangesCount_DCMI );
+            //返回解析成功结果
+            return OperateResult. CreateSuccessResult ( );
+        }
+        catch ( Exception ex)
+        {
+            return new OperateResult ("直流表档位解码失败：" +ex.Message);
+        }
+      
     }
 
     OperateResult IDecoder_DCM.DecodeReadData_DCM ( byte[ ] response )
     {
-        //解析测量类型
-        MeasureType_DCM measureType_DCM = ( MeasureType_DCM ) response[11];
-
-        //根据测量类型解析数据
-        switch ( measureType_DCM )
+        try
         {
-            case MeasureType_DCM. DCM_Voltage:
-                RangeIndex_DCMU = response[6];
-                DCMU = _byteTransform. TransSingle ( response , 7 );
-                break;
-            case MeasureType_DCM. DCM_Current:
-                RangeIndex_DCMI = response[6];
-                DCMI = _byteTransform. TransSingle ( response , 7 );
-                break;
-            case MeasureType_DCM. DCM_VoltageRipple:
-                RangeIndex_DCMU_Ripple = response[6];
-                DCMU_Ripple = _byteTransform. TransSingle ( response , 7 );
-                break;
-            case MeasureType_DCM. DCM_CurrentRipple:
-                RangeIndex_DCMI_Ripple = response[6];
-                DCMI_Ripple = _byteTransform. TransSingle ( response , 7 );
-                break;
-            default:
-                return new OperateResult ( "（Hex81）MeasureType_DCM:回复数据解码失败:没能找到匹配的MeasureType_DCM枚举项" );
+            //解析测量类型
+            MeasureType_DCM measureType_DCM = ( MeasureType_DCM ) response[11];
+
+            //根据测量类型解析数据
+            switch ( measureType_DCM )
+            {
+                case MeasureType_DCM. DCM_Voltage:
+                    RangeIndex_DCMU = response[6];
+                    DCMU = _byteTransform. TransSingle ( response , 7 );
+                    break;
+                case MeasureType_DCM. DCM_Current:
+                    RangeIndex_DCMI = response[6];
+                    DCMI = _byteTransform. TransSingle ( response , 7 );
+                    break;
+                case MeasureType_DCM. DCM_VoltageRipple:
+                    RangeIndex_DCMU_Ripple = response[6];
+                    DCMU_Ripple = _byteTransform. TransSingle ( response , 7 );
+                    break;
+                case MeasureType_DCM. DCM_CurrentRipple:
+                    RangeIndex_DCMI_Ripple = response[6];
+                    DCMI_Ripple = _byteTransform. TransSingle ( response , 7 );
+                    break;
+                default:
+                    return new OperateResult ( "（Hex81）MeasureType_DCM:回复数据解码失败:没能找到匹配的MeasureType_DCM枚举项" );
+            }
+            //返回解析成功结果
+            return OperateResult. CreateSuccessResult ( );
         }
-        //返回解析成功结果
-        return OperateResult. CreateSuccessResult ( );
+        catch ( Exception ex)
+        {
+            return new OperateResult ( "直流表数据解析失败：" + ex. Message );
+        }
+       
     }
 }
