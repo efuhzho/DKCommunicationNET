@@ -221,21 +221,21 @@ public class DKStandardSource : DandickSerialBase<RegularByteTransform>
     }
 
 
-    ///// <summary>
-    ///// 在打开端口时的初始化方法
-    ///// </summary>
-    ///// <returns>是否初始化成功</returns>
-    //protected  override OperateResult<byte[ ]> InitializationOnOpen ( )
-    //{
-    //   return HandShake ( );
-    //}
+   /// <summary>
+   /// 在打开端口时的初始化方法
+   /// </summary>
+   /// <returns>是否初始化成功</returns>
+   protected  override OperateResult<byte[ ]> InitializationOnOpen ( )
+   {
+      return HandShake ( );
+   }
 
     #region 《Core Interative 核心交互
     /// <summary>
     /// 发送报文，获取并校验下位机的回复报文。
     /// </summary>
     /// <param name="send">发送的报文</param>
-    /// <param name="awaitData"></param>
+    /// <param name="awaitData">是否等待下位机回复报文</param>
     /// <returns></returns>
     private OperateResult<byte[ ]> CheckResponse ( byte[ ] send , bool awaitData = true )
     {

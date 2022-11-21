@@ -208,29 +208,32 @@ public class EPQ : IModuleEPQ
     #endregion 解码器属性：读取属性，只读》
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 )
+    public OperateResult<byte[ ]> ReadData (bool holding=false, Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 )
     {
-        //检查协议是否支持
-        if ( _encoder == null || _decoder == null )
+        do
         {
-            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
-        }
-        //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( Channels )  );
+            //检查协议是否支持
+            if ( _encoder == null || _decoder == null )
+            {
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+            }
+            //执行命令并获取回复报文
+            var result = CommandAction. Action ( _encoder. Packet_ReadData ( Channels ) );
 
-        if ( !result. IsSuccess || result. Content == null  )
-        {
+            if ( !result. IsSuccess || result. Content == null )
+            {
+                return result;
+            }
+
+            var decodeResult = _decoder. DecodeReadData_EPQ ( result. Content );
+            if ( !decodeResult. IsSuccess )
+            {
+                result. IsSuccess = false;
+                result. Message = StringResources. Language. DecodeError + ":" + decodeResult. Message;
+            }
+
             return result;
-        }
-
-        var decodeResult = _decoder. DecodeReadData_EPQ ( result. Content );
-        if (! decodeResult. IsSuccess )
-        {
-            result. IsSuccess = false;
-            result. Message = StringResources. Language. DecodeError+":"+decodeResult.Message;
-        }
-
-        return result;
+        } while ( holding );       
     }
 
     /// <inheritdoc/>

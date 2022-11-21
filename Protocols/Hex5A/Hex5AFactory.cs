@@ -4,7 +4,7 @@ using DKCommunicationNET. Protocols. Hex5A. Encoders;
 
 /**************************************************************************************************
  * 
- *  【Hex5A协议工厂类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月9日 13点39分  
+ *  【Hex5A协议工厂类】 版本：V 1.0.0   Author:  Fuhong Zhou   2022年9月9日 3点39分  
  *  
  *  生产本协议的组件
  *

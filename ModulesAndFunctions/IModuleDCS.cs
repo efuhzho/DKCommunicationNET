@@ -67,10 +67,10 @@ public interface IModuleDCS :ISetProperties_DCS,IReadProperties_DCS
     /// <summary>
     /// 读取直流源数据
     /// </summary>
+    /// <param name="holding">读取保持，循环读取</param>
     /// <param name="Resistor">【可选参数：当支持直流电阻输出时有效】当需要读取直流输出电阻值时：请输入字符 'R'</param>
     /// <returns></returns>
-    OperateResult<byte[ ]> ReadData ( char? Resistor = null );
-
+    OperateResult<byte[ ]> ReadData (bool holding=false, char? Resistor = null );
       
 
     /// <summary>

@@ -16,7 +16,7 @@ public interface IModuleACM: IPropertiesACM
     /// 创建报文：读取交流标准表测量值/标准源输出值
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> ReadData ( );
+    public OperateResult<byte[ ]> ReadData ( bool holding = false );
     /// <summary>
     /// 设置标准表测量档位
     /// </summary>

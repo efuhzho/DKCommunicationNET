@@ -371,7 +371,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction.Action(_encoder.Packet_SetAmplitude( channels , value ));
+        return CommandAction. Action ( _encoder. Packet_SetAmplitude ( channels , value ) );
     }
 
     /// <inheritdoc/>
@@ -393,7 +393,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction.Action(_encoder.Packet_SetPhase( channels , value ));
+        return CommandAction. Action ( _encoder. Packet_SetPhase ( channels , value ) );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetFrequency ( float FreqOfAll , float FreqOfC = 0 )
@@ -433,7 +433,7 @@ public class ACS : IModuleACS
             return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
         }
         //执行报文发送并接收下位机回复报文
-        return CommandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode ,closeLoopMode) );
+        return CommandAction. Action ( _encoder. Packet_SetHarmonicMode ( HarmonicMode , closeLoopMode ) );
     }
     /// <inheritdoc/>
     public OperateResult<byte[ ]> SetHarmonics ( Enum harmonicChannels , HarmonicArgs[ ]? harmonicArgs = null )
@@ -454,25 +454,29 @@ public class ACS : IModuleACS
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( )
+    public OperateResult<byte[ ]> ReadData ( bool holding = false )
     {
-        if ( _encoder == null || _decoder == null )
+        do
         {
-            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
-        }
-        //执行报文发送并接收下位机回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
-        if ( !result. IsSuccess || result. Content == null )
-        {
+            if ( _encoder == null || _decoder == null )
+            {
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+            }
+            //执行报文发送并接收下位机回复报文
+            var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
+            if ( !result. IsSuccess || result. Content == null )
+            {
+                return result;
+            }
+            var decodeResult = _decoder. DecodeReadData_ACS ( result. Content );
+            if ( !decodeResult. IsSuccess )
+            {
+                result. IsSuccess = false;
+                result. Message = StringResources. Language. DecodeError;
+            }
             return result;
-        }
-        var decodeResult = _decoder. DecodeReadData_ACS ( result. Content );
-        if ( !decodeResult. IsSuccess )
-        {
-            result. IsSuccess = false;
-            result. Message = StringResources. Language. DecodeError;
-        }
-        return result;
+        } while ( holding );
+
         //TODO encoder添加设备型号属性，判断属性是否执行ReadData_Status方法
     }
 

@@ -42,7 +42,7 @@ public interface IModuleDCM:ISetProperties_DCM,IReadProperties_DCM
     /// 读取直流表当前测量数据
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> ReadData ( );
+    public OperateResult<byte[ ]> ReadData (bool holding );
 }
 
 /// <summary>

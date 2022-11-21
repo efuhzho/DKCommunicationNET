@@ -9,7 +9,7 @@ public interface IModuleEPQ : ISetProperties_EPQ,IReadProperies_EPQ
     /// 读取电能误差数据
     /// </summary>
     /// <returns></returns>
-    OperateResult<byte[ ]> ReadData ( Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1 );
+    OperateResult<byte[ ]> ReadData (bool holding = false , Channels_ReadEPQ Channels = Channels_ReadEPQ. Channel1);
 
     /// <summary>
     /// 设置参数并启动校验有功电能

@@ -24,24 +24,27 @@ public class ACM : IModuleACM
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( )
+    public OperateResult<byte[ ]> ReadData (bool holding=false )
     {
-        if ( _encoder is null || _decoder is null )
+        do
         {
-            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
-        }
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
-        if ( !result. IsSuccess || result. Content is null )
-        {
+            if ( _encoder is null || _decoder is null )
+            {
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+            }
+            var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
+            if ( !result. IsSuccess || result. Content is null )
+            {
+                return result;
+            }
+            //解码
+            var deResult = _decoder. DecodeReadData ( result. Content );
+            if ( !deResult. IsSuccess )
+            {
+                return OperateResult. CreateFailedResult<byte[ ]> ( deResult );
+            }
             return result;
-        }
-        //解码
-        var deResult = _decoder. DecodeReadData ( result. Content );
-        if ( !deResult. IsSuccess )
-        {
-            return OperateResult. CreateFailedResult<byte[ ]> ( deResult );
-        }
-        return result;
+        } while ( holding );  
     }
 
     /// <inheritdoc/>

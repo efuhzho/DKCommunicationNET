@@ -570,9 +570,7 @@ namespace DKCommunicationNET. BasicFramework
 
             for ( int i = 0 ; i < buffer. Length / 2 ; i++ )
             {
-                byte tmp = buffer[i * 2 + 0];
-                buffer[i * 2 + 0] = buffer[i * 2 + 1];
-                buffer[i * 2 + 1] = tmp;
+                (buffer[i * 2 + 1], buffer[i * 2 + 0]) = (buffer[i * 2 + 0], buffer[i * 2 + 1]);
             }
 
             return buffer;

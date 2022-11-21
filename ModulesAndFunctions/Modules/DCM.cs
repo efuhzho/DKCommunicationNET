@@ -161,33 +161,36 @@ public class DCM : IModuleDCM
     }
 
     /// <inheritdoc/>
-    public OperateResult<byte[ ]> ReadData ( )
+    public OperateResult<byte[ ]> ReadData (bool holding=false )
     {
-        //执行命令前的功能状态检查
-        if ( _encoder == null || _decoder == null )
+        do
         {
-            return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
-        }
+            if ( _encoder == null || _decoder == null )
+            {
+                return new OperateResult<byte[ ]> ( StringResources. Language. NotSupportedModule );
+            }
 
-        //执行命令并获取回复报文
-        var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
+            //执行命令并获取回复报文
+            var result = CommandAction. Action ( _encoder. Packet_ReadData ( ) );
 
-        //如果命令执行失败
-        if ( !result. IsSuccess || result. Content == null )
-        {
+            //如果命令执行失败
+            if ( !result. IsSuccess || result. Content == null )
+            {
+                return result;
+            }
+
+            //解码
+            var decodeResult = _decoder. DecodeReadData_DCM ( result. Content );
+
+            //解码失败
+            if ( !decodeResult. IsSuccess )
+            {
+                result. IsSuccess = false;
+                result. Message = StringResources. Language. DecodeError;
+            }
             return result;
-        }
-
-        //解码
-        var decodeResult = _decoder. DecodeReadData_DCM ( result. Content );
-
-        //解码失败
-        if ( !decodeResult. IsSuccess )
-        {
-            result. IsSuccess = false;
-            result. Message = StringResources. Language. DecodeError;
-        }
-        return result;
+        } while ( holding );
+        //执行命令前的功能状态检查       
     }
 
     /// <inheritdoc/>

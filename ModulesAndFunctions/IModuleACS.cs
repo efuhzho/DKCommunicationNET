@@ -179,7 +179,7 @@ public interface IModuleACS : IProperties_ACS
     /// 读取交流源当前输出数据
     /// </summary>
     /// <returns></returns>
-    public OperateResult<byte[ ]> ReadData ( );
+    public OperateResult<byte[ ]> ReadData (bool hoding=false );
 
     /// <summary>
     /// 读取交流源当前输出状态
